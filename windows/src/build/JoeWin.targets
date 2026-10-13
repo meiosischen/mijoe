@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <CompileAs>CompileAsC</CompileAs>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <WarningLevel>Level3</WarningLevel>
+      <MinimalRebuild>true</MinimalRebuild>
+      <PreprocessorDefinitions Condition="'$(ConfigurationType)'=='StaticLibrary'">WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ConfigurationType)'!='StaticLibrary'">WIN32;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(VersionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(JoeWinCommonSrcDir);$(VersionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  
+  <ItemDefinitionGroup Condition="'$(Platform)' == 'Win32'">
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Lib>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  
+  <ItemDefinitionGroup Condition="'$(Platform)' == 'x64'">
+    <Link>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+    <Lib>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  
+  <ItemDefinitionGroup Condition="'$(Configuration)' == 'Debug'">
+    <PropertyGroup>
+      <LinkIncremental>true</LinkIncremental>
+    </PropertyGroup>
+    
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PreprocessorDefinitions>_DEBUG;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>false</OptimizeReferences>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+    </Link>
+
+    <Midl>
+      <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    
+    <ResourceCompile>
+      <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <PropertyGroup>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <LinkIncremental>false</LinkIncremental>
+    </PropertyGroup>
+
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DebugSymbols>True</DebugSymbols>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+    
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <Import Condition="'$(OutputType)' != 'Package'" Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="JoeWin.tasks.targets" />
+
+  <Target Name="BeforeResourceCompile" Inputs="@(ResourceSpec)" Outputs="$(IntDir)\builtins.rc">
+    <JWGenerateResources Specs="@(ResourceSpec)" FileLocation="$(BuiltinFilesLocation)" OutputFile="$(IntDir)\builtins.rc" />
+  </Target>
+
+  <Target Name="AfterClean">
+    <Delete Files="$(IntDir)\builtins.rc" />
+  </Target>
+  
+  <!-- Target to sign output binaries.  SignWith must be specified as an environment variable or
+       property, and must be the SHA1 thumbprint of a certificate in the Windows Certificate Store -->
+  <Target Name="SignBinaries" Condition="'$(SignWith)' != '' and '$(IsStandalone)' == ''">
+    <PropertyGroup>
+      <_SignedOutputExtension Condition="'$(ConfigurationType)' == 'DynamicLibrary'">.dll</_SignedOutputExtension>
+      <_SignedOutputExtension Condition="'$(ConfigurationType)' == 'Application'">.exe</_SignedOutputExtension>
+      <_SignedExecutable Condition="Exists('$(OutDir)\$(RootNamespace)$(_SignedOutputExtension)')">$(RootNamespace)$(_SignedOutputExtension)</_SignedExecutable>
+      <_SignedExecutable Condition="Exists('$(OutDir)\$(AssemblyName)$(_SignedOutputExtension)')">$(AssemblyName)$(_SignedOutputExtension)</_SignedExecutable>
+    </PropertyGroup>
+    <Exec Condition="'$(_SignedExecutable)' != '' and Exists('$(OutDir)\$(_SignedExecutable)')" Command="signtool sign /t http://timestamp.verisign.com/scripts/timestamp.dll /sha1 $(SignWith) /d $(_SignedExecutable) &quot;$(OutDir)\$(_SignedExecutable)&quot;" />
+  </Target>
+
+  <PropertyGroup>
+    <BuildDependsOn>$(BuildDependsOn);SignBinaries</BuildDependsOn>
+  </PropertyGroup>
+  
+  <!-- Targets to sign MSI -->
+  <Target Name="SignMsi" Condition="'$(SignWith)' != ''">
+    <Exec Command="signtool sign /t http://timestamp.verisign.com/scripts/timestamp.dll /sha1 $(SignWith) /d %(SignMsi.FileName) &quot;%(SignMsi.FullPath)&quot;" />
+  </Target>
+  <Target Name="SignCabs" Condition="'$(SignWith)' != ''">
+    <Exec Command="signtool sign /t http://timestamp.verisign.com/scripts/timestamp.dll /sha1 $(SignWith) /d %(SignCabs.FileName) &quot;%(SignCabs.FullPath)&quot;" />
+  </Target>
+</Project>

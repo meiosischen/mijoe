@@ -1,0 +1,2 @@
+PASS original 4.6 backup: 486 files, all SHA256 values match.
+PASS 3.8: 814 files and all SHA256 values unchanged.

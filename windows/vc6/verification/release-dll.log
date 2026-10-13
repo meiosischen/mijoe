@@ -1,0 +1,43 @@
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MT /O2 /DNDEBUG /DUNICODE /D_UNICODE /DJOEDLL_EXPORTS /Fo""..\bin\vc6\Release\obj\joedll.obj"" /c ..\src\exe\joedll\joedll.c
+joedll.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	rc.exe /dJOEWIN_VC6 /i"." /i"..\src\common" /i"..\src\exe" /dNDEBUG /fo""..\bin\vc6\Release\obj\joedll.res"" joedll.rc
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /dll /out:""..\bin\vc6\Release\dll\joewin.dll"" /implib:"..\bin\vc6\Release\dll\joewin.lib" "..\bin\vc6\Release\joe.lib" "..\bin\vc6\Release\putty.lib" "..\bin\vc6\Release\common.lib" "..\bin\vc6\Release\obj\joedll.obj" "..\bin\vc6\Release\obj\joedll.res" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib
+   Creating library ..\bin\vc6\Release\dll\joewin.lib and object ..\bin\vc6\Release\dll\joewin.exp
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MT /O2 /DNDEBUG /DUNICODE /D_UNICODE /I"..\src\exe\joedll" /Fo""..\bin\vc6\Release\obj\dllmain.obj"" /c ..\src\exe\main.c
+main.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	rc.exe /dJOEWIN_VC6 /i"." /i"..\src\common" /i"..\src\exe" /dNDEBUG /dJOEWIN_DLL_FRONTEND /fo""..\bin\vc6\Release\obj\cjoe_dll.res"" cjoe.rc
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /out:""..\bin\vc6\Release\dll\cjoe.exe"" "..\bin\vc6\Release\dll\joewin.lib" "..\bin\vc6\Release\obj\dllmain.obj" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib "..\bin\vc6\Release\obj\cjoe_dll.res"
+	rc.exe /dJOEWIN_VC6 /i"." /i"..\src\common" /i"..\src\exe" /dNDEBUG /dJOEWIN_DLL_FRONTEND /fo""..\bin\vc6\Release\obj\joe_dll.res"" joe.rc
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /out:""..\bin\vc6\Release\dll\joe.exe"" "..\bin\vc6\Release\dll\joewin.lib" "..\bin\vc6\Release\obj\dllmain.obj" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib "..\bin\vc6\Release\obj\joe_dll.res"
+	rc.exe /dJOEWIN_VC6 /i"." /i"..\src\common" /i"..\src\exe" /dNDEBUG /dJOEWIN_DLL_FRONTEND /fo""..\bin\vc6\Release\obj\jmacs_dll.res"" jmacs.rc
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /out:""..\bin\vc6\Release\dll\jmacs.exe"" "..\bin\vc6\Release\dll\joewin.lib" "..\bin\vc6\Release\obj\dllmain.obj" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib "..\bin\vc6\Release\obj\jmacs_dll.res"
+	rc.exe /dJOEWIN_VC6 /i"." /i"..\src\common" /i"..\src\exe" /dNDEBUG /dJOEWIN_DLL_FRONTEND /fo""..\bin\vc6\Release\obj\jstar_dll.res"" jstar.rc
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /out:""..\bin\vc6\Release\dll\jstar.exe"" "..\bin\vc6\Release\dll\joewin.lib" "..\bin\vc6\Release\obj\dllmain.obj" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib "..\bin\vc6\Release\obj\jstar_dll.res"
+	rc.exe /dJOEWIN_VC6 /i"." /i"..\src\common" /i"..\src\exe" /dNDEBUG /dJOEWIN_DLL_FRONTEND /fo""..\bin\vc6\Release\obj\jpico_dll.res"" jpico.rc
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /out:""..\bin\vc6\Release\dll\jpico.exe"" "..\bin\vc6\Release\dll\joewin.lib" "..\bin\vc6\Release\obj\dllmain.obj" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib "..\bin\vc6\Release\obj\jpico_dll.res"
+	rc.exe /dJOEWIN_VC6 /i"." /i"..\src\common" /i"..\src\exe" /dNDEBUG /dJOEWIN_DLL_FRONTEND /fo""..\bin\vc6\Release\obj\jice_dll.res"" jice.rc
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /out:""..\bin\vc6\Release\dll\jice.exe"" "..\bin\vc6\Release\dll\joewin.lib" "..\bin\vc6\Release\obj\dllmain.obj" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib "..\bin\vc6\Release\obj\jice_dll.res"

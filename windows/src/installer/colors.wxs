@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   This file is part of Joe's Own Editor for Windows.
+   Copyright (c) 2014 John J. Jordan.
+ 
+   Joe's Own Editor for Windows is free software: you can redistribute it
+   and/or modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation, either version 2 of the
+   License, or (at your option) any later version.
+ 
+   Joe's Own Editor for Windows is distributed in the hope that it will
+   be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+   of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+ 
+   You should have received a copy of the GNU General Public License
+   along with Joe's Own Editor for Windows.  If not, see
+   <http://www.gnu.org/licenses/>.
+-->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include properties.wxi ?>
+  
+  <Fragment>
+    <!-- Default colors, always installed (keep this small) -->
+    <ComponentGroup Id="StandardColorsComponentGroup">
+      <Component Id="defaultJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+        <File Id="defaultJCF" Name="default.jcf" DiskId="1" Source="$(var.ColorsRootDir)\default.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="gruvboxJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+        <File Id="gruvboxJCF" Name="gruvbox.jcf" DiskId="1" Source="$(var.ColorsRootDir)\gruvbox.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="ir_blackJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+        <File Id="ir_blackJCF" Name="ir_black.jcf" DiskId="1" Source="$(var.ColorsRootDir)\ir_black.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="molokaiJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+        <File Id="molokaiJCF" Name="molokai.jcf" DiskId="1" Source="$(var.ColorsRootDir)\molokai.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="solarizedJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+        <File Id="solarizedJCF" Name="solarized.jcf" DiskId="1" Source="$(var.ColorsRootDir)\solarized.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="wombatJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+        <File Id="wombatJCF" Name="wombat.jcf" DiskId="1" Source="$(var.ColorsRootDir)\wombat.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="xoriaJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+        <File Id="xoriaJCF" Name="xoria.jcf" DiskId="1" Source="$(var.ColorsRootDir)\xoria.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="zenburnJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+        <File Id="zenburnJCF" Name="zenburn.jcf" DiskId="1" Source="$(var.ColorsRootDir)\zenburn.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="zenburnHCJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+	<File Id="zenburnHCJCF" Name="zenburn-hc.jcf" DiskId="1" Source="$(var.ColorsRootDir)\zenburn-hc.jcf" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <!-- Extra colors, installed only if user confirms -->
+    <ComponentGroup Id="ExtendedColorsComponentGroup">
+      <Component Id="darkblue2JCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+	<File Id="darkblue2JCF" Name="darkblue2.jcf" DiskId="1" Source="$(var.ColorsRootDir)\darkblue2.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="desertJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+	<File Id="desertJCF" Name="desert.jcf" DiskId="1" Source="$(var.ColorsRootDir)\desert.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="duskJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+	<File Id="duskJCF" Name="dusk.jcf" DiskId="1" Source="$(var.ColorsRootDir)\dusk.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="eclipseJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+	<File Id="eclipseJCF" Name="eclipse.jcf" DiskId="1" Source="$(var.ColorsRootDir)\eclipse.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="lucarioJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+	<File Id="lucarioJCF" Name="lucario.jcf" DiskId="1" Source="$(var.ColorsRootDir)\lucario.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="luciusJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+	<File Id="luciusJCF" Name="lucius.jcf" DiskId="1" Source="$(var.ColorsRootDir)\lucius.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="morialightJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+	<File Id="morialightJCF" Name="moria-light.jcf" DiskId="1" Source="$(var.ColorsRootDir)\moria-light.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="oceandeepJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+	<File Id="oceandeepJCF" Name="oceandeep.jcf" DiskId="1" Source="$(var.ColorsRootDir)\oceandeep.jcf" KeyPath="yes" />
+      </Component>
+      <Component Id="pyteJCFComponent" Guid="*" Directory="COLORFOLDER" Win64="$(var.Win64)">
+	<File Id="pyteJCF" Name="pyte.jcf" DiskId="1" Source="$(var.ColorsRootDir)\pyte.jcf" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

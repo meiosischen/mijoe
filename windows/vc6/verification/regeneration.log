@@ -1,0 +1,1 @@
+PASS generate.py regenerates all checked-in inputs without changing identical bytes or timestamps.

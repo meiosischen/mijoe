@@ -1,0 +1,2 @@
+PASS: all 104 resources decoded by the actual VC6 JOE/miniz loader exactly match source bytes.
+Includes 18 .jcf themes, 81 syntax files, configuration, license and Chinese translation.

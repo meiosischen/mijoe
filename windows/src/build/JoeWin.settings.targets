@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- Default configuration if not supplied (commandline build) -->
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <Platform Condition="'$(Platform)' == ''">Win32</Platform>
+    
+    <!-- Pick latest present VS version if not supplied -->
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == '' and '$([MSBuild]::GetRegistryValueFromView(`HKCU\Software\Microsoft\VisualStudio\18.0`, `VisualStudioLocation`, `dne`, RegistryView.Registry32))' != 'dne'">18.0</VisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == '' and '$([MSBuild]::GetRegistryValueFromView(`HKCU\Software\Microsoft\VisualStudio\17.0`, `VisualStudioLocation`, `dne`, RegistryView.Registry32))' != 'dne'">17.0</VisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == '' and '$([MSBuild]::GetRegistryValueFromView(`HKCU\Software\Microsoft\VisualStudio\16.0`, `VisualStudioLocation`, `dne`, RegistryView.Registry32))' != 'dne'">16.0</VisualStudioVersion>
+    <!-- The above don't yet exist ... these are real: -->
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == '' and '$([MSBuild]::GetRegistryValueFromView(`HKCU\Software\Microsoft\VisualStudio\15.0`, `VisualStudioLocation`, `dne`, RegistryView.Registry32))' != 'dne'">15.0</VisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == '' and '$([MSBuild]::GetRegistryValueFromView(`HKCU\Software\Microsoft\VisualStudio\14.0`, `VisualStudioLocation`, `dne`, RegistryView.Registry32))' != 'dne'">14.0</VisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == '' and '$([MSBuild]::GetRegistryValueFromView(`HKCU\Software\Microsoft\VisualStudio\13.0`, `VisualStudioLocation`, `dne`, RegistryView.Registry32))' != 'dne'">13.0</VisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == '' and '$([MSBuild]::GetRegistryValueFromView(`HKCU\Software\Microsoft\VisualStudio\12.0`, `VisualStudioLocation`, `dne`, RegistryView.Registry32))' != 'dne'">12.0</VisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == '' and '$([MSBuild]::GetRegistryValueFromView(`HKCU\Software\Microsoft\VisualStudio\11.0`, `VisualStudioLocation`, `dne`, RegistryView.Registry32))' != 'dne'">11.0</VisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+
+    <!-- Pick toolset to use based on VS version (to enable XP targetting) -->
+    <PlatformToolset Condition="'$(PlatformToolset)' == '' and '$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    
+    <!-- Only target XP on 32-bit builds -->
+    <_ToolsetSuffix Condition="'$(Platform)' == 'Win32'">_xp</_ToolsetSuffix>
+    
+    <!-- VS 2017 uses a different toolset version -->
+    <PlatformToolset Condition="'$(PlatformToolset)' == '' and '$(VisualStudioVersion)' == '15.0'">v141$(_ToolsetSuffix)</PlatformToolset>
+    
+    <!-- Handles VS 2012, 2013, 2015 -->
+    <PlatformToolset Condition="'$(PlatformToolset)' == ''">v$([System.String]::Copy('$(VisualStudioVersion)').Replace('.', ''))$(_ToolsetSuffix)</PlatformToolset>
+    
+    <!-- build might work with 2008, but it's really old now, just use something recent. -->
+  </PropertyGroup>
+
+  <PropertyGroup>
+	<JoeRoot>$(MSBuildThisFileDirectory)\..\..\..</JoeRoot>
+	<JoeWinRoot>$(MSBuildThisFileDirectory)\..</JoeWinRoot>
+	<BinaryRoot>$(JoeWinRoot)\..\bin</BinaryRoot>
+	<JoeExternalSrcDir>$(JoeRoot)\joe</JoeExternalSrcDir>
+	<PuttyExternalSrcDir>$(JoeWinRoot)\putty\putty</PuttyExternalSrcDir>
+	<JoeWinSrcDir>$(JoeWinRoot)\joewin\win</JoeWinSrcDir>
+	<JoeWinCommonSrcDir>$(JoeWinRoot)\common</JoeWinCommonSrcDir>
+	<JoeSrcDir>$(JoeWinRoot)\joe\win</JoeSrcDir>
+	<PuttySrcDir>$(JoeWinRoot)\putty\win</PuttySrcDir>
+	<JoeConfDir>$(JoeWinRoot)\..\rc</JoeConfDir>
+	<JoeSyntaxDir>$(JoeRoot)\syntax</JoeSyntaxDir>
+	<JoeDocsDir>$(JoeWinRoot)\..\docs</JoeDocsDir>
+	<JoeWinColorsDir>$(JoeWinRoot)\..\colors</JoeWinColorsDir>
+	<JoeLangDir>$(JoeRoot)\po</JoeLangDir>
+	<JoeRootConfDir>$(JoeRoot)\rc</JoeRootConfDir>
+	<JoeRootDocsDir>$(JoeRoot)\docs</JoeRootDocsDir>
+	<JoeColorsDir>$(JoeRoot)\colors</JoeColorsDir>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <PlatformDir Condition="'$(Platform)' == 'Win32'">x86</PlatformDir>
+    <PlatformDir Condition="'$(Platform)' == 'x86'">x86</PlatformDir>
+    <PlatformDir Condition="'$(Platform)' == 'x64'">x64</PlatformDir>
+    <OutputRootDir>$(BinaryRoot)\$(PlatformDir)\$(Configuration)</OutputRootDir>
+    <StandaloneDir Condition="'$(IsStandalone)' != ''">\Standalone</StandaloneDir>
+    <OutDir Condition="'$(WriteOutputToRoot)' == ''">$(OutputRootDir)$(StandaloneDir)\Object\$(RootNamespace)\</OutDir>
+    <OutDir Condition="'$(WriteOutputToRoot)' != ''">$(OutputRootDir)$(StandaloneDir)\</OutDir>
+    <IntDir>$(OutputRootDir)$(StandaloneDir)\Intermediate\$(RootNamespace)\</IntDir>
+    <IntermediateOutputPath>$(IntDir)</IntermediateOutputPath>
+    
+    <VersionDir>$(OutputRootDir)\Intermediate\version</VersionDir>
+    <ColorsOutDir>$(OutputRootDir)\colors</ColorsOutDir>
+    <SyntaxOutDir>$(OutputRootDir)\syntax</SyntaxOutDir>
+    <ConfOutDir>$(OutputRootDir)\conf</ConfOutDir>
+    <VTOutDir>$(OutputRootDir)\vt</VTOutDir>
+    <DocOutDir>$(OutputRootDir)\doc</DocOutDir>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <FrontendDependencies>comctl32.lib;imm32.lib;winmm.lib;$(OutputRootDir)\Intermediate\joewincommon\resources.res</FrontendDependencies>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Find Python 2.7/6/5 -->
+    <_PyRegPrefix>HKEY_LOCAL_MACHINE\SOFTWARE\Python\PythonCore</_PyRegPrefix>
+    <_PythonPath>$([MSBuild]::GetRegistryValueFromView('$(_PyRegPrefix)\2.7\InstallPath', '', null, RegistryView.Registry64, RegistryView.Registry32))</_PythonPath>
+    <_PythonPath Condition="'$(_PythonPath)'==''">$([MSBuild]::GetRegistryValueFromView('$(_PyRegPrefix)\2.6\InstallPath', '', null, RegistryView.Registry64, RegistryView.Registry32))</_PythonPath>
+    <_PythonPath Condition="'$(_PythonPath)'==''">$([MSBuild]::GetRegistryValueFromView('$(_PyRegPrefix)\2.5\InstallPath', '', null, RegistryView.Registry64, RegistryView.Registry32))</_PythonPath>
+    <_Python Condition="'$(_PythonPath)'!=''">$(_PythonPath)\python.exe</_Python>
+  </PropertyGroup>
+
+  <Import Condition="'$(OutputType)' != 'Package'" Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Condition="'$(OutputType)' != 'Package'" Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="version.props" />
+</Project>

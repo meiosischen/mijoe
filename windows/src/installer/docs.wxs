@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   This file is part of Joe's Own Editor for Windows.
+   Copyright (c) 2014 John J. Jordan.
+ 
+   Joe's Own Editor for Windows is free software: you can redistribute it
+   and/or modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation, either version 2 of the
+   License, or (at your option) any later version.
+ 
+   Joe's Own Editor for Windows is distributed in the hope that it will
+   be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+   of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+ 
+   You should have received a copy of the GNU General Public License
+   along with Joe's Own Editor for Windows.  If not, see
+   <http://www.gnu.org/licenses/>.
+-->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include properties.wxi ?>
+
+  <Fragment>
+    <ComponentGroup Id="DocumentsComponentGroup" Directory="DOCFOLDER">
+      <Component Id="LicenseTXTComponent" Guid="*" Win64="$(var.Win64)">
+        <File Id="licenseTXT" Name="license.txt" DiskId="1" Source="$(var.DocRootDir)\license.txt" KeyPath="yes" />
+      </Component>
+      <Component Id="ManHTMLComponent" Guid="*" Win64="$(var.Win64)">
+        <File Id="manHTML" Name="man.html" DiskId="1" Source="$(var.DocRootDir)\man.html" KeyPath="yes" />
+      </Component>
+      <Component Id="NewsHTMLComponent" Guid="*" Win64="$(var.Win64)">
+        <File Id="newsHTML" Name="news.html" DiskId="1" Source="$(var.DocRootDir)\news.html" KeyPath="yes" />
+      </Component>
+      <Component Id="WindowsHTMLComponent" Guid="*" Win64="$(var.Win64)">
+	<File Id="windowsHTML" Name="windows.html" DiskId="1" Source="$(var.DocRootDir)\windows.html" KeyPath="yes" />
+      </Component>
+      <Component Id="MarkdownCSSComponent" Guid="*" Win64="$(var.Win64)">
+	<File Id="markdownCSS" Name="markdown.css" DiskId="1" Source="$(var.DocRootDir)\markdown.css" KeyPath="yes" />
+      </Component>
+
+      <ComponentRef Id="ManualShortcutComponent"/>
+      <ComponentRef Id="WindowsTipsShortcutComponent"/>
+      <ComponentRef Id="NewsShortcutComponent"/>
+    </ComponentGroup>
+
+    <DirectoryRef Id="DocShortcutsDir">
+      <Component Id="ManualShortcutComponent" Guid="*" Win64="$(var.Win64)">
+	<Shortcut Id="ManualShortcut" Name="User manual" Description="Manual for Joe's Own Editor" Target="[#manHTML]" />
+	<RegistryValue Root="HKCU" Key="Software\JoeEditor" Name="manshortcut" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+      <Component Id="WindowsTipsShortcutComponent" Guid="*" Win64="$(var.Win64)">
+	<Shortcut Id="WindowsTipsShortcut" Name="JOE for Windows Tips" Description="Tips for using JOE for Windows" Target="[#windowsHTML]" />
+	<RegistryValue Root="HKCU" Key="Software\JoeEditor" Name="manwtipsshortcut" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+      <Component Id="NewsShortcutComponent" Guid="*" Win64="$(var.Win64)">
+	<Shortcut Id="NewsShortcut" Name="Release notes" Description="Changelog for Joe's Own Editor" Target="[#newsHTML]" />
+	<RegistryValue Root="HKCU" Key="Software\JoeEditor" Name="newsshortcut" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

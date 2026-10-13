@@ -1,0 +1,4 @@
+#define JOEWIN_DLL joewin.dll
+#include "../src/exe/joewin.rc"
+#include "dialogs.rc"
+#include "builtins.rc"

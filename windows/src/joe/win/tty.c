@@ -1,0 +1,477 @@
+/*
+ *  This file is part of Joe's Own Editor for Windows.
+ *  Copyright (c) 2014 John J. Jordan.
+ *
+ *  Joe's Own Editor for Windows is free software: you can redistribute it 
+ *  and/or modify it under the terms of the GNU General Public License as
+ *  published by the Free Software Foundation, either version 2 of the 
+ *  License, or (at your option) any later version.
+ *
+ *  Joe's Own Editor for Windows is distributed in the hope that it will
+ *  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+ *  of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Joe's Own Editor for Windows.  If not, see
+ *  <http://www.gnu.org/licenses/>.
+ */
+
+#include "types.h"
+
+int idleout = 1;
+
+/* Global configuration variables */
+
+int noxon = 0;			/* Set if ^S/^Q processing should be disabled */
+int Baud = 38400;		/* Baud rate from joerc, cmd line or environment */
+
+/* Output buffer, index and size */
+
+char *obuf = NULL;
+ptrdiff_t obufp = 0;
+ptrdiff_t obufsiz;
+
+char ibuf[UI_TO_EDITOR_IOSZ];
+ptrdiff_t ibufp = 0;
+ptrdiff_t ibufsiz = 0;
+
+/* The baud rate */
+
+long tty_baud;			/* Bits per second */
+long upc;			/* Microseconds per character */
+
+/* Input buffer */
+
+int have = 0;			/* Set if we have pending input */
+char havec;			/* Character read in during pending input check */
+int leave = 0;			/* When set, typeahead checking is disabled */
+
+/* TTY mode flag.  1 for open, 0 for closed */
+static int ttymode = 0;
+
+/* Signal state flag.  1 for joe, 0 for normal */
+static int ttysig = 0;
+
+/* Current window size */
+static int winwidth = 0, winheight = 0;
+
+/* Open terminal and set signals */
+
+void ttopen(void)
+{
+	sigjoe();
+	ttopnn();
+}
+
+/* Close terminal and restore signals */
+
+void ttclose(void)
+{
+	ttclsn();
+	signrm();
+}
+
+static int winched = 0;
+
+/* Second ticker */
+
+int ticked = 0;
+
+/* Open terminal */
+
+void ttopnn(void)
+{
+	if (ttymode)
+	{
+		return;
+	}
+
+	ttymode = 1;
+
+	// Next bit in regular implementation turns off XON/XOFF, and ECHO
+	// line discipline.  This is already set correctly on the PuTTY end.
+
+	// Next bit in regular implementation is baud calcuation nonsense.
+	// Note: High baud rate turns off scroll.  Normally, yeah this would be fine,
+	// but it doesn't work very well over remote desktop without it.  baud ought
+	// to be 9600 per the putty termcap, so keep it rather than assigning from Baud.
+	tty_baud = 9600;
+	upc = DIVIDEND / tty_baud;
+	
+	// Setup output buffer
+	if (obuf)
+	{
+		joe_free(obuf);
+	}
+
+	// The next bit normally picks an obufsiz based on TIMES and DIVIDEND because
+	// joe, at one point, would throttle its output so that the terminal could
+	// keep up, but that logic is just a touch obsolete.  Use 4k...
+
+	obufsiz = 4096;
+	obuf = (char *) joe_malloc(obufsiz);
+
+	winwidth = jw_initialcols;
+	winheight = jw_initialrows;
+}
+
+/* Close terminal */
+
+void ttclsn(void)
+{
+	int oleave;
+
+	if (ttymode)
+		ttymode = 0;
+	else
+		return;
+
+	oleave = leave;
+	leave = 1;
+
+	ttflsh();
+	leave = oleave;
+}
+
+/* Flush output and check for typeahead */
+
+int ttflsh(void)
+{
+	/* Flush output */
+	if (obufp) {
+		jwWriteIO(JW_FROM_EDITOR, obuf, obufp);
+		obufp = 0;
+	}
+
+	ttcheck();
+
+	return 0;
+}
+
+/* Check for typeahead */
+
+int ttcheck(void)
+{
+	if (!have && !leave) {
+		if (ibufp < ibufsiz)
+		{
+			have = 1;
+			havec = ibuf[ibufp++];
+		}
+	}
+
+	return have;
+}
+
+/* Read next character from input */
+
+time_t last_time;
+
+int handlejwcontrol(struct CommMessage *m);
+extern MACRO *timer_play();
+
+char ttgetc(void)
+{
+	MACRO *m;
+	time_t new_time;
+	int flg;
+	int set_tick = 0;
+	DWORD timeout = 1000; // milliseconds
+	int qds[1 + NPROC];
+
+	set_tick = 1;
+
+	/* Send any pending buffer changes on the outset */
+	send_buffer_changes();
+
+      loop:
+      	flg = 0;
+      	/* Status line clock */
+	new_time = time(NULL);
+	if (new_time != last_time) {
+		last_time = new_time;
+		dostaupd = 1;
+		ticked = 1;
+	}
+	/* Autoscroller */
+	if (auto_scroll && mnow() >= auto_trig_time) {
+		do_auto_scroll();
+		ticked = 1;
+		flg = 1;
+	}
+	ttflsh();
+	m = timer_play();
+	if (m) {
+		co_call(exemac, m);
+		edupd(1);
+		ttflsh();
+	}
+	while (winched) {
+		winched = 0;
+		dostaupd = 1;
+		edupd(1);
+		ttflsh();
+	}
+	if (ticked) {
+		edupd(flg);
+		ttflsh();
+		ticked = 0;
+		set_tick = 1;
+	}
+
+	if (set_tick) {
+		set_tick = 0;
+		if (auto_scroll) {
+			timeout = auto_trig_time - mnow();
+		} else {
+			timeout = 1000;
+		}
+	}
+
+	if (have) {
+		have = 0;
+	} else {
+		struct CommMessage *m;
+		int i, n;
+		int qd;
+
+		/* If there is something in the input buffer, have and havec should be set! */
+		assert(ibufp == ibufsiz);
+
+		qds[0] = JW_TO_EDITOR;
+		n = 1;
+
+		if (nmpx) {
+			for (i = 0; i < NPROC; i++) {
+				if (asyncs[i].func) {
+					qds[n++] = asyncs[i].dataqd;
+				}
+			}
+		}
+
+		m = jwWaitForComm(qds, n, timeout, &qd);
+
+		if (!m) {
+			/* Timeout */
+			ticked = 1;
+			goto loop;
+		}
+
+		if (qd == JW_TO_EDITOR) {
+			if (JWISIO(m)) {
+				/* IO */
+				ibufsiz = jwReadIO(m, ibuf);
+				jwReleaseComm(JW_TO_EDITOR, m);
+
+				assert(ibufsiz > 0);
+				havec = ibuf[0];
+				ibufp = 1;
+			} else {
+				if (handlejwcontrol(m)) {
+					return -1;
+				}
+
+				jwReleaseComm(qd, m);
+				goto loop;
+			}
+		} else {
+			MPX *mpx = (MPX*)m->ptr;
+
+			if (m->msg == COMM_MPXDATA) {
+				jwSendComm0(mpx->ackfd, COMM_ACK);
+
+				mpx->func(mpx->object, m->buffer->buffer, m->buffer->size);
+				edupd(1);
+			} else if (m->msg == COMM_EXIT) {
+				mpxdied(mpx);
+			}
+
+			jwReleaseComm(qd, m);
+			goto loop;
+		}
+	}
+
+	return havec;
+}
+
+/* Get character from input: convert whatever we get to Unicode */
+
+static struct utf8_sm main_utf8_sm;
+
+int ttgetch()
+{
+	if (locale_map->type) {
+		int utf8_char;
+		do {
+			char c = ttgetc();
+			utf8_char = utf8_decode(&main_utf8_sm, c);
+		} while (!leave && utf8_char < 0);
+		return leave ? -1 : utf8_char;
+	} else {
+		char c = ttgetc();
+		int utf8_char = to_uni(locale_map, c);
+		if (utf8_char == -1)
+			utf8_char = '?'; /* Maybe we should ignore it? */
+		return utf8_char;
+	}
+}
+
+/* Write string to output */
+
+void ttputs(const char *s)
+{
+	while (*s) {
+		obuf[obufp++] = *s++;
+		if (obufp == obufsiz)
+			ttflsh();
+	}
+}
+
+/* Get window size */
+
+void ttgtsz(ptrdiff_t *x, ptrdiff_t *y)
+{
+	*x = winwidth;
+	*y = winheight;
+}
+
+int handlejwcontrol(struct CommMessage *m)
+{
+	if (m->msg == COMM_WINRESIZE) {
+		if (winwidth != m->arg1 || winheight != m->arg2) {
+			winwidth = m->arg1;
+			winheight = m->arg2;
+			winched = 1;
+		}
+	} else if (m->msg == COMM_DROPFILES) {
+		struct CommMessage *n = m;
+		char **files = vamk(m->arg3);
+		int x = m->arg1, y = m->arg2;
+		int qd = JW_TO_EDITOR;
+
+		/* We will be sent a packet with count=0 to denote no more files */
+		while (n && n->arg3 > 0) {
+			files = vaadd(files, vsdupz(n->buffer->buffer));
+
+			if (n != m) {
+				jwReleaseComm(JW_TO_EDITOR, n);
+			}
+
+			n = jwWaitForComm(&qd, 1, INFINITE, NULL);
+			assert(n);
+			assert(n->msg == COMM_DROPFILES);
+		}
+
+		if (n != m) {
+			jwReleaseComm(JW_TO_EDITOR, n);
+		}
+
+		co_call(dodropfiles, files, x, y);
+
+		varm(files);
+		edupd(1);
+	} else if (m->msg == COMM_COLORSCHEMES) {
+		/* Gets the list of color schemes */
+		char **colors = get_colors();
+		int i, n;
+
+		/* Same as above, but the other way around. */
+		for (n = valen(colors) - 1, i = 0; n >= 0; n--, i++) {
+			jwSendComm1s(JW_FROM_EDITOR, COMM_COLORSCHEMES, n, colors[i]);
+		}
+
+		/* Notify about the current color scheme */
+		jwSendComm0s(JW_FROM_EDITOR, COMM_ACTIVESCHEME, scheme_name);
+	} else if (m->msg == COMM_EXEC) {
+		/* Called with either a buffer attached or a pointer to a const string */
+
+		char *data;
+		char buf[256];
+		char *dealloc = NULL;
+
+		/* mparse writes back to buffer, make sure it is in writeable memory! */
+		if (m->buffer) {
+			data = m->buffer->buffer;
+		} else if (m->ptr) {
+			if (strlen((char*)m->ptr) > sizeof(buf)) {
+				data = strdup((char*)m->ptr);
+				dealloc = data;
+			} else {
+				strcpy(buf, (char*)m->ptr);
+				data = buf;
+			}
+		}
+
+		if (data) {
+			ptrdiff_t sta;
+			MACRO *m = mparse(NULL, data, &sta, 0);
+			co_call(exemac, m);
+			rmmacro(m);
+			if (dealloc) free(dealloc);
+			edupd(1);
+		}
+	} else if (m->msg == COMM_EXIT) {
+		/* Shut down and exit */
+		CMD *c = findcmd("killjoe");
+		execmd(c, 0);
+
+		/* Recycle this message first because we're about to... */
+		jwReleaseComm(JW_TO_EDITOR, m);
+
+		/* ...exit the thread */
+		return 1;
+	}
+
+	send_buffer_changes();
+
+	return 0;
+}
+
+void ttsusp(void)
+{
+}
+
+/* Exception handling */
+
+static DWORD editorthread;
+
+static LONG WINAPI SehHandler(LPEXCEPTION_POINTERS lpe)
+{
+	/* Only handle errors in the editor */
+	if (editorthread != GetCurrentThreadId())
+		return EXCEPTION_EXECUTE_HANDLER;
+	
+	ttsig(lpe->ExceptionRecord->ExceptionCode);
+	return 0; /* Not reached */
+}
+
+/* Set signals for JOE */
+void sigjoe(void)
+{
+	if (ttysig)
+		return;
+	ttysig = 1;
+
+	joe_set_signal(SIGSEGV, ttsig);
+	joe_set_signal(SIGABRT, ttsig);
+	joe_set_signal(SIGTERM, ttsig);
+	joe_set_signal(SIGILL, ttsig);
+
+	editorthread = GetCurrentThreadId();
+	SetUnhandledExceptionFilter(SehHandler);
+}
+
+/* Restore signals for exiting */
+void signrm(void)
+{
+	if (!ttysig)
+		return;
+	ttysig = 0;
+	joe_set_signal(SIGSEGV, SIG_DFL);
+	joe_set_signal(SIGABRT, SIG_DFL);
+	joe_set_signal(SIGTERM, SIG_DFL);
+	joe_set_signal(SIGILL, SIG_DFL);
+
+	SetUnhandledExceptionFilter(NULL);
+}

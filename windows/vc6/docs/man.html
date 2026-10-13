@@ -1,0 +1,3987 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>JOE 4.6 - man</title><style>body{max-width:70em;margin:2em auto;padding:0 1em;}pre{white-space:pre-wrap;word-wrap:break-word;font-size:14px;}</style></head><body><p>Windows VC6 edition: pop-up terminals and F1-F4 are disabled.</p><pre># JOE - Joe&#x27;s Own Editor
+
+&gt;For the latest, official version of this document, find it on
+&gt;[the joe-editor Sourceforge Wiki](https://sourceforge.net/p/joe-editor/mercurial/ci/default/tree/docs/man.md)
+[TOC]
+
+## Syntax
+
+__joe [global-options] [ [local-options] filename ]...__
+&lt;br&gt;
+__jstar [global-options] [ [local-options] filename ]...__
+&lt;br&gt;
+__jmacs [global-options] [ [local-options] filename ]...__
+&lt;br&gt;
+__rjoe [global-options] [ [local-options] filename ]...__
+&lt;br&gt;
+__jpico [global-options] [ [local-options] filename ]...__
+
+## Description
+
+JOE is a powerful console screen editor.  It has a &quot;mode-less&quot; user
+interface which is similar to many user-friendly PC editors.  Users of
+Micro-Pro&#x27;s WordStar or Borland&#x27;s &quot;Turbo&quot; languages will feel at home.  JOE
+is a full featured UNIX screen-editor though, and has many features for
+editing programs and text.
+
+JOE also emulates several other editors.  JSTAR is a close imitation of
+WordStar with many &quot;JOE&quot; extensions.  JPICO is a close imitation of the
+Pine mailing system&#x27;s PICO editor, but with many extensions and
+improvements.  JMACS is a GNU-EMACS imitation.  RJOE is a restricted
+version of JOE, which allows you to edit only the files specified on the
+command line.
+
+Although JOE is actually five different editors, it still requires only one
+executable, but one with five different names.  The name of the editor with
+an &quot;rc&quot; appended gives the name of JOE&#x27;s initialization file, which
+determines the personality of the editor.
+
+JOE is free software;  you can distribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation.  JOE is available over the Internet from
+&lt;http://www.sourceforge.net/projects/joe-editor&gt;.
+
+## Usage
+
+To start the editor, type __joe__ followed by zero or more names of files
+you want to edit.  Each file name may be preceded by a local option setting
+(see the local options table which follows).  Other global options, which
+apply to the editor as a whole, may also be placed on the command line (see
+the global options table which follows).  If you are editing a new file, you
+can either give the name of the new file when you invoke the editor, or in
+the editor when you save the new file.  A modified syntax for file names is
+provided to allow you to edit program output, standard input/output, or
+sections of files or devices.  See the section [Filenames](#filenames) below for
+details.
+
+Once you are in the editor, you can type in text and use special
+control-character sequences to perform other editing tasks.  To find out
+what the control-character sequences are, read the rest of this man page or
+type __^K H__ for help in the editor.
+
+Now for some obscure computer-lore:
+
+The __^__ means that you hold down the __Control__ key while pressing
+the following key (the same way the __Shift__ key works for uppercase
+letters).  A number of control-key sequences are duplicated on other keys,
+so that you don&#x27;t need to press the control key: __Esc__ will work in
+place of __^\[__, __Del__ will work in place of __^?__, __Backspace__
+will work in place of __^H__, __Tab__ will work in place of __^I__,
+__Return__ or __Enter__ will work in place of __^M__ and
+__Linefeed__ will work in place of __^J__.  Some keyboards may give you
+trouble with some control keys.  __^___, __^^__ and __^@__ can usually
+be entered without pressing shift (i.e., try __^-__, __^6__ and
+__^2__).  Other keyboards may reassign these to other keys.  Try:
+__^.__, __^,__ and __^/__.  __^Space__ can usually be used in place
+of __^@__.  __^\\__ and __^\]__ are interpreted by many communication
+programs, including telnet and kermit.  Usually you just hit the key twice
+to get it to pass through the communication program.
+
+On some keyboards, holding the __Alt__ key down while pressing another key
+is the same as typing __Esc__ before typing the other key.
+
+Once you have typed __^K H__, the first help window appears at the top of
+the screen.  You can continue to enter and edit text while the help window
+is on.  To page through other topics, hit __Esc ,__ and __Esc .__ (that is,
+__Esc ,__ and __Esc .__).  Use __^K H__ to dismiss the help window.
+
+You can customize the keyboard layout, the help screens and a number of
+behavior defaults by copying JOE&#x27;s initialization file (usually
+__/etc/joe/joerc__) to __.joerc__ in your home directory and then
+by modifying it.  See the section [joerc](#joerc) below.
+
+To have JOE used as your default editor for e-mail and News, you need to set
+the __EDITOR__ and __VISUAL__ environment variables in your shell
+initialization file (__.cshrc__ or __.profile__) to refer to JOE (JOE
+usually resides as __/usr/bin/joe__).
+
+There are a number of other obscure invocation parameters which may have to
+be set, particularly if your terminal screen is not updating as you think it
+should.  See the section [Environment variables](#evariables) below.
+
+&lt;a name=&quot;options&quot;&gt;&lt;/a&gt;
+## Command Line Options
+
+These options can also be specified in the joerc file.  Local options can be
+set depending on the file-name extension.  Programs (.c, .h or .p extension)
+usually have autoindent enabled.  Wordwrap is enabled on other files, but rc
+files have it disabled.
+
+An option is enabled when it&#x27;s given like this:
+
+    -wordwrap
+
+An option is disabled when it&#x27;s given like this:
+
+    --wordwrap
+
+Some options take arguments.  Arguments are given like this:
+
+    -lmargin 5
+
+The following global options may be specified on the command line:
+
+* asis&lt;br&gt;
+Characters with codes above 127 will be sent to the terminal as-is, instead
+of as inverse of the corresponding character below 128.  If this does not
+work, check your terminal server.  This option has no effect if UTF-8
+encoding is used.
+&lt;br&gt;
+
+* assume\_256color&lt;br&gt;
+Assume ANSI-like terminal emulator supports 256 colors even if termcap entry
+says it doesn&#x27;t.
+&lt;br&gt;
+
+* assume\_color&lt;br&gt;
+Assume ANSI-like terminal emulator supports color even if termcap entry says
+it doesn&#x27;t.
+&lt;br&gt;
+
+* autoswap&lt;br&gt;
+Automatically swap __^K B__ with __^K K__ if necessary to
+mark a legal block during block copy/move commands.
+&lt;br&gt;
+
+* backpath path&lt;br&gt;
+Sets path to a directory where all backup files are
+to be stored.  If this is unset (the default) backup files are stored in the
+directory containing the file.
+&lt;br&gt;
+
+* baud nnn&lt;br&gt;
+Set the baud rate for the purposes of terminal screen optimization
+(overrides value reported by stty).  JOE inserts delays for baud rates below
+19200, which bypasses tty buffering so that typeahead will interrupt the
+screen output.  Scrolling commands will not be used for 38400 baud and
+above.  This is useful for X-terms and other console ttys which really
+aren&#x27;t going over a serial line.
+&lt;br&gt;
+
+* beep&lt;br&gt;
+Enable beeps when edit commands return errors, for example when the cursor
+goes past extremes.
+&lt;br&gt;
+
+* break\_links&lt;br&gt;
+When enabled, JOE first deletes the file before
+writing it in order to break hard-links and symbolic-links.
+&lt;br&gt;
+
+* break\_hardlinks&lt;br&gt;
+When enabled, and the file is
+not a symbolic links, JOE first deletes the file before
+writing it in order to break hard-links.
+&lt;br&gt;
+
+* brpaste&lt;br&gt;
+When JOE starts, send command to the terminal emulator that
+enables &quot;bracketed paste mode&quot; (but only if the terminal
+seems to have the ANSI command set).  In this mode, text
+pasted into the window is bracketed with ESC \[ 2 0 0 ~ and
+ESC \[ 2 0 1 ~.
+&lt;br&gt;
+
+* colors __scheme__&lt;br&gt;
+Sets the color scheme.
+&lt;br&gt;
+
+* columns nnn&lt;br&gt;
+Set number of columns in terminal emulator (in case
+termcap entry is wrong).  This is only useful on old system which don&#x27;t have
+the &quot;get window size&quot; ioctl.
+&lt;br&gt;
+
+* csmode&lt;br&gt;
+Enable continued search mode: Successive
+__^K F__s repeat the current search instead of prompting for a new one.
+&lt;br&gt;
+
+* dopadding&lt;br&gt;
+Enable JOE to send padding NULs to the terminal (for very old terminals).
+&lt;br&gt;
+
+* exask&lt;br&gt;
+When set, __^K X__ prompts for a new name before saving the file.
+&lt;br&gt;
+
+* floatmouse&lt;br&gt;
+When set, mouse clicks can position the cursor
+beyond the ends of lines.
+&lt;br&gt;
+
+* guess\_crlf&lt;br&gt;
+When set, JOE tries to guess the file format
+MS-DOS or UNIX.
+&lt;br&gt;
+
+* guess\_indent&lt;br&gt;
+When set, JOE tries to guess the indentation character and indentation
+step based on the contents of the file.  The algorithm is to find the
+greatest common factor of the three most common indentations found in the
+file.
+&lt;br&gt;
+
+* guess\_non\_utf8&lt;br&gt;
+When set, enable guessing of non-UTF-8 files
+in UTF-8 locales.
+&lt;br&gt;
+
+* guess\_utf8&lt;br&gt;
+When set, enable guessing of UTF-8 files in
+non-UTF-8 locales.
+&lt;br&gt;
+
+* guess_utf16&lt;br&gt;
+When set, enable guessing of UTF-16 files.  If a UTF-16BE or UTF-16LE file
+is detected, it is converted to UTF-8 during load, and converted back to
+UTF-16 during save.
+&lt;br&gt;
+
+* helpon&lt;br&gt;
+When set, start off with the on-line help enabled.
+&lt;br&gt;
+
+* help\_is\_utf8&lt;br&gt;
+When set, the help text in the joerc file is
+assumed to be UTF-8.
+&lt;br&gt;
+
+* hiline&lt;br&gt;
+When set, the current line is highlighted. The current color scheme must
+support this.
+&lt;br&gt;
+
+* icase&lt;br&gt;
+Search is case insensitive by default when set.
+&lt;br&gt;
+
+* joe\_state&lt;br&gt;
+Enable reading and writing of ~/.joe_state file
+&lt;br&gt;
+
+* joexterm&lt;br&gt;
+Set this if xterm was configured with --paste64
+option for better mouse support.
+&lt;br&gt;
+
+* keepup&lt;br&gt;
+The column number on the status line is updated constantly when
+this is set, otherwise it is updated only once a second.
+&lt;br&gt;
+
+* language __language__&lt;br&gt;
+Sets language for aspell.
+&lt;br&gt;
+
+* lightoff&lt;br&gt;
+Automatically turn off __^K B__ __^K K__ highlighting after a
+block operation.
+&lt;br&gt;
+
+* lines nnn&lt;br&gt;
+Set number of lines in terminal emulator (in case termcap entry is wrong). 
+This is only useful on old system which don&#x27;t have the &quot;get window size&quot;
+ioctl.
+&lt;br&gt;
+
+* marking&lt;br&gt;
+Enable marking mode: highlights between __^K B__ and cursor.
+&lt;br&gt;
+
+* menu\_above&lt;br&gt;
+Put menus above prompt instead of below them.
+&lt;br&gt;
+
+* menu\_explorer&lt;br&gt;
+Stay in menu when a directory is selected (otherwise the directory is added
+to the path and the cursor jumps back to the prompt).
+&lt;br&gt;
+
+* menu\_jump&lt;br&gt;
+Jump into the file selection menu when __Tab__ __Tab__ is hit.
+&lt;br&gt;
+
+* mid&lt;br&gt;
+If this option is set and the cursor moves off the window, the window will
+be scrolled so that the cursor is in the center.  This option is forced on
+slow terminals which don&#x27;t have scrolling commands.
+&lt;br&gt;
+
+* left nn&lt;br&gt;
+This sets the number of columns the screen scrolls to the left when cursor
+moves past the left edge or when the crawll command is issued.  If nn is
+negative, then it&#x27;s the fraction of the screen to scroll.  For example, -2
+means scroll 1/2 the screen.
+&lt;br&gt;
+
+* right nn&lt;br&gt;
+This sets the number of columns the screen scrolls to the right when cursor
+moves past the right edge or when the crawlr command is issued.  If nn is
+negative, then it&#x27;s the fraction of the screen to scroll.  For example, -3
+means scroll 1/3 the screen.
+&lt;br&gt;
+
+* mouse&lt;br&gt;
+Enable xterm mouse support.
+&lt;br&gt;
+
+* nobackups&lt;br&gt;
+Disable backup files.
+&lt;br&gt;
+
+* nocurdir&lt;br&gt;
+Disable current-directory prefix in prompts.
+&lt;br&gt;
+
+* noexmsg&lt;br&gt;
+Disable exiting message (&quot;File not changed so no update needed&quot;)
+&lt;br&gt;
+
+* nolinefeeds&lt;br&gt;
+Disable sending linefeeds to
+preserve screen history in terminal emulator&#x27;s scroll-back buffer (only
+relevant when notite mode is enabled).  
+&lt;br&gt;
+
+* nolocks&lt;br&gt;
+Disable EMACS compatible file locks.
+&lt;br&gt;
+
+* nomodcheck&lt;br&gt;
+Disable periodic file modification check.
+&lt;br&gt;
+
+* nonotice&lt;br&gt;
+This option prevents the copyright notice from being displayed when the
+editor starts.
+&lt;br&gt;
+
+* nosta&lt;br&gt;
+This option eliminates the top-most status line.  It&#x27;s nice for when you
+only want to see your text on the screen or if you&#x27;re using a vt52.
+&lt;br&gt;
+
+* notagsmenu&lt;br&gt;
+Disable selection menu for tags search with multiple results.
+&lt;br&gt;
+
+* notite&lt;br&gt;
+Disable ti and te termcap sequences which are usually
+set up to save and restore the terminal screen contents when JOE starts and
+exits.
+&lt;br&gt;
+
+* pastehack&lt;br&gt;
+If keyboard input comes in as one block assume it&#x27;s a mouse
+paste and disable autoindent and wordwrap.
+&lt;br&gt;
+
+* noxon&lt;br&gt;
+Disable __^S__ and __^Q__ flow control, possibly allowing __^S__ and __^Q__ to be used as
+editor keys.
+&lt;br&gt;
+
+* orphan&lt;br&gt;
+Orphan extra files given on the command line instead of creating windows for
+them (the files are loaded, but you need to use switch-buffer commands to
+access them).
+&lt;br&gt;
+
+* pg nnn&lt;br&gt;
+Set number of lines to keep during Page Up and Page Down (use -1 for 1/2
+window size).
+&lt;br&gt;
+
+* regex&lt;br&gt;
+Use standard regular expression syntax by default, instead of the JOE syntax
+(where special characters have their meaning only when preceded with
+backslash).
+&lt;br&gt;
+
+* restore&lt;br&gt;
+Set to have cursor positions restored to last positions of previously edited
+files.
+&lt;br&gt;
+
+* rtbutton&lt;br&gt;
+Swap left and right mouse buttons.
+&lt;br&gt;
+
+* search\_prompting&lt;br&gt;
+Show previous search string in search command (like in PICO).
+&lt;br&gt;
+
+* skiptop nnn&lt;br&gt;
+When set to N, the first N lines of the terminal screen are not used by JOE
+and are instead left with their original contents.  This is useful for
+programs which call JOE to leave a message for the user.
+&lt;br&gt;
+
+* square&lt;br&gt;
+Enable rectangular block mode.
+&lt;br&gt;
+
+* transpose&lt;br&gt;
+Transpose rows with columns in all menus.
+&lt;br&gt;
+
+* title&lt;br&gt;
+Display context (titles) in status line.  When enabled this shows the first
+line of the function that the cursor is in on the status line.  The syntax
+file context.jsf identifies which lines are title lines.
+&lt;br&gt;
+
+* type&lt;br&gt;
+Select file type, overriding the automatically determined type.  The file
+types are defined in the __ftyperc__ file.
+&lt;br&gt;
+
+* undo_keep nnn&lt;br&gt;
+Sets number of undo records to keep (0 means infinite).
+&lt;br&gt;
+
+* usetabs&lt;br&gt;
+Set to allow rectangular block operations to use
+tabs.
+&lt;br&gt;
+
+* wrap&lt;br&gt;
+Enable search to wrap to beginning of file.
+&lt;br&gt;
+
+The following local options may be specified on the command line:
+
+* +nnn&lt;br&gt;
+The cursor starts on the specified line.
+&lt;br&gt;
+
+* autoindent&lt;br&gt;
+Enable auto-indent mode.  When you hit __Enter__ on an indented line, the
+indentation is duplicated onto the new line.
+&lt;br&gt;
+
+* c\_comment&lt;br&gt;
+Enable __^G__ skipping of C-style comments /* ... */
+&lt;br&gt;
+
+* cpara __characters__&lt;br&gt;
+Sets list of characters which can indent paragraphs.
+&lt;br&gt;
+
+* cnotpara __characters__&lt;br&gt;
+Sets list of characters which begin lines which are definitely not part of
+paragraphs.
+&lt;br&gt;
+
+* cpp\_comment&lt;br&gt;
+Enable __^G__ skipping of C++-style comments // ...
+&lt;br&gt;
+
+* crlf&lt;br&gt;
+JOE uses CR-LF as the end of line sequence instead of just LF.  This is for
+editing MS-DOS or VMS files.
+&lt;br&gt;
+
+* encoding __encoding__&lt;br&gt;
+Set file encoding (like utf-8 or 8859-1).
+&lt;br&gt;
+
+* flowed&lt;br&gt;
+Set to force an extra space after each line of a paragraph but the last.
+&lt;br&gt;
+
+* force&lt;br&gt;
+When set, a final newline is appended to the file if
+there isn&#x27;t one when the file is saved.
+&lt;br&gt;
+
+* french&lt;br&gt;
+When set, only one space is inserted after periods in paragraph reformats
+instead of two.
+&lt;br&gt;
+
+* hex&lt;br&gt;
+Enable hex-dump mode.
+&lt;br&gt;
+
+* highlight&lt;br&gt;
+Enable syntax highlighting.
+&lt;br&gt;
+
+* highlighter\_context&lt;br&gt;
+Enable use of syntax file to identify comments and strings which should be
+skipped over during __^G__ matching.
+&lt;br&gt;
+
+* indentc nnn&lt;br&gt;
+Sets the indentation character for shift left and shift right (__^K ,__ and
+__^K .__).  Use 32 for __Space__, 9 for __Tab__.
+&lt;br&gt;
+
+* indentfirst&lt;br&gt;
+When set, the smart home key jumps to the indentation point first, otherwise
+it jumps to column 1 first.
+&lt;br&gt;
+
+* istep nnn&lt;br&gt;
+Sets indentation step.
+&lt;br&gt;
+
+* linums&lt;br&gt;
+Enable line number display.
+&lt;br&gt;
+
+* lmargin&lt;br&gt;
+Set left margin.
+&lt;br&gt;
+
+* lmsg&lt;br&gt;
+Define left-side status bar message.
+&lt;br&gt;
+
+* overwrite&lt;br&gt;
+Enable overtype mode.  Typing overwrites existing characters instead of
+inserting before them.
+&lt;br&gt;
+
+* picture&lt;br&gt;
+Enable &quot;picture&quot; mode- allows cursor to go past ends of lines.
+&lt;br&gt;
+
+* pound\_comment&lt;br&gt;
+__^G__ ignores # ... comments.
+&lt;br&gt;
+
+* purify&lt;br&gt;
+Fix indentation if necessary before shifting or smart backspace.  For
+example, if indentation uses a mix of tabs and spaces, and indentc is
+space, then indentation will be converted to all spaces before the shifting
+operation.
+&lt;br&gt;
+
+* rdonly&lt;br&gt;
+Set read-only mode.
+&lt;br&gt;
+
+* rmargin nnn&lt;br&gt;
+Set right margin.
+&lt;br&gt;
+
+* rmsg __string__&lt;br&gt;
+Define right-side status bar message.
+&lt;br&gt;
+
+* semi\_comment&lt;br&gt;
+__^G__ ignores ; ... comments.
+&lt;br&gt;
+
+* single\_quoted&lt;br&gt;
+__^G__ ignores &#x27;...&#x27;
+&lt;br&gt;
+
+* smartbacks&lt;br&gt;
+Enable smart backspace and tab.  When this mode is set backspace and tab
+indent or unindent based on the values of the istep and indentc options.
+&lt;br&gt;
+
+* smarthome&lt;br&gt;
+Home key first moves cursor to beginning of line, then if hit again, to
+the first non-blank character.
+&lt;br&gt;
+
+* smsg __string__&lt;br&gt;
+Define status command format when cursor is on a character.
+&lt;br&gt;
+
+* spaces&lt;br&gt;
+Insert spaces when __Tab__ key is hit.
+&lt;br&gt;
+
+* syntax __syntax__&lt;br&gt;
+Set syntax for syntax highlighting.
+&lt;br&gt;
+
+* tab nnn&lt;br&gt;
+Set tab stop width.
+&lt;br&gt;
+
+* text\_delimiters __word delimiter list__&lt;br&gt;
+Give list of word delimiters which __^G__ will step through.
+
+For example, &quot;begin=end:if=elif=else=endif&quot; means that __^G__ will jump
+between the matching if, elif, else and endif.
+
+* vhdl\_comment&lt;br&gt;
+__^G__ ignores -- ... comments
+&lt;br&gt;
+
+* wordwrap&lt;br&gt;
+JOE wraps the previous word when you type past the right margin.
+&lt;br&gt;
+
+* zmsg __string__&lt;br&gt;
+Define status command format when cursor is at end of file.
+&lt;br&gt;
+
+* xmsg __string__&lt;br&gt;
+Define startup message (usually the copyright notice).
+&lt;br&gt;
+
+* aborthint __string__&lt;br&gt;
+Give the key sequence to show in prompts for abort (usually ^C).
+&lt;br&gt;
+
+* helphint __string__&lt;br&gt;
+Give the key sequence to show in prompts for help (usually ^K H).
+&lt;br&gt;
+
+### Colors and attributes
+
+Combine attributes and up to one foreground color and one background color
+to create arguments for color options like text_color.  For example:
+bold+bg_green+blue
+
+* Attributes: bold, inverse, blink, dim, underline, italic, stricken (strike out) and dunderline (double-underline)
+
+* Foreground colors: white, cyan, magenta, blue, yellow, green, red, or black
+
+* Background colors: bg\_white, bg_cyan, bg\_magenta, bg\_blue, bg\_yellow, bg\_green, bg\_red or bg\_black
+
+With a 16 color or 256 color terminal emulator (export TERM=xterm-16color), these
+brighter than normal colors become available:
+
+&gt; Note that you need an xterm which was compiled to support 16 or 256 colors
+&gt; and a matching termcap/terminfo entry for it.
+
+* Foreground: WHITE, CYAN, MAGENTA, BLUE, YELLOW, GREEN, RED or BLACK
+
+* Background: bg\_WHITE, bg\_CYAN, bg\_MAGENTA, bg\_BLUE, bg\_YELLOW, bg\_GREEN, bg\_RED or bg\_BLACK
+
+With a 256 color terminal emulator (export TERM=xterm-256color), these become available:
+
+&gt; Note that you need an xterm which was compiled to support 256 colors and a
+&gt; matching termcap/terminfo entry for it.
+
+* fg\_RGB and bg\_RGB, where R, G and B rand from 0 - 5.  So: fg\_500 is bright red.
+
+* fg\_NN and bg\_NN give shades of grey, where the intensity, NN, ranges from 0 - 23.
+
+### Status line definition strings
+
+-lmsg defines the left-justified string and -rmsg defines the
+right-justified string.  The first character of -rmsg is the background fill
+character.
+
+-smsg defines the status command (__^K Space__).  -zmsg defines it when the cursor
+is at the end of the file.  The last character of smsg or zmsg is the fill character.
+
+The following escape sequences can be used in these strings:
+
+    %t  12 hour time
+    %u  24 hour time
+    %T  O for overtype mode, I for insert mode
+    %W  W if wordwrap is enabled
+    %I  A if autoindent is enabled
+    %X  Rectangle mode indicator
+    %n  File name
+    %m  &#x27;(Modified)&#x27; if file has been changed
+    %*  &#x27;*&#x27; if file has been changed
+    %R  Read-only indicator
+    %r  Row (line) number
+    %c  Column number
+    %o  Byte offset into file
+    %O  Byte offset into file in hex
+    %a  Ascii value of character under cursor
+    %A  Ascii value of character under cursor in hex
+    %w  Width of character under cursor
+    %p  Percent of file cursor is at
+    %l  No. lines in file
+    %k  Entered prefix keys
+    %S  &#x27;*SHELL*&#x27; if there is a shell running in window
+    %M  Macro recording message
+    %y  Syntax
+    %e  Encoding
+    %x  Context (first non-indented line going backwards)
+    %dd day
+    %dm month
+    %dY year
+    %Ename%  value of environment variable
+    %Tname%  value of option (ON or OFF for Boolean options)
+
+These formatting escape sequences may also be given:
+ 
+    \i  Inverse
+    \u  Underline
+    \b  Bold
+    \d  Dim
+    \f  Blink
+    \l  Italic
+    \s  Strikeout
+    \z  Double underline
+&lt;br&gt;
+
+
+## Basic Editing
+
+When you type characters into the editor, they are normally inserted into
+the file being edited (or appended to the file if the cursor is at the end
+of the file).  This is the normal operating mode of the editor.  If you want
+to replace some existing text, you have to delete the old text before or
+after you type in the replacement text.  The __Backspace__ key can be used
+for deleting text: move the cursor to right after the text you want to
+delete and hit __Backspace__ a number of times.
+
+Hit the __Enter__ or __Return__ key to insert a line-break.  For 
+example, if the cursor was in the middle of a line and you hit __Enter__, 
+the line would be split into two lines with the cursor appearing at the 
+beginning of the second line.  Hit __Backspace__ at the beginning of a 
+line to eliminate a line-break.
+
+Use the arrow keys to move around the file.  If your keyboard doesn&#x27;t have
+arrow keys (or if they don&#x27;t work for some reason), use __^F__ to move
+forwards (right), __^B__ to move backwards (left), __^P__ to move to the
+previous line (up), and __^N__ to move to the next line (down).  The right
+and left arrow keys simply move forwards or backwards one character at a
+time through the text: if you&#x27;re at the beginning of a line and
+you press left-arrow, you will end up at the end of the previous line.  The
+up and down arrow keys move forwards and backwards by enough characters so
+that the cursor appears in the same column that it was in on the original
+line.
+
+If you want to indent the text you enter, you can use the __Tab__ key. 
+This inserts a special control character which makes the characters which
+follow it begin at the next tab stop.  Tab stops normally occur every 8
+columns, but this can be changed with the __^T D__ command.  PASCAL and C
+programmers often set tab stops on every 4 columns.
+
+If for some reason your terminal screen gets messed up (for example, if
+you receive a mail notice from biff), you can have the editor refresh the
+screen by hitting __^R__.
+
+There are many other keys for deleting text and moving around the file.  For 
+example, hit __^D__ to delete the character the cursor is on instead of 
+deleting backwards like __Backspace__.  __^D__ will also delete a 
+line-break if the cursor is at the end of a line.  Type __^Y__ to delete 
+the entire line the cursor is on or __^J__ to delete just from the cursor 
+to the end of the line.
+
+Hit __^A__ to move the cursor to the beginning of the line it&#x27;s on.  Hit 
+__^E__ to move the cursor to the end of the line.  Hit __^U__ or 
+__^V__ for scrolling the cursor up or down 1/2 a screen&#x27;s worth.  
+&quot;Scrolling&quot; means that the text on the screen moves, but the cursor stays at 
+the same place relative to the screen.  Hit __^K U__ or __^K V__ to move 
+the cursor to the beginning or the end of the file.  Look at the help 
+screens in the editor to find even more delete and movement commands.
+
+If you make a mistake, you can hit __^\___ to &quot;undo&quot; it.  On most keyboards
+you hit just __^-__ to get __^\___, but on some you might have to hold
+both the __Shift__ and __Control__ keys down at the same time to get it.
+If you &quot;undo&quot; too much, you can &quot;redo&quot; the changes back into existence by
+hitting __^^__ (type this with just __^6__ on most keyboards).
+
+### Cursor position history
+
+If you were editing in one place within the file, and you then temporarily 
+had to look or edit some other place within the file, you can get back to 
+the original place by hitting __^K -__.  This command actually returns you 
+to the last place you made a change in the file.  You can step through a 
+history of places with __^K -__ and __^K =__, in the same way you can 
+step through the history of changes with the &quot;undo&quot; and &quot;redo&quot; commands.
+
+### Save and exit
+
+When you are done editing the file, hit __^K X__ to exit the editor.  You
+will be prompted for a file name if you hadn&#x27;t already named the file you
+were editing.
+
+When you edit a file, you actually edit only a copy of the file.  So if you
+decide that you don&#x27;t want the changes you made to a file during a
+particular edit session, you can hit __^C__ to exit the editor without
+saving them.
+
+If you edit a file and save the changes, a backup copy of that file is 
+created in the current directory, with a __~__ appended to the name, which 
+contains the original version of the file.
+
+### File operations
+
+
+You can hit __^K D__ to save the current file (possibly under a different
+name from what the file was called originally).  After the file is saved,
+you can hit __^K E__ to edit a different file.
+
+If you want to save only a selected section of the file, see the section on
+[Blocks](#blocks) below.
+
+If you want to include another file in the file you&#x27;re editing, use __^K
+R__ to insert it.
+
+&lt;a name=&quot;filenames&quot;&gt;&lt;/a&gt;
+### Filenames
+
+Wherever JOE expects you to enter a file name, whether on the command line
+or in prompts within the editor, you may also type:
+
+    !command
+
+To read or write data to or from a shell command.  For example,
+use __joe &#x27;!ls&#x27;__ to get a copy of your directory listing to edit or from
+within the editor use __^K D !mail jhallen@world.std.com__ to send the
+file being edited to me.
+
+    &gt;&gt;filename
+
+Use this to have JOE append the edited text to the end of the file 
+&quot;filename.&quot;
+
+    filename,START,SIZE
+
+Use this to access a fixed section of a file or device.  __START__ and
+__SIZE__ may be entered in decimal (ex.: 123) octal (ex.: 0777) or
+hexadecimal (ex.: 0xFF).  For example, use __joe /dev/fd0,508,2__ to edit
+bytes 508 and 509 of the first floppy drive in Linux.
+
+* -
+
+Use this to get input from the standard input or to write output to the
+standard output.  For example, you can put JOE in a pipe of commands:
+__quota -v | joe | mail root__, if you want to complain about your low
+quota.
+
+### Using JOE in a shell script
+
+JOE used to use /dev/tty to access the terminal.  This caused a problem with
+idle-session killers (they would kill JOE because the real tty device was
+not being accessed for a long time), so now JOE only uses /dev/tty if you
+need to pipe a file into JOE, as in:
+
+	echo &quot;hi&quot; | joe
+
+If you want to use JOE in a shell script which has its stdin/stdout
+redirected, but you do not need to pipe to it, you should simply redirect
+JOE&#x27;s stdin/stdout to /dev/tty:
+
+	joe filename  &lt;/dev/tty &gt;/dev/tty
+
+
+&lt;br&gt;&lt;br&gt;
+
+### Word wrap and formatting
+
+If you type past the right edge of the screen in a C or PASCAL language 
+file, the screen will scroll to the right to follow the cursor.  If you type 
+past the right edge of the screen in a normal file (one whose name doesn&#x27;t 
+end in .c, .h or .p), JOE will automatically wrap the last word onto the 
+next line so that you don&#x27;t have to hit __Enter__.  This is called 
+word-wrap mode.  Word-wrap can be turned on or off with the __^T W__ 
+command.  JOE&#x27;s initialization file is usually set up so that this mode is 
+automatically turned on for all non-program files.  See the section below on 
+the [joerc](#joerc) file to change this and other defaults.
+
+Aside for Word-wrap mode, JOE does not automatically keep paragraphs 
+formatted like some word-processors.  Instead, if you need a paragraph to be 
+reformatted, hit __^K J__.  This command &quot;fills in&quot; the paragraph that the 
+cursor is in, fitting as many words in a line as is possible.  A paragraph, 
+in this case, is a block of text separated above and below by a blank line.
+
+The margins which JOE uses for paragraph formatting and word-wrap can be set
+with the __^T L__ and __^T R__ commands.  If the left margin is set to
+a value other than 1, then when you start typing at the beginning of a line,
+the cursor will immediately jump to the left margin.
+
+There are a number of options which control the paragraph reformatter and
+word wrapper:
+
+* The __cpara__ option provides a list of characters which can indent a
+  paragraph.  For example, in e-mail quoted matter is indicated by __\&gt;__ 
+  at the beginnings of line, so this character should be in the cpara list.
+
+* The __cnotpara__ option provides a list of characters which, if they are
+  the first non-whitespace character of a line, indicate that the line is not
+  to be included as part of a paragraph for formatting.  For example, lines
+  beginning with &#x27;.&#x27; in nroff can not be paragraph lines.
+
+* Autoindent mode affects the formatter.  If autoindent is disabled, only
+  the first line will be indented.  If autoindent is enabled, the entire
+  paragraph is indented.
+
+* __french__ determines how many spaces are inserted after periods.
+
+* When __flowed__ is enabled, a space is inserted after each but the
+  last line of the paragraph.  This indicates that the lines belong together
+  as a single paragraph in some programs.
+
+* When __overtype__ is enabled, the word wrapper will not insert lines.
+
+### Centering
+
+If you want to center a line within the margins, use the __^K A__
+command.
+
+### Spell checker
+
+Hit __Esc N__ to check the spelling of the word the cursor is on using the
+aspell program (or ispell program if you modify the joerc file).  Hit
+__Esc L__ to check the highlighted block or the entire file if no block is
+highlighted.
+
+JOE passes the language and character encoding to the spell checker.  To
+change the language, hit __^T V__.  For example, use en_US for English.
+
+### Overtype mode
+
+Sometimes it&#x27;s tiresome to have to delete old text before or after you 
+insert new text.  This happens, for example, when you are changing a table 
+and you want to maintain the column position of the right side of the table.  
+When this occurs, you can put the editor in overtype mode with __^T T__.  
+When the editor is in this mode, the characters you type in replace existing 
+characters, in the way an idealized typewriter would.  Also, __Backspace__ 
+simply moves left instead of deleting the character to the left, when it&#x27;s 
+not at the end or beginning of a line.  Overtype mode is not the natural 
+way of dealing with text electronically, so you should go back to 
+insert-mode as soon as possible by typing __^T T__ again. 
+
+If you need to insert while you&#x27;re in overtype mode, hit __^@__.  This
+inserts a single __Space__ into the text.
+
+### Control and Meta characters
+
+Each character is represented by a number.  For example, the number for &#x27;A&#x27;
+is 65 and the number for &#x27;1&#x27; is 49.  All of the characters which you
+normally see have numbers in the range of 32 - 126 (this particular
+arbitrary assignment between characters and numbers is called the ASCII
+character set).  The numbers outside of this range, from 0 to 255, aren&#x27;t
+usually displayed, but sometimes have other special meanings.  The number
+10, for example, is used for the line-breaks.  You can enter these special,
+non-displayed __control characters__ by first hitting __^Q__ and then
+hitting a character in the range __@ A B C ... X Y Z [ ^ ] \\ \___ to get
+the number 0 - 31, and ? to get 127.  For example, if you hit __^Q J__,
+you&#x27;ll insert a line-break character, or if you hit __^Q I__, you&#x27;ll insert
+a __Tab__ character (which does the same thing the __Tab__ key does).  A useful
+control character to enter is 12 (__^Q L__), which causes most printers to
+advance to the top of the page.  You&#x27;ll notice that JOE displays this
+character as an underlined L.  You can enter the characters above 127, the
+__meta characters__, by first hitting __^\\__.  This adds 128
+to the next (possibly control) character entered.  JOE displays characters
+above 128 in inverse-video.  Some foreign languages, which have more letters
+than English, use the meta characters for the rest of their alphabet.  You
+have to put the editor in __asis__ mode to have these
+passed untranslated to the terminal.
+
+__Note:__ JOE now normally passes all 8-bits to the terminal unless the
+locale is set to C or POSIX.  If the locale is C or POSIX, then the __asis__
+flag determines if __meta characters__ are shown in inverse video or passed
+directly to the terminal.
+
+__Note:__ In older version of JOE, you had to use __Esc &#x27;__ to enter control
+characters.
+
+## Character sets and UTF-8
+
+JOE natively handles two classes of character sets: UTF-8 and byte coded
+(like ISO-8859-1).  For these character sets, the file is loaded as-is into
+memory, and is exactly preserved during save, even if it contains UTF-8
+coding errors.
+
+It can not yet natively handle other major classes such as UTF-16 or GB2312. 
+There are other restrictions: character sets must use LF (0x0A) or CR-LF
+(0x0D - 0x0A) as line terminators, space must be 0x20 and tab must be 0x09. 
+Basically, the files must be UNIX or MS-DOS compatible text files.
+
+This means EBCDIC will not work properly (but you would need to handle fixed
+record length lines anyway) and character sets which use CR terminated lines
+(MACs) will not yet work.
+
+JOE now supports UTF-16 (both big endian and little endian).  It supports
+UTF-16 by converting to UTF-8 during load, and converting back to UTF-16
+during save.
+
+The terminal and the file can have different encodings.  JOE will translate
+between the two.  Currently, one of the two must be UTF-8 for translation to
+work.
+
+The character set for the terminal and the default character set assumed for
+files is determined by the &#x27;LC\_ALL&#x27; environment variable (and if that&#x27;s not
+set, LC_CTYPE and LANG are also checked).
+
+For example, if LC\_ALL is set to:
+
+	de_DE
+
+Then the character set will be ISO-8859-1.
+
+If LC\_ALL is set to:
+
+	de_DE.UTF-8
+
+The character set will be UTF-8.
+
+Hit __^T E__ to change the coding for the file.  Hit __Tab__ __Tab__ at
+this prompt to get a list of available codings.  There are a number of
+built-in character sets, plus you can install character sets in the
+~/.joe/charmaps and /usr/share/joe/charmaps directories.
+
+Check: /usr/share/i18n/charmaps for example character set files.  Only
+byte oriented character sets will work.  Also, the file should not be
+gzipped (all of the charmap files in /usr/share/i18n/charmaps on my computer
+were compressed).  The parser is very bad, so basically the file has to look
+exactly like the example one in /usr/share/joe/charmaps.
+
+You can hit __^K Space__ to see the current character set.
+
+You can hit __^Q x__ to enter a Unicode character if the file coding is
+UTF-8.
+
+## Prompts
+
+Most prompts record a history of the responses you give them.  You can hit
+up and down arrow to step through these histories.
+
+Prompts are actually single line windows with no status line, so you can use
+any editing command that you normally use on text within the prompts.  The
+prompt history is actually just other lines of the same &quot;prompt file&quot;.  Thus
+you can can search backwards though the prompt history with the normal __^K
+F__ command if you want.
+
+Since prompts are windows, you can also switch out of them with __^K P__
+and __^K N__.
+
+### Completion and selection menus
+
+You can hit __Tab__ in just about any prompt to request JOE to complete the
+word you are typing.  If JOE beeps, there are either no completions or many. 
+As with the &quot;bash&quot; shell, hit __Tab__ twice to bring up a list of all the
+possibilities.  This list is actually a menu, but by default, the cursor
+does not jump into it since it is usually easier to just type in your
+selection. You can, however, jump into the menu window with __^K P__ (move to
+previous window) and use the arrow keys and &amp;lt;Enter&amp;gt; to make your
+selection.  Also in a menu, you can hit the first letter of any of the items
+to make the cursor jump directly to it.  The __^T__ option menu works like
+this.
+
+If the menu is too large to fit in the window, you can hit Page Up and
+Page Down to scroll it (even if you have not jumped into it).
+
+__Tab__ completion works in the search and replace prompts as well.  In this
+case, JOE tries to complete the word based on the contents of the buffer. 
+If you need search for the __Tab__ character itself, you can enter it with __^Q
+Tab__.
+
+Also, you can hit __Esc Enter__ in a text window to request JOE to
+complete the word you are typing.  As with the search prompt, JOE tries to
+complete the word based on the contents of the buffer.  It will bring up a
+menu of possibilities if you hit __Esc Enter__ twice.
+
+
+## Where am I?
+
+
+Hit __^K Space__ to have JOE report the line number, column number, and
+byte number on the last line of the screen.  The number associated with the
+character the cursor is on (its ASCII code) is also shown.  You can have the
+line number and/or column number always displayed on the status line by
+placing the appropriate escape sequences in the status line setup
+strings.  Edit the joerc file for details.
+
+## What if I hit __^K__ by accident?
+
+Hit the space bar.  This runs an innocuous command (it shows the line
+number on the status bar).
+
+## Temporarily suspending the editor
+
+
+If you need to temporarily stop the editor and go back to the shell, hit 
+__^K Z__.  You might want to do this to stop whatever you&#x27;re editing and 
+answer an e-mail message or read this man page, for example.  You have to 
+type __fg__ or __exit__ (you&#x27;ll be told which when you hit __^K Z__) 
+to return to the editor.  
+
+## Searching for text
+
+
+Hit __^K F__ to have the editor search forwards or backwards for a text 
+fragment (__string__) for you.  You will be prompted for the text to 
+search for.  After you hit __Enter__, you are prompted to enter options.  
+You can just hit __Enter__ again to have the editor immediately search 
+forwards for the text, or you can enter one or more of these options:
+
+* __b__&lt;br&gt;
+
+Search backwards instead of forwards.
+
+* __i__&lt;br&gt;
+
+Treat uppercase and lower case letters as the same when searching.  Normally
+uppercase and lowercase letters are considered to be different.
+
+* __nnn__&lt;br&gt;
+
+(where __nnn__ is a number) If you enter a number, JOE searches for the 
+Nth occurrence of the text.  This is useful for going to specific places in 
+files structured in some regular manner.
+
+* __r__&lt;br&gt;
+
+Replace text.  If you enter the __r__ option, then you will be further
+prompted for replacement text.  Each time the editor finds the search text,
+you will be prompted as to whether you want to replace the found search text
+with the replacement text.  You hit: __y__ to replace the text and then
+find the next occurrence, __n__ to not replace this text, but to then find
+the next occurrence, __r__ to replace all of the remaining occurrences of
+the search text in the remainder of the file without asking for confirmation
+(subject to the __nnn__ option above), or __^C__ to stop searching and
+replacing.
+
+You can also hit __B__ or __Backspace__ to back up to the previously
+found text (if it had been replaced, the replacement is undone).
+
+* __a__&lt;br&gt;
+
+The search covers all loaded buffers.  So to replace all instances of &quot;foo&quot;
+with &quot;bar&quot; in all .c files in the current directory:
+
+	joe *.c
+	   ^K F
+	       foo &lt;Enter&gt;
+	       ra &lt;Enter&gt;
+	       bar &lt;Enter&gt;
+
+* __e__&lt;br&gt;
+
+The search covers all files in the grep or make error list.  You can use a
+UNIX command to generate a list of files and search and replace through the
+list.  So to replace all instances of &quot;foo&quot; with &quot;bar&quot; in all .c files which
+begin with f.  You can also use &quot;ls&quot; and &quot;find&quot; instead of grep to create
+the file list.
+
+
+	Esc G
+	  grep -n foo f*.c &lt;Enter&gt;
+	^K F
+           foo &lt;Enter&gt;
+	   re &lt;Enter&gt;
+	   bar &lt;Enter&gt;
+
+* __x__&lt;br&gt;
+
+JOE will use the standard syntax for regular expressions if this option is
+given.  In the standard syntax, these characters have their special
+meanings directly, and do not have to be escaped with backslash: ., \*, \+, ?, 
+\{, \}, (, ), |, ^, $ and \[.
+
+* __y__&lt;br&gt;
+
+JOE will use the JOE syntax for regular expressions instead of the standard
+syntax.  This overrides the &quot;-regex&quot; option.
+
+* __v__&lt;br&gt;
+
+JOE will send debug information about the regular expression to the startup
+log.  The log can be viewed with the showlog command.
+
+You can hit __^L__ to repeat the previous search.
+
+You can hit __^K H__ at the search and replace options prompt to bring up a list
+of all search and replace options.
+
+### Regular Expressions
+
+A number of special character sequences may be entered as search
+text:
+
+* __\\\*__&lt;br&gt;
+
+This finds zero or more of the item to the left.  For example, if you give
+__AB\\\*C__ as the search text, JOE will try to find an A followed by any
+number of Bs, and then a C.
+
+* __\\\+__&lt;br&gt;
+
+This finds one or more of the item to the left.  For example, if you give
+__AB\\\+C__ as the search text, JOE will try to find an A followed by one
+or more Bs, and then a C.
+
+* __\\?__&lt;br&gt;
+
+This indicates that the item to the left is optional.  For example, if you give
+__AB\\?C__ as the search text, JOE will find AC or ABC.
+
+* __\\\{min,max\}__&lt;br&gt;
+
+This indicates that JOE should try to find a string with a specific number
+of occurrences of the item to the left.  For example, __AX\\\{2,5\}B__ will
+match these strings: AXXB, AXXXB, AXXXXB, and AXXXXXB.  Min can be left out
+to indicate 0 occurrences.  Max (and the comma) can be left out to indicate
+any number of occurrences.
+
+* __\\.__&lt;br&gt;
+
+This finds exactly one character.  For example, if you give __A\\.B__ as
+the search text, JOE will find AXB, but not AB or AXXB.
+
+* __\\!__&lt;br&gt;
+
+This works like __\.__, but matches a balanced C-language expression. 
+For example, if you search for __malloc(\\!\\\*)__, then JOE will find all
+function calls to __malloc__, even if there was a __)__ within the
+parenthesis.
+
+* __\\|__&lt;br&gt;
+
+This finds the item on the left or the item on the right.  For example, if
+you give __A\\|B__ as the search text, JOE will try to find either an A or
+a B.
+
+* __\\( \\)__&lt;br&gt;
+
+Use these to group characters together.  For example, if you search for
+__\\(foo\\)\\\+__, then JOE will find strings like &quot;foo&quot;, and &quot;foofoofoo&quot;.
+
+* __\^ \$__&lt;br&gt;
+
+These match the beginnings and endings of lines.  For example, if you give
+__\^test\$__, then JOE with find __test__ on a line by itself.
+
+* __\&lt; \\\&gt;__&lt;br&gt;
+
+These match the beginnings and endings of words.  For example, if you give `\&lt;is\&gt;`
+then JOE will find the word &quot;is&quot; but will not find the &quot;is&quot; in &quot;this&quot;.
+
+* __\\\[...]__&lt;br&gt;
+
+This matches any single character which appears within the brackets.  For
+example, if __\\\[Tt]his__ is entered as the search string, then JOE finds
+both __This__ and __this__.  Ranges of characters can be entered within
+the brackets.  For example, __\\\[A-Z]__ finds any uppercase letter.  If
+the first character given in the brackets is __^__, then JOE tries to find
+any character not given in the the brackets.  To include __-__ itself, include
+it as the last or first character (possibly after __^__).
+
+* __\\\\__&lt;br&gt;
+
+Matches a single \\.
+
+* __\n__&lt;br&gt;
+
+This finds the special end-of-line or line-break character.
+
+
+A number of special character sequences may also be given in the replacement
+string:
+
+* __\\&amp;__&lt;br&gt;
+
+This gets replaced by the text which matched the search string.  For
+example, if the search string was __\&lt;\\\*\\\&gt;__, which matches words, and
+you give __&quot;\\&amp;&quot;__, then JOE will put quote marks around words.
+
+* __\1 - \9__&lt;br&gt;
+
+These get replaced with the text which matched the Nth grouping; the text
+within the Nth set of \\( \\).
+
+* __\\l, \\u__&lt;br&gt;
+
+Convert the next character of the replacement text to lowercase or uppercase.
+
+* __\\L, \\U__&lt;br&gt;
+
+Convert all following replacement text to lowercase or uppercase.  Conversion
+stops when \\E is encountered.
+
+* __\\\\__&lt;br&gt;
+
+Use this if you need to put a __\\__ in the replacement string.
+
+* __\n__&lt;br&gt;
+
+Use this if you need to put a line-break in the replacement string.
+
+Some examples:
+
+Suppose you have a list of addresses, each on a separate line, which starts 
+with &quot;Address:&quot; and has each element separated by commas.  Like so:
+
+Address: S. Holmes, 221b Baker St., London, England
+
+If you wanted to rearrange the list, to get the country first, then the 
+city, then the person&#x27;s name, and then the address, you could do this:
+
+Type __^K F__ to start the search, and type:
+
+__Address:\\(\\.\\\*\\),\\(\\.\\\*\\),\\(\\.\\\*\\),\\(\\.\\\*\\)\$__
+
+to match &quot;Address:&quot;, the four comma-separated elements, and then the end of 
+the line.  When asked for options, you would type __r__ to replace the 
+string, and then type:
+
+__Address:\4,\3,\1,\2__
+
+To shuffle the information the way you want it. After hitting return, the 
+search would begin, and the sample line would be changed to:
+
+Address: England, London, S. Holmes, 221b Baker St.
+
+&lt;a name=&quot;escapes&quot;&gt;&lt;/a&gt;
+### Escape sequences
+
+JOE understands the following escape sequences withing search and
+replacement strings:
+
+* \\x{10ffff}&lt;br&gt;
+
+This matches a specific Unicode code point given in hexadecimal.
+
+* \\xFF&lt;br&gt;
+
+This matches a specific character specified in hexadecimal.
+
+* \\377&lt;br&gt;
+
+This matches a specific character specified in octal.
+
+* \\p{Ll}&lt;br&gt;
+
+This matches any character in the named Unicode category or block.
+
+The block names, such as &quot;Latin-1 Supplement&quot; or &quot;Arabic&quot; can be found here: 
+
+[Unicode Blocks](ftp://ftp.unicode.org/Public/8.0.0/ucd/Blocks.txt)
+
+The category names such as &quot;Ll&quot; can be found here:
+
+[Unicode Categories](ftp://ftp.unicode.org/Public/5.1.0/ucd/UCD.html#General_Category_Values)
+
+Note that a single letter matches all of the category names which start with
+that letter.  For example, \\p{N} (any number) include \\p{Nd} (decimal
+digit), \\p{Nl} (letter number) and \\p{No} (other number).
+
+* \\d&lt;br&gt;
+
+This matches any Unicode digit.  This is the same as \\p{Nd}.
+
+* \\D&lt;br&gt;
+
+This matches anything except for a Unicode digit.  This is the same as
+\\\[^\\p{Nd}].
+
+* \\w&lt;br&gt;
+
+This matches any word character.  This is the same as
+\\\[^\\p{C}\\p{P}\\p{Z}].
+
+* \\W&lt;br&gt;
+
+This matches anything except for a word character.  This is the same
+as \\\[\\p{C}\\p{P}\\p{Z}].
+ 
+
+* \\s&lt;br&gt;
+
+This matches any space character.  This is the same as
+\\\[\\t\\r\\f\\n\\p{Z}].
+
+* \\S&lt;br&gt;
+
+This matches anything except for a spacing character.  This is the
+same as \\\[^\\t\\r\\f\\n\\p{Z}].
+
+
+* \\i&lt;br&gt;
+
+This matches an identifier start character.  This is the same as
+\\\[\\p{L}\\p{Pc}\\p{Nl}].
+
+* \\I&lt;br&gt;
+
+This matches anything except for an identifier start character.  This is the
+same as \\\[^\\p{L}\\p{Pc}\\p{Nl}].
+
+* \\c&lt;br&gt;
+
+This matches an identifier continuation character.  This is the same as
+\\\[\\i\\p{Mn}\\p{Mc}\\p{Nd}\\x{200c}\\x{200d}].
+
+* \\C&lt;br&gt;
+
+This matches anything except for an identifier continuation character.  This
+is the same as \\\[^\\i\\p{Mn}\\p{Mc}\\p{Nd}\\x{200c}\\x{200d}].
+
+* \\t Tab
+* \\n Newline
+* \\r Carriage return
+* \\b Backspace
+* \\a Alert
+* \\f Formfeed
+* \\e Escape
+* \\\\ Backslash
+
+## Incremental search
+
+Use __Esc S__ to start an increment search forwards, or __Esc R__ to start
+an incremental search backwards.  As you type the search string, the cursor
+will jump to the first text that matches the regular expression you have
+entered so far.
+
+Hit __Esc S__ or __Esc R__ again to find the next occurrence of the text or
+to switch the direction of the search.
+
+__^S__, __^\\__ and __^L__ have the same effect as __Esc S__. __^R__ has the same
+effect as __Esc R__.  These keys are to support JMACS.
+
+Hit __Backspace__ to undo the last incremental search action.  The last
+action could be a repeat of a previous search or the entering of a new
+character.
+
+Use __^Q__ to insert control characters into the search text.  Previously,
+\` could also be used for this.
+
+Hit any other key to exit the increment search. 
+
+## Goto matching delimiter
+
+Hit __^G__ to jump between matching delimiters.  This works on both
+character delimiters (like &#x27;(&#x27; and &#x27;)&#x27;) and word delimiters for languages
+like Pascal and Verilog which use &quot;begin&quot; and &quot;end&quot; to delimit blocks.  It
+also works for matching start and end tags in XML.  If a word is not known,
+__^G__ starts a search with the word moved into the search prompt.
+
+For __^G__ to work on word delimiters, the cursor must be positioned
+on the first letter of the word.  So in XML, if the cursor is on the &amp;lt; in
+&amp;lt;foo&amp;gt;, it will jump to the &amp;gt;.  But if it is one the &#x27;f&#x27;, it will
+jump to the matching &amp;lt;/foo&amp;gt;.  Likewise, in C, __^G__ will jump between #if, #else
+and #endif, but you need to position the cursor on the letter,
+not the &#x27;#&#x27;.
+
+__^G__ is smart enough to skip delimiters found in quoted or
+commented-out matter.  You need to tell JOE how your language indicates
+this: see the __ftyperc__ file for examples of how this is done.
+
+The are a number of options which control the behavior of __^G__.  These
+options control which kinds of comments __^G__ can skip over:
+
+* c_comment
+* cpp_comment
+* pount_comment
+* semi_comment
+* vhdl_comment
+
+These options determine which kinds of strings __^G__ can skip over:
+
+* single_quoted
+* double_quoted
+
+This option allows an annotated syntax file to determine which text can be
+counted as comments or strings which can be skipped over by __^G__:
+
+* highlighter_context
+
+This option enables the use of syntax files to identify comments and strings
+which should be skipped over during __^G__ matching.  The syntax file states
+should be annotated with the __string__ and __comment__ keywords for this to
+work.
+
+* text_delimiters
+
+This option provides a list of word delimiters to match.  For example,
+&quot;begin=end:if=elif=else=endif&quot; means that __^G__ will jump between the
+matching if, elif, else and endif.  It will also jump between begin and end.
+
+__^G__ has a built-in table for matching character delimiters- it knows that
+__(__ goes with __)__.
+
+__^G__ has a built-in parser to handle start/end tag matching for XML.
+
+&lt;a name=&quot;blocks&quot;&gt;&lt;/a&gt;
+
+## Regions
+
+If you want to move, copy, save or delete a specific section of text, you 
+can do it with highlighted blocks.  First, move the cursor to the start of 
+the section of text you want to work on, and press __^K B__.  Then move 
+the cursor to the character just after the end of the text you want to 
+affect and press __^K K__.  The text between the __^K B__ and __^K K__ 
+should become highlighted.  Now you can move your cursor to someplace else 
+in your document and press __^K M__ to move the highlighted text there.  
+You can press __^K C__ to make a copy of the highlighted text and insert 
+it to where the cursor is positioned.  __^K Y__ to deletes the highlighted 
+text.  __^K W__, writes the highlighted text to a file.  
+
+A very useful command is __^K /__, which filters a block of text through a
+UNIX command.  For example, if you select a list of words with __^K B__
+and __^K K__, and then type __^K / sort__, the list of words will be
+sorted.  Another useful UNIX command for __^K /__, is __tr__.  If you
+type __^K / tr a-z A-Z__, then all of the letters in the highlighted block
+will be converted to uppercase.
+
+### How do I deselect a highlighted region?
+
+After you are finished with some region operations, you can just leave the
+highlighting on if you don&#x27;t mind it (but don&#x27;t accidentally hit __^K Y__). 
+If it really bothers you, however, just hit __^K B ^K K__, to turn the
+highlighting off.
+
+Beginning with JOE 4.2, you can hit __^C__ to cancel the region selection.
+
+### New ways of selecting regions
+
+The classic way is to hit __^K B__ at the beginning and __^K K__ at the
+end.  These set pointers called markb and markk.  Once these are set you
+can jump to markb with __Esc B__ and jump to markk with __Esc K__.
+
+New way: hit Ctrl-__Right Arrow__ to start selecting rightward.  Each time
+you hit Ctrl-__Right Arrow__, the block is extended one more to the right. 
+This uses a simple macro: &quot;begin_marking,rtarw,toggle_marking&quot;.
+
+Unfortunately, there is no standard way to get the keysequence given by the
+terminal emulator when you hit Ctrl-__Right Arrow__.  Instead you have to
+determine this sequence yourself and enter it directly in the joerc file. 
+Some examples are given for Xterm and gnome-terminal.  Hit __^Q__
+Ctrl-__Right Arrow__ within JOE to have the sequence shown on your screen. 
+Note that Putty uses __Esc Esc \[ C__ which will not appear with __^Q
+Right Arrow__ (also __Esc Esc__ is the set bookmark command, so you need to
+unbind it to do this in Putty).
+
+Also you can hit Ctrl-__Delete__ to cut and Ctrl-__Insert__ to paste if the
+sequence for these keys are known.
+
+The mouse can also be used to select text if mouse support is enabled in
+JOE.
+
+## Indenting program blocks
+
+Auto-indent mode is toggled with the __^T I__ command.  The __joerc__ file
+is normally set up so that files with names ending with .p, .c or .h have
+auto-indent mode enabled.  When auto-indent mode is enabled and you hit
+__Enter__, the cursor will be placed in the same column that the first
+non-whitespace character was on in the original line.
+
+You can use the __^K ,__ and __^K .__ commands to shift a block of text to
+the left or right.  If no highlighting is set when you give these commands,
+the program block (as indicated by indentation) that the cursor is located in
+will be selected, and will be moved by subsequent __^K ,__ and __^K .__
+commands.
+
+The number of columns these commands shift by and the character used for
+shifting can be set through the istep and indentc options.  These options
+are available in the __^T__ menu.  Also, __^T =__ can be used to quickly
+select from a number of common values for indentation step and character.
+
+JOE has a number of additional options related to indenting programs:
+
+* smartbacks&lt;br&gt;
+Enable smart backspace and tab.  When this mode is set __Backspace__ and __Tab__
+indent or unindent based on the values of the istep and indentc options.
+&lt;br&gt;
+
+* smarthome&lt;br&gt;
+The __Home__ and __^A__ keys first move the cursor to the beginning of the
+line, then if hit again, to the first non-blank character.
+&lt;br&gt;
+
+* indentfirst&lt;br&gt;
+Smart home goes to first non-blank character first, instead of going
+to the beginning of the line first.
+&lt;br&gt;
+
+* purify&lt;br&gt;
+Fix indentation if necessary before shifting or smart backspace.  For
+example, if indentation uses a mix of tabs and spaces, and indentc is
+space, then indentation will be converted to all spaces before the shifting
+operation.
+&lt;br&gt;
+
+* guess_indent&lt;br&gt;
+When set, JOE tries to guess the indentation character and indentation
+step based on the contents of the file.  The algorithm is to find the
+greatest common factor of the three most common indentations found in the
+file.
+&lt;br&gt;
+
+## Rectangle mode
+
+Type __^T X__ to have __^K B__ and __^K K__ select rectangular blocks
+instead of stream-of-text blocks.  This is also known as columnar mode. 
+This mode is useful for moving, copying, deleting or saving columns of text. 
+You can also filter columns of text with the __^K /__ command- if you want
+to sort a column, for example.  The insert file command, __^K R__ is also
+affected.
+
+When rectangle mode is selected, overtype mode is also useful
+(__^T T__).  When overtype mode is selected, rectangles will replace
+existing text instead of getting inserted before it.  Also the delete block
+command (__^K Y__) will clear the selected rectangle with __Spaces__ and __Tabs__
+instead of deleting it.  Overtype mode is especially useful for the filter
+block command (__^K /__), since it will maintain the original width of the
+selected column.
+
+## Picture mode
+
+Use __^T P__ to enter or exit picture mode.  Picture mode helps with ASCII
+drawings.
+
+Picture mode controls how JOE handles the case where the cursor is past the
+ends of lines.  This happens when you use the up or down arrow keys to move
+the cursor from the end of a long line to a short line.
+
+If you attempt to type a character in this case:
+
+If picture mode is off, the cursor will jump to the end of the line and
+insert it there.
+
+If picture mode is on, the line is filled with spaces so that the character
+can be inserted at the cursor position.
+
+## Windows
+
+You can edit more than one file at the same time or edit two or more
+different places of the same file.  To do this, hit __^K O__, to split the
+screen into two windows.  Use __^K P__ or __^K N__ to move the cursor
+into the top window or the lower window.  Use __^K E__ to edit a new
+file in one of the windows.  A window will go away when you save the file
+with __^K X__ or abort the file with __^C__.  If you abort a file which
+exists in two windows, one of the window goes away, not the file.
+
+You can hit __^K O__ within a window to create even more windows.  If you 
+have too many windows on the screen, but you don&#x27;t want to eliminate them, 
+you can hit __^K I__.  This will show only the window the cursor is in, or 
+if there was only one window on the screen to begin with, try to fit all 
+hidden windows on the screen.  If there are more windows than can fit on 
+the screen, you can hit __^K N__ on the bottom-most window or __^K P__ 
+on the top-most window to get to them.  
+
+If you gave more than one file name to JOE on the command line, each file 
+will be placed in a different window.  
+
+You can change the height of the windows with the __^K G__ and __^K T__
+commands.
+
+### Windowing system model
+
+JOE has an unusual model for its windowing system.  Basically you have a ring
+of windows, but only a section of this ring may fit on the screen.  The windows
+not on the screen still exist, they are just scrolled off.  When you hit
+__^K N__ on the bottom window of the screen, it scrolls further windows from
+the ring onto the screen, possibly letting the top window scroll out of
+view.
+
+Native JOE tries to keep each loaded buffer in a window, so users can find
+all of the buffers by scrolling through the windows.  The __explode__
+command (__^K I__) either expands all windows to the size of the screen so
+that only one window can fit on the screen, or shrinks them all as much as
+possible to fit many on the screen.
+
+On the other hand, JOE supports &quot;orphan&quot; buffers- files loaded into the
+editor, but which are not in a window.  __^C__ normally closes a window and
+discards the buffer that was in it.  If you hit __^C__ on the last remaining
+window, it will normally exit the editor.  However, if there are orphan
+buffers, __^C__ will instead load them into this final window to give you
+a chance to explicitly discard them.  If the __orphan__ option is given on
+the command line, as in __joe -orphan *.c__, then JOE only loads the first
+file into a window and leaves all the rest as orphans.
+
+__orphan__ also controls whether the edit command __^K E__ creates a new
+window for a newly loaded file, or reuses the current window (orphaning its
+previous occupant).
+
+The __bufed__ command prompts for a name of a buffer to switch into a window. 
+Its completion list will show all buffers, including orphans and buffers
+which appear in other windows.  __Esc V__ and __Esc U__ (__nbuf__ and
+__pbuf__ commands) allow you to cycle through all buffers within a single
+window.
+
+Windows maintain a stack of occupants to support the pop-up shell window
+feature.  When a pop-up window is dismissed, the previous buffer is returned
+to the window.
+
+## Scratch buffers
+
+Scratch buffers are buffers which JOE does not worry about trying to
+preserve.  JOE will not ask to save modified scratch buffers.  Pop-up shell
+windows, the startup log and compile and grep message windows are scratch
+buffers.  You can create your own scratch buffer with the __scratch__
+command.
+
+The following commands load scratch buffers:
+
+* __showlog__ Show startup log
+* __mwind__ Show message window (compile / grep messages from __Esc C__ and
+  __Esc G__ commands).
+
+## Keyboard macros 
+
+Macros allow you to record a series of keystrokes and replay them with the 
+press of two keys.  This is useful to automate repetitive tasks.  To start a 
+macro recording, hit __^K \[__ followed by a number from 0 to 9.  The 
+status line will display (Macro n recording...).  Now, type in the series of 
+keystrokes that you want to be able to repeat.  The commands you type will 
+have their usual effects. Hit __^K ]__ to stop recording the macro.  Hit 
+__^K__ followed by the number you recorded the macro in to execute one 
+iteration of the key-strokes.   
+
+For example, if you want to put &quot;\*\*&quot; in front of a number of lines, you can 
+type:
+
+__^K \[ 0 ^A \*\* &amp;lt;__down arrow__&amp;gt; ^K ]__
+
+Which starts the macro recording, moves the cursor to the beginning of the 
+line, inserts &quot;\*\*&quot;, moves the cursor down one line, and then ends the 
+recording. Since we included the key-strokes needed to position the cursor 
+on the next line, we can repeatedly use this macro without having to move 
+the cursor ourselves, something you should always keep in mind when 
+recording a macro.
+
+### Keyboard macro subroutines
+
+If you find that the macro you are recording itself has a repeated set of
+key-strokes in it, you can record a macro within the macro, as long as you
+use a different macro number.  Also you can execute previously recorded
+macros from within new macros. 
+
+### Query suspend
+
+If your macro includes a prompt for user input, and you want the user to
+fill in the prompt every time the macro is executed, hit __^K ?__ at the
+point in the macro recording where the user action is required.  Keyboard
+input will not be recorded at this point.  When the user completes the
+prompt, macro recording will continue.
+
+When the macro is executed, the macro player will pause at the point where
+__^K ?__ was entered to allow user input.  When the user completes the
+prompt, the player continues with the rest of the macro.
+
+### Repeat
+
+You can use the repeat command, __^K \\__, to repeat a macro, or any other
+edit command or even a normal character, a specified number of times.  Hit
+__^K \\__, type in the number of times you want the command repeated and
+press __Enter__.  The next edit command you now give will be repeated
+that many times.
+For example, to delete the next 20 lines of text, type:
+
+__^K \\ 20__&lt;return&gt;__^Y__
+
+## Macros and commands
+
+A macro is a comma separated list of commands.  When the macro is executed,
+each command is executed until either the end of the list is reached, or one
+of the commands fails (non-zero return value from the command).  Failed
+commands beep if you have beeps enabled (__^T B__).
+
+Hit __Esc D__ to insert the current set of keyboard macros as text into the
+current buffer.  For example, the &quot;\*\*&quot; insert macro above looks like this:
+
+	home,&quot;**&quot;,dnarw	^K 0	Macro 0
+
+You could insert this into your .joerc file and change the key sequence (the
+__K 0__) to something more permanent.
+
+### Define your own
+
+You can bind macros to key sequences or define your own named macros in the
+joerc file.  For example, this will define a macro called __foo__:
+
+	:def foo eof,bol
+
+__foo__ will position the cursor at the beginning of the last line of the
+file.  __eof__ jumps to the end of the file.  __bol__ jumps to the beginning
+of a line.  Once a macro has been named this way it will show up in the
+completion list of the __Esc X__ command prompt.
+
+### Command prompt
+
+You can execute a macro directly by typing it into the command prompt.  Hit
+__Esc X__ to bring up the command prompt.  Hit __Tab__ at this prompt for a
+completion list of all available commands.
+
+Here is a [complete list of commands](#list).
+
+### Macro don&#x27;t stop modifier
+
+Sometimes, you expect commands to sometimes fail, but want the rest of the
+commands in the list to be executed anyway.  To mark a command which is
+allowed to fail, postfix it with &#x27;!&#x27;.  For example, here a macro which hits
+down page in the window above:
+
+	prevw,pgdn!,nextw
+
+If prevw fails, the macro is aborted as usual. Even if pgdn fails (already
+at end of buffer), nextw will be executed so that the cursor is returned to
+the original window.
+
+### Macro repeat argument modifiers
+
+Repeat arguments can be specified with __^K \\__.  When a command is executed
+with a repeat argument, it is repeatedly executed the specified number of
+times.  If the repeat argument is negative, an opposite command (if one
+exists) is executed instead.  For example, if you repeat &quot;rtarw&quot; -3 times,
+&quot;ltarw&quot; will be repeated 3 times.  If a negative argument is given for a
+command which does not have an opposite, the repeat argument is ignored.
+
+Normally, if a repeat argument is specified for a macro, the macro is simply
+repeated the given number of times.  If a negative argument is given, the
+argument is ignored.
+
+Sometimes you want to allow negative arguments for macros and have their
+behavior modified.  To do this, postfix each command within the macro which
+should be switched to its opposite for negative arguments with &#x27;-&#x27;.  For
+example, here is the page down other window macro:
+
+	prevw,pgdn-!,nextw
+
+Now if you execute this with an argument of -2, it will be repeated twice,
+but pgup will be executed instead of pgdn.  (note that several postfix
+modifiers can be placed after each command).
+
+Sometimes when a repeat argument is given to macro, you want only one of the
+commands in the list to be repeated, not the entire macro.  This can be
+indicated as follows:
+
+	prevw,pgdn#!,nextw
+
+If this is executed with an argument of 2, prevw is executed once, pgdn is
+executed twice, and nextw is executed once.
+
+Finally, even more complex semantics can be expressed with the &quot;if&quot; command:
+
+	if~,&quot;arg&lt;0&quot;,then,
+		ltarw,
+	else,
+		rtarw,
+	endif
+
+When the macro is executed, the &quot;arg&quot; math variable is set to the given
+repeat argument.  The &quot;argset&quot; variable is set to true if the user set an
+argument, even if it&#x27;s 1.  If no argument was given, argset is false.
+
+If any command in the list is postfixed with ~ (if above), the macro is not
+repeated, even if there is an argument.  &#x27;arg&#x27; is still set to the given
+repeat count, however.
+
+### &#x27;psh&#x27;/&#x27;query&#x27; interaction
+
+The &#x27;psh&#x27; command saves the __^K B__ and __^K K__ positions on a stack.  When the
+macro completes, (or when the &#x27;pop&#x27; command is called) the positions are
+restored.
+
+The &#x27;query&#x27; command suspends macro execution until the current dialog is
+complete.  It also suspends the automatic &#x27;pop&#x27; which happens at the end
+of a macro- so if the macro ends in a dialog you often want to call &#x27;query&#x27;
+to prevent the __^K B__ __^K K__ positions from being restored too early.
+
+
+
+## Tags search
+
+If you are editing a large C program with many source files, you can use the 
+__ctags__ program to generate a __tags__ file.  This file contains a 
+list of program symbols and the files and positions where the symbols are 
+defined. 
+
+
+First, create the tags file with the &quot;ctags&quot; program.  For example:
+
+	ctags *.c *.h
+
+This will create a file called &quot;tags&quot; in the current directory.
+
+JOE looks for the &quot;tags&quot; file in the current directory.  If there is none,
+it will try to open the file specified by the TAGS environment variable.
+
+Paths in the tags file are always relative to location of the tags file
+itself.
+
+The tags file contains a list of identifier definition locations in one of
+these formats:
+
+	identifier filename /search-expression/[;comments]
+
+	identifier filename ?search-expression?[;comments]
+
+	identifier filename line-number[;comments]
+
+Some versions of ctags include class-names in the identifiers:
+
+	class::member
+
+In this case, JOE will match on any of these strings:
+
+	member
+	::member
+	class::member
+
+Some versions of ctags include a filename in the identifier:
+
+	filename:identifier
+
+In this case JOE will only find the identifier if the buffer name matches
+the filename.
+
+The search-expression is a vi regular expression, but JOE only supports the
+following special characters:
+
+	^ at the beginning means expression starts at beginning of line
+
+	$ at the end means expression ends at end of line
+
+	\x quote x (suppress meaning of /, ?, ^ or $)
+
+Type __^K ;__ to bring up a tags search prompt.  If the cursor had been on an
+identifier, the prompt is pre-loaded with it.  Tab completion works in this
+prompt (it uses the tags file to find completions).
+
+When you hit __Enter__, the tags search commences:
+
+If there is one and only one match, JOE will jump directly to the
+definition.
+
+If there are multiple matches, then the behavior is controlled by the
+notagsmenu option.  If notagsmenu is enabled JOE jumps to the first
+definition.  If you hit __^K ;__ again before hitting any other keys, JOE jumps
+to the next definition, and so on.  The &quot;tagjump&quot; command also performs this
+function.
+
+If notagsmenu is disabled, JOE brings up a menu of all the matches.  You
+select the one you want and JOE jumps to it.  If you hit __^K ;__ again before
+hitting any other keys, the same menu re-appears with the cursor left in the
+original location.
+
+You can hit __^K -__ to move the cursor back to the original location before the
+tags search (often __^C__ will work as well).
+
+Since __^K ;__ loads  the definition file into the current window, you
+probably want to split the window first with __^K O__, to have both the
+original file and the definition file loaded.
+
+## Calculator
+
+JOE has a built-in calculator which can be invoked with __Esc M__.
+
+### Math functions
+
+sin, cos, tan, exp, sqrt, cbrt, ln, log,
+asin, acos, atan, sinh, cosh, tanh, asinh, acosh,
+atanh, int, floor, ceil, abs, erf, erfc, j0,
+j1, y0, y1
+
+### Variables
+
+* e&lt;br&gt;
+Set to &#x27;e&#x27;
+&lt;br&gt;
+
+* pi&lt;br&gt;
+Set to &#x27;pi&#x27;
+&lt;br&gt;
+
+* top&lt;br&gt;
+Set to line number of top window line
+&lt;br&gt;
+
+* lines&lt;br&gt;
+Set to number of lines in file
+&lt;br&gt;
+
+* line&lt;br&gt;
+Set to current line number
+&lt;br&gt;
+
+* col&lt;br&gt;
+Set to current column number
+&lt;br&gt;
+
+* byte&lt;br&gt;
+Set to current byte number
+&lt;br&gt;
+
+* size&lt;br&gt;
+Set to buffer size
+&lt;br&gt;
+
+* height&lt;br&gt;
+Set to window height
+&lt;br&gt;
+
+* width&lt;br&gt;
+Set to window width
+&lt;br&gt;
+
+* char&lt;br&gt;
+Set to ASCII val of character under cursor
+&lt;br&gt;
+
+* markv&lt;br&gt;
+True if there is a valid block set (^KB ... ^KK)
+&lt;br&gt;
+
+* rdonly&lt;br&gt;
+True if file is read-only
+&lt;br&gt;
+
+* arg&lt;br&gt;
+Current repeat argument
+&lt;br&gt;
+
+* argset&lt;br&gt;
+True if a repeat argument was given
+&lt;br&gt;
+
+* is_shell&lt;br&gt;
+True if executed in an active shell window
+&lt;br&gt;
+
+* no_windows&lt;br&gt;
+No. buffer windows on the screen
+&lt;br&gt;
+
+* ans&lt;br&gt;
+Result of previous expression
+&lt;br&gt;
+
+
+### Commands
+
+* hex&lt;br&gt;
+Hex display mode
+&lt;br&gt;
+
+* dec&lt;br&gt;
+Decimal display mode
+&lt;br&gt;
+
+* ins&lt;br&gt;
+Insert &#x27;ans&#x27; into buffer
+&lt;br&gt;
+
+* sum&lt;br&gt;
+Sum of numbers in block
+&lt;br&gt;
+
+* cnt&lt;br&gt;
+Count numbers in block
+&lt;br&gt;
+
+* avg&lt;br&gt;
+Average value of numbers in block
+&lt;br&gt;
+
+* dev&lt;br&gt;
+Standard deviation of numbers in block
+&lt;br&gt;
+
+* eval&lt;br&gt;
+Evaluate math expressions in block (or whole file if no block set).
+&lt;br&gt;
+
+* joe(...)&lt;br&gt;
+Execute a JOE macro (argument in same format as joerc file macros).  Return value of JOE macro is returned (for macro success, return true (non-zero)).
+&lt;br&gt;
+
+
+For example:
+
+    joe(sys,&quot;[ 1 == 1 ]&quot;,rtn)
+
+([ 1 == 1 ]) is a shell command.  &quot;[&quot; is a synonym for
+the &quot;test&quot; UNIX command.
+
+Returns true.
+
+Remember: argument for JOE macro command
+&quot;if&quot; is a math expression.  So for example, the
+macro:
+
+    if,&quot;joe(sys,\&quot;[ 1 == 1 ]\&quot;,rtn)&quot;,then,&quot;TRUE&quot;,endif
+
+Types TRUE into the buffer.
+
+### Operators:
+	
+* !x&lt;br&gt;
+Logical not of x.
+&lt;br&gt;
+
+* x^y&lt;br&gt;
+Raise x to power of y.
+&lt;br&gt;
+
+* a*b&lt;br&gt;
+Multiply.
+&lt;br&gt;
+
+* a/b&lt;br&gt;
+Divide.
+&lt;br&gt;
+
+* a%b&lt;br&gt; 
+Modulus.
+&lt;br&gt;
+
+* a+b&lt;br&gt;
+Add.
+&lt;br&gt;
+
+* a-b&lt;br&gt;
+Subtract.
+&lt;br&gt;
+
+* a&amp;lt;b&lt;br&gt;
+True if a is less than b.
+&lt;br&gt;
+
+* a&amp;lt;=b&lt;br&gt;
+True if a is less than or equal to b.
+&lt;br&gt;
+
+* a&amp;gt;b&lt;br&gt;
+True if a is greater than b.
+&lt;br&gt;
+
+* a&amp;gt;=b&lt;br&gt;
+True if a is greater than or equal to b.
+&lt;br&gt;
+
+* a==b&lt;br&gt;
+True if a equals b.
+&lt;br&gt;
+
+* a!=b&lt;br&gt;
+True if a does not equal b.
+&lt;br&gt;
+
+* a&amp;amp;&amp;amp;b&lt;br&gt;
+True if both a and b are true.
+&lt;br&gt;
+
+* a||b&lt;br&gt;
+True if ether a or b are true.
+&lt;br&gt;
+
+* a?b:c&lt;br&gt;
+If a is true return b, otherwise return c.
+&lt;br&gt;
+
+* a=b&lt;br&gt;
+Assign b to a.
+&lt;br&gt;
+
+* a:b&lt;br&gt;
+Execute a, then execute b.
+&lt;br&gt;
+
+&amp;amp;&amp;amp;, || and ? : work as in C and sh as far as side effects: if the
+left side of &amp;amp;&amp;amp; is false, the right side is not evaluated.
+
+: is expression separator.
+
+## Shell windows
+
+Hit __^K &#x27;__ to run a command shell in one of JOE&#x27;s windows.  When the
+cursor is at the end of a shell window (use __^K V__ if it&#x27;s not),
+whatever you type is passed to the shell instead of the buffer.  Any output
+from the shell or from commands executed in the shell is appended to the
+shell window (the cursor will follow this output if it&#x27;s at the end of the
+shell window).  This command is useful for recording the results of shell
+commands- for example the output of __make__, the result of __grep__ping
+a set of files for a string, or directory listings from __FTP__ sessions. 
+Besides typeable characters, the keys __^C__, __Backspace__, __Del__, __Return__ and
+__^D__ are passed to the shell.  Type the shell __exit__ command to stop recording
+shell output.  If you press __^C__ in a shell window, when the cursor is
+not at the end of the window, the shell is __kill__ed.
+
+If you use Bash, you can hit: __^Q Up Arrow__ and __^Q Down Arrow__ to
+scroll through Bash&#x27;s history buffer.  Other keys work as well: try
+__^Q ^A__ to go to beginning of line or __^Q ^E__ to go to end of line.
+Unfortunately JOE only emulates a dumb terminal, so you have to use a lot of
+imagination to do any editing beyond hitting backspace.
+
+In general, any character quoted with __^Q__ is sent to the shell.
+
+Also sent to the shell: __Tab__, __Backspace__, __Enter__, __^C__ and __^D__.
+
+&lt;a name=&quot;popup&quot;&gt;&lt;/a&gt;
+## Pop-up shell windows
+
+Hit F1 - F4 to open and switch between shell windows.
+
+Pop-up shell windows use a full terminal emulator so that when you type &quot;man ls&quot; it&#x27;s
+formatted correctly (it works well enough so that some interactive programs
+can be used).  Even so, the shell window is still an edit buffer.
+
+The old shell window (with no terminal emulation) still exists: use __^K &#x27;__ to
+invoke it as usual.  This is useful to see control sequences emitted by a
+program.
+
+More of the keys get passed to the running program in pop-up shell windows
+compared with the older one.  There is a :vtshell section of the joerc file to
+control which ones.  In particular arrow keys and Ctrl-C are passed to the
+program.  It means you can easily step through bash history with the arrow
+keys, or abort programs the normal way with Ctrl-C.
+
+On the other hand, loss of Ctrl-C means it&#x27;s less obvious how to close the
+window.  One way is to move the cursor off of the shell data entry point
+(with Ctrl-P), and then hit Ctrl-C.  Another is to hit __^K Q__.  Finally, you
+can type &#x27;pop&#x27; at the command prompt.
+
+If you need to pass a key to the shell that JOE normally uses, quote it.  For
+example, if you invoke &quot;emacs -nw&quot; in the shell window, you can exit it with:
+
+	^Q ^X ^C
+	
+To quickly position the cursor back to the point where data is entered into
+the shell, hit __^K V__.
+
+When you open a shell window, a JOE-specific startup-script is sourced. 
+It&#x27;s located in /etc/joe/shell.sh (also /etc/joe/shell.csh).  It contains
+some aliases which allow you to control JOE with fake shell commands.  I
+have these commands so far:
+
+* clear        &lt;br&gt;
+erase shell window (delete buffer contents)
+&lt;br&gt;
+
+* joe file     &lt;br&gt;
+edit a file in JOE
+&lt;br&gt;
+
+* math 1+2     &lt;br&gt;
+evaluate equation using JOE&#x27;s calculator
+&lt;br&gt;
+
+* cd xyz       &lt;br&gt;
+change directory, keep JOE up to date
+&lt;br&gt;
+
+* markb        &lt;br&gt;
+same as ^KB
+&lt;br&gt;
+
+* markk        &lt;br&gt;
+same as ^KK
+&lt;br&gt;
+
+* mark command &lt;br&gt;
+execute shell command, mark it&#x27;s output
+&lt;br&gt;
+
+* parse command&lt;br&gt;
+execute shell command, parse it&#x27;s output for file names and line numbers (for find or grep)
+&lt;br&gt;
+
+* parser comman&lt;br&gt;
+execute shell command, parse it&#x27;s output for errors (for gcc)
+&lt;br&gt;
+
+* release      &lt;br&gt;
+release parsed errors
+&lt;br&gt;
+
+* pop          &lt;br&gt;
+dismiss shell window (same as ^K Q)
+&lt;br&gt;
+
+
+These work by emitting an escape sequence recognized by the terminal
+emulator: __Esc { joe_macro }__.  When this is received, the macro is executed. 
+For security, only macros defined in the joerc file which begin with
+&quot;shell_&quot; can be executed this way.
+
+### Use cases
+
+Pop-up shell windows have a number of nice use cases:
+
+* Use it to browse manual pages
+
+	Hit F1 and type &quot;man fopen&quot;.  Use &#x27;b&#x27; (&#x27;u&#x27;) and space to control
+	_more_ (or _less_) while viewing the manual.  You can leave the manual
+	on the screen in one window while editing in another window.
+
+* Use it to switch directories
+
+	Hit F1 and navigate to the directory while using _cd_.  Once
+	you are in the right place, hit __^K E__ to load a file (or type &quot;edit file&quot;
+	from the shell).
+
+* Use it in conjunction with the error parser to find files
+
+	Hit F1 and navigate to a directory.  Use grep or find (or both)
+	to generate a list of files):
+
+        parse grep -n FIXME *.c
+
+
+Or:
+
+        markb; find . | xargs grep -n FIXME; markk; parse
+
+(Note that you can&#x27;t say this:
+
+        parse find . | xargs grep -n FIXME
+
+...the issue is that only the words to the left of the pipe symbol
+are passed as arguments to the parse command).
+
+Now use __^P__ to position the cursor on one of the lines of the list.  Hit
+__Esc Space__ to have JOE edit the file and jump to the specified line (also
+you can use __Esc -__ and __Esc =__ to step through the list).
+
+* Use it in conjunction with search and replace to edit many files
+
+	Once JOE has a list of files (from above), use search and replace
+	with the &#x27;e&#x27; option to visit all of them:
+
+        ^K F
+           Find: &lt;text&gt;
+           Options: re
+           Replace: &lt;replacement text&gt;
+
+* Build your project
+
+Easily capture errors from a build with:
+
+        parserr make
+
+Hit __Esc =__ and __Esc -__ to step through the errors.
+
+
+### How it works..
+
+* There is a new mode &quot;ansi&quot;.  (__Esc X__ mode ansi).  When this mode is
+enabled, the screen updater hides escape sequences which are in the
+buffer.  Otherwise you get a big mess from the sequences surrounding
+colored output from &#x27;ls&#x27;.
+
+* There is a new built-in syntax: &quot;ansi&quot;.  (__^T Y__ ansi).  This syntax
+parses the ANSI color control sequences so that text gets colored.
+
+* There is a terminal emulator to interpret control sequences from the
+shell program.  It emulates a terminal by modifying the contents of an
+edit buffer.
+
+* When the edit window is resized we tell the shell by issuing the
+TIOCSSIZE or TIOCSWINSZ ioctl.  This way, the program running in the
+shell knows the window size.
+
+## Compiler and grep/find parsers
+
+JOE has two parsers which can be used to generate the error list (list of
+file names / line numbers).
+
+The &quot;parserr&quot; command parses the entire buffer, or if the block is set, just
+the highighted block for compiler error messages.  The messages should be in
+this format:
+
+	&lt;junk&gt; file.name &lt;junk&gt; line-number &lt;junk&gt; : &lt;junk&gt;
+
+The file name needs to be made of numbers, letters, &#x27;/&#x27;, &#x27;.&#x27; and &#x27;-&#x27;.  It
+must have at leat one &#x27;.&#x27; in it.  There needs to be a colon somewhere after
+the line number.  Lines not in this format are ignored.
+
+The &quot;gparse&#x27; command parses the entire buffer, or if the block is set, just
+the highlighted block for a list of filenames or filenames with line numbers
+from &quot;grep -n&quot;, &quot;find&quot; and similar programs.
+
+	filename
+
+	filename:&lt;junk&gt;
+
+	filename:line-number:&lt;junk&gt;
+
+Once JOE has the error list, there are a number of things you can do with
+it:
+
+* Visit the files/locations in the list with __Esc -__ and __Esc =__
+
+* Search and replace across all files in the list by using the &#x27;e&#x27; search
+  and replace option.
+
+* Clear the list by using the &quot;release&quot; command.
+
+Also, you can use __Esc Space__ (&#x27;jump&#x27; command) to parse the line the cursor is
+on and jump to the parsed filename and line number.  &#x27;jump&#x27; uses the
+grep/find parser unless &#x27;parserr&#x27; had been previously issued in the buffer.
+
+### Grep-find
+
+Hit __Esc G__ to bring up the prompt.  Enter a command which results in file
+names with line numbers, for example: &#x27;grep -n fred \*.c&#x27;.  This will list all
+instances of &#x27;fred&#x27; in the \*.c files.  You need the &#x27;-n&#x27; to get the line
+numbers.
+
+Now you can hit __Esc Space__ on one of the lines to jump to the selected
+file.  Also, you can use __Esc =__ and __Esc -__ to step through each line.
+
+### Compile
+
+Hit __Esc C__ to save all modified files and then bring up the compile prompt. 
+Enter the command you want to use for the compiler (typically &quot;make -w&quot;).  The
+compiler will run in a shell window.  When it&#x27;s complete, the results are
+parsed.
+
+The &#x27;-w&#x27; flag should be given to &quot;make&quot; so that it prints messages whenever
+it changes directories.  The message are in this format:
+
+	make[1]: Entering directory `/home/jhallen/joe-editor-mercurial/joe&#x27;
+
+If there are any errors or warnings from the compiler you can hit
+__Esc Space__ on one of the lines to jump to the selected file.  Also,
+you can use __Esc =__ and __Esc -__ to step through each line.
+
+## Syntax highlighting
+
+To enable highlight use __^T H__.
+
+To select the syntax, use __^T Y__.  You can hit __Tab__ __Tab__ at the prompt for a
+completion list.
+
+JOE tries to determine the syntax to use based on the name and contents of
+the file.  The configuration file /etc/joe/ftyperc contains the definitions.
+
+Each syntax is defined by a file located /usr/share/joe/syntax/.
+
+## How JOE syntax highlighting works
+
+*from [c.jsf](http://joe-editor.hg.sourceforge.net/hgweb/joe-editor/joe-editor/file/tip/syntax/c.jsf.in),
+slightly modified*
+
+A deterministic state machine that performs lexical analysis of the target
+language is provided in a syntax file.  (This is the &quot;assembly language&quot; of
+syntax highlighting.  A separate program could in principal be used to
+convert a regular expression NFA syntax into this format).
+
+Each state begins with:
+
+    :&lt;name&gt; &lt;color-name&gt; &lt;context&gt;
+
+&lt;name\&gt; is the state&#x27;s name.
+
+&lt;color-name\&gt; is the color used for characters eaten by the state
+(really a symbol for a user definable color).
+
+&lt;context\&gt; tells JOE if the current character is part of a comment or a
+string.  This allows JOE to skip over comments and strings when matching
+characters such as parentheses.  To use this feature, the
+highlighter_context option must be applied to the files highlighted by the
+corresponding syntax.  To apply the option, add it to ftyperc for those file
+entries.
+
+The valid contexts are:
+
+  * comment  This character is part of a comment.  Example:  /\* comment \*/
+
+  * string   This character is part of a string.  Examples: &quot;string&quot; &#x27;c&#x27; &#x27;string&#x27;
+
+The comment and string delimiters themselves should be marked with the
+appropriate context.  The context is considered to be part of the color, so
+the recolor=-N and recolormark options apply the context to previous
+characters.
+
+The first state defined is the initial state.
+
+Within a state, define transitions (jumps) to other states.  Each
+jump has the form:
+
+        &lt;character-list&gt; &lt;target-state-name&gt; [&lt;option&gt;s]
+
+There are three ways to specify &lt;character-list\&gt;s, either __\*__ for any
+character not otherwise specified, __%__ or __&amp;__ to match the character in
+the delimiter match buffer (__%__ matches the saved character exactly, while
+__&amp;__ matches the opposite character, for example \( will match \) when
+__&amp;__ is used) or a literal list of characters within quotes (ranges and
+escape sequences allowed: see [Escape Sequences](#escapes)).  When the next
+character matches any in the list, a jump to the target-state is taken and
+the character is eaten (we advance to the next character of the file to be
+colored).
+
+The * transition should be the first transition specified in the state.
+
+There are several options:
+
+* __noeat__       - Do not eat the character, instead feed it to the next state
+                    (this tends to make the states smaller, but be careful: you
+                    can make infinite loops).  &#x27;noeat&#x27; implies &#x27;recolor=-1&#x27;.
+
+* __recolor=-N__  - Recolor the past N characters with the color of the
+                    target-state.  For example once /\* is recognized as the
+                    start of C comment, you want to color the /\* with the C
+                    comment color with recolor=-2.
+
+* __mark__        - Mark beginning of a region with current position.
+
+* __markend__     - Mark end of region.
+
+* __recolormark__ - Recolor all of the characters in the marked region with
+                    the color of the target-state.  If markend is not given,
+                    all of the characters up to the current position are recolored.
+                    Note that the marked region can not cross line boundaries and
+                    must be on the same line as recolormark.
+
+* __buffer__      - Start copying characters to a string buffer, beginning with this
+                    one (it&#x27;s OK to not terminate buffering with a matching
+                    &#x27;strings&#x27;, &#x27;istrings&#x27; or &#x27;hold&#x27; option- the buffer is limited
+                    to leading 23 characters).
+
+* __save_c__      - Save character in delimiter match buffer.
+
+* __save_s__      - Copy string buffer to delimiter match buffer.
+
+* __strings__     - A list of strings follows.  If the buffer matches any of the
+                    given strings, a jump to the target-state in the string list
+                    is taken instead of the normal jump.
+
+* __istrings__    - Same as strings, but case is ignored.
+                    Note: strings and istrings should be the last option on the
+                    line.  They cause any options which follow them to be ignored.
+
+* __hold__        - Stop buffering string- a future &#x27;strings&#x27; or &#x27;istrings&#x27; will
+                    look at contents of buffer at this point.  Useful for distinguishing
+                    commands and function calls in some languages &#x27;write 7&#x27; is a command
+                    &#x27;write (&#x27; is a function call- hold lets us stop at the space and delay
+                    the string lookup until the ( or 7.
+
+The format of the string list is:
+
+        &quot;string&quot;   &lt;target-state&gt; [&lt;options&gt;s]
+        &quot;string&quot;   &lt;target-state&gt; [&lt;options&gt;s]
+        &quot;&amp;&quot;        &lt;target-state&gt; [&lt;options&gt;s]   # matches contents of delimiter match buffer
+        done
+
+(all of the options above are allowed except &quot;strings&quot;, &quot;istrings&quot; and &quot;noeat&quot;.  noeat is
+always implied after a matched string).
+
+Weirdness: only states have colors, not transitions.  This means that you
+sometimes have to make dummy states with
+
+        *    &lt;next-state&gt;    noeat
+
+just to get a color specification.
+
+Delimiter match buffer is for perl and shell: a regex in perl can be s&amp;lt;..&amp;gt;(...)
+and in shell you can say: &amp;lt;&amp;lt;EOS ....... EOS.  The idea is that you capture
+the first delimiter into the match buffer (the &amp;lt; or first &quot;EOS&quot;) and then
+match it to the second one with &quot;&amp;&quot; in a string or character list.
+
+### Subroutines
+
+Highlighter state machines can now make subroutine calls.  This works by
+template instantiation: the called state machine is included in your
+current state machine, but is modified so that the return address points
+to the called.  There is still no run-time stack (the state is represented
+as a single integer plus the saved delimiter string).
+
+Recursion is allowed, but is self limited to 5 levels.
+
+__Note:__ this recursion limit is obsolete.  Subroutines now do use a stack
+so the call-depth is limitless.
+
+To call a subroutine, use the &#x27;call&#x27; option:
+
+        &quot;\&quot;&quot;    fred    call=string(dquote)
+
+The subroutine called &#x27;string&#x27; is called and the jump to &#x27;fred&#x27; is
+ignored.  The &#x27;dquote&#x27; option is passed to the subroutine.
+
+If you use recolor along with call, the color used is that of the first
+state of the subroutine.
+
+The subroutine itself returns to the caller like this:
+
+        &quot;\&quot;&quot;    whatever    return
+
+If we&#x27;re in a subroutine, it returns to the target state of the call (&quot;fred&quot;
+in the above example).  If we&#x27;re not in a subroutine, it jumps to
+&quot;whatever&quot;.
+
+If you use recolor along with return, the color used is from the returned
+state (&quot;fred&quot; in the example above).
+
+There are several ways of delimiting subroutines which show up in how it
+is called.  Here are the options:
+
+* __call=string()__         - A file called string.jsf is the subroutine.
+                              The entire file is the subroutine.  The starting
+                              point is the first state in the file.
+
+* __call=library.string()__ - A file called library.jsf has the subroutine.
+                              The subroutine within the file is called string.
+
+* __call=.string()__        - There is a subroutine called string in the current file.
+
+When a subroutine is within a file, but is not the whole file, it is delimited
+as follows:
+
+    .subr string
+
+    . . . states for string subroutine . . .
+
+    .end
+
+Option flags can be passed to subroutines which control preprocessor-like
+directives.  For example:
+
+    .ifdef dquote
+        &quot;\&quot;&quot;    idle    return
+    .endif
+    .ifdef squote
+        &quot;&#x27;&quot;     idle    return
+    .endif
+
+.else is also available.  .ifdefs can be nested.
+
+&lt;a name=&quot;joerc&quot;&gt;&lt;/a&gt;
+
+### Color schemes
+
+Color *classes* are declared at the top of each syntax file, and referenced
+from each state.  Previously, colors would be specified alongside each class
+in the syntax files, but they are now globally specified by color schemes. 
+The syntax files will pull in all colors relevant to their languages by
+declaring them, optionally referencing other classes in case a class isn&#x27;t
+specified by a color scheme.  For example, this is typical:
+
+    =Constant
+    =String +Constant
+    =Number +Constant
+
+Both the `String` and `Number` classes can be defined by the color scheme. 
+If they aren&#x27;t, each will fall back to `Constant`, which is logically a
+superset of strings and numbers.  More than one class can be referenced in a
+class declaration; JOE will pick the first one that is defined.
+
+In this manner schemes can define a broad and generic set of color classes
+and syntax files can filter those into the color classes applicable to their
+languages.  This assumes that syntaxes and color schemes follow a particular
+convention, which is laid out in __syntax/CLASSES.md__.
+
+### Color scheme files
+
+Color scheme files are divided into sections based on the number of colors
+available to the terminal to support e.g. 256-color terminals vs 88-color
+terminals vs terminals with [24-bit color support](https://gist.github.com/XVilka/8346728).
+Each section starts with the `.colors` directive:
+
+    .colors 256
+    # 256-color terminal section
+    .colors *
+    # Truecolor terminal section
+
+The above scheme would fail to load on a 16-color terminal.  JOE will check
+if the `COLORTERM` environment variable is set to `24bit` or `truecolor` to
+determine if a terminal supports 24 bit color, due to the fact that terminfo
+currently lacks this support.  In Windows, JOE automatically supports 24 bit
+color.
+
+Environment colors are specified as such:
+
+    -text &lt;fg&gt;/&lt;bg&gt; &lt;attributes&gt;
+
+Where `&lt;fg&gt;` and `&lt;bg&gt;` are both optional, and can be any of:
+
+* Color names: white, cyan, magenta, blue, yellow, green, red, or black, WHITE,
+CYAN, MAGENTA, BLUE, YELLOW, GREEN, RED or BLACK (where upper-case colors
+are the high intensity versions from 16 color terminals).
+
+* `default` for the terminal&#x27;s default foreground or background color.
+
+* Color numbers: 0-255 xterm colors
+
+* RGB specifications in the standard `$RRGGBB` form (only in the 24-bit
+section).
+
+Attributes can be `bold`, `inverse`, `blink`, `dim`, `underline`, `italic`,
+`stricken` and `dunderline`.
+
+A number of environment colors can be changed:
+
+* `-text` specifies the default environment text.
+* `-status` specifies the status line&#x27;s color.
+* `-selection` specifies the color used for selection.
+* `-help` specifies the help text background color.
+* `-menu` specifies the inactive menu item color.
+* `-menusel` specifies the active menu item color.
+* `-prompt` specifies prompt color.
+* `-message` specifies message color.
+* `-linum` specifies the color in the line number gutter.
+* `-curlin` specifies the current line color (if `hiline` is on).
+* `-curlinum` specifies the current line number color (if `hiline` is on).
+
+These do not all need to be specified.  `-text` defaults to the terminal&#x27;s
+default foreground/background colors.  Each other will pick up the value of
+`-text` (plus `inverse` in a few cases) if it is not specified.
+
+When using pop-up terminals, JOE will remap colors 0-15 based on colors
+found in the scheme specified by `-term &lt;n&gt; __color spec__`.
+
+The rest of the file is color classes that map into syntax colors.  Color
+classes can be set by either:
+
+    =ClassName &lt;color spec&gt;
+    =syntaxname.ClassName &lt;color spec&gt;
+
+In the second case, the color will only apply to the specified syntax.
+
+Lastly, macros can be defined in color scheme files to simplify their
+maintenance.  For example:
+
+    .set dark_blue 66
+    # ...
+    =Define [dark_blue]
+
+References to `dark_blue` must be in brackets, and their values will be
+substituted by a simple string replacement before parsing the line (which
+means macros can contain any text, not just color values).
+
+## The joerc file
+
+__^T__ options, the help screens and the key-sequence to editor command
+bindings are all defined in JOE&#x27;s initialization file.  If you make a copy
+of this file (which normally resides in __/etc/joe/joerc__) to
+__$HOME/.joerc__, you can customize these setting to your liking.  The
+syntax of the initialization file should be fairly obvious and there are
+further instructions in it.
+
+The __joerc__ file has a directive to include another file (:include).  This
+facility is used to include a file called __ftyperc__ (usually located in
+__/etc/joe/ftyperc__).  __ftyperc__ has the file type table which determines
+which local options (including syntax for the highlighter) are applied to
+each file type.
+
+### Initialization file loading sequence
+
+If the path for an initialization file begins with &#x27;/&#x27; (you can specify this
+with the include directive), JOE only tries to load it from the absolute
+path.  Otherwise, JOE tries to load initialization files (the joerc file and
+any files included in it, typically ftyperc) from three places:
+
+* &quot;$HOME/.joerc&quot; - The user&#x27;s personalized joerc file.
+
+* &quot;/etc/joe/joerc&quot; - The system&#x27;s joerc file.
+The exact path is fixed during the build, and is determined by the
+--sysconfdir configure script option.
+
+* &quot;*joerc&quot; - Built-in file
+This means JOE searches for the file in a table of files linked in with the
+JOE binary (they are in the builtins.c file).  A built-in joerc file is
+provided so that the editor will run in cases where system&#x27;s joerc is
+inaccessible.
+
+If the system&#x27;s joerc file is newer than the user&#x27;s joerc file, JOE will
+print a warning in the startup log.  Previous versions of JOE would prompt
+the user for this case- the idea was that JOE may be unusable with an out of
+date initialization file.
+
+### joerc file sections
+
+The __joerc__ file is broken up into a number of sections:
+
+* Global options
+  Options which are not file specific, like __noxon__.
+
+* File name and content dependent options
+  Options which depend on the file type, such as __autoindent__.  The
+  __ftyperc__ file is included in this section.
+
+* __^T__ menu system definition
+  Use :defmenu to define a named menu of macros.  The __menu__ command
+brings up a specific named menu.  __^T__ is a macro which brings up the root
+menu: __menu,&quot;root&quot;,rtn__.
+
+* Help screen contents
+  Each help screen is named.  The name is used to implement context
+  dependent help.
+
+* Key bindings
+  Key binding tables are defined.  You can define as many as you like (you
+can switch to a specific one with the __keymap__ command), but
+the following must be provided:
+
+    * __main__ Editing windows
+    * __prompt__ Prompt windows
+    * __query__ Single-character query prompts
+    * __querya__ Single-character query for quote
+    * __querysr__ Single-character query for search and replace
+    * __shell__ Shell windows
+    * __vtshell__ Terminal emulator shell windows
+
+Key binding tables can inherit bindings from already defined tables.  This
+allows you to group common key bindings into a single table which is
+inherited by the others.
+
+### Mode command
+
+Many options can be controlled with the __^T__ menu.  This menu is defined
+in the joerc file.  Each option in the __^T__ menu just executes a macro. 
+Usually the macro is the mode command.  You can execute the mode command
+directly with:
+
+	Esc X mode &lt;enter&gt;
+
+Hit __Tab__ __Tab__ for a completion list of all options.
+
+### Menu command
+
+This command calls up a named menu of macros which was defined in the
+__joerc__ file.
+
+	Esc X menu &lt;enter&gt;
+
+As usual, hit __Tab__ __Tab__ at the prompt for a completion list of the
+menus which exist.
+
+__^T__ is bound to the simple macro __menu,&quot;root&quot;,rtn__- it brings up the
+root of the options menu system.
+
+## Xterm Mouse support
+
+There are two levels of mouse support.  The -mouse option enables the
+first level, which will work with any stock Xterm.  If -joexterm is also
+set, mouse support is enhanced, but you need a recent version of XTerm,
+and it needs to be ./configured with the --enable-paste64 option.
+
+When -mouse is set, you can:
+
+* Left-click in a text window to set the cursor position.  Left-click in a
+  different window to move the cursor to a different window.
+
+* Select text with the mouse.  Left-click and drag to select some text- it
+will be as if you had used __^K B__ and __^K K__ to mark it. Left-click (but don&#x27;t
+drag) to position the cursor somewhere else.  Middle click to copy the
+selected text to the cursor- it will be as if you had hit __^K C__.  If you drag
+past the edge of the text window, the window will auto-scroll to select more
+text.  Unfortunately, Xterm does not send any codes when the cursor is
+outside of the Xterm frame itself, so this only works if the mouse is still
+contained within the Xterm frame.  I&#x27;ve sent a patch to the Xterm maintainer
+to improve this, but he has not taken it yet.
+
+* Resize windows with the mouse: click and hold on a status line
+dividing two windows to move it.
+
+* Select menu entries (such as any completion menu or the __^T__ options
+menu): click on the menu item to position the cursor on it.  Double-click on
+a menu item to select it (same as hitting return with cursor on it).&lt;/li&gt;
+
+* If your mouse has a wheel, turning the wheel will scroll the window with
+the cursor.
+
+Unfortunately, when -mouse is selected, cut and paste between X windows
+does not work as it normally does in a shell window (left-click and drag to
+select, middle click to paste).  Instead, you have to hold the shift key
+down to do this: shift-left-click and drag to select, and shift-middle click
+to paste.  Note that pasting text into JOE this way has problems: any \`
+characters will get messed up because \` means quote the following control
+character.  Also if auto-indent is enabled, pasted text will not be indented
+properly.
+
+__Note:__ these problems with pasting have been resolved in recent versions
+of JOE.
+
+* JOE enables &quot;bracketed paste&quot; mode in Xterm so that pasted text is
+bracketed with an escape sequence.  This sequence causes JOE to disable
+the autoindent, wordwrap and spaces modes for the paste, and restores them
+when the paste is complete.
+
+* Even if the terminal emulator does not have this bracketed paste mode,
+JOE detects pasted text by timing: If text arrives all at once (all in the
+same buffer), the text is assumed to be pasted text and autoindent and
+wordwrap are temporarily disabled.
+
+When -joexterm is set (and you have ./configured Xterm with
+--enable-paste64):
+
+* Cut &amp;amp; paste are properly integrated with X.  Text selected with
+left-click-drag is available for pasting into other X windows (even if the
+selected text is larger than the text window).  Text selected in other X
+windows can be pasted into JOE with middle-click.  There are no problems
+pasting text containing \` or with auto-indent.
+
+--enable-paste64 allows an application program to communicate Base-64
+encoded selection data to and from the Xterm.  The program has full control
+over what is in the selection data and when it is received or sent.
+
+## Color Xterm support
+
+JOE can make use of monochrome Xterm, 8-color Xterm, 16-color Xterm,
+88-color Xterm and 256-color Xterm.  The number of colors which Xterm
+supports is determined by which &quot;configure&quot; script options are set before
+the Xterm source code is compiled.  The termcap or terminfo entry must
+support how your Xterm is configured.  On my Slackware Linux distribution,
+you have to set the TERM environment variable to one of these:
+
+* xterm
+* xterm-color
+* xterm-16color
+* xterm-88color
+* xterm-256color
+
+If the termcap/terminfo entry is missing, you can add the &quot;-assume_256color&quot;
+option to the joerc file.  Note that this was broken for terminfo in
+versions of JOE below 3.4.
+
+When it is working, the command: &quot;joe -assume_256color -text_color bg_222&quot;
+should have a gray background.
+
+## Hex edit mode
+
+When this mode is selected (either put -hex on the command line, or look for
+&quot;Hex edit mode&quot; after hitting __^T__), the buffer is displayed as a hex dump,
+but all of the editing commands operate the same way.  It is most useful to
+select overtype mode in conjunction with hex dump (hit __^T T__).  Then typing
+will not insert.
+
+- To enter the hex byte 0xF8 type __^Q x F 8__
+
+- You can use __^K C__ to copy a block as usual.  If overtype mode is selected,
+  the block will overwrite the destination data without changing the size of
+  the file.  Otherwise it inserts.
+
+- Hit __Esc X byte &amp;lt;Enter&amp;gt;__, to jump to a particular byte offset.  Hex values
+  can be entered into this prompt like this: 0x2000.
+
+- Search, incremental search, and search &amp;amp; replace all operate as usual.
+
+&lt;a name=&quot;evariables&quot;&gt;&lt;/a&gt;
+## Environment variables 
+
+For JOE to operate correctly, a number of other environment settings must be 
+correct.  The throughput (baud rate) of the connection between the computer 
+and your terminal must be set correctly for JOE to update the screen 
+smoothly and allow typeahead to defer the screen update.  Use the __stty nnn__
+command to set this.  You want to set it as close as possible to 
+actual throughput of the connection.  For example, if you are connected via 
+a 1200 baud modem, you want to use this value for __stty__.  If you are 
+connected via 14.4k modem, but the terminal server you are connected to 
+connects to the computer a 9600 baud, you want to set your speed as 9600 
+baud.  The special baud rate of 38400 or __extb__ is used to indicate that 
+you have a very-high speed connection, such as a memory mapped console or an 
+X-window terminal emulator.  If you can&#x27;t use __stty__ to set the actual 
+throughput (perhaps because of a modem communicating with the computer at a 
+different rate than it&#x27;s communicating over the phone line), you can put a 
+numeric value in the __BAUD__ environment variable instead (use __setenv 
+BAUD 9600__ for csh or __BAUD=9600; export BAUD__ for sh).  
+
+The __TERM__ environment variable must be set to the type of terminal
+you&#x27;re using.  If the size (number of lines/columns) of your terminal is
+different from what is reported in the TERMCAP or TERMINFO entry, you can
+set this with the __stty rows nn cols nn__ command, or by setting the
+__LINES__ and __COLUMNS__ environment variables.  The terminal size is
+variable on modern systems and is determined by an ioctl, so these
+parameters often have no effect.
+
+JOE normally expects that flow control between the computer and your
+terminal to use __^S__/__^Q__ handshaking (i.e., if the computer is sending
+characters too fast for your terminal, your terminal sends __^S__ to stop the
+output and __^Q__ to restart it).  If the flow control uses out-of-band or
+hardware handshaking or if your terminal is fast enough to always keep up
+with the computer output and you wish to map __^S__/__^Q__ to edit commands, you can
+set the environment variable __NOXON__ to have JOE attempt to turn off
+__^S__/__^Q__ handshaking.  If the connection between the computer and your terminal
+uses no handshaking and your terminal is not fast enough to keep up with the
+output of the computer, you can set the environment variable __DOPADDING__
+to have __JOE__ slow down the output by interspersing PAD characters
+between the terminal screen update sequences.
+
+Here is a complete list of the environment variables:
+
+* BAUD&lt;br&gt;
+Tell JOE the baud rate of the terminal (overrides value reported by stty).
+&lt;br&gt;
+
+* COLORTERM&lt;br&gt;
+If set to `truecolor` or `24bit`, [24-bit color support](https://gist.github.com/XVilka/8346728)
+will be assumed and JOE will be able to load those sections from color
+schemes.
+&lt;br&gt;
+
+* COLUMNS&lt;br&gt;
+Set number of columns in terminal emulator (in case
+termcap entry is wrong).  This is only useful on old system which don&#x27;t have
+the &quot;get window size&quot; ioctl.
+&lt;br&gt;
+
+* DOPADDING&lt;br&gt;
+Enable JOE to send padding NULs to the terminal
+when set (for very old terminals).
+&lt;br&gt;
+
+* HOME&lt;br&gt;
+Used to get path to home directory for ~
+expansion and also to find ~/.joerc file ~/.joe directory.
+&lt;br&gt;
+
+* HOSTNAME&lt;br&gt;
+Used to get hostname to put in EMACS compatible locks.
+&lt;br&gt;
+
+* JOETERM&lt;br&gt;
+Gives terminal type: JOE will use this instead of TERM if it&#x27;s set.
+&lt;br&gt;
+
+* LANG&lt;br&gt;
+Sets locale (like en\_US.utf-8).  JOE uses
+the first of these which is set: LC\_ALL, LC\_CTYPE, LANG.
+&lt;br&gt;
+
+* LC\_ALL&lt;br&gt;
+Sets locale (like en\_US.utf-8).  JOE
+uses the first of these which is set: LC\_ALL, LC\_CTYPE, LANG.
+&lt;br&gt;
+
+* LC\_CTYPE&lt;br&gt;
+Sets locale (like en\_US.utf-8).  JOE
+uses the first of these which is set: LC\_ALL, LC\_CTYPE, LANG.
+&lt;br&gt;
+
+* LINES&lt;br&gt;
+Set number of lines in terminal emulator (in case
+termcap entry is wrong).  This is only useful on old system which don&#x27;t have
+the &quot;get window size&quot; ioctl.
+&lt;br&gt;
+
+* NOXON&lt;br&gt;
+Disable __^S__ and __^Q__ flow control, possibly
+allowing __^S__ and __^Q__ to be used as editor keys.
+&lt;br&gt;
+
+* SHELL&lt;br&gt;
+Path to shell (like /bin/sh).  This is
+used in several places: If you are on a system with no job control, this
+shell is invoked when you hit __^K Z__.  Also this is the shell which is run in shell
+windows.  If SHELL is not set (Cygwin) or if it&#x27;s set to /bin/sh, JOE
+invokes the first of these which exists: /bin/bash, /usr/bin/bash, /bin/sh.
+&lt;br&gt;
+
+* SIMPLE\_BACKUP\_SUFFIX&lt;br&gt;
+If this is set, it is
+appended to the file name instead of ~ to create the backup file name.
+&lt;br&gt;
+
+* TAGS&lt;br&gt;
+If set to a path to a file, JOE tries to
+use this as the &quot;tags&quot; file if there is no &quot;tags&quot; file in the current
+directory.
+&lt;br&gt;
+
+* TEMP&lt;br&gt;
+If set, gives path to directory to open
+swapfile instead of /tmp
+&lt;br&gt;
+
+* TERMCAP&lt;br&gt;
+Used by JOE&#x27;s built-in termcap file
+parser (not used for terminfo).  A termcap entry can be placed directly in
+this variable (which will be used if it matches TERM), or if it begins with
+/, it gives a list of paths to termcap files to search.
+&lt;br&gt;
+
+* TERMPATH&lt;br&gt;
+Gives list of paths to termcap files to search when TERMCAP has a
+termcap entry (otherwise it&#x27;s ignored).  The default list of paths to
+termcap files (when TERMCAP and TERMPATH do not have it) is: &quot;~/.termcap
+/etc/joe/termcap /etc/termcap&quot;
+&lt;br&gt;
+
+* TERM&lt;br&gt;
+Gives terminal type, like &quot;vt100&quot; or &quot;xterm&quot;.
+&lt;br&gt;
+
+* USER&lt;br&gt;
+Used to get user name for EMACS compatible file locks.
+&lt;br&gt;
+
+&lt;a name=&quot;list&quot;&gt;&lt;/a&gt;
+## JOE commands grouped by function
+
+These commands can be entered at the __Esc X__ prompt.
+
+### Background programs
+
+* bknd&lt;br&gt;
+Run a shell in a window
+&lt;br&gt;
+
+* vtbknd&lt;br&gt;
+Run a shell in a terminal emulator window
+&lt;br&gt;
+
+* killproc&lt;br&gt;
+Kill program in current window
+&lt;br&gt;
+
+* run&lt;br&gt;
+Run a UNIX command in a window
+&lt;br&gt;
+
+* sys&lt;br&gt;
+Run a UNIX command and return to editor when done (I/O does not go through editor, but we get the command&#x27;s return status).
+
+### Blocks
+
+* blkcpy&lt;br&gt;
+Copy marked block to cursor
+&lt;br&gt;
+
+* blkdel&lt;br&gt;
+Delete marked block
+&lt;br&gt;
+
+* blkmove&lt;br&gt;
+Move marked block to cursor
+&lt;br&gt;
+
+* blksave&lt;br&gt;
+Save marked block into a file
+&lt;br&gt;
+
+* copy&lt;br&gt;
+Copy block to kill-ring
+&lt;br&gt;
+
+* drop&lt;br&gt;
+Set markb.  If it was already set, eliminate Ait.
+&lt;br&gt;
+
+* dropon&lt;br&gt;
+Set markb.  If it was already set, eliminate it.  Turn on marking mode.
+&lt;br&gt;
+
+* toggle_marking&lt;br&gt;
+If we&#x27;re in a block: clear markb and markk. If marking is off: set markb and turn on marking.  If marking is on: set markk (swap if necessary with markb) and turn marking off.
+&lt;br&gt;
+
+* begin_marking&lt;br&gt;
+If we&#x27;re on an edge of a block: set markb to other edge and turn on marking mode.  Otherwise set markb to cursor and turn on marking mode.
+&lt;br&gt;
+
+* select&lt;br&gt;
+Set markb.  If it was already set, do nothing.
+&lt;br&gt;
+
+* filt&lt;br&gt;
+Filter block or file through a UNIX command
+&lt;br&gt;
+
+* markb&lt;br&gt;
+Set beginning of block mark
+&lt;br&gt;
+
+* markk&lt;br&gt;
+Set end of block mark
+&lt;br&gt;
+
+* markl&lt;br&gt;
+Mark current line
+&lt;br&gt;
+
+* nmark&lt;br&gt;
+Eliminate markb and markk
+&lt;br&gt;
+
+* picokill&lt;br&gt;
+Delete line or block
+&lt;br&gt;
+
+* pop&lt;br&gt;
+Restore markb and markk values from stack
+&lt;br&gt;
+
+* psh&lt;br&gt;
+Push markb and markk values onto a stack
+&lt;br&gt;
+
+* swap&lt;br&gt;
+Switch cursor with markb
+&lt;br&gt;
+
+* tomarkb&lt;br&gt;
+Move cursor to markb
+&lt;br&gt;
+
+* tomarkbk&lt;br&gt;
+Move cursor to markb or markk
+&lt;br&gt;
+
+* tomarkk&lt;br&gt;
+Move cursor to markk
+&lt;br&gt;
+
+* yank&lt;br&gt;
+Insert top of kill ring
+&lt;br&gt;
+
+* yankpop&lt;br&gt;
+Scroll through kill ring
+&lt;br&gt;
+
+* yapp&lt;br&gt;
+Append next kill to top of kill ring
+&lt;br&gt;
+
+* upper&lt;br&gt;
+Convert everything in block to uppercase
+&lt;br&gt;
+
+* lower&lt;br&gt;
+Convert everything in block to lowercase
+
+
+### Buffers
+
+* bufed&lt;br&gt;
+Buffer menu
+&lt;br&gt;
+
+* edit&lt;br&gt;
+Load file into window: asks to reload if buffer exists
+&lt;br&gt;
+
+* switch&lt;br&gt;
+Load file into window: always uses buffer if it exists
+&lt;br&gt;
+
+* scratch&lt;br&gt;
+Push a scratch buffer into current window
+&lt;br&gt;
+
+* popabort&lt;br&gt;
+Abort and pop window from stack (do nothing if stack empty)
+&lt;br&gt;
+
+* nbuf&lt;br&gt;
+Load next buffer into current window
+&lt;br&gt;
+
+* pbuf&lt;br&gt;
+Load previous buffer into current window
+&lt;br&gt;
+
+* reload&lt;br&gt;
+Re-read file into buffer (revert)
+&lt;br&gt;
+
+* reloadall&lt;br&gt;
+Re-read all unmodified buffers
+
+
+### Cursor Motion
+
+* bof&lt;br&gt;
+Move cursor to beginning of file
+&lt;br&gt;
+
+* bol&lt;br&gt;
+Move cursor to beginning of line (always)
+&lt;br&gt;
+
+* bop&lt;br&gt;
+Move to beginning of a paragraph
+&lt;br&gt;
+
+* bos&lt;br&gt;
+Move to beginning of screen
+&lt;br&gt;
+
+* bkwdc&lt;br&gt;
+Search backwards for a character
+&lt;br&gt;
+
+* byte&lt;br&gt;
+Move cursor to specific byte offset into the file.
+&lt;br&gt;
+
+* col&lt;br&gt;
+Move cursor to specific column number.
+&lt;br&gt;
+
+* dnarw&lt;br&gt;
+Move cursor down one line
+&lt;br&gt;
+
+* eof&lt;br&gt;
+Move cursor to end of file
+&lt;br&gt;
+
+* eol&lt;br&gt;
+Move cursor to end of line
+&lt;br&gt;
+
+* eop&lt;br&gt;
+Move cursor to end of paragraph
+&lt;br&gt;
+
+* fwrdc&lt;br&gt;
+Search forward for matching character
+&lt;br&gt;
+
+* gomark&lt;br&gt;
+Move cursor to a bookmark
+&lt;br&gt;
+
+* home&lt;br&gt;
+Move cursor to beginning of line
+&lt;br&gt;
+
+* line&lt;br&gt;
+Move cursor to specified line
+&lt;br&gt;
+
+* ltarw&lt;br&gt;
+Move cursor left
+&lt;br&gt;
+
+* nedge&lt;br&gt;
+Move cursor to next edge
+&lt;br&gt;
+
+* nextpos&lt;br&gt;
+Move cursor to next position in cursor position history
+&lt;br&gt;
+
+* nextword&lt;br&gt;
+Move cursor to end of next word
+&lt;br&gt;
+
+* pedge&lt;br&gt;
+Move cursor to previous edge
+&lt;br&gt;
+
+* prevpos&lt;br&gt;
+Move cursor to previous position in cursor position history
+&lt;br&gt;
+
+* prevword&lt;br&gt;
+Move cursor to beginning of previous word
+&lt;br&gt;
+
+* rtarw&lt;br&gt;
+Move cursor right
+&lt;br&gt;
+
+* setmark&lt;br&gt;
+Set a bookmark
+&lt;br&gt;
+
+* tomatch&lt;br&gt;
+Move cursor to matching delimiter
+&lt;br&gt;
+
+* tos&lt;br&gt;
+Move cursor to top of screen
+&lt;br&gt;
+
+* uparw&lt;br&gt;
+Move cursor up
+
+### Deletion
+
+* backs&lt;br&gt;
+Backspace
+&lt;br&gt;
+
+* backw&lt;br&gt;
+Backspace a word
+&lt;br&gt;
+
+* delbol&lt;br&gt;
+Delete to beginning of line
+&lt;br&gt;
+
+* delch&lt;br&gt;
+Delete character under cursor
+&lt;br&gt;
+
+* deleol&lt;br&gt;
+Delete to end of line
+&lt;br&gt;
+
+* dellin&lt;br&gt;
+Delete entire line
+&lt;br&gt;
+
+* delw&lt;br&gt;
+Delete word to right
+
+### Error parsing
+
+* nxterr&lt;br&gt;
+Goto next parsed error
+&lt;br&gt;
+
+* parserr&lt;br&gt;
+Parse errors in current file
+&lt;br&gt;
+
+* gparse&lt;br&gt;
+Parse grep list in current file
+&lt;br&gt;
+
+* jump&lt;br&gt;
+Parse current line and jump to it
+&lt;br&gt;
+
+* prverr&lt;br&gt;
+Go to previous parsed error
+&lt;br&gt;
+
+* showerr&lt;br&gt;
+Show current message
+&lt;br&gt;
+
+* grep&lt;br&gt;
+Execute grep command, parse when done
+&lt;br&gt;
+
+* build&lt;br&gt;
+Execute build command, parse when done
+&lt;br&gt;
+
+* release&lt;br&gt;
+Release error/grep records
+
+### Exit
+
+* cancel&lt;br&gt;
+Like abort, but doesn&#x27;t return failure: useful in macros to escape out of a prompt.
+&lt;br&gt;
+
+* abort&lt;br&gt;
+Abort current buffer/window.  Prompt if it is changed.
+&lt;br&gt;
+
+* abortbuf&lt;br&gt;
+Like above, but just fail if it would have to prompt because it&#x27;s the last window on a modified buffer.
+&lt;br&gt;
+
+* ask&lt;br&gt;
+Prompt to save current file: user says yes return, user says no: run &#x27;abort&#x27;.  Use in a macro: &quot;ask,query,exsave&quot;
+&lt;br&gt;
+
+* exsave&lt;br&gt;
+Save file and exit
+&lt;br&gt;
+
+* lose&lt;br&gt;
+EMACS kill buffer.  The buffer is deleted- any windows with it get a replacement scratch buffer.
+&lt;br&gt;
+
+* querysave&lt;br&gt;
+Prompt to save each modified buffer.  Use in a macro: &quot;querysave,query,killjoe&quot;
+&lt;br&gt;
+
+* killjoe&lt;br&gt;
+Exit JOE immediately without checking for modified buffers
+
+### Files
+
+* cd&lt;br&gt;
+Set directory prefix
+&lt;br&gt;
+
+* save&lt;br&gt;
+Save file
+&lt;br&gt;
+
+* savenow&lt;br&gt;
+Save immediately, unless file name is not known
+&lt;br&gt;
+
+* insf&lt;br&gt;
+Insert a file
+
+### Formatting
+
+* center&lt;br&gt;
+Center line
+&lt;br&gt;
+
+* fmtblk&lt;br&gt;
+Format all paragraphs in a block
+&lt;br&gt;
+
+* format&lt;br&gt;
+Format current paragraph
+&lt;br&gt;
+
+* lindent&lt;br&gt;
+Indent to the left
+&lt;br&gt;
+
+* rindent&lt;br&gt;
+Indent to the right
+
+### Help
+
+* help&lt;br&gt;
+Turn help on or off
+&lt;br&gt;
+
+* hnext&lt;br&gt;
+Switch to next help screen
+&lt;br&gt;
+
+* hprev&lt;br&gt;
+Switch to previous help screen
+
+### Inserting
+
+* ctrl&lt;br&gt;
+Type next key
+&lt;br&gt;
+
+* finish&lt;br&gt;
+Complete word in text window
+&lt;br&gt;
+
+* insc&lt;br&gt;
+Insert a space 
+&lt;br&gt;
+
+* open&lt;br&gt;
+Insert newline
+&lt;br&gt;
+
+* quote&lt;br&gt;
+Insert a control character
+&lt;br&gt;
+
+* quote8&lt;br&gt;
+Insert a meta character
+&lt;br&gt;
+
+* rtn&lt;br&gt;
+__Return__ / __Enter__ key
+&lt;br&gt;
+
+* type&lt;br&gt;
+Insert typed character
+&lt;br&gt;
+
+* secure_type&lt;br&gt;
+Insert typed character, but only allowed in prompt windows (not allowed in shell windows)
+
+### Macros
+
+* macros&lt;br&gt;
+Insert keyboard macros into current file
+&lt;br&gt;
+
+* play&lt;br&gt;
+Execute a macro
+&lt;br&gt;
+
+* query&lt;br&gt;
+Suspend macro recording for user query
+&lt;br&gt;
+
+* record&lt;br&gt;
+Record a macro
+&lt;br&gt;
+
+* stop&lt;br&gt;
+Stop recording macro
+
+### Menu
+
+* backsmenu&lt;br&gt;
+Undo in file completion menu
+&lt;br&gt;
+
+* bofmenu&lt;br&gt;
+Move to beginning of menu
+&lt;br&gt;
+
+* bolmenu&lt;br&gt;
+Move to beginning of line in a menu
+&lt;br&gt;
+
+* dnarwmenu&lt;br&gt;
+Move down one line in a menu
+&lt;br&gt;
+
+* eolmenu&lt;br&gt;
+Move cursor to end of line in a menu
+&lt;br&gt;
+
+* eofmenu&lt;br&gt;
+Move cursor to end of menu
+&lt;br&gt;
+
+* ltarwmenu&lt;br&gt;
+Move cursor left in a menu
+&lt;br&gt;
+
+* rtarwmenu&lt;br&gt;
+Move cursor right in menu
+&lt;br&gt;
+
+* uparwmenu&lt;br&gt;
+Move cursor up in menu
+&lt;br&gt;
+
+* dnslidemenu&lt;br&gt;
+Scroll menu down one line
+&lt;br&gt;
+
+* upslidemenu&lt;br&gt;
+Scroll menu up one line
+&lt;br&gt;
+
+* pgupmenu&lt;br&gt;
+Scroll menu up
+&lt;br&gt;
+
+* pgdnmenu&lt;br&gt;
+Scroll menu down
+&lt;br&gt;
+
+* tabmenu&lt;br&gt;
+Tab through menu
+
+### Misc
+
+* beep&lt;br&gt;
+Beep
+&lt;br&gt;
+
+* execmd&lt;br&gt;
+Execute a JOE command
+&lt;br&gt;
+
+* debug_joe&lt;br&gt;
+Insert debug information into buffer
+&lt;br&gt;
+
+* math&lt;br&gt;
+Calculator
+&lt;br&gt;
+
+* maths&lt;br&gt;
+Secure Calculator (no way to run joe() macros)
+&lt;br&gt;
+
+* mode&lt;br&gt;
+Mode prompt
+&lt;br&gt;
+
+* menu&lt;br&gt;
+Menu prompt
+&lt;br&gt;
+
+* msg&lt;br&gt;
+Display a message
+&lt;br&gt;
+
+* notmod&lt;br&gt;
+Clear the modified flag
+&lt;br&gt;
+
+* retype&lt;br&gt;
+Refresh screen
+&lt;br&gt;
+
+* shell&lt;br&gt;
+Suspend process or execute a sub-shell
+&lt;br&gt;
+
+* stat&lt;br&gt;
+Display cursor position
+&lt;br&gt;
+
+* tag&lt;br&gt;
+Tags file search
+&lt;br&gt;
+
+* tagjump&lt;br&gt;
+Jump to next tags file search match (only if notagsmenu is set)
+&lt;br&gt;
+
+* timer&lt;br&gt;
+Execute a macro periodically
+&lt;br&gt;
+
+* txt&lt;br&gt;
+Insert text.  If first character is \`, then text is assumed to be a format string (that is, the string used to define the status line for the rmsg and lmsg options) and is formatted before the insertion.
+&lt;br&gt;
+
+* name&lt;br&gt;
+Insert current file name
+&lt;br&gt;
+
+* language&lt;br&gt;
+Insert current language
+&lt;br&gt;
+
+* charset&lt;br&gt;
+Insert current character set
+&lt;br&gt;
+
+* keymap&lt;br&gt;
+Switch to another keymap
+
+### Prompts
+
+* complete&lt;br&gt;
+Complete a file-name in a prompt
+&lt;br&gt;
+
+* if&lt;br&gt;
+Only run following cmds if expr is true (non-zero)
+&lt;br&gt;
+
+* then&lt;br&gt;
+Same as rtn but only works in prompt windows
+&lt;br&gt;
+
+* elsif&lt;br&gt;
+Try a new condition
+&lt;br&gt;
+
+* else&lt;br&gt;
+Toggle truth flag
+&lt;br&gt;
+
+* endif&lt;br&gt;
+Start running cmds again
+&lt;br&gt;
+
+&lt;p&gt;Here is an example &#x27;if&#x27; macro:&lt;/p&gt;
+
+    if,&quot;char==65&quot;,then,&quot;it&#x27;s an A&quot;,else,&quot;it&#x27;s not an A&quot;,endif	^[ q
+
+When you hit __^[ q__, if the character under the cursor is an &#x27;A&#x27;: &quot;it&#x27;s a A&quot;
+is inserted into the buffer, otherwise &quot;it&#x27;s not an A&quot; is inserted.
+
+&lt;p&gt;&quot;if&quot; creates a math prompt (like __Esc M__).  &quot;then&quot; is like &quot;rtn&quot;- it hits the
+return key for this prompt.
+
+Within the math prompt, the following variables are available:
+
+* char&lt;br&gt;
+ASCII value of character under cursor
+&lt;br&gt;
+
+* width&lt;br&gt;
+Width of screen
+&lt;br&gt;
+
+* height&lt;br&gt;
+Height of screen
+&lt;br&gt;
+
+* byte&lt;br&gt;
+byte number
+&lt;br&gt;
+
+* col&lt;br&gt;
+column number
+&lt;br&gt;
+
+* line&lt;br&gt;
+line number
+&lt;br&gt;
+
+* lines&lt;br&gt;
+no. lines in file
+&lt;br&gt;
+
+* top&lt;br&gt;
+line number of top line of window
+
+### Repeat
+
+* arg&lt;br&gt;
+Prompt for repeat argument
+&lt;br&gt;
+
+* uarg&lt;br&gt;
+Universal argument
+
+### Scrolling
+
+* crawll&lt;br&gt;
+Pan screen left
+&lt;br&gt;
+
+* crawlr&lt;br&gt;
+Pan screen right
+&lt;br&gt;
+
+* dnslide&lt;br&gt;
+Scroll screen down 1 line
+&lt;br&gt;
+
+* pgdn&lt;br&gt;
+Scroll screen down
+&lt;br&gt;
+
+* pgup&lt;br&gt;
+Scroll screen up
+&lt;br&gt;
+
+* upslide&lt;br&gt;
+Scroll up one line
+
+### Search and replace
+
+* ffirst&lt;br&gt;
+Find text
+&lt;br&gt;
+
+* fnext&lt;br&gt;
+Repeat previous search
+&lt;br&gt;
+
+* isrch&lt;br&gt;
+Incremental search forward
+&lt;br&gt;
+
+* qrepl&lt;br&gt;
+Search and replace
+&lt;br&gt;
+
+* rfirst&lt;br&gt;
+Search backwards for text
+&lt;br&gt;
+
+* rsrch&lt;br&gt;
+Reverse incremental search
+
+### Windows
+
+* explode&lt;br&gt;
+Display one window or display all windows
+&lt;br&gt;
+
+* dupw&lt;br&gt;
+Duplicate current window
+&lt;br&gt;
+
+* groww&lt;br&gt;
+Increase size of window
+&lt;br&gt;
+
+* nextw&lt;br&gt;
+Move cursor to next window
+&lt;br&gt;
+
+* prevw&lt;br&gt;
+Go to previous window
+&lt;br&gt;
+
+* shrinkw&lt;br&gt;
+Shrink window
+&lt;br&gt;
+
+* splitw&lt;br&gt;
+Split window into two
+&lt;br&gt;
+
+* tw0&lt;br&gt;
+Eliminate this window
+&lt;br&gt;
+
+* tw1&lt;br&gt;
+Show only one window
+&lt;br&gt;
+
+* mwind&lt;br&gt;
+Get error messages window on the screen and put cursor in it.
+&lt;br&gt;
+
+* showlog&lt;br&gt;
+Get startup log scratch buffer into window.
+&lt;br&gt;
+
+* mfit&lt;br&gt;
+Fit two windows on the screen: make current window 6 lines, and give rest of space to window above.  The window above is either the existing previous window, a newly created one if there wasn&#x27;t one.
+
+### Undo
+
+* redo&lt;br&gt;
+Re-execute the latest undone change
+&lt;br&gt;
+
+* undo&lt;br&gt;
+Undo last change
+
+### Mouse
+
+* tomouse&lt;br&gt;
+Move the cursor to where the mouse was clicked/dragged
+&lt;br&gt;
+
+* defmdown&lt;br&gt;
+Default single-click handler, usually bound to MDOWN.  Positions cursor to
+mouse and begins a region.
+&lt;br&gt;
+
+* defmup&lt;br&gt;
+Default single-click release handler, usually bound to MUP.  Completes
+selection of a region.
+&lt;br&gt;
+
+* defmdrag&lt;br&gt;
+Default single-click drag handler, usually bound to MDRAG.  Selects a region
+of text a character at a time.
+&lt;br&gt;
+
+* defm2down&lt;br&gt;
+Default double-click handler, usually bound to M2DOWN.
+&lt;br&gt;
+
+* defm2up&lt;br&gt;
+Default double-click release handler, usually bound to M2UP.
+&lt;br&gt;
+
+* defm2drag&lt;br&gt;
+Default double-click drag handler, usually bound to M2DRAG.  Selects a
+region of text a word at a time.
+&lt;br&gt;
+
+* defm3down&lt;br&gt;
+Default triple-click handler, usually bound to M3DOWN.
+&lt;br&gt;
+
+* defm3up&lt;br&gt;
+Default triple-click release handler, usually bound to M3UP.
+&lt;br&gt;
+
+* defm3drag&lt;br&gt;
+Default triple-click drag handler, usually bound to M3DRAG.  Selects a
+region of text a line at a time.
+&lt;br&gt;
+
+* defmiddledown&lt;br&gt;
+Default middle click handler, usually bound to MIDDLEDOWN.  This inserts
+text.
+&lt;br&gt;
+
+* defmiddleup&lt;br&gt;
+Default middle button release handler, usually bound to MIDDLEUP.
+&lt;br&gt;
+
+* xtmouse&lt;br&gt;
+Handle xterm mouse events, usually bound to Esc \[ M.  It parses the rest of
+the sequence and generates fake &quot;keys&quot; that can be bound to macros in the
+joerc file.  It uses a timer to detect double-click and triple-click.  The
+keys are: MUP, MDOWN, MDRAG, M2UP, M2DOWN, M2DRAG, M3UP, M3DOWN, M3DRAG,
+MWUP and MWDOWN.
+&lt;br&gt;
+
+* extmouse&lt;br&gt;
+Handle extended xterm mouse events, usually bound to Esc \[ \&lt;.
+&lt;br&gt;
+
+* paste&lt;br&gt;
+Insert base64 encoded text (for XTerm --enable-base64 option).
+&lt;br&gt;
+
+* brpaste&lt;br&gt;
+Disable autoindent, wordwrap and spaces.  The idea is to bind this to __Esc [ 2 0 0 ~__ so that when the terminal emulator sends a mouse paste, the text is inserted as-is.
+&lt;br&gt;
+
+* brpaste_done&lt;br&gt;
+Restore autoindent, wordwrap and spaces modes to their original values before brpaste.  The idea is to bind this to __Esc [ 2 0 1 ~__ so that these modes are restored after a mouse paste.
+&lt;br&gt;
+</pre></body></html>
