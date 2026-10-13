@@ -115,10 +115,9 @@ static int setjoeargs(int argc, wchar_t **argv)
 		return 1;
 	}
 
-	/* Handle first argument special: we need to fix the path and get the personality */
+	/* Fix the executable path and use the default JOE settings. */
 	{
 		size_t arglen;
-		wchar_t *r, *d;
 
 		wcscpy(tmp, argv[0]);
 		if (fixpath(tmp, MAX_PATH))
@@ -135,23 +134,7 @@ static int setjoeargs(int argc, wchar_t **argv)
 			return 1;
 		}
 
-		r = wcsrchr(tmp, L'\\');
-		if (!r)
-		{
-			r = tmp;
-		}
-		else
-		{
-			r++;
-		}
-
-		d = wcschr(r, L'.');
-		if (d)
-		{
-			*d = 0;
-		}
-
-		jw_personality = wcsdup(r);
+		jw_personality = wcsdup(L"joe");
 	}
 
 	/* Copy the rest of the arguments */

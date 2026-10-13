@@ -1,0 +1,7 @@
+window opened: Z:\tmp\mijoe-default-joe-verification\renamed.exe
+Color menu entries: 18
+PASS actual menu dispatch -> JOE color parsing -> active-menu acknowledgement: darkblue2
+PASS actual menu dispatch -> JOE color parsing -> active-menu acknowledgement: default
+PASS themes
+PASS F1-F4 launched no child processes
+PASS Unicode filename + edit + save + exit

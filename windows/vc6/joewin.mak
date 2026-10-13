@@ -32,7 +32,7 @@ RCFLAGS=$(RCFLAGS) /dNDEBUG
 
 HEADERS=jwversion.h ..\src\common\*.h ..\src\joe\win\*.h ..\src\putty\win\*.h ..\src\putty\putty\*.h ..\src\putty\putty\windows\*.h ..\..\joe\*.h "$(OBJDIR)\dirs.tag"
 
-all: "$(OUTDIR)\cjoe.exe" "$(OUTDIR)\joe.exe" "$(OUTDIR)\jmacs.exe" "$(OUTDIR)\jstar.exe" "$(OUTDIR)\jpico.exe" "$(OUTDIR)\jice.exe"
+all: "$(OUTDIR)\joe.exe"
 
 "$(OBJDIR)\dirs.tag":
 	@if not exist "$(OBJDIR)" mkdir "$(OBJDIR)"
@@ -63,29 +63,11 @@ RESOURCEDEPS=dialogs.rc builtins.rc joewin-vc6.ico ..\src\exe\joewin.rc $(HEADER
 # VC6 LINK accepts one .res per output; include every resource in that one file.
 "$(OBJDIR)\joe.res": joe.rc ..\rc\joerc $(RESOURCEDEPS)
 	$(RC) $(RCFLAGS) /fo"$@" joe.rc
-"$(OBJDIR)\jmacs.res": jmacs.rc ..\rc\jmacsrc $(RESOURCEDEPS)
-	$(RC) $(RCFLAGS) /fo"$@" jmacs.rc
-"$(OBJDIR)\jstar.res": jstar.rc ..\rc\jstarrc $(RESOURCEDEPS)
-	$(RC) $(RCFLAGS) /fo"$@" jstar.rc
-"$(OBJDIR)\jpico.res": jpico.rc ..\rc\jpicorc $(RESOURCEDEPS)
-	$(RC) $(RCFLAGS) /fo"$@" jpico.rc
-"$(OBJDIR)\jice.res": jice.rc ..\rc\jicerc $(RESOURCEDEPS)
-	$(RC) $(RCFLAGS) /fo"$@" jice.rc
-
 EXEDEPS=$(LIBS) "$(OBJDIR)\main.obj"
 "$(OUTDIR)\joe.exe": $(EXEDEPS) "$(OBJDIR)\joe.res"
 	$(LINK) $(LFLAGS) /out:"$@" $(EXEDEPS) "$(OBJDIR)\joe.res" $(SYSLIBS)
-"$(OUTDIR)\jmacs.exe": $(EXEDEPS) "$(OBJDIR)\jmacs.res"
-	$(LINK) $(LFLAGS) /out:"$@" $(EXEDEPS) "$(OBJDIR)\jmacs.res" $(SYSLIBS)
-"$(OUTDIR)\jstar.exe": $(EXEDEPS) "$(OBJDIR)\jstar.res"
-	$(LINK) $(LFLAGS) /out:"$@" $(EXEDEPS) "$(OBJDIR)\jstar.res" $(SYSLIBS)
-"$(OUTDIR)\jpico.exe": $(EXEDEPS) "$(OBJDIR)\jpico.res"
-	$(LINK) $(LFLAGS) /out:"$@" $(EXEDEPS) "$(OBJDIR)\jpico.res" $(SYSLIBS)
-"$(OUTDIR)\jice.exe": $(EXEDEPS) "$(OBJDIR)\jice.res"
-	$(LINK) $(LFLAGS) /out:"$@" $(EXEDEPS) "$(OBJDIR)\jice.res" $(SYSLIBS)
-
 # Optional shared-DLL layout, matching the original Visual Studio solution.
-dll: "$(OUTDIR)\dll\cjoe.exe" "$(OUTDIR)\dll\joewin.dll" "$(OUTDIR)\dll\joe.exe" "$(OUTDIR)\dll\jmacs.exe" "$(OUTDIR)\dll\jstar.exe" "$(OUTDIR)\dll\jpico.exe" "$(OUTDIR)\dll\jice.exe"
+dll: "$(OUTDIR)\dll\joewin.dll" "$(OUTDIR)\dll\joe.exe"
 
 "$(OBJDIR)\joedll.obj": ..\src\exe\joedll\joedll.c $(HEADERS) ..\src\exe\joedll\joedll.h
 	$(CC) $(CFLAGS) $(COMMONFLAGS) /DJOEDLL_EXPORTS /Fo"$@" /c ..\src\exe\joedll\joedll.c
@@ -99,28 +81,10 @@ dll: "$(OUTDIR)\dll\cjoe.exe" "$(OUTDIR)\dll\joewin.dll" "$(OUTDIR)\dll\joe.exe"
 
 "$(OBJDIR)\joe_dll.res": joe.rc ..\rc\joerc $(RESOURCEDEPS)
 	$(RC) $(RCFLAGS) /dJOEWIN_DLL_FRONTEND /fo"$@" joe.rc
-"$(OBJDIR)\jmacs_dll.res": jmacs.rc ..\rc\jmacsrc $(RESOURCEDEPS)
-	$(RC) $(RCFLAGS) /dJOEWIN_DLL_FRONTEND /fo"$@" jmacs.rc
-"$(OBJDIR)\jstar_dll.res": jstar.rc ..\rc\jstarrc $(RESOURCEDEPS)
-	$(RC) $(RCFLAGS) /dJOEWIN_DLL_FRONTEND /fo"$@" jstar.rc
-"$(OBJDIR)\jpico_dll.res": jpico.rc ..\rc\jpicorc $(RESOURCEDEPS)
-	$(RC) $(RCFLAGS) /dJOEWIN_DLL_FRONTEND /fo"$@" jpico.rc
-"$(OBJDIR)\jice_dll.res": jice.rc ..\rc\jicerc $(RESOURCEDEPS)
-	$(RC) $(RCFLAGS) /dJOEWIN_DLL_FRONTEND /fo"$@" jice.rc
-
 DLLDEPS="$(OUTDIR)\dll\joewin.dll" "$(OBJDIR)\dllmain.obj"
 DLLLINK="$(OUTDIR)\dll\joewin.lib" "$(OBJDIR)\dllmain.obj" $(SYSLIBS)
 "$(OUTDIR)\dll\joe.exe": $(DLLDEPS) "$(OBJDIR)\joe_dll.res"
 	$(LINK) $(LFLAGS) /out:"$@" $(DLLLINK) "$(OBJDIR)\joe_dll.res"
-"$(OUTDIR)\dll\jmacs.exe": $(DLLDEPS) "$(OBJDIR)\jmacs_dll.res"
-	$(LINK) $(LFLAGS) /out:"$@" $(DLLLINK) "$(OBJDIR)\jmacs_dll.res"
-"$(OUTDIR)\dll\jstar.exe": $(DLLDEPS) "$(OBJDIR)\jstar_dll.res"
-	$(LINK) $(LFLAGS) /out:"$@" $(DLLLINK) "$(OBJDIR)\jstar_dll.res"
-"$(OUTDIR)\dll\jpico.exe": $(DLLDEPS) "$(OBJDIR)\jpico_dll.res"
-	$(LINK) $(LFLAGS) /out:"$@" $(DLLLINK) "$(OBJDIR)\jpico_dll.res"
-"$(OUTDIR)\dll\jice.exe": $(DLLDEPS) "$(OBJDIR)\jice_dll.res"
-	$(LINK) $(LFLAGS) /out:"$@" $(DLLLINK) "$(OBJDIR)\jice_dll.res"
-
 clean:
 	@if exist "$(OUTDIR)" rmdir /s /q "$(OUTDIR)"
 
@@ -130,12 +94,3 @@ package: all
 	@copy /y ..\colors\*.jcf "$(OUTDIR)\colors\" >nul
 	@if not exist "$(OUTDIR)\docs" mkdir "$(OUTDIR)\docs"
 	@copy /y docs\*.html "$(OUTDIR)\docs\" >nul
-
-"$(OBJDIR)\cjoe.res": cjoe.rc ..\rc\joerc.zh_TW $(RESOURCEDEPS)
-	$(RC) $(RCFLAGS) /fo"$@" cjoe.rc
-"$(OUTDIR)\cjoe.exe": $(EXEDEPS) "$(OBJDIR)\cjoe.res"
-	$(LINK) $(LFLAGS) /out:"$@" $(EXEDEPS) "$(OBJDIR)\cjoe.res" $(SYSLIBS)
-"$(OBJDIR)\cjoe_dll.res": cjoe.rc ..\rc\joerc.zh_TW $(RESOURCEDEPS)
-	$(RC) $(RCFLAGS) /dJOEWIN_DLL_FRONTEND /fo"$@" cjoe.rc
-"$(OUTDIR)\dll\cjoe.exe": $(DLLDEPS) "$(OBJDIR)\cjoe_dll.res"
-	$(LINK) $(LFLAGS) /out:"$@" $(DLLLINK) "$(OBJDIR)\cjoe_dll.res"

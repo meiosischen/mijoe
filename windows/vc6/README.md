@@ -42,12 +42,15 @@ build.bat Debug dll
 `build.bat Release clean` 只清理该配置的 `windows\bin\vc6\Release` 构建输出。
 使用 VC6 自带头文件与库即可；应用程序静态链接 VC6 CRT，无需安装 MFC 或额外的 VC 运行库 DLL。
 
+Git 只保留可运行程序、主题、帮助和验证证据；`obj` 目录及 `.lib/.exp/.pdb`
+等编译中间文件已清理并加入忽略规则，构建时会自动重新生成。
+
 ## 输出与使用
 
 - 独立版：`windows\bin\vc6\Release\` 或 `Debug\`。
 - 共享版：对应目录下的 `dll\`，运行时将 `joewin.dll` 与 EXE 放在同一目录。
-- 六个程序：`joe.exe`、`jmacs.exe`、`jstar.exe`、`jpico.exe`、`jice.exe`、`cjoe.exe`。
-  `cjoe` 使用原源码的繁体中文配置。
+- 只构建默认 JOE 键位的 `joe.exe`；共享版另生成 `joewin.dll`。
+- 启动配置统一为 `joerc`，不随程序文件名或界面语言切换；界面翻译资源仍保留。
 - 普通使用选择 `joe.exe`；程序内置启动配置、81 个语法文件和 18 个主题。
 - 点击窗口左上角图标，在系统菜单的 **Color Schemes** 中切换主题；自定义 `.jcf`
   可放在 EXE 旁的 `colors\` 或 `%LOCALAPPDATA%\JoeEditor\colors\`。
@@ -63,7 +66,6 @@ F1～F4 的按键处理。前端会同时消费按下和松开事件，防止残
 
 VC6 兼容层处理旧 SDK 缺少的类型/API、64 位整数类型和 CRT 格式符、
 无符号 64 位整数到浮点数的转换、资源编译器大小写与图标格式等差异。
-`jice` 配置中的三个旧字节范围已转换为 4.6 支持的 Unicode 范围。
 
 原现代 Visual Studio solution 和安装工程也已去掉弹出终端引用；本次没有构建 WiX 安装包。
 修改和新增文件的完整清单见 [change-list.txt](change-list.txt)。

@@ -10,10 +10,10 @@ drag-and-drop and clipboard integration.
 
 ## Clipboard integration
 
-`^K C` in JOE and JSTAR will paste text from the Windows clipboard if no block
-is set.  JOE also maps `^S` to copy the current block into the clipboard.  If
-you use a different personality, you may use the context menu (right click
-in the editor) to copy into/paste from the Windows clipboard.
+`^K C` in JOE will paste text from the Windows clipboard if no block
+is set. JOE also maps `^S` to copy the current block into the clipboard. The
+context menu (right click in the editor) also supports copying into/pasting
+from the Windows clipboard.
 
 ## Explorer integration
 
@@ -50,9 +50,9 @@ likely work for JOE.
 
 JOE for Windows comes in two installation flavors: Windows installer (MSI) and
 standalone EXE.  You can find standalone versions on [sourceforge](https://sourceforge.net/projects/joe-editor/files/JOE%20for%20Windows/),
-in the `standalone` directories for releases since 4.1.  There is one per flavor,
-each with every syntax and rc file baked into it, so that no external files are
-required for operation.
+in the `standalone` directories for releases since 4.1. This source tree builds
+only `joe.exe`, with the default `joerc`, syntax files and color schemes embedded,
+so that no external files are required for operation.
 
 Currently, the only limitation present in the standalone version is that pop-up
 virtual terminals, mentioned in the above section, are not supported.  They can
@@ -63,7 +63,7 @@ find one, but you&#x27;d need to get it from the normal install.
 
 Since the `joerc` file is embedded within the EXE, it is a little less
 straightforward to customize the standalone binaries.  They will still try
-to read `conf\joerc` (or `jmacsrc`, `jpicorc`, etc) relative to the EXE file
+to read `conf\joerc` relative to the EXE file
 as well as in your home directory as normal (see below), so it can be
 overridden by placing an rc file in one of those locations.
 

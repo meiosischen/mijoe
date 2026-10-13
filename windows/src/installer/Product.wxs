@@ -64,27 +64,8 @@
         <ComponentRef Id="JoePersonalityShortcut" />
       </Feature>
 
-      <Feature Id="JStarFeature" Title="JSTAR editor" Description="JOE's WordStar emulation personality" Level="2" AllowAdvertise="no" InstallDefault="local">
-        <ComponentRef Id="JStarPersonality" />
-        <ComponentRef Id="JStarRCComponent" />
-        <ComponentRef Id="JStarPersonalityShortcut" />
-      </Feature>
-
-      <Feature Id="JMacsFeature" Title="JMACS editor" Description="JOE's Emacs emulation personality" Level="2" AllowAdvertise="no" InstallDefault="local">
-        <ComponentRef Id="JMacsPersonality" />
-        <ComponentRef Id="JMacsRCComponent" />
-        <ComponentRef Id="JMacsPersonalityShortcut" />
-      </Feature>
-      
-      <Feature Id="JPicoFeature" Title="JPICO editor" Description="JOE's Pico emulation personality" Level="2" AllowAdvertise="no" InstallDefault="local">
-        <ComponentRef Id="JPicoPersonality" />
-        <ComponentRef Id="JPicoPersonalityShortcut" />
-        <ComponentRef Id="JPicoRCComponent" />
-      </Feature>
-      
       <Feature Id="TranslationsFeature" Title="Translations" Description="Install translation files for German, Traditional Chinese, Russian, Ukrainian, and French" Level="3" AllowAdvertise="no" InstallDefault="local">
 	<ComponentGroupRef Id="TranslationsComponentGroup" />
-	<ComponentGroupRef Id="RegionalConfFilesComponentGroup" />
       </Feature>
 
       <Feature Id="ExtendedColorsFeature" Title="Extra color schemes" Description="Install all available color schemes.  Standard install also contains schemes, but not this many." Level="8" AllowAdvertise="no" InstallDefault="local">

@@ -1,0 +1,3 @@
+PASS decoded 103 embedded resources using the actual JOE/miniz loader; themes=18
+PASS all 103 decoded resources match current sources byte for byte (VC6 resource names are uppercase)
+PASS default joerc only; Traditional Chinese message translation retained

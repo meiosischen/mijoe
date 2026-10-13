@@ -1,7 +1,0 @@
-#define PERSONALITY jmacs
-#include "../src/exe/joewin.rc"
-F:*joerc RCDATA "resources\\jmacsrc.dfl"
-#ifndef JOEWIN_DLL_FRONTEND
-#include "dialogs.rc"
-#include "builtins.rc"
-#endif

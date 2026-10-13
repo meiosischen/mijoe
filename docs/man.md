@@ -7,14 +7,6 @@
 ## Syntax
 
 __joe [global-options] [ [local-options] filename ]...__
-<br>
-__jstar [global-options] [ [local-options] filename ]...__
-<br>
-__jmacs [global-options] [ [local-options] filename ]...__
-<br>
-__rjoe [global-options] [ [local-options] filename ]...__
-<br>
-__jpico [global-options] [ [local-options] filename ]...__
 
 ## Description
 
@@ -24,17 +16,10 @@ Micro-Pro's WordStar or Borland's "Turbo" languages will feel at home.  JOE
 is a full featured UNIX screen-editor though, and has many features for
 editing programs and text.
 
-JOE also emulates several other editors.  JSTAR is a close imitation of
-WordStar with many "JOE" extensions.  JPICO is a close imitation of the
-Pine mailing system's PICO editor, but with many extensions and
-improvements.  JMACS is a GNU-EMACS imitation.  RJOE is a restricted
-version of JOE, which allows you to edit only the files specified on the
-command line.
-
-Although JOE is actually five different editors, it still requires only one
-executable, but one with five different names.  The name of the editor with
-an "rc" appended gives the name of JOE's initialization file, which
-determines the personality of the editor.
+This source tree provides only the default JOE key layout. The editor
+loads the initialization file "joerc", regardless of its executable
+name or interface language. User customization through "joerc" remains
+available.
 
 JOE is free software;  you can distribute it and/or modify it under the
 terms of the GNU General Public License as published by the Free Software
@@ -1429,7 +1414,7 @@ Hit __Esc S__ or __Esc R__ again to find the next occurrence of the text or
 to switch the direction of the search.
 
 __^S__, __^\\__ and __^L__ have the same effect as __Esc S__. __^R__ has the same
-effect as __Esc R__.  These keys are to support JMACS.
+effect as __Esc R__.
 
 Hit __Backspace__ to undo the last incremental search action.  The last
 action could be a repeat of a previous search or the entering of a new

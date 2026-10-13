@@ -53,16 +53,11 @@ library is required to access the database (on some systems this library is
 ncurses, but JOE does not use curses to control the terminal- it has its own
 code for this).</p>
 
-<p>Much of the look and feel of JOE is determined by its simple
-configuration file "joerc".  Several variants of the editor are installed by
-default in addition to "joe": "jmacs" (emulate GNU-EMACS), "jstar" emulate
-WordStar, "jpico" emulate the Pine mailer editor PICO and "rjoe"- a
-restricted version of JOE which allows the used to only edit the file given
-on the command line.  JOE is linked to several names.  The name which is
-used to invoke the editor with "rc" tacked on the end gives the name of
-configuration file to use.  It is thus easy for you to make your own variant
-if you want.  Also you can customize the editor by copying the system
-"joerc" file to your home directory.</p>
+<p>Much of the look and feel of JOE is determined by its configuration
+file "joerc". This source tree provides only the default JOE key layout
+and builds only the "joe" frontend. The configuration name remains
+"joerc" even if the executable is renamed. You can customize JOE by
+copying the system "joerc" file to your home directory.</p>
 
 <p>Here is a basic screen shot of JOE running in a Cygwin console:</p>
 ![screen capture](http://joe-editor.sourceforge.net/capture.gif)

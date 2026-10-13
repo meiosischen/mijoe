@@ -1,7 +1,6 @@
 #include "jwres.h"
 F:*ftyperc RCDATA "resources\\ftyperc.dfl"
 F:*license.txt RCDATA "resources\\license.txt.dfl"
-F:*joerc.zh_TW RCDATA "resources\\joerc.zh_TW.dfl"
 F:*zh_TW.po RCDATA "resources\\zh_TW.po.dfl"
 F:*4gl.jsf RCDATA "resources\\4gl.jsf.dfl"
 F:*ada.jsf RCDATA "resources\\ada.jsf.dfl"

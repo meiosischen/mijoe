@@ -1,1 +1,0 @@
-jpicorc => joerc [compress]

@@ -9,7 +9,6 @@ import xml.etree.ElementTree as ET
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
-PERSONALITIES = ("joe", "jmacs", "jstar", "jpico", "jice", "cjoe")
 
 
 def write_bytes(path, content):
@@ -88,7 +87,7 @@ def resources():
 
     common = '#include "jwres.h"\n'
     for path in [ROOT / "windows/rc/ftyperc", ROOT / "windows/docs/license.txt",
-                 ROOT / "windows/rc/joerc.zh_TW", ROOT / "po/zh_TW.po"]:
+                 ROOT / "po/zh_TW.po"]:
         common += resource_line(path.name, compressed(path))
     for tag in ("SyntaxFile", "ColorSchemeFile"):
         for item in project.findall(".//{*}" + tag + "[@Include]"):
@@ -98,11 +97,10 @@ def resources():
     # VC6's resource compiler accepts ANSI source; the original dialog is UTF-16.
     dialog = (ROOT / "windows/src/common/resources.rc").read_text(encoding="utf-16")
     write("dialogs.rc", dialog)
-    for personality in PERSONALITIES:
-        text = '#define PERSONALITY %s\n#include "../src/exe/joewin.rc"\n' % personality
-        text += resource_line("joerc", compressed(ROOT / "windows/rc" / ("joerc.zh_TW" if personality == "cjoe" else personality + "rc")))
-        text += '#ifndef JOEWIN_DLL_FRONTEND\n#include "dialogs.rc"\n#include "builtins.rc"\n#endif\n'
-        write(personality + ".rc", text)
+    text = '#define PERSONALITY joe\n#include "../src/exe/joewin.rc"\n'
+    text += resource_line("joerc", compressed(ROOT / "windows/rc/joerc"))
+    text += '#ifndef JOEWIN_DLL_FRONTEND\n#include "dialogs.rc"\n#include "builtins.rc"\n#endif\n'
+    write("joe.rc", text)
     write("joedll.rc", '#define JOEWIN_DLL joewin.dll\n#include "../src/exe/joewin.rc"\n'
                       '#include "dialogs.rc"\n#include "builtins.rc"\n')
     # Keep the existing DIB icon images unchanged; VC6 RC cannot read PNG entries.

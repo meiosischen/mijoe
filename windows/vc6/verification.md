@@ -1,6 +1,9 @@
 # VC6 移植验证记录
 
-日期：2026-10-11。对象：本目录的 JOE for Windows 4.6，禁用弹出终端和 F1～F4。
+日期：2026-10-11。对象：当时的 JOE for Windows 4.6，禁用弹出终端和 F1～F4。
+
+本文件保留收敛键位前的历史验证结果。2026-10-13 起只保留默认 JOE，
+当前验证见 [default-joe-verification.md](default-joe-verification.md)。
 
 ## 环境与结果
 

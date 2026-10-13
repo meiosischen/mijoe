@@ -1,1 +1,0 @@
-jstarrc => joerc [compress]

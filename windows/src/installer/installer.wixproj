@@ -58,14 +58,6 @@
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\exe\jmacs.vcxproj">
-      <Name>jmacs _exe\jmacs_</Name>
-      <Project>{848598c4-f41a-4e93-b862-b6c95d9f429a}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
     <ProjectReference Include="..\exe\joe.vcxproj">
       <Name>joe _exe\joe_</Name>
       <Project>{6c4d6e86-33f1-42e4-864c-fdac9847bc31}</Project>
@@ -77,22 +69,6 @@
     <ProjectReference Include="..\exe\joedll\joedll.vcxproj">
       <Name>joedll</Name>
       <Project>{e4ab405b-0d5c-4c0c-8f2f-274477e65cae}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\exe\jpico.vcxproj">
-      <Name>jpico _exe\jpico_</Name>
-      <Project>{c89edffc-4b31-44ea-9a7d-b000ee068454}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\exe\jstar.vcxproj">
-      <Name>jstar _exe\jstar_</Name>
-      <Project>{f1366d13-320d-4d88-97d5-c62073ce86bd}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>

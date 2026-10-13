@@ -314,7 +314,7 @@ int ushowlog(W *w, int k)
 	return 1;
 }
 
-/* Determine name editor was invoked as and process <name>rc file */
+/* Process the default JOE configuration, regardless of the executable name. */
 
 CAP *cap;
 char **argv;
@@ -326,31 +326,17 @@ int joerc()
 	char *s;
 	char *t;
 	time_t time_rc;
-	char *run;
-#if defined(__MSDOS__) || defined(JOEWIN)
+#ifdef __MSDOS__
 	char *rundir;
 #endif
 	
-	/* Figure out name editor was invoked under */
 #if defined(__MSDOS__) || defined(JOEWIN)
 	_fmode = O_BINARY;
-	s = vscpyz(NULL, argv[0]);
-	joesep(s);
-	run = namprt(s);
-	rundir = dirprt(s);
-	for (c = 0; run[c]; ++c)
-		if (run[c] == '.') {
-			run = vstrunc(run, c);
-			break;
-		}
-#else
-	run = namprt(argv[0]);
 #endif
 
 #ifdef __MSDOS__
 
-	s = vsncpy(NULL, 0, sv(run));
-	s = vsncpy(sv(s), sc("rc"));
+	s = vscpyz(NULL, "joerc");
 	c = procrc(cap, s);
 	if (c == 0)
 		goto donerc;
@@ -358,9 +344,9 @@ int joerc()
 		logerror_1(joe_gettext(_("There were errors in '%s'.  Falling back on default.\n")), s);
 	}
 
+	rundir = dirprt(argv[0]);
 	s = vsncpy(NULL, 0, sv(rundir));
-	s = vsncpy(sv(s), sv(run));
-	s = vsncpy(sv(s), sc("rc"));
+	s = vsncpy(sv(s), sc("joerc"));
 	c = procrc(cap, s);
 	if (c == 0)
 		goto donerc;
@@ -369,51 +355,18 @@ int joerc()
 	}
 #else
 
-	/* Name of system joerc file.  Try to find one with matching language... */
-	
-	/* Try full language: like joerc.de_DE */
+	/* Use the single default key layout; message translations are separate. */
 #ifdef JOEWIN
 	/* Windows port stores configuration files underneath 'conf' directory in same location as exe */
 	t = vsncpy(NULL, 0, sz(JOERC));
 #else
 	t = vsncpy(NULL, 0, sc(JOERC));
 #endif
-	t = vsncpy(sv(t), sv(run));
-	t = vsncpy(sv(t), sc("rc."));
-	t = vsncpy(sv(t), sz(locale_msgs));
+	t = vsncpy(sv(t), sc("joerc"));
 	if (!stat(t,&sbuf))
 		time_rc = sbuf.st_mtime;
-	else {
-		/* Try generic language: like joerc.de */
-		if (locale_msgs[0] && locale_msgs[1] && locale_msgs[2]=='_') {
-#ifdef JOEWIN
-			t = vsncpy(NULL, 0, sz(JOERC));
-#else
-			t = vsncpy(NULL, 0, sc(JOERC));
-#endif
-			t = vsncpy(sv(t), sv(run));
-			t = vsncpy(sv(t), sc("rc."));
-			t = vsncpy(sv(t), locale_msgs, 2);
-			if (!stat(t,&sbuf))
-				time_rc = sbuf.st_mtime;
-			else
-				goto nope;
-		} else {
-			nope:
-			/* Try Joe's bad English */
-#ifdef JOEWIN
-			t = vsncpy(NULL, 0, sz(JOERC));
-#else
-			t = vsncpy(NULL, 0, sc(JOERC));
-#endif
-			t = vsncpy(sv(t), sv(run));
-			t = vsncpy(sv(t), sc("rc"));
-			if (!stat(t,&sbuf))
-				time_rc = sbuf.st_mtime;
-			else
-				time_rc = 0;
-		}
-	}
+	else
+		time_rc = 0;
 
 	/* User's joerc file */
 	s = getenv("HOME");
@@ -425,8 +378,7 @@ int joerc()
 		/* No dot-names in Windows */
 		s = vsncpy(sv(s), sc("\\"));
 #endif
-		s = vsncpy(sv(s), sv(run));
-		s = vsncpy(sv(s), sc("rc"));
+		s = vsncpy(sv(s), sc("joerc"));
 
 		if (!stat(s,&sbuf)) {
 			if (sbuf.st_mtime < time_rc) {
@@ -452,16 +404,8 @@ int joerc()
 	}
 
 	/* Try built-in joerc */
-	s = vsncpy(NULL, 0, sc("*"));
-	s = vsncpy(sv(s), sv(run));
-	s = vsncpy(sv(s), sc("rc"));
+	s = vscpyz(NULL, "*joerc");
 	c = procrc(cap, s);
-	if (c != 0 && c != 1) {
-		/* If *fancyjoerc not present, use *joerc which is always there */
-		s = vstrunc(s, 0);
-		s = vsncpy(sv(s),sc("*joerc"));
-		c = procrc(cap, s);
-	}
 	if (c == 0)
 		goto donerc;
 	if (c == 1) {

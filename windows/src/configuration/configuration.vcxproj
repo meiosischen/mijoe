@@ -35,12 +35,7 @@
     <MDDocFile Include="$(JoeRootDocsDir)\windows.md" />
     <DocFile Include="markdown.css" />
     <ConfigFile Include="$(JoeConfDir)\ftyperc" />
-    <ConfigFile Include="$(JoeConfDir)\jmacsrc" />
     <ConfigFile Include="$(JoeConfDir)\joerc" />
-    <ConfigFile Include="$(JoeConfDir)\joerc.zh_TW" />
-    <ConfigFile Include="$(JoeConfDir)\jpicorc" />
-    <ConfigFile Include="$(JoeConfDir)\jstarrc" />
-    <ConfigFile Include="$(JoeConfDir)\jicerc" />
     <SyntaxFile Include="$(JoeSyntaxDir)\4gl.jsf" />
     <SyntaxFile Include="$(JoeSyntaxDir)\ada.jsf" />
     <SyntaxFile Include="$(JoeSyntaxDir)\ant.jsf" />

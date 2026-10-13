@@ -1,0 +1,13 @@
+# Local editor and Python caches.
+.DS_Store
+__pycache__/
+*.pyc
+
+# VC6 intermediate files; keep runnable EXE/DLL packages and verification logs.
+/windows/bin/vc6/*/obj/
+/windows/bin/vc6/**/*.lib
+/windows/bin/vc6/**/*.exp
+/windows/bin/vc6/**/*.pdb
+/windows/bin/vc6/**/*.idb
+/windows/bin/vc6/**/*.ilk
+/windows/bin/vc6/**/*.pch

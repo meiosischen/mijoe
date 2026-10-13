@@ -39,10 +39,5 @@
 	<File Id="TrChinesePO" Name="zh_TW.po" DiskId="1" Source="$(var.PODir)\zh_TW.po" KeyPath="yes" />
       </Component>
     </ComponentGroup>
-    <ComponentGroup Id="RegionalConfFilesComponentGroup" Directory="CONFIGFOLDER">
-      <Component Id="TrChineseRCComponent" Win64="$(var.Win64)">
-	<File Id="TrChineseRC" Name="joerc.zh_TW" DiskId="1" Source="$(var.ConfRootDir)\joerc.zh_TW" KeyPath="yes" />
-      </Component>      
-    </ComponentGroup>
   </Fragment>
 </Wix>

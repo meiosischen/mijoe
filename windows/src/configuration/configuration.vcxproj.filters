@@ -47,22 +47,7 @@
     <ConfigFile Include="$(JoeConfDir)\ftyperc">
       <Filter>Conf files</Filter>
     </ConfigFile>
-    <ConfigFile Include="$(JoeConfDir)\jmacsrc">
-      <Filter>Conf files</Filter>
-    </ConfigFile>
     <ConfigFile Include="$(JoeConfDir)\joerc">
-      <Filter>Conf files</Filter>
-    </ConfigFile>
-    <ConfigFile Include="$(JoeConfDir)\joerc.zh_TW">
-      <Filter>Conf files</Filter>
-    </ConfigFile>
-    <ConfigFile Include="$(JoeConfDir)\jpicorc">
-      <Filter>Conf files</Filter>
-    </ConfigFile>
-    <ConfigFile Include="$(JoeConfDir)\jstarrc">
-      <Filter>Conf files</Filter>
-    </ConfigFile>
-    <ConfigFile Include="$(JoeConfDir)\jicerc">
       <Filter>Conf files</Filter>
     </ConfigFile>
     <SyntaxFile Include="$(JoeSyntaxDir)\4gl.jsf">

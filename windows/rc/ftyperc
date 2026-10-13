@@ -654,15 +654,7 @@
 [joerc]
 *ftyperc
 *joerc
-*jmacsrc
-*jstarrc
-*rjoerc
-*jpicorc
 *joerc.in
-*jmacsrc.in
-*jstarrc.in
-*rjoerc.in
-*jpicorc.in
 -syntax joerc
 -highlighter_context
 
