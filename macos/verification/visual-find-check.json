@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-27",
+  "command": "/usr/local/bin/mj",
+  "binary_sha256": "0a8afe29e617b7a85c6390cc2b4bce50a63537f0d8a5ca7cbf6c764a881afd45",
+  "code_changed": false,
+  "reference_cases_passed": 78,
+  "failure_cases_passed": 6,
+  "test_script_sha256": "d71ea5110eae8afa2cd537a82850aad2bf7bd8ca724cc18d18e0c195aba0d34f",
+  "visual_cases": [
+    {
+      "case": "visual-find",
+      "keys": "vfxd",
+      "expected": "637864207461696c0a",
+      "actual": "637864207461696c0a"
+    },
+    {
+      "case": "visual-till-uppercase-V",
+      "keys": "vtVd",
+      "expected": "5664656656207461696c0a",
+      "actual": "5664656656207461696c0a"
+    },
+    {
+      "case": "visual-find-uppercase-V",
+      "keys": "vfVd",
+      "expected": "64656656207461696c0a",
+      "actual": "64656656207461696c0a"
+    },
+    {
+      "case": "visual-till-uppercase-V-count",
+      "keys": "v2tVd",
+      "expected": "56207461696c0a",
+      "actual": "56207461696c0a"
+    },
+    {
+      "case": "visual-find-uppercase-V-count",
+      "keys": "v2fVd",
+      "expected": "207461696c0a",
+      "actual": "207461696c0a"
+    },
+    {
+      "case": "visual-find-uppercase-V-copy",
+      "keys": "vfVy$p",
+      "expected": "6162635664656656207461696c616263560a",
+      "actual": "6162635664656656207461696c616263560a"
+    },
+    {
+      "case": "visual-till-uppercase-V-change",
+      "keys": "vtVcQ\u001b",
+      "expected": "515664656656207461696c0a",
+      "actual": "515664656656207461696c0a"
+    },
+    {
+      "case": "visual-find-mode-key-target",
+      "keys": "vfvd",
+      "expected": "636456207461696c0a",
+      "actual": "636456207461696c0a"
+    },
+    {
+      "case": "visual-till-operator-key-target",
+      "keys": "vtdd",
+      "expected": "644546207461696c0a",
+      "actual": "644546207461696c0a"
+    },
+    {
+      "case": "visual-till-backward",
+      "keys": "$vTxd",
+      "expected": "61627863780a",
+      "actual": "61627863780a"
+    }
+  ]
+}

@@ -6,6 +6,7 @@
  *	This file is part of JOE (Joe's Own Editor)
  */
 #include "types.h"
+#include "vim.h"
 
 int staen = 0;
 int staupd = 0;
@@ -219,6 +220,11 @@ char *stagen(char *stalin, BW *bw, const char *s, char fill)
 
 	stalin = vstrunc(stalin, 0);
 	obj_perm(stalin);
+	if (s == bw->o.lmsg && !bw->b->pid) {
+		stalin = vsncpy(sv(stalin), sz("["));
+		stalin = vsncpy(sv(stalin), sz(vim_mode_name()));
+		stalin = vsncpy(sv(stalin), sz("] "));
+	}
 	while (*s) {
 		if (*s == '%' && s[1]) {
 			field = 0;

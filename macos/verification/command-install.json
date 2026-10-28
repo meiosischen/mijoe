@@ -1,0 +1,32 @@
+{
+  "prefix": "/usr/local",
+  "checks": [
+    {
+      "command": "mj",
+      "passed": true,
+      "transcript": "command-install/mj/terminal.log",
+      "transcript_sha256": "1d8609f113f10c01c8bfa6baf8935cdd36e3456464460faa941e2d0249a4108b"
+    },
+    {
+      "command": "rmj",
+      "passed": true,
+      "transcript": "command-install/rmj/terminal.log",
+      "transcript_sha256": "75f29a573aed29b818f7311ce526f03496ae2af12eb38674bb2db32c4f919e69"
+    },
+    {
+      "command": "xmj",
+      "passed": true,
+      "hex_edit_saved": true,
+      "transcript": "command-install/xmj/terminal.log",
+      "transcript_sha256": "15706fc13bedfcb2bfa876e472e52f9d2016bc4ca7dfc46c498c108b250d2ec5"
+    }
+  ],
+  "binary_sha256": "a8c5e4db2f25ebbb032e8cf103a5a888faaf130b87e7175f05955d1c95c847e0",
+  "matched_resource_files": 107,
+  "launchers": {
+    "mj": "9b92d776c7ff04d16ab7807ef42dfef74421db130ff83f9d399d268b22a0ef3d",
+    "rmj": "aefb42574d56ca880d15999b4e5a52f74378557169de5bfb8956987189733705",
+    "xmj": "385d04a8781045c2319ebf34be893da03e5d6d6efd1f0141fd22992b4747c11c"
+  },
+  "installer_sha256": "1eb43d9f1f69b5dd8259c7dc2f74771b9e24c23fe9cf6760c6e209d6d0ddcb96"
+}

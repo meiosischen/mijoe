@@ -1,5 +1,8 @@
 # 默认 JOE 键位收敛验证
 
+本文件保留 2026-10-13 的历史结果。当前程序已加入默认启用的 Vim 操作，
+产品和最新验证以 [vim-verification.md](vim-verification.md) 为准；下列旧哈希不代表当前产品。
+
 日期：2026-10-13。工程：`/Users/meiosis/Workspace/Projects/mijoe`。
 
 只保留默认 JOE 键位和 `joe` 前端。已删除 JMACS、JSTAR（WordStar 仿真）、

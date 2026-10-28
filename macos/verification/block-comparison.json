@@ -1,0 +1,224 @@
+[
+  {
+    "case": "insert-line-start",
+    "keys": "\u0016jjI// \u001b",
+    "expected": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "actual": "2f2f206162630a2f2f206465660a2f2f206768690a"
+  },
+  {
+    "case": "insert-current-column",
+    "keys": "ll\u0016jjIX\u001b",
+    "expected": "61625863640a65665867680a696a586b6c0a",
+    "actual": "61625863640a65665867680a696a586b6c0a"
+  },
+  {
+    "case": "append-current-column",
+    "keys": "l\u0016jjAX\u001b",
+    "expected": "61625863640a65665867680a696a586b6c0a",
+    "actual": "61625863640a65665867680a696a586b6c0a"
+  },
+  {
+    "case": "append-block-width",
+    "keys": "\u0016lljjAX\u001b",
+    "expected": "61626358640a65666758680a696a6b586c0a",
+    "actual": "61626358640a65666758680a696a6b586c0a"
+  },
+  {
+    "case": "insert-upwards",
+    "keys": "jjl\u0016kkIX\u001b",
+    "expected": "61586263640a65586667680a69586a6b6c0a",
+    "actual": "61586263640a65586667680a69586a6b6c0a"
+  },
+  {
+    "case": "append-upwards",
+    "keys": "jjl\u0016kkAX\u001b",
+    "expected": "61625863640a65665867680a696a586b6c0a",
+    "actual": "61625863640a65665867680a696a586b6c0a"
+  },
+  {
+    "case": "insert-counted-height",
+    "keys": "\u00162jIX\u001b",
+    "expected": "586162630a586465660a586768690a",
+    "actual": "586162630a586465660a586768690a"
+  },
+  {
+    "case": "insert-skip-short-lines",
+    "keys": "ll\u0016jjjIX\u001b",
+    "expected": "6162586364650a780a0a4142584344450a",
+    "actual": "6162586364650a780a0a4142584344450a"
+  },
+  {
+    "case": "insert-at-equal-length",
+    "keys": "ll\u0016jjjjIX\u001b",
+    "expected": "6162586364650a6162580a780a0a4142584344450a",
+    "actual": "6162586364650a6162580a780a0a4142584344450a"
+  },
+  {
+    "case": "append-pad-short-lines",
+    "keys": "ll\u0016jjjAX\u001b",
+    "expected": "6162635864650a782020580a202020580a4142435844450a",
+    "actual": "6162635864650a782020580a202020580a4142435844450a"
+  },
+  {
+    "case": "short-line-endpoint",
+    "keys": "ll\u0016jIX\u001b",
+    "expected": "6158626364650a78580a",
+    "actual": "6158626364650a78580a"
+  },
+  {
+    "case": "short-line-top",
+    "keys": "jll\u0016kIX\u001b",
+    "expected": "78580a6158626364650a41424344450a",
+    "actual": "78580a6158626364650a41424344450a"
+  },
+  {
+    "case": "empty-line-start",
+    "keys": "\u0016jIX\u001b",
+    "expected": "580a586162630a",
+    "actual": "580a586162630a"
+  },
+  {
+    "case": "append-each-line-end",
+    "keys": "\u0016jj$AX\u001b",
+    "expected": "6162580a63646566580a78580a",
+    "actual": "6162580a63646566580a78580a"
+  },
+  {
+    "case": "append-end-before-vertical-motion",
+    "keys": "\u0016$jjAX\u001b",
+    "expected": "6162580a63646566580a78580a",
+    "actual": "6162580a63646566580a78580a"
+  },
+  {
+    "case": "insert-unicode",
+    "keys": "\u0016jjI中文\u001b",
+    "expected": "e4b8ade696876162630ae4b8ade696876465660ae4b8ade696876768690a",
+    "actual": "e4b8ade696876162630ae4b8ade696876465660ae4b8ade696876768690a"
+  },
+  {
+    "case": "insert-after-wide-characters",
+    "keys": "l\u0016jjIX\u001b",
+    "expected": "e794b2586162630ae4b999586465660ae4b899586768690a",
+    "actual": "e794b2586162630ae4b999586465660ae4b899586768690a"
+  },
+  {
+    "case": "insert-interior-wide-character",
+    "keys": "l\u0016jjIX\u001b",
+    "expected": "61586263640a2058e794b2e4b9990a5a585a5a5a0a",
+    "actual": "61586263640a2058e794b2e4b9990a5a585a5a5a0a"
+  },
+  {
+    "case": "append-interior-wide-character",
+    "keys": "\u0016jjAX\u001b",
+    "expected": "61586263640a2058e794b2e4b9990a5a585a5a5a0a",
+    "actual": "61586263640a2058e794b2e4b9990a5a585a5a5a0a"
+  },
+  {
+    "case": "insert-tab-interior",
+    "keys": "ll\u0016jjIX\u001b",
+    "expected": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "actual": "61625863640a20205820202020202058595a0a5a5a585a5a0a"
+  },
+  {
+    "case": "append-tab-interior",
+    "keys": "ll\u0016jjAX\u001b",
+    "expected": "61626358640a20202058202020202058595a0a5a5a5a585a0a",
+    "actual": "61626358640a20202058202020202058595a0a5a5a5a585a0a"
+  },
+  {
+    "case": "tab-endpoint",
+    "keys": "l\u0016jAX\u001b",
+    "expected": "6142432020202020580a095858595a0a",
+    "actual": "6142432020202020580a095858595a0a"
+  },
+  {
+    "case": "insert-tab-text",
+    "keys": "\u0016jI\tX\u001b",
+    "expected": "09586162630a09586465660a",
+    "actual": "09586162630a09586465660a"
+  },
+  {
+    "case": "backspace-in-added-text",
+    "keys": "\u0016jIXY\bZ\u001b",
+    "expected": "585a61620a585a63640a",
+    "actual": "585a61620a585a63640a"
+  },
+  {
+    "case": "empty-insert",
+    "keys": "\u0016jI\u001b",
+    "expected": "61620a0963640a",
+    "actual": "61620a0963640a"
+  },
+  {
+    "case": "empty-append",
+    "keys": "ll\u0016jA\u001b",
+    "expected": "61626364650a780a",
+    "actual": "61626364650a780a"
+  },
+  {
+    "case": "insert-newline-first-line-only",
+    "keys": "\u0016jIX\rY\u001b",
+    "expected": "580a5961620a63640a",
+    "actual": "580a5961620a63640a"
+  },
+  {
+    "case": "undo-whole-block",
+    "keys": "\u0016jjIXY\u001bu",
+    "expected": "6162630a6465660a6768690a",
+    "actual": "6162630a6465660a6768690a"
+  },
+  {
+    "case": "redo-whole-block",
+    "keys": "\u0016jjIXY\u001bu\u0012",
+    "expected": "58596162630a58596465660a58596768690a",
+    "actual": "58596162630a58596465660a58596768690a"
+  },
+  {
+    "case": "repeat-block-insert",
+    "keys": "\u0016jIX\u001bl.",
+    "expected": "58586162630a58586465660a6768690a",
+    "actual": "58586162630a58586465660a6768690a"
+  },
+  {
+    "case": "switch-to-character-visual",
+    "keys": "\u0016jvd",
+    "expected": "6667680a",
+    "actual": "6667680a"
+  },
+  {
+    "case": "switch-to-line-visual",
+    "keys": "\u0016jVd",
+    "expected": "",
+    "actual": ""
+  },
+  {
+    "case": "switch-from-character-visual",
+    "keys": "vl\u0016jIX\u001b",
+    "expected": "58616263640a58656667680a",
+    "actual": "58616263640a58656667680a"
+  },
+  {
+    "case": "cancel-block",
+    "keys": "\u0016j\u001bx",
+    "expected": "6162630a65660a",
+    "actual": "6162630a65660a"
+  },
+  {
+    "case": "toggle-block-off",
+    "keys": "\u0016j\u0016x",
+    "expected": "6162630a65660a",
+    "actual": "6162630a65660a"
+  },
+  {
+    "case": "unterminated-last-line",
+    "keys": "\u0016jIX\u001b",
+    "expected": "586162630a58646566",
+    "actual": "586162630a58646566"
+  },
+  {
+    "case": "windows-line-endings",
+    "keys": "\u0016jIX\u001b",
+    "expected": "586162630d0a586465660d0a",
+    "actual": "586162630d0a586465660d0a"
+  }
+]

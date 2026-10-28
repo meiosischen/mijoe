@@ -99,6 +99,8 @@ void ttclsn(void);
 char ttgetc(void);
 int ttgetch(void);
 int ttcheck(void);
+/* Wait at most milliseconds for key lookahead, without consuming a byte. */
+int ttwaitkey(int milliseconds);
 
 /* void ttputc(char c);  Write a character to the output buffer.  If it becomes
  * full, call ttflsh()

@@ -1,0 +1,127 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[H[2J[?2004h[0m[4l[1;40r[H[NORMAL] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-pqvnm8tf/test_native_help_shortcut_and_p  Row 1    Col 1   
+[0mabcdef[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[H
+[A[9C[7m^K
+[0m[A[9T[9C[4mREGION[16CGO TO[20CGO TO[20CDELETE[13CEXIT[16CSEARCH
+[117D[0m[1m^Arrow[0m Select[9C[1m^Z[0m Prev. word[12C[1m^U/^V[0m PgUp/PgDn[10C[1m^D[0m Char.[11C[1m^KX[0m Save[12C[1m^KF[0m Find
+[119D[1m^KB[0m Begin[13C[1m^X[0m Next word[13C[4mMISC[21C[0m[1m^Y[0m Line[12C[1m^C[0m  Abort[11C[1m^L[0m  Next
+[119D[1m^KK[0m End[15C[1m^KU[0m Top of file[10C[1m^KJ[0m Paragraph[12C[1m^W[0m >Word[11C[1m^KQ[0m All[13C[4mHELP
+[115D[0m[1m^KC[0m Copy[14C[1m^KV[0m End of file[10C[1m^KA[0m Center line[10C[1m^O[0m Word<[11C[4mFILE[16C[0m[1mEsc .[0m Next
+[121D[1m^KM[0m Move[14C[1m^A[0m Beg. of line[10C[1m^K Space[0m Status[10C[1m^J[0m >Line[11C[1m^KE[0m Edit[12C[1mEsc ,[0m Prev
+[121D[1m^KW[0m File[14C[1m^E[0m End of line[11C[4mSPELL[20C[0m[1m^[O[0m Line<[10C[1m^KR[0m Insert[10C[1m^KH[0m Off
+[118D[1m^KY[0m Delete[12C[1m^KL[0m To line no.[10C[1mEsc N[0m Word[15C[1m^_[0m Undo[12C[1m^KD[0m Save[12C[1m^T[0m  Menu
+[119D[1m^K/[0m Filter[12C[1m^G[0m  Matching ([11C[1mEsc L[0m File[15C[1m^^[0m Redo[12C[1m^K`[0m Revert
+[101D[7m  
+[1;10H[0m  [4mMACROS[14C[0m     [4mSCROLL[14C[0m       [4mWINDOW[12C[0m      [7C[4mGO TO[0m     [11C[4mI-SEARCH[0m   
+[117D  [1m^K[ 0-9[0m Record[6C     [1mEsc W[0m Up[12C       [1m^KO[0m Open  [1m^C[0m  Close       [5C[1mEsc B[0m / [1mK[0m     [7C[1m^R[0m Backwards 
+[119D  [1m^K][0m     Stop[8C     [1mEsc Z[0m Down[10C       [1m^KG[0m Grow  [1m^KT[0m Shrink     [6Cto [1m^KB[0m/[1m^KK [0m    [6C[1m^S[0m Forwards  
+[119D  [1mEsc I[0m   Text[8C     [1mEsc <[0m Left[10C       [1m^KN[0m Next  [1m^KP[0m Prev.       [5C[1m^P[0m  Up       [8C[4mBOOKMARKS
+[115D[0m  [1m^K?[0m     Pause[7C     [1mEsc >[0m Right[9C       [1m^KI[0m Show one / All        [5C[1m^N[0m  Down  [11C[1mEsc 0-9[0m Goto   
+[121D     for prompt[7C     [4mINSERT[0m    [10C       [4mSHELL[0m   [10C        [5C[1m^B[0m  Left      [7C[1mEsc Esc[0m Set    
+[121D  [1m^K 0-9[0m  Play[8C     [1m^][0m Line  [1m^Q[0m Ctrl[4C       [1mF1-F4[0m Term emulator        [4C[1m^F[0m  Right       [5C[1m^K-[0m Auto prev
+[119D  [1m^K\[0m     Repeat[6C     [1m^@[0m Space [1m^\[0m Meta[4C       [1m^K'[0m In buffer[5C       [12C        [7C[1m^K=[0m Auto next
+[119D  [1mEsc D[0m   Dump[8C     [1mEsc Y[0m Paste[9C       [1m^KZ[0m Suspend  [1mEsc ![0m Append[12C          
+
+[1;10H[4mREGION[0m  [14C[4mGO TO[0m      [14C[4mGO TO[0m        [12C[4mDELETE[7C[0m      [4mEXIT[11C[0m     [4mSEARCH
+[117D[0m[1m^Arrow[0m Select   [6C[1m^Z[0m Prev. word[12C[1m^U/^V[0m PgUp/PgDn          [1m^D[0m Char.[5C      [1m^KX[0m Save[7C     [1m^KF[0m Find
+[119D[1m^KB[0m Begin     [8C[1m^X[0m Next word   [10C[4mMISC[0m                     [1m^Y[0m Line[6C      [1m^C[0m  Abort[6C     [1m^L[0m  Next
+[119D[1m^KK[0m End       [8C[1m^KU[0m Top of file[10C[1m^KJ[0m Paragraph            [1m^W[0m >Word[5C      [1m^KQ[0m All[8C     [4mHELP
+[115D[0m[1m^KC[0m Copy       [7C[1m^KV[0m End of file [9C[1m^KA[0m Center line          [1m^O[0m Word<[5C      [4mFILE[11C[0m     [1mEsc .[0m Next
+[121D[1m^KM[0m Move       [7C[1m^A[0m Beg. of line[10C[1m^K Space[0m Status[10C[1m^J[0m >Line[5C      [1m^KE[0m Edit[7C     [1mEsc ,[0m Prev
+[121D[1m^KW[0m File      [8C[1m^E[0m End of line       [4C[4mSPELL[0m                    [1m^[O[0m Line<[4C      [1m^KR[0m Insert[5C     [1m^KH[0m Off 
+[119D[1m^KY[0m Delete      [6C[1m^KL[0m To line no.      [4C[1mEsc N[0m Word          [5C[1m^_[0m Undo[12C[1m^KD[0m Save[7C     [1m^T[0m  Menu
+[119D[1m^K/[0m Filter    [8C[1m^G[0m  Matching (  [9C[1mEsc L[0m File               [1m^^[0m Redo[12C[1m^K`[0m Revert
+
+[A[9C[7m^K
+[0m[29B[9S[1;10H[7m  [31B[0m[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[H
+[A[CCOMMAND] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb3[4C0gn/T/mijoe-vim-pty-pqvnm8tf/test_native_help_shortcut_and_[39B[0m:[K[H
+[38B[Cw[K[H
+[A[CNORMAL] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb30[4Cgn/T/mijoe-vim-pty-pqvnm8tf/test_native_help_shortcut_and_p[39B[0m[KFile /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-pqvnm8tf/test_native_help_shortcut_and_paging/sample.txt saved[K[H
+[A[CCOMMAND] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb3[4C0gn/T/mijoe-vim-pty-pqvnm8tf/test_native_help_shortcut_and_[39B[0m:[K[H
+[38B[Cq[K[H
+[38B[2C![K[H
+[38B[?2004l

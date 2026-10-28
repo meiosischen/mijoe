@@ -1,5 +1,9 @@
 # JOE for Windows 4.6：VC6 编译说明
 
+默认启用 Vim 基础操作；`joe.exe -novim` 使用传统 JOE 键位。
+操作见 [Vim 使用说明](../../docs/vim.md)，最新构建和测试见
+[Vim 验证记录](vim-verification.md)。`package` 中的 `docs/vim.html` 可离线查看。
+
 这是 Win32/x86、面向 Windows XP 的 VC6 移植版。已使用真正的 Visual C++ 6.0
 编译器、资源编译器、链接器及 Developer Studio，在 Wine 中完成构建和运行测试。
 Windows XP 实机或 UTM 虚拟机运行尚未验证，详细证据见 [verification.md](verification.md)。

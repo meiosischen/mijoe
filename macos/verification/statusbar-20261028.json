@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "mode": "Normal",
+      "label": "[N]",
+      "passed": true
+    },
+    {
+      "mode": "Insert",
+      "label": "[I]",
+      "passed": true
+    },
+    {
+      "mode": "Visual",
+      "label": "[V]",
+      "passed": true
+    },
+    {
+      "mode": "Visual line",
+      "label": "[V]",
+      "passed": true
+    },
+    {
+      "mode": "Visual block",
+      "label": "[V]",
+      "passed": true
+    }
+  ],
+  "transcript": "statusbar-20261028-terminal.log",
+  "date": "2026-10-28",
+  "binary_sha256": "70f9cd2d6d57f803fa5515e4a7fc4a021b69a2b6dac45dfabedc81354443ff5b",
+  "sources": {
+    "joe/vim.c": "6b0c42f189860e7ff32f363ed0bbd78d3a668aef104482ffa6a9fd371a63fd09",
+    "joe/tw.c": "e77cc9bfd67e775e73046f3a6c8b0c4affc33f6d3f7599d871501af2dd4c6b24",
+    "tests/vim_pty_test.py": "0b61c905d45cff3df3603f771e3c305b3cf30451c5586338b5b5e7f8a51ef413"
+  },
+  "functional_regression_rerun": false,
+  "zip_sha256": "6cd2fbd572e53e1a08974fb039635052ea41f2a7dd944b94f9fe235d0bb2f8a6",
+  "system_install_updated": false,
+  "system_install_status": "waiting_for_macos_administrator_authentication"
+}

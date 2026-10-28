@@ -276,8 +276,8 @@ CAP *getcap(char *name, long baud, void (*out) (void *, char), void *outptr)
 			} else
 				namebuf = NULL;
 			namebuf = vsncpy(sv(namebuf), sc(".termcap "));
-#ifdef JOEWIN
-			/* JOERC is not a constant in joewin */
+#if defined(JOEWIN) || (defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS))
+			/* Packaged ports compute JOERC at runtime. */
 			namebuf = vsncpy(sv(namebuf), sz(JOERC));
 #else
 			namebuf = vsncpy(sv(namebuf), sc(JOERC));

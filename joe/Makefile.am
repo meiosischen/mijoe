@@ -1,6 +1,8 @@
 AUTOMAKE_OPTIONS = foreign
 
-SUBDIRS = util
+# Unicode/terminal maintenance tools are not required to build the editor.
+SUBDIRS =
+DIST_SUBDIRS = util
 
 EXTRA_DIST = TODO
 
@@ -13,7 +15,7 @@ noinst_HEADERS = b.h blocks.h bw.h cmd.h config.h coroutine.h hash.h help.h kbd.
 	ufile.h uformat.h uisrch.h umath.h undo.h usearch.h ushell.h utag.h \
 	utils.h vfile.h w.h utf8.h syntax.h charmap.h mouse.h libcoro.h \
 	lattr.h gettext.h builtin.h vt.h mmenu.h state.h options.h \
-	unicode.h cclass.h frag.h colors.h
+	unicode.h cclass.h frag.h colors.h vim.h vimhelp.h macos.h
 
 bin_PROGRAMS = joe
 AM_CPPFLAGS = -DJOERC="\"$(sysconf_joedir)/\"" -DJOEDATA="\"$(data_joedir)/\""
@@ -26,11 +28,7 @@ joe_SOURCES = b.c blocks.c bw.c cmd.c coroutine.c hash.c help.c kbd.c macro.c ma
 	undo.c usearch.c ushell.c utag.c vfile.c w.c utils.c syntax.c \
 	utf8.c selinux.c charmap.c mouse.c lattr.c gettext.c builtin.c libcoro.c \
 	builtins.c vt.c mmenu.c state.c options.c unicode.c \
-	cclass.c frag.c colors.c unicat-@UNICODE_VERSION@.c
-
-termidx_SOURCES = termidx.c
-
-stringify_SOURCES = stringify.c
+	cclass.c frag.c colors.c vim.c macos.c unicat-@UNICODE_VERSION@.c
 
 distclean-local:
 	rm -f *~

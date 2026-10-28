@@ -1,0 +1,1370 @@
+[
+  {
+    "configuration": "release-package",
+    "case": "insert",
+    "initial": "696e697469616c0a",
+    "keys": "69581b3a77710d",
+    "expected": "58696e697469616c0a",
+    "actual": "58696e697469616c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "delete-undo-dot",
+    "initial": "610a620a630a640a",
+    "keys": "64642e75123a77710d",
+    "expected": "630a640a",
+    "actual": "630a640a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "visual",
+    "initial": "6162636465660a",
+    "keys": "766c6c643a77710d",
+    "expected": "6465660a",
+    "actual": "6465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "visual-line-change",
+    "initial": "610a620a630a",
+    "keys": "566a63581b3a77710d",
+    "expected": "580a630a",
+    "actual": "580a630a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "copy-paste",
+    "initial": "6f6e652074776f0a",
+    "keys": "797777703a77710d",
+    "expected": "6f6e6520746f6e6520776f0a",
+    "actual": "6f6e6520746f6e6520776f0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "save-failure",
+    "initial": "610a",
+    "keys": "41211b3a7771206d697373696e672f66696c650d3a77710d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "buffers",
+    "initial": "610a",
+    "keys": "41211b3a656e65770d696f746865721b3a77206f746865722e7478740d3a6220310d3a770d3a71210d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "saveas",
+    "initial": "610a",
+    "keys": "41211b3a7361766561732072656e616d65642e7478740d413f1b3a770d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "windows-path",
+    "initial": "610a",
+    "keys": "3a7720666f6c6465725c636f70792e7478740d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "command-paste",
+    "initial": "610a",
+    "keys": "3a77201b5b3230307e666f6c6465725c7061737465642e7478741b5b3230317e0d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "find-forward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "6466783a77710d",
+    "expected": "637864207461696c0a",
+    "actual": "637864207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "find-backward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "246446783a77710d",
+    "expected": "616278636c0a",
+    "actual": "616278636c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "till-forward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "6474783a77710d",
+    "expected": "78637864207461696c0a",
+    "actual": "78637864207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "till-backward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "246454783a77710d",
+    "expected": "61627863786c0a",
+    "actual": "61627863786c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "till-count-repeat",
+    "initial": "6158625863586458207461696c0a",
+    "keys": "7458323b783a77710d",
+    "expected": "61585863586458207461696c0a",
+    "actual": "61585863586458207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "find-reverse-repeat",
+    "initial": "6158625863586458207461696c0a",
+    "keys": "3266582c3b783a77710d",
+    "expected": "61586263586458207461696c0a",
+    "actual": "61586263586458207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "find-missing-count",
+    "initial": "61625863640a58206e6578740a",
+    "keys": "643266583a77710d",
+    "expected": "61625863640a58206e6578740a",
+    "actual": "61625863640a58206e6578740a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "percent-pair",
+    "initial": "28612862296329207461696c0a",
+    "keys": "64253a77710d",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "percent-quote",
+    "initial": "286120272927206229207461696c0a",
+    "keys": "25783a77710d",
+    "expected": "2861202729272062207461696c0a",
+    "actual": "2861202729272062207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "percent-comment",
+    "initial": "2f2a20636f6d6d656e74202a2f207461696c0a",
+    "keys": "25783a77710d",
+    "expected": "2f2a20636f6d6d656e74202a207461696c0a",
+    "actual": "2f2a20636f6d6d656e74202a207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "percent-directive",
+    "initial": "23696620410a410a23656c73650a420a23656e6469660a",
+    "keys": "64253a77710d",
+    "expected": "420a23656e6469660a",
+    "actual": "420a23656e6469660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "percent-number",
+    "initial": "610a620a630a640a650a660a670a",
+    "keys": "643530253a77710d",
+    "expected": "650a660a670a",
+    "actual": "650a660a670a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "help-pages",
+    "initial": "6162636465660a",
+    "keys": "3a68656c700d1b5b367e1b5b357e7141211b3a77710d",
+    "expected": "616263646566210a",
+    "actual": "616263646566210a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "help-undo",
+    "initial": "6162636465660a",
+    "keys": "783a680d7864643a656e65770d1b753a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "native-help",
+    "initial": "6162636465660a",
+    "keys": "0b481b5b367e1b5b357e0b683a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "native-window-shortcut",
+    "initial": "6162636465660a",
+    "keys": "0b54783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "options-theme",
+    "initial": "6162636465660a",
+    "keys": "145367727576626f780d3a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "color-menu",
+    "initial": "6162636465660a",
+    "keys": "3a636f6c6f72730d673a636f6c6f72736368656d650d033a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "insert-options-menu",
+    "initial": "6162636465660a",
+    "keys": "69581403591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "help-paste",
+    "initial": "6162636465660a",
+    "keys": "3a68656c700d1b5b3230307e0b48694241441b3a77710d1b5b3230317e71783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "block-insert",
+    "initial": "6162630a6465660a6768690a",
+    "keys": "166a6a492f2f201b3a77710d",
+    "expected": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "actual": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "block-insert-short",
+    "initial": "61626364650a780a0a41424344450a",
+    "keys": "6c6c166a6a6a49581b3a77710d",
+    "expected": "6162586364650a780a0a4142584344450a",
+    "actual": "6162586364650a780a0a4142584344450a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "block-append-pad",
+    "initial": "61626364650a780a0a41424344450a",
+    "keys": "6c6c166a6a6a41581b3a77710d",
+    "expected": "6162635864650a782020580a202020580a4142435844450a",
+    "actual": "6162635864650a782020580a202020580a4142435844450a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "block-append-eol",
+    "initial": "61620a636465660a780a",
+    "keys": "166a6a2441581b3a77710d",
+    "expected": "6162580a63646566580a78580a",
+    "actual": "6162580a63646566580a78580a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "block-tab",
+    "initial": "616263640a0958595a0a5a5a5a5a0a",
+    "keys": "6c6c166a6a49581b3a77710d",
+    "expected": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "actual": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "block-undo-redo",
+    "initial": "6162630a6465660a6768690a",
+    "keys": "166a6a4958591b75123a77710d",
+    "expected": "58596162630a58596465660a58596768690a",
+    "actual": "58596162630a58596465660a58596768690a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "block-paste",
+    "initial": "6162630a6465660a",
+    "keys": "166a491b5b3230307e581b5b3230317e1b3a77710d",
+    "expected": "586162630a586465660a",
+    "actual": "586162630a586465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-package",
+    "case": "block-cancel",
+    "initial": "6162630a6465660a",
+    "keys": "166a1b783a77710d",
+    "expected": "6162630a65660a",
+    "actual": "6162630a65660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "insert",
+    "initial": "696e697469616c0a",
+    "keys": "69581b3a77710d",
+    "expected": "58696e697469616c0a",
+    "actual": "58696e697469616c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "delete-undo-dot",
+    "initial": "610a620a630a640a",
+    "keys": "64642e75123a77710d",
+    "expected": "630a640a",
+    "actual": "630a640a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "visual",
+    "initial": "6162636465660a",
+    "keys": "766c6c643a77710d",
+    "expected": "6465660a",
+    "actual": "6465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "visual-line-change",
+    "initial": "610a620a630a",
+    "keys": "566a63581b3a77710d",
+    "expected": "580a630a",
+    "actual": "580a630a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "copy-paste",
+    "initial": "6f6e652074776f0a",
+    "keys": "797777703a77710d",
+    "expected": "6f6e6520746f6e6520776f0a",
+    "actual": "6f6e6520746f6e6520776f0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "save-failure",
+    "initial": "610a",
+    "keys": "41211b3a7771206d697373696e672f66696c650d3a77710d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "buffers",
+    "initial": "610a",
+    "keys": "41211b3a656e65770d696f746865721b3a77206f746865722e7478740d3a6220310d3a770d3a71210d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "saveas",
+    "initial": "610a",
+    "keys": "41211b3a7361766561732072656e616d65642e7478740d413f1b3a770d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "windows-path",
+    "initial": "610a",
+    "keys": "3a7720666f6c6465725c636f70792e7478740d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "command-paste",
+    "initial": "610a",
+    "keys": "3a77201b5b3230307e666f6c6465725c7061737465642e7478741b5b3230317e0d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "find-forward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "6466783a77710d",
+    "expected": "637864207461696c0a",
+    "actual": "637864207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "find-backward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "246446783a77710d",
+    "expected": "616278636c0a",
+    "actual": "616278636c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "till-forward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "6474783a77710d",
+    "expected": "78637864207461696c0a",
+    "actual": "78637864207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "till-backward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "246454783a77710d",
+    "expected": "61627863786c0a",
+    "actual": "61627863786c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "till-count-repeat",
+    "initial": "6158625863586458207461696c0a",
+    "keys": "7458323b783a77710d",
+    "expected": "61585863586458207461696c0a",
+    "actual": "61585863586458207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "find-reverse-repeat",
+    "initial": "6158625863586458207461696c0a",
+    "keys": "3266582c3b783a77710d",
+    "expected": "61586263586458207461696c0a",
+    "actual": "61586263586458207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "find-missing-count",
+    "initial": "61625863640a58206e6578740a",
+    "keys": "643266583a77710d",
+    "expected": "61625863640a58206e6578740a",
+    "actual": "61625863640a58206e6578740a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "percent-pair",
+    "initial": "28612862296329207461696c0a",
+    "keys": "64253a77710d",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "percent-quote",
+    "initial": "286120272927206229207461696c0a",
+    "keys": "25783a77710d",
+    "expected": "2861202729272062207461696c0a",
+    "actual": "2861202729272062207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "percent-comment",
+    "initial": "2f2a20636f6d6d656e74202a2f207461696c0a",
+    "keys": "25783a77710d",
+    "expected": "2f2a20636f6d6d656e74202a207461696c0a",
+    "actual": "2f2a20636f6d6d656e74202a207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "percent-directive",
+    "initial": "23696620410a410a23656c73650a420a23656e6469660a",
+    "keys": "64253a77710d",
+    "expected": "420a23656e6469660a",
+    "actual": "420a23656e6469660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "percent-number",
+    "initial": "610a620a630a640a650a660a670a",
+    "keys": "643530253a77710d",
+    "expected": "650a660a670a",
+    "actual": "650a660a670a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "help-pages",
+    "initial": "6162636465660a",
+    "keys": "3a68656c700d1b5b367e1b5b357e7141211b3a77710d",
+    "expected": "616263646566210a",
+    "actual": "616263646566210a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "help-undo",
+    "initial": "6162636465660a",
+    "keys": "783a680d7864643a656e65770d1b753a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "native-help",
+    "initial": "6162636465660a",
+    "keys": "0b481b5b367e1b5b357e0b683a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "native-window-shortcut",
+    "initial": "6162636465660a",
+    "keys": "0b54783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "options-theme",
+    "initial": "6162636465660a",
+    "keys": "145367727576626f780d3a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "color-menu",
+    "initial": "6162636465660a",
+    "keys": "3a636f6c6f72730d673a636f6c6f72736368656d650d033a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "insert-options-menu",
+    "initial": "6162636465660a",
+    "keys": "69581403591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "help-paste",
+    "initial": "6162636465660a",
+    "keys": "3a68656c700d1b5b3230307e0b48694241441b3a77710d1b5b3230317e71783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "block-insert",
+    "initial": "6162630a6465660a6768690a",
+    "keys": "166a6a492f2f201b3a77710d",
+    "expected": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "actual": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "block-insert-short",
+    "initial": "61626364650a780a0a41424344450a",
+    "keys": "6c6c166a6a6a49581b3a77710d",
+    "expected": "6162586364650a780a0a4142584344450a",
+    "actual": "6162586364650a780a0a4142584344450a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "block-append-pad",
+    "initial": "61626364650a780a0a41424344450a",
+    "keys": "6c6c166a6a6a41581b3a77710d",
+    "expected": "6162635864650a782020580a202020580a4142435844450a",
+    "actual": "6162635864650a782020580a202020580a4142435844450a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "block-append-eol",
+    "initial": "61620a636465660a780a",
+    "keys": "166a6a2441581b3a77710d",
+    "expected": "6162580a63646566580a78580a",
+    "actual": "6162580a63646566580a78580a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "block-tab",
+    "initial": "616263640a0958595a0a5a5a5a5a0a",
+    "keys": "6c6c166a6a49581b3a77710d",
+    "expected": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "actual": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "block-undo-redo",
+    "initial": "6162630a6465660a6768690a",
+    "keys": "166a6a4958591b75123a77710d",
+    "expected": "58596162630a58596465660a58596768690a",
+    "actual": "58596162630a58596465660a58596768690a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "block-paste",
+    "initial": "6162630a6465660a",
+    "keys": "166a491b5b3230307e581b5b3230317e1b3a77710d",
+    "expected": "586162630a586465660a",
+    "actual": "586162630a586465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-package",
+    "case": "block-cancel",
+    "initial": "6162630a6465660a",
+    "keys": "166a1b783a77710d",
+    "expected": "6162630a65660a",
+    "actual": "6162630a65660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "insert",
+    "initial": "696e697469616c0a",
+    "keys": "69581b3a77710d",
+    "expected": "58696e697469616c0a",
+    "actual": "58696e697469616c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "delete-undo-dot",
+    "initial": "610a620a630a640a",
+    "keys": "64642e75123a77710d",
+    "expected": "630a640a",
+    "actual": "630a640a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "visual",
+    "initial": "6162636465660a",
+    "keys": "766c6c643a77710d",
+    "expected": "6465660a",
+    "actual": "6465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "visual-line-change",
+    "initial": "610a620a630a",
+    "keys": "566a63581b3a77710d",
+    "expected": "580a630a",
+    "actual": "580a630a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "copy-paste",
+    "initial": "6f6e652074776f0a",
+    "keys": "797777703a77710d",
+    "expected": "6f6e6520746f6e6520776f0a",
+    "actual": "6f6e6520746f6e6520776f0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "save-failure",
+    "initial": "610a",
+    "keys": "41211b3a7771206d697373696e672f66696c650d3a77710d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "buffers",
+    "initial": "610a",
+    "keys": "41211b3a656e65770d696f746865721b3a77206f746865722e7478740d3a6220310d3a770d3a71210d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "saveas",
+    "initial": "610a",
+    "keys": "41211b3a7361766561732072656e616d65642e7478740d413f1b3a770d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "windows-path",
+    "initial": "610a",
+    "keys": "3a7720666f6c6465725c636f70792e7478740d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "command-paste",
+    "initial": "610a",
+    "keys": "3a77201b5b3230307e666f6c6465725c7061737465642e7478741b5b3230317e0d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "find-forward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "6466783a77710d",
+    "expected": "637864207461696c0a",
+    "actual": "637864207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "find-backward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "246446783a77710d",
+    "expected": "616278636c0a",
+    "actual": "616278636c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "till-forward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "6474783a77710d",
+    "expected": "78637864207461696c0a",
+    "actual": "78637864207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "till-backward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "246454783a77710d",
+    "expected": "61627863786c0a",
+    "actual": "61627863786c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "till-count-repeat",
+    "initial": "6158625863586458207461696c0a",
+    "keys": "7458323b783a77710d",
+    "expected": "61585863586458207461696c0a",
+    "actual": "61585863586458207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "find-reverse-repeat",
+    "initial": "6158625863586458207461696c0a",
+    "keys": "3266582c3b783a77710d",
+    "expected": "61586263586458207461696c0a",
+    "actual": "61586263586458207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "find-missing-count",
+    "initial": "61625863640a58206e6578740a",
+    "keys": "643266583a77710d",
+    "expected": "61625863640a58206e6578740a",
+    "actual": "61625863640a58206e6578740a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "percent-pair",
+    "initial": "28612862296329207461696c0a",
+    "keys": "64253a77710d",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "percent-quote",
+    "initial": "286120272927206229207461696c0a",
+    "keys": "25783a77710d",
+    "expected": "2861202729272062207461696c0a",
+    "actual": "2861202729272062207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "percent-comment",
+    "initial": "2f2a20636f6d6d656e74202a2f207461696c0a",
+    "keys": "25783a77710d",
+    "expected": "2f2a20636f6d6d656e74202a207461696c0a",
+    "actual": "2f2a20636f6d6d656e74202a207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "percent-directive",
+    "initial": "23696620410a410a23656c73650a420a23656e6469660a",
+    "keys": "64253a77710d",
+    "expected": "420a23656e6469660a",
+    "actual": "420a23656e6469660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "percent-number",
+    "initial": "610a620a630a640a650a660a670a",
+    "keys": "643530253a77710d",
+    "expected": "650a660a670a",
+    "actual": "650a660a670a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "help-pages",
+    "initial": "6162636465660a",
+    "keys": "3a68656c700d1b5b367e1b5b357e7141211b3a77710d",
+    "expected": "616263646566210a",
+    "actual": "616263646566210a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "help-undo",
+    "initial": "6162636465660a",
+    "keys": "783a680d7864643a656e65770d1b753a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "native-help",
+    "initial": "6162636465660a",
+    "keys": "0b481b5b367e1b5b357e0b683a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "native-window-shortcut",
+    "initial": "6162636465660a",
+    "keys": "0b54783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "options-theme",
+    "initial": "6162636465660a",
+    "keys": "145367727576626f780d3a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "color-menu",
+    "initial": "6162636465660a",
+    "keys": "3a636f6c6f72730d673a636f6c6f72736368656d650d033a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "insert-options-menu",
+    "initial": "6162636465660a",
+    "keys": "69581403591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "help-paste",
+    "initial": "6162636465660a",
+    "keys": "3a68656c700d1b5b3230307e0b48694241441b3a77710d1b5b3230317e71783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "block-insert",
+    "initial": "6162630a6465660a6768690a",
+    "keys": "166a6a492f2f201b3a77710d",
+    "expected": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "actual": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "block-insert-short",
+    "initial": "61626364650a780a0a41424344450a",
+    "keys": "6c6c166a6a6a49581b3a77710d",
+    "expected": "6162586364650a780a0a4142584344450a",
+    "actual": "6162586364650a780a0a4142584344450a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "block-append-pad",
+    "initial": "61626364650a780a0a41424344450a",
+    "keys": "6c6c166a6a6a41581b3a77710d",
+    "expected": "6162635864650a782020580a202020580a4142435844450a",
+    "actual": "6162635864650a782020580a202020580a4142435844450a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "block-append-eol",
+    "initial": "61620a636465660a780a",
+    "keys": "166a6a2441581b3a77710d",
+    "expected": "6162580a63646566580a78580a",
+    "actual": "6162580a63646566580a78580a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "block-tab",
+    "initial": "616263640a0958595a0a5a5a5a5a0a",
+    "keys": "6c6c166a6a49581b3a77710d",
+    "expected": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "actual": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "block-undo-redo",
+    "initial": "6162630a6465660a6768690a",
+    "keys": "166a6a4958591b75123a77710d",
+    "expected": "58596162630a58596465660a58596768690a",
+    "actual": "58596162630a58596465660a58596768690a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "block-paste",
+    "initial": "6162630a6465660a",
+    "keys": "166a491b5b3230307e581b5b3230317e1b3a77710d",
+    "expected": "586162630a586465660a",
+    "actual": "586162630a586465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "release-dll",
+    "case": "block-cancel",
+    "initial": "6162630a6465660a",
+    "keys": "166a1b783a77710d",
+    "expected": "6162630a65660a",
+    "actual": "6162630a65660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "insert",
+    "initial": "696e697469616c0a",
+    "keys": "69581b3a77710d",
+    "expected": "58696e697469616c0a",
+    "actual": "58696e697469616c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "delete-undo-dot",
+    "initial": "610a620a630a640a",
+    "keys": "64642e75123a77710d",
+    "expected": "630a640a",
+    "actual": "630a640a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "visual",
+    "initial": "6162636465660a",
+    "keys": "766c6c643a77710d",
+    "expected": "6465660a",
+    "actual": "6465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "visual-line-change",
+    "initial": "610a620a630a",
+    "keys": "566a63581b3a77710d",
+    "expected": "580a630a",
+    "actual": "580a630a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "copy-paste",
+    "initial": "6f6e652074776f0a",
+    "keys": "797777703a77710d",
+    "expected": "6f6e6520746f6e6520776f0a",
+    "actual": "6f6e6520746f6e6520776f0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "save-failure",
+    "initial": "610a",
+    "keys": "41211b3a7771206d697373696e672f66696c650d3a77710d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "buffers",
+    "initial": "610a",
+    "keys": "41211b3a656e65770d696f746865721b3a77206f746865722e7478740d3a6220310d3a770d3a71210d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "saveas",
+    "initial": "610a",
+    "keys": "41211b3a7361766561732072656e616d65642e7478740d413f1b3a770d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "windows-path",
+    "initial": "610a",
+    "keys": "3a7720666f6c6465725c636f70792e7478740d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "command-paste",
+    "initial": "610a",
+    "keys": "3a77201b5b3230307e666f6c6465725c7061737465642e7478741b5b3230317e0d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "find-forward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "6466783a77710d",
+    "expected": "637864207461696c0a",
+    "actual": "637864207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "find-backward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "246446783a77710d",
+    "expected": "616278636c0a",
+    "actual": "616278636c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "till-forward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "6474783a77710d",
+    "expected": "78637864207461696c0a",
+    "actual": "78637864207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "till-backward-delete",
+    "initial": "616278637864207461696c0a",
+    "keys": "246454783a77710d",
+    "expected": "61627863786c0a",
+    "actual": "61627863786c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "till-count-repeat",
+    "initial": "6158625863586458207461696c0a",
+    "keys": "7458323b783a77710d",
+    "expected": "61585863586458207461696c0a",
+    "actual": "61585863586458207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "find-reverse-repeat",
+    "initial": "6158625863586458207461696c0a",
+    "keys": "3266582c3b783a77710d",
+    "expected": "61586263586458207461696c0a",
+    "actual": "61586263586458207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "find-missing-count",
+    "initial": "61625863640a58206e6578740a",
+    "keys": "643266583a77710d",
+    "expected": "61625863640a58206e6578740a",
+    "actual": "61625863640a58206e6578740a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "percent-pair",
+    "initial": "28612862296329207461696c0a",
+    "keys": "64253a77710d",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "percent-quote",
+    "initial": "286120272927206229207461696c0a",
+    "keys": "25783a77710d",
+    "expected": "2861202729272062207461696c0a",
+    "actual": "2861202729272062207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "percent-comment",
+    "initial": "2f2a20636f6d6d656e74202a2f207461696c0a",
+    "keys": "25783a77710d",
+    "expected": "2f2a20636f6d6d656e74202a207461696c0a",
+    "actual": "2f2a20636f6d6d656e74202a207461696c0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "percent-directive",
+    "initial": "23696620410a410a23656c73650a420a23656e6469660a",
+    "keys": "64253a77710d",
+    "expected": "420a23656e6469660a",
+    "actual": "420a23656e6469660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "percent-number",
+    "initial": "610a620a630a640a650a660a670a",
+    "keys": "643530253a77710d",
+    "expected": "650a660a670a",
+    "actual": "650a660a670a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "help-pages",
+    "initial": "6162636465660a",
+    "keys": "3a68656c700d1b5b367e1b5b357e7141211b3a77710d",
+    "expected": "616263646566210a",
+    "actual": "616263646566210a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "help-undo",
+    "initial": "6162636465660a",
+    "keys": "783a680d7864643a656e65770d1b753a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "native-help",
+    "initial": "6162636465660a",
+    "keys": "0b481b5b367e1b5b357e0b683a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "native-window-shortcut",
+    "initial": "6162636465660a",
+    "keys": "0b54783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "options-theme",
+    "initial": "6162636465660a",
+    "keys": "145367727576626f780d3a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "color-menu",
+    "initial": "6162636465660a",
+    "keys": "3a636f6c6f72730d673a636f6c6f72736368656d650d033a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "insert-options-menu",
+    "initial": "6162636465660a",
+    "keys": "69581403591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "help-paste",
+    "initial": "6162636465660a",
+    "keys": "3a68656c700d1b5b3230307e0b48694241441b3a77710d1b5b3230317e71783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "block-insert",
+    "initial": "6162630a6465660a6768690a",
+    "keys": "166a6a492f2f201b3a77710d",
+    "expected": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "actual": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "block-insert-short",
+    "initial": "61626364650a780a0a41424344450a",
+    "keys": "6c6c166a6a6a49581b3a77710d",
+    "expected": "6162586364650a780a0a4142584344450a",
+    "actual": "6162586364650a780a0a4142584344450a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "block-append-pad",
+    "initial": "61626364650a780a0a41424344450a",
+    "keys": "6c6c166a6a6a41581b3a77710d",
+    "expected": "6162635864650a782020580a202020580a4142435844450a",
+    "actual": "6162635864650a782020580a202020580a4142435844450a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "block-append-eol",
+    "initial": "61620a636465660a780a",
+    "keys": "166a6a2441581b3a77710d",
+    "expected": "6162580a63646566580a78580a",
+    "actual": "6162580a63646566580a78580a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "block-tab",
+    "initial": "616263640a0958595a0a5a5a5a5a0a",
+    "keys": "6c6c166a6a49581b3a77710d",
+    "expected": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "actual": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "block-undo-redo",
+    "initial": "6162630a6465660a6768690a",
+    "keys": "166a6a4958591b75123a77710d",
+    "expected": "58596162630a58596465660a58596768690a",
+    "actual": "58596162630a58596465660a58596768690a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "block-paste",
+    "initial": "6162630a6465660a",
+    "keys": "166a491b5b3230307e581b5b3230317e1b3a77710d",
+    "expected": "586162630a586465660a",
+    "actual": "586162630a586465660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  },
+  {
+    "configuration": "debug-dll",
+    "case": "block-cancel",
+    "initial": "6162630a6465660a",
+    "keys": "166a1b783a77710d",
+    "expected": "6162630a65660a",
+    "actual": "6162630a65660a",
+    "run_log": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+  }
+]

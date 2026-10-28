@@ -1,0 +1,2 @@
+# VC6 Developer Studio and existing Windows sources intentionally use CRLF.
+windows/** whitespace=cr-at-eol

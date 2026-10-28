@@ -68,6 +68,10 @@ CFG=joewin - Win32 Release
 # PROP Default_Filter "c;h;rc;mak;bat"
 # Begin Source File
 
+SOURCE=..\..\joe\vim.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\joe\b.c
 # End Source File
 # Begin Source File

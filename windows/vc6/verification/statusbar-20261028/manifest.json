@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-28",
+  "builds": [
+    "Release package",
+    "Debug package",
+    "Release dll",
+    "Debug dll"
+  ],
+  "binaries": [
+    {
+      "path": "windows/bin/vc6/Debug/dll/joe.exe",
+      "architecture": "PE32/i386",
+      "subsystem": [
+        5,
+        1
+      ],
+      "sha256": "75651cfa7d115d92b1f0671fc81e63fccd30f7416f793a4fe6c5d790bd781d17"
+    },
+    {
+      "path": "windows/bin/vc6/Debug/dll/joewin.dll",
+      "architecture": "PE32/i386",
+      "subsystem": [
+        5,
+        1
+      ],
+      "sha256": "11d7b67ec487d6ae8a89d5da8c7d1d19a111ce70eb140009948e51cb43492264"
+    },
+    {
+      "path": "windows/bin/vc6/Debug/joe.exe",
+      "architecture": "PE32/i386",
+      "subsystem": [
+        5,
+        1
+      ],
+      "sha256": "a12acb6f143209831cfb50e4c8ac99b2c34b32cdcae53744291a8d044f72c993"
+    },
+    {
+      "path": "windows/bin/vc6/Release/dll/joe.exe",
+      "architecture": "PE32/i386",
+      "subsystem": [
+        5,
+        1
+      ],
+      "sha256": "aafb4b48d681cf0ae57f4d952b19c7d66f70494ad8ba3b8f5f27572d44b4a1e1"
+    },
+    {
+      "path": "windows/bin/vc6/Release/dll/joewin.dll",
+      "architecture": "PE32/i386",
+      "subsystem": [
+        5,
+        1
+      ],
+      "sha256": "25158dce91dbc3d6bd8ce0b686a92d60fae55392b171c33bf2317a23f349d131"
+    },
+    {
+      "path": "windows/bin/vc6/Release/joe.exe",
+      "architecture": "PE32/i386",
+      "subsystem": [
+        5,
+        1
+      ],
+      "sha256": "7b94a9495afbbdb158b4d45f5cbf60eea0d0ba10901608fa2167f8b62177c632"
+    }
+  ],
+  "ui_tests_rerun": false,
+  "sources": {
+    "joe/vim.c": "6b0c42f189860e7ff32f363ed0bbd78d3a668aef104482ffa6a9fd371a63fd09",
+    "joe/tw.c": "e77cc9bfd67e775e73046f3a6c8b0c4affc33f6d3f7599d871501af2dd4c6b24",
+    "tests/vim_pty_test.py": "0b61c905d45cff3df3603f771e3c305b3cf30451c5586338b5b5e7f8a51ef413"
+  },
+  "package": "build/deliveries/mijoe-vim-winxp-x86-20261028.zip",
+  "package_sha256": "3d437a36d6a82b6169e22159da56828dc47d0cdffd94421d643f9fb5d089a593"
+}

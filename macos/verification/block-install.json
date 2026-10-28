@@ -1,0 +1,14 @@
+{
+  "application": "mijoe",
+  "architecture": "arm64",
+  "binary_sha256": "a8c5e4db2f25ebbb032e8cf103a5a888faaf130b87e7175f05955d1c95c847e0",
+  "prefix": "/usr/local",
+  "commands": {
+    "mj": "/usr/local/bin/mj",
+    "rmj": "/usr/local/bin/rmj",
+    "xmj": "/usr/local/bin/xmj"
+  },
+  "block_tests_passed": 42,
+  "block_reference_cases": 37,
+  "block_protection_tests": 5
+}

@@ -1,0 +1,323 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[H[2J[?2004h[0m[4l[1;40r[H[NORMAL] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-pqvnm8tf/test_help_page_boundaries_and_a  Row 1    Col 1   
+[0mabcdef[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[H
+[A[CCOMMAND] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb3[4C0gn/T/mijoe-vim-pty-pqvnm8tf/test_help_page_boundaries_and_[39B[0m:[K[H
+[38B[Ch[K[H
+[AMiJoe :help - supported command[7m/[0m[Ks
+已支持的 Vim 命  [K令
+Normal 普通模式；Insert 插入模式；Visual 选择模式  [K。
+PageDown / Space 下一页；PageUp / b 上一页；q / Esc 关闭帮助  [K。
+
+【移动与定位  [K】
+h j k l / 方向键：左、下、上、右移动  [K。
+w / b / e：下个词、上个词、词尾  [K。
+0 / ^ / $ / Home / End：行首、首个非空白字符、行尾  [K。
+gg / G / 数字G：首行、末行、指定行；:数字 跳到行号  [K。
+Ctrl+u / Ctrl+d / PageUp / PageDown：半页、整页移动  [K。
+f字符 / F字符：在当前行向右、向左找到字符  [K。
+t字符 / T字符：在当前行停到目标字符前、后  [K。
+; / ,：按原方向、相反方向重复 f/F/t/T  [K。
+%：匹配 () [] {}，支持跨行与嵌套  [K。
+%：光标在 /* 或 */ 上时匹配 C 注释的另一端  [K。
+%：匹配 #if/#ifdef/#ifndef/#elif/#else/#endif  [K。
+1% 至 100%：跳到文件相应比例的行  [K。
+次数：2fx、3j、2d3w；查找失败取消待执行操作  [K。
+
+【插入与编辑  [K】
+i / a：在当前字符前、后插入  [K。
+I / A：在行首非空白处、行尾插入  [K。
+o / O：在下方、上方新建一行并插入  [K。
+Esc / Ctrl+[：结束插入或选择，返回 Normal  [K。
+Insert 中：Enter 换行；Backspace / Delete 删除字符  [K。
+Insert 中：方向键、Home/End、PageUp/PageDown 移动  [K。
+x / Delete：删除当前字符；可带次数  [K。
+d移动 / c移动 / y移动：删除、修改、复制移动范围  [K。
+dd / cc / yy：删除、修改、复制整行；可带次数  [K。
+D / C：删除、修改到行尾；可带行数  [K。
+p / P：在光标后、前粘贴内部寄存器内容  [K。
+u / Ctrl+r / .：撤销、重做、重复上次修改  [K。
+示例：dw、cfx、dFx、y%、v%d、2d3fx  [K。
+
+【选择与搜索  [K】
+v / V：按字符、按整行选择；再按一次取消  [K。
+Page 1/3 | PgDn/PgUp | q/Es [Kc
+[NORMAL] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-pqvnm8tf/test_help_page_boundaries_and_a  Row 1    Col 1   
+[0mabcdef[K[H
+字符/整行选择中使用移动键扩展范围，y/d/c/x 复制、删除或修改  [K。
+Ctrl+V：矩形选择；h/j/k/l、方向键或次数调整范围[2C[K。
+矩形 I / A：左侧插入、右侧追加，输入后 Esc 应用到各行[2C[K。
+列插入输入期间先显示首行，Esc 后复制到其余所选行  [K。
+示例：行首 Ctrl+V、2j、I，输入 // 后 Esc，给三行加前缀  [K。
+矩形 $A 在每行行尾追加；u / Ctrl+r 整批撤销、重做  [K。
+I 跳过未到达插入列的短行；A 补空格；Tab 内插入会拆分 Tab  [K。
+列插入支持中文和单行粘贴；换行或移动光标后只编辑首行[2C[K。
+矩形中再按 Ctrl+V 或 Esc 取消，v/V 切换为字符/整行选择  [K。
+/表达式 / ?表达式：向前、向后搜索；Enter 执行[2C[K。
+n / N：重复搜索、反向重复；使用 JOE 正则表达式  [K。
+[K
+【文件与缓冲区[2C[K】
+:e 路径 / :edit 路径：打开文件，保留已有未保存内容  [K。
+:enew：新建未命名缓冲区[2C[K。
+:ls / :buffers：显示缓冲区编号、当前项和修改标记  [K。
+:bn / :bnext；:bp / :bprevious：下个、上个缓冲区  [K。
+:b 编号 / :buffer 编号：按编号切换[2C[K。
+:bd / :bdelete：删除当前缓冲区；有修改需使用 :bd!  [K。
+:w / :write：保存当前文件  [K。
+:w 路径：写出副本，保留当前文件名；! 允许覆盖  [K。
+:saveas 路径 / :sav 路径：另存为并切换文件名  [K。
+:q / :quit：退出；有修改时 :q! 明确放弃  [K。
+:wq：保存成功后退出；保存失败保留编辑器和修改  [K。
+:x：有修改时保存，然后退出ks[K。
+路径支持空格、中文和 Windows 反斜杠，可整体加引号
+[K
+【帮助、菜单与主题[2C[K】
+:help / :h：本支持列表；PageDown/PageUp 翻页，q/Esc 关闭  [K。
+Ctrl+K H：JOE 原始帮助；PageDown/PageUp 切页，再次按键关闭  [K。
+Ctrl+T：JOE 选项菜单；方向键选择，Enter 确认，Ctrl+C 取消  [K。
+Ctrl+K T：缩小窗口；不是选项菜单[2C[K。
+切换主题：Ctrl+T，然后 S，输入主题名并按 Enter  [K。
+主题输入框可按 Tab 查看候选，Ctrl+C 取消  [K。
+:colors / :colorscheme：直接显示主题选择菜单  [K。
+主题菜单中方向键选择、PageUp/PageDown 翻页、Enter 应用  [K。[6G
+2
+
+[H
+:colors 主题名：直接应用，如 :colors gruvbox[2C[K。
+主题即时生效，不会修改文件内容[2C[K。
+:set novim[2C切换到 JOE 键位；启动参数 -novim 同效[2C[K。
+macOS 用终端粘贴；Windows Insert 中支持 Shift+Insert  [K。
+[K
+【范围A [K】
+只列出本版本已支持命令，未列出命令不保证可用[2C[K。
+矩形模式目前仅支持 I/A，不支持矩形删除、修改、复制粘贴[2C[K。
+不支持命名寄存器、文本对象、Vimscript、完整 Ex[2C[K。
+主题是否跨会话保留取决于 joe_state 设置；不改写用户配置  [K。
+Page 3/3 | PgDn/PgUp | q/Es[C[Kc
+[NORMAL] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-pqvnm8tf/test_help_page_boundaries_and_a  Row 1    Col 1   
+[0mabcdef[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[26A[H
+字符/整行选择中使用移动键扩展范围，y/d/c/x 复制、删除或修改  [K。
+Ctrl+V：矩形选择；h/j/k/l、方向键或次数调整范围  [K。
+矩形 I / A[2C左侧插入、右侧追加，输入后 Esc 应用到各行  [K。
+列插入输入期间先显示首行，Esc 后复制到其余所选行se[K。
+示例：行首 Ctrl+V、2j、I，输入 // 后 Esc，给三行加前缀  [K。
+矩形 $A 在每行行尾追加；u / Ctrl+r 整批撤销、重做  [K。
+I 跳过未到达插入列的短行；A 补空格；Tab 内插入会拆分 Tab  [K。
+列插入支持中文和单行粘贴；换行或移动光标后只编辑首行[2C[K。
+矩形中再按 Ctrl+V 或 Esc 取消，v/V 切换为字符/整行选择  [K。
+/表达式 / ?表达式：向前、向后搜索；Enter 执行[2C[K。
+n / N：重复搜索、反向重复；使用 JOE 正则表达式  [K。
+[K
+【文件与缓冲区  [K】
+:e 路径 / :edit 路径：打开文件，保留已有未保存内容  [K。
+:enew：新建未命名缓冲区  [K。
+:ls / :buffers：显示缓冲区编号、当前项和修改标记  [K。
+:bn / :bnext；:bp / :bprevious：下个、上个缓冲区  [K。
+:b 编号 / :buffer 编号：按编号切换  [K。
+:bd / :bdelete：删除当前缓冲区；有修改需使用 :bd!  [K。
+:w / :write：保存当前文件  [K。
+:w 路径：写出副本，保留当前文件名；! 允许覆盖  [K。
+:saveas 路径 / :sav 路径：另存为并切换文件名  [K。
+:q / :quit：退出；有修改时 :q! 明确放弃  [K。
+:wq：保存成功后退出；保存失败保留编辑器和修改  [K。
+:x：有修改时保存，然后退出  [K。
+路径支持空格、中文和 Windows 反斜杠，可整体加引号  [K。
+
+【帮助、菜单与主题  [K】
+:help / :h：本支持列表；PageDown/PageUp 翻页，q/Esc 关闭  [K。
+Ctrl+K H：JOE 原始帮助；PageDown/PageUp 切页，再次按键关闭  [K。
+Ctrl+T：JOE 选项菜单；方向键选择，Enter 确认，Ctrl+C 取消  [K。
+Ctrl+K T：缩小窗口；不是选项菜单  [K。
+切换主题：Ctrl+T，然后 S，输入主题名并按 Enter  [K。
+主题输入框可按 Tab 查看候选，Ctrl+C 取消  [K。
+:colors / :colorscheme：直接显示主题选择菜单  [K。
+主题菜单中方向键选择、PageUp/PageDown 翻页、Enter 应用  [K。
+Page 2/3 | PgDn/PgUp | q/Es [Kc
+[NORMAL] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-pqvnm8tf/test_help_page_boundaries_and_a  Row 1    Col 1   
+[H
+[0m已支持的 Vim 命[2C[K令
+Normal 普通模式；Insert 插入模式；Visual 选择模式[2C[K。
+PageDown / Space 下一页；PageUp / b 上一页；q / Esc 关闭帮助  [K。
+[K
+【移动与定位tr[K】
+h j k l / 方向键：左、下、上、右移动[2C[K。
+w / b / e：下个词、上个词、词尾[2C[K。
+0 / ^ / $ / Home / End：行首、首个非空白字符、行尾[2C[K。
+gg / G / 数字G：首行、末行、指定行；:数字 跳到行号[2C[K。
+Ctrl+u / Ctrl+d / PageUp / PageDown：半页、整页移动  [K。
+f字符 / F字符：在当前行向右、向左找到字符[2C[K。
+t字符 / T字符：在当前行停到目标字符前、后  [K。
+; / ,：按原方向、相反方向重复 f/F/t/T  [K。
+%：匹配 () [] {}，支持跨行与嵌套[2C[K。
+%：光标在 /* 或 */ 上时匹配 C 注释的另一端  [K。
+%：匹配 #if/#ifdef/#ifndef/#elif/#else/#endif[2C[K。
+1% 至 100%：跳到文件相应比例的行[2C[K。
+次数：2fx、3j、2d3w；查找失败取消待执行操作  [K。
+[K
+【插入与编辑[2C[K】
+i / a：在当前字符前、后插入[2C[K。
+I / A：在行首非空白处、行尾插入[2C[K。
+o / O：在下方、上方新建一行并插入[2C[K。
+Esc / Ctrl+[：结束插入或选择，返回 Normal[2C[K。
+Insert 中：Enter 换行；Backspace / Delete 删除字符  [K。
+Insert 中：方向键、Home/End、PageUp/PageDown 移动
+x / Delete：删除当前字符；可带次数  [K。
+d移动 / c移动 / y移动：删除、修改、复制移动范围  [K。
+dd / cc / yy：删除、修改、复制整行；可带次数[2C[K。
+D / C：删除、修改到行尾；可带行数Pa[K。
+p / P：在光标后、前粘贴内部寄存器内容er[K。
+u / Ctrl+r / .：撤销、重做、重复上次修改  [K。
+示例：dw、cfx、dFx、y%、v%d、2d3fx[2C[K。
+[K
+【选择与搜索ol[K】
+v / V：按字符、按整行选择；再按一次取消[2C[K。[6G
+1
+
+abcdef[K[H[NORMAL] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-pqvnm8tf/test_help_page_boundaries_and_a  Row 1    Col 1   
+[0mabcdef[K
+[K
+[K
+
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+
+[K
+[K
+[K
+[K
+[K[H
+[A[CCOMMAND] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb3[4C0gn/T/mijoe-vim-pty-pqvnm8tf/test_help_page_boundaries_and_[39B[0m:[K[H
+[38B[Cw[K[H
+[A[CNORMAL] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb30[4Cgn/T/mijoe-vim-pty-pqvnm8tf/test_help_page_boundaries_and_a[39B[0m[KFile /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-pqvnm8tf/test_help_page_boundaries_and_alias/sample.txt saved[K[H
+[A[CCOMMAND] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb3[4C0gn/T/mijoe-vim-pty-pqvnm8tf/test_help_page_boundaries_and_[39B[0m:[K[H
+[38B[Cq[K[H
+[38B[2C![K[H
+[38B[?2004l

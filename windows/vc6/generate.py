@@ -144,7 +144,7 @@ def documents():
     # Keep offline help self-contained, including on machines without Python.
     target = HERE / "docs"
     target.mkdir(exist_ok=True)
-    for name in ("man", "windows"):
+    for name in ("man", "windows", "vim"):
         source = (ROOT / "docs" / (name + ".md")).read_text(encoding="utf-8")
         page = ('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">'
                 '<title>JOE 4.6 - ' + name + '</title>'

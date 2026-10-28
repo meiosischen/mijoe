@@ -6,6 +6,10 @@
  *	This file is part of JOE (Joe's Own Editor)
  */
 #include "types.h"
+#include <sys/select.h>
+#ifdef HAVE_UTIL_H
+#include <util.h>
+#endif
 
 #ifdef GWINSZ_IN_SYS_IOCTL
 #ifdef HAVE_SYS_IOCTL_H
@@ -553,6 +557,21 @@ int ttcheck()
 		}
 	}
 	return have;
+}
+
+int ttwaitkey(int milliseconds)
+{
+	fd_set input;
+	struct timeval timeout;
+	int fd;
+	if (ttcheck()) return 1;
+	fd = ackkbd != -1 ? mpxfd : fileno(termin);
+	FD_ZERO(&input);
+	FD_SET(fd, &input);
+	timeout.tv_sec = milliseconds / 1000;
+	timeout.tv_usec = (milliseconds % 1000) * 1000;
+	select(fd + 1, &input, NULL, NULL, &timeout);
+	return ttcheck();
 }
 
 /* Flush output and check for type ahead */

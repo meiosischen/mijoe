@@ -1,5 +1,12 @@
 # Joe's Own Editor
 
+本仓库默认启用跨平台 Vim 基础操作：Normal、Insert、Visual，移动与组合编辑、
+多缓冲区、保存/另存为、撤销/重做及 `.` 重复修改。操作及 UNIX 构建方法见
+[`docs/vim.md`](docs/vim.md)。使用 `joe -novim` 可恢复传统 JOE 键位。
+
+macOS 本机可运行 `python3 tools/build_macos.py`，然后双击生成的
+`build/macos/MiJoe-macOS-arm64/启动MiJoe.command`。详见 [macOS 说明](macos/README.md)。
+
 本目录已增加 JOE for Windows 4.6 的 Visual C++ 6.0 移植版。打开
 [`windows/vc6/joewin.dsw`](windows/vc6/joewin.dsw)，选择 `joewin - Win32 Release`
 后编译即可。此 Windows 版本禁用了 `joewinpty` 弹出终端和 F1～F4，保留编辑、
@@ -54,8 +61,9 @@ ncurses, but JOE does not use curses to control the terminal- it has its own
 code for this).</p>
 
 <p>Much of the look and feel of JOE is determined by its configuration
-file "joerc". This source tree provides only the default JOE key layout
-and builds only the "joe" frontend. The configuration name remains
+file "joerc". This source tree keeps the default JOE key layout as its
+non-modal fallback, adds shared Vim modal editing, and builds only the
+"joe" frontend. The configuration name remains
 "joerc" even if the executable is renamed. You can customize JOE by
 copying the system "joerc" file to your home directory.</p>
 

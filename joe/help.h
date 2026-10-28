@@ -16,3 +16,9 @@ int u_help_next(W *w, int k);		/* goto next help screen */
 int u_help_prev(W *w, int k);		/* goto prev help screen */
 extern int bg_help;				/* Background color for help */
 extern int help_is_utf8;			/* Set if help text is UTF-8 */
+
+/* Modal, paged text above the current editor; text and title must be static. */
+int help_text_open(W *w, const char *title, const char *text, int utf8);
+int help_text_active(Screen *t);
+int help_text_page(Screen *t, int direction);
+void help_text_close(Screen *t);

@@ -6,6 +6,7 @@
  * 	This file is part of JOE (Joe's Own Editor)
  */
 #include "types.h"
+#include "vim.h"
 
 #ifdef MOUSE_GPM
 #include <gpm.h>
@@ -147,7 +148,7 @@ int edloop()
 			c = ungotc;
 			ungot = 0;
 		} else
-			c = ttgetch();
+			c = vim_enabled ? vim_getch() : ttgetch();
 
 		/* Clear temporary messages */
 		w = maint->curwin;
@@ -166,6 +167,14 @@ int edloop()
 			c = 13;
 		
 		more_no_auto:
+		/* Vim consumes only ordinary text windows. Prompts, menus and shells
+		 * retain their own keyboard maps and coroutine lifecycle. */
+		if (vim_enabled && (maint->curwin->watom->what & TYPETW) &&
+		    !((BW *)maint->curwin->object)->b->pid &&
+		    (c < KEY_MDOWN || c > KEY_MRDRAG) && !vim_native_key(c)) {
+			co_call(vim_input, vim_readkey(c));
+			continue;
+		}
 
 		/* Give key to current keyboard handler: it returns a macro to execute when
 		   a full sequence is decoded. Use special kbd if we're handing data to a shell window */
@@ -356,8 +365,8 @@ int joerc()
 #else
 
 	/* Use the single default key layout; message translations are separate. */
-#ifdef JOEWIN
-	/* Windows port stores configuration files underneath 'conf' directory in same location as exe */
+#if defined(JOEWIN) || (defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS))
+	/* Packaged ports compute the configuration directory at runtime. */
 	t = vsncpy(NULL, 0, sz(JOERC));
 #else
 	t = vsncpy(NULL, 0, sc(JOERC));

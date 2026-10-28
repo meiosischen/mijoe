@@ -164,6 +164,32 @@ int ttcheck(void)
 	return have;
 }
 
+int handlejwcontrol(struct CommMessage *m);
+
+/* Timed lookahead for Escape/CSI decoding. Do not consume the next byte. */
+int ttwaitkey(int milliseconds)
+{
+    DWORD start = GetTickCount();
+    int qd = JW_TO_EDITOR;
+    if (ttcheck()) return 1;
+    while (!leave) {
+        DWORD elapsed = GetTickCount() - start;
+        struct CommMessage *m;
+        if (elapsed >= (DWORD)milliseconds) return 0;
+        m = jwWaitForComm(&qd, 1, (DWORD)milliseconds - elapsed, NULL);
+        if (!m) return 0;
+        if (JWISIO(m)) {
+            ibufsiz = jwReadIO(m, ibuf);
+            ibufp = 0;
+            jwReleaseComm(qd, m);
+            return ttcheck();
+        }
+        handlejwcontrol(m);
+        jwReleaseComm(qd, m);
+    }
+    return 0;
+}
+
 /* Read next character from input */
 
 time_t last_time;

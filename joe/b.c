@@ -248,6 +248,7 @@ static B *bmkchn(H *chn, B *prop, off_t amnt, off_t nlines)
 		b->o = pdefault;
 	mset((char *)b->marks, 0, SIZEOF(b->marks));
 	b->rdonly = 0;
+	b->vim_number = 0;
 	b->orphan = 0;
 	b->oldcur = NULL;
 	b->err = NULL;

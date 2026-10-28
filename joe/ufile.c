@@ -308,6 +308,8 @@ struct savereq {
 	int rename;	/* Set if we're renaming the file during save */
 	int block_save; /* Flag, if we want to save a block# */
 	const char *message; /* String for messages to be shown to the user */
+	int vim_request; /* Report conflicts instead of opening a yes/no prompt. */
+	int overwrite;
 };
 
 static struct savereq *mksavereq(int (*callback)(BW *bw, struct savereq *req, int flg), char *name, B *first, int myrename, int block_save)
@@ -319,6 +321,7 @@ static struct savereq *mksavereq(int (*callback)(BW *bw, struct savereq *req, in
 	req->not_saved = 0;
 	req->rename = myrename;
 	req->block_save = block_save;
+	req->vim_request = req->overwrite = 0;
 	return req;
 }
 
@@ -415,7 +418,7 @@ static int saver(W *w, int c, void *object)
 			bw->b->changed = 0;
 			saverr(bw->b->name);
 		}
-		{
+		if (!req->vim_request || (bw->b->name && !fullfilecmp(bw->b->name, req->name))) {
 			/* Last UNDOREC which wasn't modified will be changed
 			 * to modified. And because this block is
 			 * executed after each 'save', there can't be more
@@ -493,7 +496,12 @@ static int dosave(BW *bw, struct savereq *req)
 	else
 	{
 		if (backup(bw)) {
-			return saver(bw->parent, 0, req);
+			if (req->vim_request && !req->overwrite) {
+				msgnw(bw->parent, "Could not make backup; file not saved (use :w!)");
+				rmsavereq(req);
+				return -1;
+			}
+			return saver(bw->parent, req->overwrite ? YES_CODE : 0, req);
 		} else {
 			return saver(bw->parent, YES_CODE, req);
 		}
@@ -535,6 +543,8 @@ static int dosave1(W *w, char *s, void *object)
 		obj_free(req->name);
 	req->name = s;
 	obj_perm(req->name);
+	if (req->vim_request && req->overwrite)
+		return dosave(bw, req);
 
 	if (s[0] != '!' && !(s[0] == '>' && s[1] == '>')) {
 		/* It's a normal file: not a pipe or append */
@@ -543,6 +553,11 @@ static int dosave1(W *w, char *s, void *object)
 			f = open(dequote(s), O_RDONLY);
 			if (f != -1) {
 				close(f);
+				if (req->vim_request) {
+					msgnw(w, "File exists (use :w! or :saveas! to overwrite)");
+					rmsavereq(req);
+					return -1;
+				}
 				req->message = joe_gettext(_("File exists. Overwrite (y,n,%{abort})? "));
 				return dosave2(bw->parent, 0, req);
 			}
@@ -550,6 +565,11 @@ static int dosave1(W *w, char *s, void *object)
 		else {
 			/* We're saving a newer version of the same file */
 			if (check_mod(bw->b)) {
+				if (req->vim_request) {
+					msgnw(w, "File changed on disk; not saved (use :w!)");
+					rmsavereq(req);
+					return -1;
+				}
 				req->message = joe_gettext(_("File on disk is newer. Overwrite (y,n,%{abort})? "));
 				return dosave2(bw->parent, 0, req);
 			}
@@ -589,6 +609,41 @@ int usavenow(W *w, int k)
 		return dosave1(w,vsncpy(NULL,0,sz(bw->b->name)),mksavereq(NULL,NULL,NULL,0,0));
 	} else
 		return usave(w, 0);
+}
+
+int vim_write_file(W *w, const char *name, int rename_file, int overwrite)
+{
+	BW *bw;
+	B *other;
+	struct savereq *req;
+	const char *target;
+	WIND_BW(bw, w);
+	target = name ? name : bw->b->name;
+	if (target && zlen(target) >= 1000) {
+		msgnw(w, "Filename is too long for the file engine");
+		return -1;
+	}
+	if (!target || !*target) {
+		msgnw(w, "No filename; use :w filename or :saveas filename");
+		return -1;
+	}
+	if (*target == '!' || *target == '>') {
+		msgnw(w, "Pipe and append writes are not implemented");
+		return -1;
+	}
+	if (bw->b->rdonly && !overwrite && (!bw->b->name || !fullfilecmp(target, bw->b->name))) {
+		msgnw(w, "Read only (use :w! to attempt a write)");
+		return -1;
+	}
+	other = bcheck_loaded(target);
+	if (other && other != bw->b) {
+		msgnw(w, "Target file is already open in another buffer");
+		return -1;
+	}
+	req = mksavereq(NULL, NULL, NULL, rename_file, 0);
+	req->vim_request = 1;
+	req->overwrite = overwrite;
+	return dosave1(w, vsdupz(target), req);
 }
 
 /* Write highlighted block to a file */

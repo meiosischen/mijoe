@@ -124,6 +124,7 @@ struct options {
 
 struct buffer {
 	LINK(B)	link;		/* Doubly-linked list of all buffers */
+	unsigned long vim_number; /* Stable, session-local user buffer number. */
 	P	*bof;		/* Beginning of file pointer */
 	P	*eof;		/* End of file pointer */
 	char *name;	/* File name */

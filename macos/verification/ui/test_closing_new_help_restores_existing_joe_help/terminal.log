@@ -1,0 +1,195 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[H[2J[?2004h[0m[4l[1;40r[H[NORMAL] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-pqvnm8tf/test_closing_new_help_restores_  Row 1    Col 1   
+[0mabcdef[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[H
+[A[9C[7m^K
+[0m[A[9T[9C[4mREGION[16CGO TO[20CGO TO[20CDELETE[13CEXIT[16CSEARCH
+[117D[0m[1m^Arrow[0m Select[9C[1m^Z[0m Prev. word[12C[1m^U/^V[0m PgUp/PgDn[10C[1m^D[0m Char.[11C[1m^KX[0m Save[12C[1m^KF[0m Find
+[119D[1m^KB[0m Begin[13C[1m^X[0m Next word[13C[4mMISC[21C[0m[1m^Y[0m Line[12C[1m^C[0m  Abort[11C[1m^L[0m  Next
+[119D[1m^KK[0m End[15C[1m^KU[0m Top of file[10C[1m^KJ[0m Paragraph[12C[1m^W[0m >Word[11C[1m^KQ[0m All[13C[4mHELP
+[115D[0m[1m^KC[0m Copy[14C[1m^KV[0m End of file[10C[1m^KA[0m Center line[10C[1m^O[0m Word<[11C[4mFILE[16C[0m[1mEsc .[0m Next
+[121D[1m^KM[0m Move[14C[1m^A[0m Beg. of line[10C[1m^K Space[0m Status[10C[1m^J[0m >Line[11C[1m^KE[0m Edit[12C[1mEsc ,[0m Prev
+[121D[1m^KW[0m File[14C[1m^E[0m End of line[11C[4mSPELL[20C[0m[1m^[O[0m Line<[10C[1m^KR[0m Insert[10C[1m^KH[0m Off
+[118D[1m^KY[0m Delete[12C[1m^KL[0m To line no.[10C[1mEsc N[0m Word[15C[1m^_[0m Undo[12C[1m^KD[0m Save[12C[1m^T[0m  Menu
+[119D[1m^K/[0m Filter[12C[1m^G[0m  Matching ([11C[1mEsc L[0m File[15C[1m^^[0m Redo[12C[1m^K`[0m Revert
+[101D[7m  
+[A[C[0mCOMMAND] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb3[4C0gn/T/mijoe-vim-pty-pqvnm8tf/test_closing_new_help_restores[30B[0m:[K[29A[29B[Ch[K[29A[29B[2Ce[K[29A[40;4Hl[K[29A[40;5Hp[K[29A[HMiJoe :help - supported command[4mG[0m[Ks
+已支持的 Vim 命 S[K令
+Normal 普通模式；Insert 插入模式；Visual 选择模式  [K。
+PageDown / Space 下一页；PageUp / b 上一页；q / Esc 关闭帮助Pa[K。
+[K
+【移动与定位 M[K】
+h j k l / 方向键：左、下、上、右移动d [K。
+w / b / e：下个词、上个词、词尾[1m^K[0m[K。
+0 / ^ / $ / Home / End：行首、首个非空白字符、行尾  [K。
+gg / G / 数字G：首行、末行、指定行；:数字 跳到行号[7m2t[0m[K。
+Ctrl+u / Ctrl+d / PageUp / PageDown：半页、整页移动  [K。
+f字符 / F字符：在当前行向右、向左找到字符  [K。
+t字符 / T字符：在当前行停到目标字符前、后  [K。
+; / ,：按原方向、相反方向重复 f/F/t/T  [K。
+%：匹配 () [] {}，支持跨行与嵌套  [K。
+%：光标在 /* 或 */ 上时匹配 C 注释的另一端  [K。
+%：匹配 #if/#ifdef/#ifndef/#elif/#else/#endif  [K。
+1% 至 100%：跳到文件相应比例的行  [K。
+次数：2fx、3j、2d3w；查找失败取消待执行操作  [K。
+
+【插入与编辑  [K】
+i / a：在当前字符前、后插入  [K。
+I / A：在行首非空白处、行尾插入  [K。
+o / O：在下方、上方新建一行并插入  [K。
+Esc / Ctrl+[：结束插入或选择，返回 Normal  [K。
+Insert 中：Enter 换行；Backspace / Delete 删除字符  [K。
+Insert 中：方向键、Home/End、PageUp/PageDown 移动  [K。
+x / Delete：删除当前字符；可带次数  [K。
+d移动 / c移动 / y移动：删除、修改、复制移动范围  [K。
+dd / cc / yy：删除、修改、复制整行；可带次数  [K。
+D / C：删除、修改到行尾；可带行数  [K。
+p / P：在光标后、前粘贴内部寄存器内容  [K。
+u / Ctrl+r / .：撤销、重做、重复上次修改  [K。
+示例：dw、cfx、dFx、y%、v%d、2d3fx  [K。
+
+【选择与搜索  [K】
+v / V：按字符、按整行选择；再按一次取消  [K。
+Page 1/3 | PgDn/PgUp | q/Es [Kc
+[NORMAL] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-pqvnm8tf/test_closing_new_help_restores_  Row 1    Col 1   
+[0mabcdef[K[H         [4mREGION[0m                [4mGO TO[20CGO TO[20CDELETE[13CEXIT[16CSEARCH
+[0m         [1m^Arrow[0m Select[9C[1m^Z[0m Prev. word[12C[1m^U/^V[0m PgUp/PgDn[10C[1m^D[0m Char.[11C[1m^KX[0m Save[12C[1m^KF[0m Find
+         [1m^KB[0m Begin             [1m^X[0m Next word         [4C[4mMISC[21C[0m[1m^Y[0m Line[12C[1m^C[0m  Abort[11C[1m^L[0m  Next
+         [1m^KK[0m End               [1m^KU[0m Top of file          [1m^KJ[0m Paragraph[12C[1m^W[0m >Word[11C[1m^KQ[0m All[13C[4mHELP
+[0m [8C[1m^KC[0m Copy[14C[1m^KV[0m End of file[10C[1m^KA[0m Center line[10C[1m^O[0m Word<[11C[4mFILE[16C[0m[1mEsc .[0m Next
+         [1m^KM[0m Move[14C[1m^A[0m Beg. of line[10C[1m^K Space[0m Status[10C[1m^J[0m >Line[11C[1m^KE[0m Edit[12C[1mEsc ,[0m Prev
+         [1m^KW[0m File              [1m^E[0m End of line[11C[4mSPELL[20C[0m[1m^[O[0m Line<[10C[1m^KR[0m Insert[10C[1m^KH[0m Off
+         [1m^KY[0m Delete            [1m^KL[0m To line no.[10C[1mEsc N[0m Word[15C[1m^_[0m Undo[12C[1m^KD[0m Save[12C[1m^T[0m  Menu
+         [1m^K/[0m Filter            [1m^G[0m  Matching (           [1mEsc L[0m File[15C[1m^^[0m Redo[12C[1m^K`[0m Revert
+[NORMAL] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-pqvnm8tf/test_closing_new_help_restores_  Row 1    Col 1   
+[0mabcdef[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+
+[K
+[K
+[K
+[K
+[K[29A[1;10H  [4mMACROS[14C[0m     [4mSCROLL[14C[0m       [4mWINDOW[12C[0m      [7C[4mGO TO[0m     [11C[4mI-SEARCH[0m   
+[117D  [1m^K[ 0-9[0m Record[6C     [1mEsc W[0m Up[12C       [1m^KO[0m Open  [1m^C[0m  Close       [5C[1mEsc B[0m / [1mK[0m     [7C[1m^R[0m Backwards 
+[119D  [1m^K][0m     Stop[8C     [1mEsc Z[0m Down[10C       [1m^KG[0m Grow  [1m^KT[0m Shrink     [6Cto [1m^KB[0m/[1m^KK [0m    [6C[1m^S[0m Forwards  
+[119D  [1mEsc I[0m   Text[8C     [1mEsc <[0m Left[10C       [1m^KN[0m Next  [1m^KP[0m Prev.       [5C[1m^P[0m  Up       [8C[4mBOOKMARKS
+[115D[0m  [1m^K?[0m     Pause[7C     [1mEsc >[0m Right[9C       [1m^KI[0m Show one / All        [5C[1m^N[0m  Down  [11C[1mEsc 0-9[0m Goto   
+[121D     for prompt[7C     [4mINSERT[0m    [10C       [4mSHELL[0m   [10C        [5C[1m^B[0m  Left      [7C[1mEsc Esc[0m Set    
+[121D  [1m^K 0-9[0m  Play[8C     [1m^][0m Line  [1m^Q[0m Ctrl[4C       [1mF1-F4[0m Term emulator        [4C[1m^F[0m  Right       [5C[1m^K-[0m Auto prev
+[119D  [1m^K\[0m     Repeat[6C     [1m^@[0m Space [1m^\[0m Meta[4C       [1m^K'[0m In buffer[5C       [12C        [7C[1m^K=[0m Auto next
+[119D  [1mEsc D[0m   Dump[8C     [1mEsc Y[0m Paste[9C       [1m^KZ[0m Suspend  [1mEsc ![0m Append[12C          
+
+[A[9C[7m^K
+[0m[29B[9S[1;10H[7m  [31B[0m[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[H
+[A[CCOMMAND] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb3[4C0gn/T/mijoe-vim-pty-pqvnm8tf/test_closing_new_help_restores[39B[0m:[K[H
+[38B[Cw[K[H
+[A[CNORMAL] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb30[4Cgn/T/mijoe-vim-pty-pqvnm8tf/test_closing_new_help_restores_[39B[0m[Kle /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-pqvnm8tf/test_closing_new_help_restores_existing_joe_help/sample.txt saved[H
+[A[CCOMMAND] [7m    IW   /var/folders/j0/mdzsf8496qlcpfp2tfpzzb3[4C0gn/T/mijoe-vim-pty-pqvnm8tf/test_closing_new_help_restores[39B[0m:[K[H
+[38B[Cq[K[H
+[38B[2C![K[H
+[38B[?2004l

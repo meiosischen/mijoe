@@ -14,9 +14,10 @@ AC_CANONICAL_TARGET
 # Init automake
 AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE
-AM_CONFIG_HEADER(joe/autoconf.h)
+AC_CONFIG_HEADERS([joe/autoconf.h])
 
 # Checks for programs.
+AS_IF([test "${CFLAGS+set}" != set], [CFLAGS="-O2 -std=gnu99"])
 AC_PROG_CC
 AC_PROG_CPP
 AC_PROG_EGREP
@@ -75,10 +76,10 @@ else
 		AC_DEFINE(HAVE_SYSV_TERMIO, 1, [We have <termio.h> and <sys/termio.h>])
 	fi
 fi
-AC_HEADER_TIOCGWINSZ
+AC_DEFINE([GWINSZ_IN_SYS_IOCTL], [1], [Window size ioctl definitions are in sys/ioctl.h])
 AC_CHECK_HEADERS([errno.h fcntl.h locale.h sgtty.h stdlib.h string.h])
 AC_CHECK_HEADERS([sys/ioctl.h sys/param.h sys/time.h unistd.h utime.h])
-AC_CHECK_HEADERS([sys/dirent.h time.h pwd.h paths.h pty.h libutil.h])
+AC_CHECK_HEADERS([sys/dirent.h time.h pwd.h paths.h pty.h libutil.h util.h])
 AC_CHECK_HEADERS([sys/types.h sys/stat.h sys/wait.h limits.h signal.h])
 AC_CHECK_HEADERS([curses.h utmp.h sys/utime.h ucontext.h setjmp.h stddef.h])
 AC_CHECK_HEADERS([term.h],[],[],
@@ -117,7 +118,8 @@ AC_CHECK_TYPE([sighandler_t],
 # Checks for library functions.
 AC_PROG_GCC_TRADITIONAL
 AC_FUNC_LSTAT
-joe_SETPGRP
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <unistd.h>]], [[setpgrp();]])],
+ [AC_DEFINE([SETPGRP_VOID], [1], [setpgrp takes no arguments])])
 AC_TYPE_PID_T
 AC_TYPE_SIZE_T
 AC_TYPE_OFF_T
@@ -135,9 +137,6 @@ if test x"$ac_cv_func_getcwd" != xyes; then
 	fi
 fi
 AC_CHECK_FUNCS([isblank])
-if test x"$ac_cv_func_isblank" = xyes; then
-	joe_ISBLANK
-fi
 AC_CHECK_FUNCS([alarm mkdir mkstemp putenv setlocale strchr strdup utime setpgid])
 AC_CHECK_FUNCS([setitimer sigaction sigvec siginterrupt sigprocmask])
 AC_CHECK_FUNCS([setjmp sigaltstack])
@@ -172,7 +171,7 @@ AC_SEARCH_LIBS(y0, m, AC_DEFINE_UNQUOTED(HAVE_Y0, 1, [If we have y0()]))
 AC_SEARCH_LIBS(y1, m, AC_DEFINE_UNQUOTED(HAVE_Y1, 1, [If we have y1()]))
 AC_SEARCH_LIBS(hypot, m, AC_DEFINE_UNQUOTED(HAVE_HYPOT, 1, [If we have hypot()]))
 
-joe_REINSTALL_SIGHANDLERS
+dnl POSIX sigaction handlers remain installed; no reinstall is required.
 
 # check if -liconv is necessary
 # if iconv() is in libc, don't bother with -liconv
@@ -198,6 +197,5 @@ AH_VERBATIM([_PARAMS],[/* Check to see if we can use strict prototypes */
 AC_CHECK_PROG(SPELL,aspell,aspell,ispell)
 
 AC_CONFIG_FILES([Makefile joe/Makefile joe/util/Makefile rc/Makefile
-man/Makefile man/ru/Makefile syntax/Makefile po/Makefile colors/Makefile
-charmaps/klingon desktop/Makefile])
+syntax/Makefile po/Makefile colors/Makefile])
 AC_OUTPUT

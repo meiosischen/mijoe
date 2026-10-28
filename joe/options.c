@@ -7,6 +7,7 @@
  */
 
 #include "types.h"
+#include "vim.h"
 
 #define HEX_RESTORE_UTF8	2
 #define HEX_RESTORE_CRLF	4
@@ -398,6 +399,7 @@ struct glopts {
 	{"notite",	0, &notite, NULL, 0, 0, _("Suppress tty init sequence"), 0, 0, 0 },
 	{"brpaste",	0, &brpaste, NULL, 0, 0, _("Bracketed paste mode"), 0, 0, 0 },
 	{"pastehack",	0, &pastehack, NULL, 0, 0, _("Paste quoting hack"), 0, 0, 0 },
+	{"vim", 0, &vim_enabled, NULL, 0, 0, _("Vim modal editing (default on; -novim disables)"), 0, 0, 0 },
 	{"nolinefeeds",	0, &nolinefeeds, NULL, 0, 0, _("Suppress history preserving linefeeds"), 0, 0, 0 },
 	{"mouse",	0, &xmouse, NULL, 0, 0, _("Enable mouse"), 0, 0, 0 },
 	{"usetabs",	0, &opt_usetabs, NULL, 0, 0, _("Screen update uses tabs"), 0, 0, 0 },
@@ -544,6 +546,11 @@ int glopt(char *s, char *arg, OPTIONS *options, int set)
 	/* Initialize offsets */
 	if (!isiz)
 		izopts();
+	/* Friendly alias alongside JOE's traditional --vim spelling. */
+	if (!zcmp(s, "novim")) {
+		if (set) vim_enabled = 0;
+		return 1;
+	}
 
 	/* Clear instead of set? */
 	if (s[0] == '-') {
@@ -1273,24 +1280,7 @@ static int olddoopt(BW *bw, int y, int flg)
 				buf = vsfmt(buf, 0, joe_gettext(glopts[y].yes), "");
 				s = ask(bw->parent, buf, NULL, NULL, colorscmplt, utf8_map, 0, 0, NULL);
 				if (s) {
-					SCHEME *scheme = load_scheme(s);
-					
-					if (scheme) {
-						if (apply_scheme(scheme)) {
-							msgnw(bw->parent, joe_gettext(_("Color scheme failed to apply")));
-							return -1;
-						} else {
-							nredraw(maint->t);
-#ifdef JOEWIN
-							/* Notify UI */
-							jwSendComm0s(JW_FROM_EDITOR, COMM_ACTIVESCHEME, scheme_name);
-#endif
-							return 0;
-						}
-					} else {
-						msgnw(bw->parent, joe_gettext(_("Color scheme file not found")));
-						return -1;
-					}
+					return set_color_scheme(bw->parent, s);
 				} else {
 					return -1;
 				}

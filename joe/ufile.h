@@ -15,6 +15,7 @@ int ushell(W *w, int k);
 int usys(W *w, int k);
 int usave(W *w, int k);
 int usavenow(W *w, int k);
+int vim_write_file(W *w, const char *name, int rename_file, int overwrite);
 int uedit(W *w, int k);
 int usetcd(W *w, int k);
 int uswitch(W *w, int k);

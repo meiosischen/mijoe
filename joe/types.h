@@ -225,10 +225,18 @@ typedef int pid_t;
 /* We use -256 so that it's still unique even if we promoted a signed char to an int */
 #define NO_MORE_DATA (-256)
 
+#if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
+#include "macos.h"
+#endif
+
 #ifndef JOEWIN
 
 /* This is defined as a function in Windows build since it is computed at runtime */
+#if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
+#define JOEDATA_PLUS(x) vsfmt(NULL, 0, "%s%s", JOEDATA, (x))
+#else
 #define JOEDATA_PLUS(x) (JOEDATA x)
+#endif
 
 #endif
 

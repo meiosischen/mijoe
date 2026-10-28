@@ -1,0 +1,8 @@
+configure.ac:119: warning: The macro 'AC_PROG_GCC_TRADITIONAL' is obsolete.
+configure.ac:119: You should run autoupdate.
+./lib/autoconf/c.m4:1802: AC_PROG_GCC_TRADITIONAL is expanded from...
+configure.ac:119: the top level
+configure.ac:130: warning: The macro 'AC_TYPE_SIGNAL' is obsolete.
+configure.ac:130: You should run autoupdate.
+./lib/autoconf/types.m4:804: AC_TYPE_SIGNAL is expanded from...
+configure.ac:130: the top level

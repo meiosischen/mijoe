@@ -1,0 +1,103 @@
+{
+  "date": "2026-10-27",
+  "base_commit": "926b309b97586261f00c352522184234914e8ead",
+  "changes_committed": false,
+  "sources": {
+    "joe/vim.c": "e629b30578188fbfca1409aeced41be5d1ac7dd7756ecb60e55bede9b9d355f6",
+    "joe/vim.h": "d5a3e72c0f6f352155cf36d6011fbd2b71676f4e986616cfefea3bdc911ffaf5",
+    "joe/main.c": "5e9fc56a051fa183a95947a6043c364203c516f9e3c022fe8a137decc4b681b8",
+    "joe/ufile.c": "bb574e2da73ed49ba2d15237ae99cdcb03ccabe137513612d51876dbe8c98cf7",
+    "joe/b.c": "4f2ae04bf523bc6cb5a4e23c0ebb3f7c5defc7cb871f124d8ae58ea517242e04",
+    "joe/b.h": "e8e4916bf2ff701cf7c04f6795e3aad43d9a66b16515a099836441623068476f",
+    "joe/tty.c": "502f6626355e3924938e3303e88f6fef487a9a3392cb4e1f04b23b8b376a94e9",
+    "joe/tty.h": "32d374776bc3932000274eb44963ed189a290f654d223b1eac51afdb07437e83",
+    "joe/options.c": "e211a4f0968cde845189a77522744b7de7c8b678ee92973cfea432340123a9b8",
+    "joe/tw.c": "e77cc9bfd67e775e73046f3a6c8b0c4affc33f6d3f7599d871501af2dd4c6b24",
+    "windows/src/joe/win/tty.c": "33339c33dcda84e4f448756d9af6ace88b9f2d46a13ecd7a7279dbe885d39d7a",
+    "configure.ac": "53ee7b370529dccb045624daf0e3bbddb494413b6e9f72695c9f2ad0f3faf34c",
+    "joe/Makefile.am": "28731df3f3e5c4547755a88568623ad054d86fe50f77d24b400d37dc5ea5a89d",
+    "tests/vim_pty_test.py": "93d54dea99d9ef507804b98474d1eba3e030a2ca0ce32f5cdb978c12d715647d",
+    "tests/vim_win32_smoke.c": "e684212ec6f465b509af81c244f78173dbc554c4c28f6025f699e444ffa2ad3f",
+    "tools/build_vc6_wine.py": "936fb6330d477716ecc53dcd6e8fc47bad836e51a16c5a9241efe8fec89ce8a8",
+    "docs/vim.md": "cbc4b265325848f0b7f8e8bda234b7b86d68fbb4c8ce1523d27d6039fb6d2572",
+    "tests/vim_motion_test.py": "a7a1e1a07666c826589365f052f70cd46e5dd3ccb15a7167629c9cdaf7def265",
+    "tools/build_macos.py": "7368b6cc52402fef54c062154c3308c85242287dfba472d485fbb28673f3448b",
+    "joe/vimhelp.h": "9b77d71827645a78c06ce3b2f0f4d6ff7789a576a1cc0eabfb515ca98e50b7ee",
+    "docs/vim-help.txt": "fb647eb4846f45d42d358206a0ac4282773b188887e59cce17ad06b579293b6b",
+    "joe/help.c": "f149a937a042bb5497fffb1b3c529681c0a5c6f8ecd9066606d2aee6172da261",
+    "joe/help.h": "727b44de89de9df3ac5b158ec6a10b69234ebb2efb90bd3a0314c7c42718403c",
+    "joe/colors.c": "f132ab160dcd88c9923e39f7f40dce42b61422c22abc4ea55dd4fc13d07e0a04",
+    "joe/colors.h": "5c492b25d5a66c123e52d67cc3617b282e53eaa9190aac1699d5416db7659df8",
+    "tests/vim_ui_test.py": "863ef2424182ee06efbdd44c8d64a1d3918e8c48f17899774d17fea50fa54e29",
+    "tools/generate_vim_help.py": "a14372481fb47f094bb5b59049876eeeb0e0071cf43bbba19b1974df93aab560",
+    "tests/vim_block_test.py": "c41a3796f3a4ed752fad23fef7bd2d010513e8b9f7b72870eca4b57b89aecb6b"
+  },
+  "binaries": [
+    {
+      "path": "windows/bin/vc6/Debug/dll/joe.exe",
+      "architecture": "PE32/i386",
+      "subsystem": [
+        5,
+        1
+      ],
+      "sha256": "c8b0635eac4fd0b25d8abe60695309ccb25844296353785a6428075a8c97b73e"
+    },
+    {
+      "path": "windows/bin/vc6/Debug/dll/joewin.dll",
+      "architecture": "PE32/i386",
+      "subsystem": [
+        5,
+        1
+      ],
+      "sha256": "5466a29a61d8febf5830af1e11e7820e9606da371986b432d3514d1b2fe2ac8e"
+    },
+    {
+      "path": "windows/bin/vc6/Debug/joe.exe",
+      "architecture": "PE32/i386",
+      "subsystem": [
+        5,
+        1
+      ],
+      "sha256": "569de0980d3494ae92511d316445227a7fd91b4a186c7589aea78c7ba9130c62"
+    },
+    {
+      "path": "windows/bin/vc6/Release/dll/joe.exe",
+      "architecture": "PE32/i386",
+      "subsystem": [
+        5,
+        1
+      ],
+      "sha256": "72f9b72571007610c78520ada7c3bc4673a4a9958ae6742839d91960aee2c66d"
+    },
+    {
+      "path": "windows/bin/vc6/Release/dll/joewin.dll",
+      "architecture": "PE32/i386",
+      "subsystem": [
+        5,
+        1
+      ],
+      "sha256": "fb2640fedb51ca6a3e9c525e6435dbbb97519ea0441bea67d1399587ac5b6466"
+    },
+    {
+      "path": "windows/bin/vc6/Release/joe.exe",
+      "architecture": "PE32/i386",
+      "subsystem": [
+        5,
+        1
+      ],
+      "sha256": "ccdc8705a2687fcb7589a59c45901d6f92cc14d0f8816f1b102fd72303864095"
+    }
+  ],
+  "windows_ui_tests": 152,
+  "native_scenarios": 188,
+  "native_package_regression_tests": 48,
+  "native_motion_reference_cases": 78,
+  "native_motion_failure_tests": 6,
+  "windows_ui_tests_per_product": 38,
+  "package": "build/deliveries/mijoe-vim-winxp-x86-20261027.zip",
+  "package_sha256": "97395aa161dd58de0fd0830f5e8439e62c10ddb6f63c93f5083b9e7902641d3d",
+  "package_files": 23,
+  "native_help_theme_ui_tests": 14,
+  "native_block_reference_cases": 37,
+  "native_block_protection_tests": 5
+}

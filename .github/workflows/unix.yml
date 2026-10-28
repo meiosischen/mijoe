@@ -1,0 +1,34 @@
+name: UNIX build and Vim input regression
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  terminal-editor:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Linux build tools
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y autoconf automake libncurses-dev vim
+      - name: macOS build tools
+        if: runner.os == 'macOS'
+        run: brew install autoconf automake
+      - name: Bootstrap, build and install
+        run: |
+          sh autojoe
+          mkdir -p build/unix
+          cd build/unix
+          ../../configure --prefix="$PWD/install"
+          make -j4
+          make install
+      - name: Real terminal input tests
+        run: python3 tests/vim_pty_test.py "$PWD/build/unix/install/bin/joe"
+      - name: Vim motion reference comparisons
+        run: python3 tests/vim_motion_test.py "$PWD/build/unix/install/bin/joe"
+      - name: Vim block insertion comparisons
+        run: python3 tests/vim_block_test.py "$PWD/build/unix/install/bin/joe"
+      - name: Help and theme UI tests
+        run: |
+          python3 tools/generate_vim_help.py --check
+          python3 tests/vim_ui_test.py "$PWD/build/unix/install/bin/joe"

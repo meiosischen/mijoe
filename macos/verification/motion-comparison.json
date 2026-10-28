@@ -1,0 +1,470 @@
+[
+  {
+    "case": "find-forward",
+    "keys": "fxi!\u001b",
+    "expected": "61622178637864207461696c0a",
+    "actual": "61622178637864207461696c0a"
+  },
+  {
+    "case": "find-backward",
+    "keys": "$Fxi!\u001b",
+    "expected": "61627863217864207461696c0a",
+    "actual": "61627863217864207461696c0a"
+  },
+  {
+    "case": "till-forward",
+    "keys": "txi!\u001b",
+    "expected": "61216278637864207461696c0a",
+    "actual": "61216278637864207461696c0a"
+  },
+  {
+    "case": "till-backward",
+    "keys": "$Txi!\u001b",
+    "expected": "61627863782164207461696c0a",
+    "actual": "61627863782164207461696c0a"
+  },
+  {
+    "case": "find-count",
+    "keys": "2fxi!\u001b",
+    "expected": "61627863217864207461696c0a",
+    "actual": "61627863217864207461696c0a"
+  },
+  {
+    "case": "find-digit",
+    "keys": "f2x",
+    "expected": "6131626332207461696c0a",
+    "actual": "6131626332207461696c0a"
+  },
+  {
+    "case": "find-space",
+    "keys": "f x",
+    "expected": "616263642065660a",
+    "actual": "616263642065660a"
+  },
+  {
+    "case": "find-command-character",
+    "keys": "fFx",
+    "expected": "6162663b2c25207461696c0a",
+    "actual": "6162663b2c25207461696c0a"
+  },
+  {
+    "case": "find-semicolon-character",
+    "keys": "f;x",
+    "expected": "616266462c25207461696c0a",
+    "actual": "616266462c25207461696c0a"
+  },
+  {
+    "case": "find-comma-character",
+    "keys": "f,x",
+    "expected": "616266463b25207461696c0a",
+    "actual": "616266463b25207461696c0a"
+  },
+  {
+    "case": "find-percent-character",
+    "keys": "f%x",
+    "expected": "616266463b2c207461696c0a",
+    "actual": "616266463b2c207461696c0a"
+  },
+  {
+    "case": "find-chinese",
+    "keys": "2f雪x",
+    "expected": "e794b2e4b999e99baae4b899e4b8810a",
+    "actual": "e794b2e4b999e99baae4b899e4b8810a"
+  },
+  {
+    "case": "till-chinese",
+    "keys": "t雪x",
+    "expected": "e794b2e99baae4b899e99baae4b8810a",
+    "actual": "e794b2e99baae4b899e99baae4b8810a"
+  },
+  {
+    "case": "repeat-forward",
+    "keys": "fX;x",
+    "expected": "61586263586458207461696c0a",
+    "actual": "61586263586458207461696c0a"
+  },
+  {
+    "case": "repeat-backward",
+    "keys": "$FX;x",
+    "expected": "61586258636458207461696c0a",
+    "actual": "61586258636458207461696c0a"
+  },
+  {
+    "case": "repeat-reverse-stays-original-direction",
+    "keys": "2fX,;x",
+    "expected": "61586263586458207461696c0a",
+    "actual": "61586263586458207461696c0a"
+  },
+  {
+    "case": "repeat-till-skips-adjacent",
+    "keys": "tX;x",
+    "expected": "61585863586458207461696c0a",
+    "actual": "61585863586458207461696c0a"
+  },
+  {
+    "case": "repeat-till-count",
+    "keys": "tX2;x",
+    "expected": "61585863586458207461696c0a",
+    "actual": "61585863586458207461696c0a"
+  },
+  {
+    "case": "repeat-till-reverse-count",
+    "keys": "$TX2;x",
+    "expected": "61586258635858207461696c0a",
+    "actual": "61586258635858207461696c0a"
+  },
+  {
+    "case": "repeat-till-backward",
+    "keys": "$TX;x",
+    "expected": "61586258635858207461696c0a",
+    "actual": "61586258635858207461696c0a"
+  },
+  {
+    "case": "repeat-till-reverse",
+    "keys": "3tX,x",
+    "expected": "61585863586458207461696c0a",
+    "actual": "61585863586458207461696c0a"
+  },
+  {
+    "case": "delete-find-forward",
+    "keys": "dfx",
+    "expected": "637864207461696c0a",
+    "actual": "637864207461696c0a"
+  },
+  {
+    "case": "delete-find-backward-exclusive",
+    "keys": "$dFx",
+    "expected": "616278636c0a",
+    "actual": "616278636c0a"
+  },
+  {
+    "case": "delete-till-forward",
+    "keys": "dtx",
+    "expected": "78637864207461696c0a",
+    "actual": "78637864207461696c0a"
+  },
+  {
+    "case": "delete-till-backward-exclusive",
+    "keys": "$dTx",
+    "expected": "61627863786c0a",
+    "actual": "61627863786c0a"
+  },
+  {
+    "case": "delete-count-multiplication",
+    "keys": "2d3fX",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a"
+  },
+  {
+    "case": "change-find",
+    "keys": "cfxQ\u001b",
+    "expected": "51637864207461696c0a",
+    "actual": "51637864207461696c0a"
+  },
+  {
+    "case": "yank-find-forward",
+    "keys": "yfx$p",
+    "expected": "616278637864207461696c6162780a",
+    "actual": "616278637864207461696c6162780a"
+  },
+  {
+    "case": "yank-find-backward-position",
+    "keys": "$yFxp",
+    "expected": "616278637878642074616964207461696c0a",
+    "actual": "616278637878642074616964207461696c0a"
+  },
+  {
+    "case": "delete-repeat-find",
+    "keys": "fXd;",
+    "expected": "6163586458207461696c0a",
+    "actual": "6163586458207461696c0a"
+  },
+  {
+    "case": "repeat-change-find",
+    "keys": "dfX.",
+    "expected": "63586458207461696c0a",
+    "actual": "63586458207461696c0a"
+  },
+  {
+    "case": "repeat-change-till",
+    "keys": "dtXl.",
+    "expected": "585863586458207461696c0a",
+    "actual": "585863586458207461696c0a"
+  },
+  {
+    "case": "dot-keeps-latest-find",
+    "keys": "dfXfY.;x",
+    "expected": "626465586659675868597461696c0a",
+    "actual": "626465586659675868597461696c0a"
+  },
+  {
+    "case": "visual-find",
+    "keys": "vfxd",
+    "expected": "637864207461696c0a",
+    "actual": "637864207461696c0a"
+  },
+  {
+    "case": "visual-till-uppercase-V",
+    "keys": "vtVd",
+    "expected": "5664656656207461696c0a",
+    "actual": "5664656656207461696c0a"
+  },
+  {
+    "case": "visual-find-uppercase-V",
+    "keys": "vfVd",
+    "expected": "64656656207461696c0a",
+    "actual": "64656656207461696c0a"
+  },
+  {
+    "case": "visual-till-uppercase-V-count",
+    "keys": "v2tVd",
+    "expected": "56207461696c0a",
+    "actual": "56207461696c0a"
+  },
+  {
+    "case": "visual-find-uppercase-V-count",
+    "keys": "v2fVd",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a"
+  },
+  {
+    "case": "visual-find-uppercase-V-copy",
+    "keys": "vfVy$p",
+    "expected": "6162635664656656207461696c616263560a",
+    "actual": "6162635664656656207461696c616263560a"
+  },
+  {
+    "case": "visual-till-uppercase-V-change",
+    "keys": "vtVcQ\u001b",
+    "expected": "515664656656207461696c0a",
+    "actual": "515664656656207461696c0a"
+  },
+  {
+    "case": "visual-find-mode-key-target",
+    "keys": "vfvd",
+    "expected": "636456207461696c0a",
+    "actual": "636456207461696c0a"
+  },
+  {
+    "case": "visual-till-operator-key-target",
+    "keys": "vtdd",
+    "expected": "644546207461696c0a",
+    "actual": "644546207461696c0a"
+  },
+  {
+    "case": "visual-till-backward",
+    "keys": "$vTxd",
+    "expected": "61627863780a",
+    "actual": "61627863780a"
+  },
+  {
+    "case": "percent-parentheses",
+    "keys": "%x",
+    "expected": "63616c6c286128622963207461696c0a",
+    "actual": "63616c6c286128622963207461696c0a"
+  },
+  {
+    "case": "percent-closing-backward",
+    "keys": "f)%x",
+    "expected": "286162296329207461696c0a",
+    "actual": "286162296329207461696c0a"
+  },
+  {
+    "case": "percent-square",
+    "keys": "%x",
+    "expected": "615b625b635d64207461696c0a",
+    "actual": "615b625b635d64207461696c0a"
+  },
+  {
+    "case": "percent-curly-multiline",
+    "keys": "%x",
+    "expected": "61207b0a2028625b635d290a207461696c0a",
+    "actual": "61207b0a2028625b635d290a207461696c0a"
+  },
+  {
+    "case": "percent-quotes",
+    "keys": "%x",
+    "expected": "2861202269676e6f7265642029222062207461696c0a",
+    "actual": "2861202269676e6f7265642029222062207461696c0a"
+  },
+  {
+    "case": "percent-character-literal",
+    "keys": "%x",
+    "expected": "2861202729272062207461696c0a",
+    "actual": "2861202729272062207461696c0a"
+  },
+  {
+    "case": "percent-escaped-brackets",
+    "keys": "%x",
+    "expected": "5c282028205c207461696c0a",
+    "actual": "5c282028205c207461696c0a"
+  },
+  {
+    "case": "percent-in-string",
+    "keys": "%x",
+    "expected": "22286122207461696c0a",
+    "actual": "22286122207461696c0a"
+  },
+  {
+    "case": "percent-comment",
+    "keys": "%x",
+    "expected": "2f2a20636f6d6d656e74202a207461696c0a",
+    "actual": "2f2a20636f6d6d656e74202a207461696c0a"
+  },
+  {
+    "case": "percent-comment-backward",
+    "keys": "f/%x",
+    "expected": "2a20636f6d6d656e74202a2f207461696c0a",
+    "actual": "2a20636f6d6d656e74202a2f207461696c0a"
+  },
+  {
+    "case": "percent-comment-on-star",
+    "keys": "l%x",
+    "expected": "2f2a20636f6d6d656e74202a207461696c0a",
+    "actual": "2f2a20636f6d6d656e74202a207461696c0a"
+  },
+  {
+    "case": "percent-comment-closing-star",
+    "keys": "f*;%x",
+    "expected": "2a20636f6d6d656e74202a2f207461696c0a",
+    "actual": "2a20636f6d6d656e74202a2f207461696c0a"
+  },
+  {
+    "case": "percent-comment-multiline",
+    "keys": "%x",
+    "expected": "2f2a20626567696e0a20636f6d6d656e740a20656e64202a207461696c0a",
+    "actual": "2f2a20626567696e0a20636f6d6d656e740a20656e64202a207461696c0a"
+  },
+  {
+    "case": "percent-comment-delete",
+    "keys": "d%",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a"
+  },
+  {
+    "case": "percent-preprocessor",
+    "keys": "%x",
+    "expected": "23696620410a410a656c73650a420a23656e6469660a",
+    "actual": "23696620410a410a656c73650a420a23656e6469660a"
+  },
+  {
+    "case": "percent-preprocessor-nested",
+    "keys": "%x",
+    "expected": "23696620410a23696620420a420a23656e6469660a656c73650a430a23656e6469660a",
+    "actual": "23696620410a23696620420a420a23656e6469660a656c73650a430a23656e6469660a"
+  },
+  {
+    "case": "percent-preprocessor-backward",
+    "keys": "G%x",
+    "expected": "696620410a410a23656c73650a420a23656e6469660a",
+    "actual": "696620410a410a23656c73650a420a23656e6469660a"
+  },
+  {
+    "case": "percent-preprocessor-cycle",
+    "keys": "%%%x",
+    "expected": "23696620410a410a23656c696620420a420a23656c73650a430a656e6469660a",
+    "actual": "23696620410a410a23656c696620420a420a23656c73650a430a656e6469660a"
+  },
+  {
+    "case": "percent-preprocessor-linewise-delete",
+    "keys": "d%",
+    "expected": "420a23656e6469660a",
+    "actual": "420a23656e6469660a"
+  },
+  {
+    "case": "percent-preprocessor-indented",
+    "keys": "%x",
+    "expected": "202023696664656620410a410a2020656e6469660a",
+    "actual": "202023696664656620410a410a2020656e6469660a"
+  },
+  {
+    "case": "percent-preprocessor-fallback",
+    "keys": "fA%x",
+    "expected": "2369666e64656620410a410a656e6469660a",
+    "actual": "2369666e64656620410a410a656e6469660a"
+  },
+  {
+    "case": "percent-even-escapes",
+    "keys": "%x",
+    "expected": "5c5c28205c2920207461696c0a",
+    "actual": "5c5c28205c2920207461696c0a"
+  },
+  {
+    "case": "percent-character-literal-backward",
+    "keys": "f)%x",
+    "expected": "6120272827206229207461696c0a",
+    "actual": "6120272827206229207461696c0a"
+  },
+  {
+    "case": "percent-double-quotes-backward",
+    "keys": "f)%x",
+    "expected": "61202269676e6f726564202822206229207461696c0a",
+    "actual": "61202269676e6f726564202822206229207461696c0a"
+  },
+  {
+    "case": "percent-odd-double-quote",
+    "keys": "%x",
+    "expected": "286120226f646420207461696c0a",
+    "actual": "286120226f646420207461696c0a"
+  },
+  {
+    "case": "percent-double-quote-character",
+    "keys": "%x",
+    "expected": "2861202722272062207461696c0a",
+    "actual": "2861202722272062207461696c0a"
+  },
+  {
+    "case": "percent-no-final-newline",
+    "keys": "%x",
+    "expected": "2861207461696c",
+    "actual": "2861207461696c"
+  },
+  {
+    "case": "percent-crlf",
+    "keys": "%x",
+    "expected": "61207b0d0a20626f64790d0a207461696c0d0a",
+    "actual": "61207b0d0a20626f64790d0a207461696c0d0a"
+  },
+  {
+    "case": "percent-number",
+    "keys": "50%x",
+    "expected": "610a620a630a0a650a660a670a",
+    "actual": "610a620a630a0a650a660a670a"
+  },
+  {
+    "case": "percent-one-hundred",
+    "keys": "100%x",
+    "expected": "610a620a630a640a650a660a0a",
+    "actual": "610a620a630a640a650a660a0a"
+  },
+  {
+    "case": "percent-delete-pair",
+    "keys": "d%",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a"
+  },
+  {
+    "case": "percent-delete-before-pair",
+    "keys": "d%",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a"
+  },
+  {
+    "case": "percent-delete-backwards",
+    "keys": "2f)d%",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a"
+  },
+  {
+    "case": "percent-visual",
+    "keys": "v%d",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a"
+  },
+  {
+    "case": "percent-delete-number",
+    "keys": "d50%",
+    "expected": "650a660a670a",
+    "actual": "650a660a670a"
+  }
+]

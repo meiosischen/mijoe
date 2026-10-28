@@ -251,8 +251,13 @@ static int dobknd(BW *bw, int vt)
 	char *s;
 	const char *sh;
 #ifndef JOEWIN
+#if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
+	const char *start_sh = mijoe_macos_shell_start(0);
+	const char *start_csh = mijoe_macos_shell_start(1);
+#else
 	const char start_sh[] = ". " JOERC "shell.sh\n";
 	const char start_csh[] = "source " JOERC "shell.csh\n";
+#endif
 #endif
 
         if (!modify_logic(bw,bw->b))

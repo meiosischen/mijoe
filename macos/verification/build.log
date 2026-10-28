@@ -1,0 +1,14 @@
+Making all in rc
+make[1]: Nothing to be done for `all'.
+Making all in po
+make[1]: Nothing to be done for `all'.
+Making all in syntax
+make[1]: Nothing to be done for `all'.
+Making all in joe
+/Library/Developer/CommandLineTools/usr/bin/make  all-recursive
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/usr/local/etc/joe/\"" -DJOEDATA="\"/usr/local/share/joe/\"" -DMIJOE_PORTABLE_MACOS  -O2 -std=gnu99 -MT vim.o -MD -MP -MF .deps/vim.Tpo -c -o vim.o /Users/meiosis/Workspace/Projects/mijoe/joe/vim.c
+mv -f .deps/vim.Tpo .deps/vim.Po
+gcc  -O2 -std=gnu99   -o joe b.o blocks.o bw.o cmd.o coroutine.o hash.o help.o kbd.o macro.o main.o menu.o obj.o path.o poshist.o pw.o queue.o qw.o rc.o regex.o scrn.o tab.o termcap.o tty.o tw.o ublock.o uedit.o uerror.o ufile.o uformat.o uisrch.o umath.o undo.o usearch.o ushell.o utag.o vfile.o w.o utils.o syntax.o utf8.o selinux.o charmap.o mouse.o lattr.o gettext.o builtin.o libcoro.o builtins.o vt.o mmenu.o state.o options.o unicode.o cclass.o frag.o colors.o vim.o macos.o unicat-9.0.0.o  -lncurses 
+Making all in colors
+make[1]: Nothing to be done for `all'.
+make[1]: Nothing to be done for `all-am'.

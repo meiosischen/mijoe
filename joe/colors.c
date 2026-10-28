@@ -1102,6 +1102,24 @@ void save_colors_state(FILE *fp)
 }
 
 /* Initialize color scheme system: load from joe_state or default */
+int set_color_scheme(W *w, const char *name)
+{
+	SCHEME *scheme = load_scheme(name);
+	if (!scheme) {
+		msgnw(w, joe_gettext(_("Color scheme file not found")));
+		return -1;
+	}
+	if (apply_scheme(scheme)) {
+		msgnw(w, joe_gettext(_("Color scheme failed to apply")));
+		return -1;
+	}
+	nredraw(maint->t);
+#ifdef JOEWIN
+	jwSendComm0s(JW_FROM_EDITOR, COMM_ACTIVESCHEME, scheme_name);
+#endif
+	return 0;
+}
+
 int init_colors(void)
 {
 	const char *myterm = getenv("TERM");
