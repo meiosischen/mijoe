@@ -1,5 +1,13 @@
 # Vim 基础操作实现与验证
 
+2026-10-28 picture mode / 菜单修复：Normal 的 `h/j/k/l`、方向键与 Insert 的方向键
+支持 picture mode 屏幕列，行尾外输入补空格；保留只读保护和末尾扩展撤销，
+整行修改、撤销与矩形插入会同步实际列。Vim 选项菜单再次按 `Ctrl+T` 只关闭菜单，
+显式 `T/t` 仍切换 overtype。四种真正 VC6 产品各通过 50 项窗口检查，共 200 项；
+六个 EXE/DLL 的 PE32/i386、XP 子系统与导入表检查通过，仍不能替代 XP 实机/输入法验收。
+本轮 [清单](verification/picture-menu-20261028/manifest.json)、[逐项结果](verification/picture-menu-20261028/windows-ui.json)。
+测试包：`build/deliveries/mijoe-vim-winxp-x86-20261028-picture-menu.zip`。
+
 2026-10-28 增量：顶部模式标签改为 `[N]`、`[I]`、`[V]`，四种 VC6 产品均重新构建成功，
 六个 PE32/XP 元数据检查通过。本次未重复窗口功能回归；下方 152 项窗口检查属于 2026-10-27。
 本轮 [清单](verification/statusbar-20261028/manifest.json)，测试包为 `build/deliveries/mijoe-vim-winxp-x86-20261028.zip`。

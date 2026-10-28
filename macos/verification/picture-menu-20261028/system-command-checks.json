@@ -1,0 +1,36 @@
+{
+  "command": "/usr/local/bin/mj",
+  "transcripts": "/var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-1jg90qcf",
+  "checks": [
+    {
+      "case": "menu-insert",
+      "expected": "58596162636465660a",
+      "actual": "58596162636465660a",
+      "passed": true
+    },
+    {
+      "case": "menu-overtype",
+      "expected": "5859636465660a",
+      "actual": "5859636465660a",
+      "passed": true
+    },
+    {
+      "case": "picture-normal",
+      "expected": "6162636465662020580a",
+      "actual": "6162636465662020580a",
+      "passed": true
+    },
+    {
+      "case": "picture-insert-arrows",
+      "expected": "6162636465662020580a",
+      "actual": "6162636465662020580a",
+      "passed": true
+    },
+    {
+      "case": "picture-block",
+      "expected": "586162630a586465660a586768690a",
+      "actual": "586162630a586465660a586768690a",
+      "passed": true
+    }
+  ]
+}

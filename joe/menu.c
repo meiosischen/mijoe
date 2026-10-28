@@ -570,6 +570,8 @@ static int umkey(W *w, int c)
 	int x;
 	int n = 0;
 
+	if (m->abort_key && c == m->abort_key) return wabort(w);
+
 	if (c == '-' && m->func) {
 		if (m->func)
 			return m->func(m, m->cursor, m->object, 2);
@@ -671,6 +673,7 @@ MENU *mkmenu(W *w, W *targ, char **s, int (*func)(MENU *m, ptrdiff_t cursor, voi
 	m->abrt = abrt;
 	m->backs = backs;
 	m->object = object;
+	m->abort_key = 0;
 	m->t = w->t;
 	m->h = neww->h;
 	m->w = neww->w;
@@ -730,7 +733,8 @@ int choose_baks(MENU *m, ptrdiff_t c, void *object)
 int choose(W *w,				/* Menu goes below this window */
            W *targ,				/* But menu is for this window */
            char **s,				/* Array of menu items */
-           ptrdiff_t *cursor)			/* Cursor position in and out */
+           ptrdiff_t *cursor,			/* Cursor position in and out */
+           int abort_key)			/* Zero disables the extra cancel key */
 {
 	struct choose_result t;
 	int ret;
@@ -739,6 +743,7 @@ int choose(W *w,				/* Menu goes below this window */
 
 	if (!m)
 		return -1;
+	m->abort_key = abort_key;
 
 	/* We get woken up when user hits a key */
 	ret = co_yield(&t.t, 0);

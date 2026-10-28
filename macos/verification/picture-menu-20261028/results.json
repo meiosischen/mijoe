@@ -1,0 +1,26 @@
+[
+  {
+    "suite": "ui",
+    "scenarios": 31,
+    "exit_code": 0,
+    "log": "ui.log"
+  },
+  {
+    "suite": "package",
+    "scenarios": 48,
+    "exit_code": 0,
+    "log": "package.log"
+  },
+  {
+    "suite": "motion",
+    "scenarios": 84,
+    "exit_code": 0,
+    "log": "motion.log"
+  },
+  {
+    "suite": "block",
+    "scenarios": 42,
+    "exit_code": 0,
+    "log": "block.log"
+  }
+]

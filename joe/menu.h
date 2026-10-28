@@ -24,6 +24,7 @@ struct menu {
 	int (*func)(MENU *m, ptrdiff_t cursor, void *object, int k); /* Return callback function */
 	int (*backs)(MENU *m, ptrdiff_t cursor, void *object); /* Backspace callback function */
 	void	*object;
+	int abort_key; /* Optional key that closes this menu without selecting. */
 };
 
 /* Create a menu */
@@ -64,4 +65,4 @@ extern int bg_menusel; /* Color for selected menu item */
 extern int bg_menumask; /* Mask for selected menu attribute */
 extern int transpose;
 
-int choose(W *w,W *targ,char **s,ptrdiff_t *cursor);
+int choose(W *w,W *targ,char **s,ptrdiff_t *cursor,int abort_key);

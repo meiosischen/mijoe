@@ -109,6 +109,8 @@ static void clear_visual(void)
 
 static void normal_cursor(BW *bw)
 {
+	/* Picture mode owns a display column, including positions past EOL. */
+	if (bw->o.picture && !visual_mode()) return;
 	if (mode != VM_INSERT && mode != VM_BLOCK && piseol(bw->cursor) && !pisbol(bw->cursor))
 		prgetc(bw->cursor);
 	bw->cursor->xcol = piscol(bw->cursor);
@@ -470,6 +472,33 @@ static int motion(BW *bw, int key, long n, int explicit_count, int *linewise, in
 	P *p = bw->cursor;
 	off_t col = p->xcol;
 	*linewise = *inclusive = 0;
+	/* Reuse JOE's virtual-column movement for ordinary picture editing.
+	 * Operators and selections continue to use their text-range semantics. */
+	if (bw->o.picture && !pending && !visual_mode()) {
+		const char *command_name = NULL;
+		int down = key == 'j' || key == VIM_DOWN;
+		int extends = 0;
+		switch (key) {
+		case 'h': case VIM_LEFT: command_name = "ltarw"; break;
+		case 'l': case VIM_RIGHT: command_name = "rtarw"; break;
+		case 'j': case VIM_DOWN: command_name = "dnarw"; break;
+		case 'k': case VIM_UP: command_name = "uparw"; break;
+		}
+		if (command_name) {
+			while (n--) {
+				/* JOE's picture-mode down arrow can append a newline.
+				 * Enforce edit protection and group counted moves for undo. */
+				if (down && p->line == bw->b->eof->line) {
+					if (!writable(bw)) break;
+					if (!extends && mode != VM_INSERT) undomark();
+					extends = 1;
+				}
+				if (execmd(findcmd(command_name), 0)) break;
+			}
+			if (extends && mode != VM_INSERT) undomark();
+			return 1;
+		}
+	}
 	switch (key) {
 	case 'f': case 'F': case 't': case 'T':
 		*inclusive = key == 'f' || key == 't';
@@ -665,6 +694,7 @@ static void block_insert_key(BW *bw, int key)
 	    ((key & VIM_LITERAL) && c >= 0 && c <= 0x10ffff) || key == VIM_CLIPBOARD)) {
 		if (block_insert_eol) p_goto_eol(bw->cursor);
 		else block_insert_position(bw->cursor, block_insert_col, block_insert_append);
+		bw->cursor->xcol = piscol(bw->cursor);
 		pset(block_insert_start, bw->cursor);
 		block_prepared = 1;
 	}
@@ -713,6 +743,7 @@ static int operate(BW *bw, P *a, P *z, int op, int linewise)
 	recording_change = 1;
 	if (op == 'c') mode = VM_INSERT;
 	else if (linewise) first_nonblank(bw->cursor);
+	bw->cursor->xcol = piscol(bw->cursor);
 	return 0;
 }
 
@@ -747,6 +778,7 @@ static int put_register(BW *bw, int before, long n)
 	}
 	if (reg_line) { pset(bw->cursor, start); first_nonblank(bw->cursor); }
 	else if (!pisbof(bw->cursor)) prgetc(bw->cursor);
+	bw->cursor->xcol = piscol(bw->cursor);
 	prm(start);
 	if (converted) obj_free(converted);
 	recording_change = 1;
@@ -758,16 +790,21 @@ static void enter_insert(BW *bw, int key)
 	if (!writable(bw)) return;
 	start_unit();
 	switch (key) {
-	case 'a': if (!piseol(bw->cursor)) pgetc(bw->cursor); break;
-	case 'I': first_nonblank(bw->cursor); break;
-	case 'A': p_goto_eol(bw->cursor); break;
+	case 'a':
+		if (!piseol(bw->cursor)) { pgetc(bw->cursor); bw->cursor->xcol = piscol(bw->cursor); }
+		else if (bw->o.picture) ++bw->cursor->xcol;
+		break;
+	case 'I': first_nonblank(bw->cursor); bw->cursor->xcol = piscol(bw->cursor); break;
+	case 'A': p_goto_eol(bw->cursor); bw->cursor->xcol = piscol(bw->cursor); break;
 	case 'o':
 		p_goto_eol(bw->cursor);
+		bw->cursor->xcol = piscol(bw->cursor);
 		if (!execmd(findcmd("rtn"), 13)) recording_change = 1;
 		break;
 	case 'O':
 		p_goto_bol(bw->cursor);
 		binsc(bw->cursor, '\n');
+		bw->cursor->xcol = 0;
 		recording_change = 1;
 		break;
 	}
@@ -806,7 +843,7 @@ static int search(BW *bw, int backwards, long n)
 		} while (p->byte != start);
 		if (!found) break;
 	}
-	if (found) pset(bw->cursor, p);
+	if (found) { pset(bw->cursor, p); bw->cursor->xcol = piscol(bw->cursor); }
 	else message("Pattern not found");
 	prm(p);
 	joe_regfree(compiled);
@@ -893,7 +930,7 @@ static int color_menu(BW *bw)
 	for (i = 0; i < valen(names); ++i)
 		if (scheme_name && !zcmp(names[i], scheme_name)) selected = i;
 	message("Color scheme: arrows/PgUp/PgDn, Enter to apply, Ctrl+C to cancel");
-	if (choose(bw->parent, bw->parent, names, &selected) != 0) return -1;
+	if (choose(bw->parent, bw->parent, names, &selected, 0) != 0) return -1;
 	return set_color_scheme(bw->parent, names[selected]);
 }
 
@@ -1079,7 +1116,8 @@ static int dispatch(BW *bw, int key)
 	if (key == 27 || key == 3) {
 		if (mode == VM_INSERT) {
 			finish_unit();
-			if (!pisbol(bw->cursor)) prgetc(bw->cursor);
+			if (bw->o.picture) u_goto_left(bw->parent, 0);
+			else if (!pisbol(bw->cursor)) prgetc(bw->cursor);
 		}
 		if (visual_mode()) clear_visual();
 		mode = VM_NORMAL;
@@ -1251,6 +1289,7 @@ static int dispatch(BW *bw, int key)
 	case 'u': case 18:
 		start_unit();
 		while (n-- && !rc) rc = key == 'u' ? uundo(bw->parent, 0) : uredo(bw->parent, 0);
+		bw->cursor->xcol = piscol(bw->cursor);
 		break;
 	case '.': clear_pending(); rc = repeat_change(bw, n); break;
 	case ':': case '/': case '?':

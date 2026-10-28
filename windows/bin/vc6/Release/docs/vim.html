@@ -20,7 +20,11 @@
 - 搜索：`/表达式`、`?表达式`、`n N`，使用 JOE 的标准正则表达式引擎。
 - 帮助：`:help` / `:h` 列出本版本支持的命令及简介，PageDown/PageUp 翻页，`q` / Esc 关闭。
 - JOE 菜单：`Ctrl+K H` 打开原始帮助，PageDown/PageUp 切页，再次按键关闭；
-  `Ctrl+T` 打开选项菜单。`Ctrl+K T` 沿用原绑定，用于缩小窗口。
+  `Ctrl+T` 打开选项菜单，再按一次关闭，保持 overtype 状态；菜单中的 `T/t` 才切换 overtype。
+  `Ctrl+K T` 沿用原绑定，用于缩小窗口。
+- Picture mode：`Ctrl+T` → `P` 开关。在 Normal 中用 `h/j/k/l` 或方向键，Insert 中用方向键，
+  可移动到行尾外；输入时自动补空格，长短行之间保留屏幕列。`i` 在当前列插入，`a` 在下一列插入，
+  `I/A` 仍定位到实际行首/行尾。向下越过文件末尾会扩展空行，可撤销；只读缓冲区禁止扩展。
 - 主题：`:colors` / `:colorscheme` 显示选择菜单，方向键选项、PageDown/PageUp 翻页、Enter 应用、Ctrl+C 取消；
   `:colors gruvbox` 可直接切换。原有入口是 `Ctrl+T` → `S Color scheme` → 输入名称 → Enter，Tab 可显示候选。
 - 文件：`:e 路径`、`:enew`、`:ls`、`:bn`、`:bp`、`:b 编号`、`:bd[!]`。

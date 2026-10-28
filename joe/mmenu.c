@@ -7,6 +7,7 @@
  */
 
 #include "types.h"
+#include "vim.h"
 
 static B *menuhist = NULL; /* Menu history */
 static struct rc_menu *menus; /* All menus */
@@ -70,7 +71,8 @@ int display_menu(BW *bw, struct rc_menu *menu)
 		s = vaadd(s, stagen(NULL, bw, menu->entries[x]->name, ' '));
 	}
 	
-	x = choose(bw->parent, bw->parent, s, &menu->last_position);
+	x = choose(bw->parent, bw->parent, s, &menu->last_position,
+	           vim_enabled && !zcmp(menu->name, "root") ? 20 : 0);
 	if (x == -1) {
 		/* Abort */
 		return -1;

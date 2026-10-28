@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-28",
+  "changes_committed": false,
+  "base_commit": "fae011646eec579f8934f2ccc185c03dab9468d8",
+  "regression_scenarios": 205,
+  "ui_tests": 31,
+  "system_install_updated": true,
+  "build": {
+    "architecture": "arm64",
+    "macos_build_host": "26.3.1",
+    "binary_sha256": "e9ccd1369b02a8ac90362364555c020be5aa13393e9385429e90298d0fa482e8",
+    "dependencies": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe:\n\t/usr/lib/libncurses.5.4.dylib (compatibility version 5.4.0, current version 5.4.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+    "sources": {
+      "joe/vim.c": "d7e246d0948bc22f5b44c56f3cef8a16ea230bc097ee46034638e16db07c3a66",
+      "joe/vim.h": "d5a3e72c0f6f352155cf36d6011fbd2b71676f4e986616cfefea3bdc911ffaf5",
+      "joe/vimhelp.h": "41dcd0d3dfbfa8c4155b3c14715bdb6226e94c2ecd21f90c718fdeb2e61aea23",
+      "docs/vim-help.txt": "2d9cab35ea369d6f3b169d20fbee4e4e46bd86f0c7b698d684a502200682105e",
+      "joe/help.c": "f149a937a042bb5497fffb1b3c529681c0a5c6f8ecd9066606d2aee6172da261",
+      "joe/help.h": "727b44de89de9df3ac5b158ec6a10b69234ebb2efb90bd3a0314c7c42718403c",
+      "joe/colors.c": "f132ab160dcd88c9923e39f7f40dce42b61422c22abc4ea55dd4fc13d07e0a04",
+      "joe/colors.h": "5c492b25d5a66c123e52d67cc3617b282e53eaa9190aac1699d5416db7659df8",
+      "joe/options.c": "e211a4f0968cde845189a77522744b7de7c8b678ee92973cfea432340123a9b8",
+      "joe/menu.c": "6fc427cb8357bed9c2c78b5db3adb630d361300f8cefc44586eae3afd2f34531",
+      "joe/menu.h": "1b925a44f1f76be62f144ce4edae58d3d4aa6f8221399881a968d5bc6f5aa89f",
+      "joe/mmenu.c": "7c551113547dd50cf8b63c07ac4c9628f6169de5c2994a421787e5203d24be5a",
+      "joe/macos.c": "f4bd47e95aaf2c89c90a84082c6d23627bbb879c4d49027c6b2573f768ec1192",
+      "joe/macos.h": "92f871bb6bc7f2c17a77fe54f351838e32405caf9c64577983e3255d8f50f5cd",
+      "joe/types.h": "e4ce02bd8ae9bcbbd4eb60b4b697f1deb377f36ab5a36a822a73f9cc7db8c549",
+      "joe/main.c": "5e9fc56a051fa183a95947a6043c364203c516f9e3c022fe8a137decc4b681b8",
+      "joe/ushell.c": "f6f035f4d21caaefc9464ab1105c8fce68ecef80bf906e7d4ad193fa8e3da0ae",
+      "joe/termcap.c": "d6b46b13225871ef92c42625673bc1e8adc79ef3cf47a4c291ce4c361f399031"
+    }
+  },
+  "validation_sources": {
+    "tests/vim_ui_test.py": "12260a75fe98e519c2f683710fd9a3525affcdd5aa62898320f8fab0a65ecea6",
+    "tests/vim_pty_test.py": "0b61c905d45cff3df3603f771e3c305b3cf30451c5586338b5b5e7f8a51ef413",
+    "tests/vim_motion_test.py": "a7a1e1a07666c826589365f052f70cd46e5dd3ccb15a7167629c9cdaf7def265",
+    "tests/vim_block_test.py": "c41a3796f3a4ed752fad23fef7bd2d010513e8b9f7b72870eca4b57b89aecb6b",
+    "tools/build_macos.py": "3a8ae315fc8ac6fb54ba394b24bd9a5195853362be332166c5897a40e74b6205"
+  },
+  "zip": "build/deliveries/mijoe-vim-macos-arm64.zip",
+  "zip_sha256": "3d2f6fedc09b7da11bd1a412f01b1b7a7bf8b46ebda2e0524317d8534c7235c7",
+  "system_command_ui_tests": 5,
+  "installed_binary_sha256": "e9ccd1369b02a8ac90362364555c020be5aa13393e9385429e90298d0fa482e8",
+  "installed_files_matched": 107,
+  "system_command_checks": "system-command-checks.json"
+}

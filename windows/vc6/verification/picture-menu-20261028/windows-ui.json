@@ -1,0 +1,1602 @@
+[
+  {
+    "product": "release-package",
+    "case": "insert",
+    "keys": "69581b3a77710d",
+    "expected": "58696e697469616c0a",
+    "actual": "58696e697469616c0a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "delete-undo-dot",
+    "keys": "64642e75123a77710d",
+    "expected": "630a640a",
+    "actual": "630a640a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "visual",
+    "keys": "766c6c643a77710d",
+    "expected": "6465660a",
+    "actual": "6465660a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "visual-line-change",
+    "keys": "566a63581b3a77710d",
+    "expected": "580a630a",
+    "actual": "580a630a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "copy-paste",
+    "keys": "797777703a77710d",
+    "expected": "6f6e6520746f6e6520776f0a",
+    "actual": "6f6e6520746f6e6520776f0a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "save-failure",
+    "keys": "41211b3a7771206d697373696e672f66696c650d3a77710d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "buffers",
+    "keys": "41211b3a656e65770d696f746865721b3a77206f746865722e7478740d3a6220310d3a770d3a71210d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "saveas",
+    "keys": "41211b3a7361766561732072656e616d65642e7478740d413f1b3a770d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "windows-path",
+    "keys": "3a7720666f6c6465725c636f70792e7478740d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "command-paste",
+    "keys": "3a77201b5b3230307e666f6c6465725c7061737465642e7478741b5b3230317e0d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "find-forward-delete",
+    "keys": "6466783a77710d",
+    "expected": "637864207461696c0a",
+    "actual": "637864207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "find-backward-delete",
+    "keys": "246446783a77710d",
+    "expected": "616278636c0a",
+    "actual": "616278636c0a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "till-forward-delete",
+    "keys": "6474783a77710d",
+    "expected": "78637864207461696c0a",
+    "actual": "78637864207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "till-backward-delete",
+    "keys": "246454783a77710d",
+    "expected": "61627863786c0a",
+    "actual": "61627863786c0a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "till-count-repeat",
+    "keys": "7458323b783a77710d",
+    "expected": "61585863586458207461696c0a",
+    "actual": "61585863586458207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "find-reverse-repeat",
+    "keys": "3266582c3b783a77710d",
+    "expected": "61586263586458207461696c0a",
+    "actual": "61586263586458207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "find-missing-count",
+    "keys": "643266583a77710d",
+    "expected": "61625863640a58206e6578740a",
+    "actual": "61625863640a58206e6578740a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "percent-pair",
+    "keys": "64253a77710d",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "percent-quote",
+    "keys": "25783a77710d",
+    "expected": "2861202729272062207461696c0a",
+    "actual": "2861202729272062207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "percent-comment",
+    "keys": "25783a77710d",
+    "expected": "2f2a20636f6d6d656e74202a207461696c0a",
+    "actual": "2f2a20636f6d6d656e74202a207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "percent-directive",
+    "keys": "64253a77710d",
+    "expected": "420a23656e6469660a",
+    "actual": "420a23656e6469660a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "percent-number",
+    "keys": "643530253a77710d",
+    "expected": "650a660a670a",
+    "actual": "650a660a670a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "help-pages",
+    "keys": "3a68656c700d1b5b367e1b5b357e7141211b3a77710d",
+    "expected": "616263646566210a",
+    "actual": "616263646566210a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "help-undo",
+    "keys": "783a680d7864643a656e65770d1b753a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "native-help",
+    "keys": "0b481b5b367e1b5b357e0b683a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "native-window-shortcut",
+    "keys": "0b54783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "options-theme",
+    "keys": "145367727576626f780d3a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "color-menu",
+    "keys": "3a636f6c6f72730d673a636f6c6f72736368656d650d033a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "insert-options-menu",
+    "keys": "69581403591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "options-toggle-insert",
+    "keys": "14146958591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "options-toggle-overtype",
+    "keys": "145414146958591b3a77710d",
+    "expected": "5859636465660a",
+    "actual": "5859636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "insert-options-toggle",
+    "keys": "69581414591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "picture-normal",
+    "keys": "1450386c69581b3a77710d",
+    "expected": "6162636465662020580a",
+    "actual": "6162636465662020580a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "picture-insert-arrows",
+    "keys": "1450691b5b431b5b431b5b431b5b431b5b431b5b431b5b431b5b43581b3a77710d",
+    "expected": "6162636465662020580a",
+    "actual": "6162636465662020580a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "picture-vertical",
+    "keys": "1450246a69581b3a77710d",
+    "expected": "6162636465660a7820202020580a",
+    "actual": "6162636465660a7820202020580a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "picture-append",
+    "keys": "1450386c61581b3a77710d",
+    "expected": "616263646566202020580a",
+    "actual": "616263646566202020580a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "picture-down-undo",
+    "keys": "1450326a753a77710d",
+    "expected": "6162",
+    "actual": "6162",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "picture-readonly",
+    "keys": "1450144f336a3a77210d3a71210d",
+    "expected": "6162",
+    "actual": "6162",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "picture-undo-column",
+    "keys": "1450386c69581b7569591b3a77710d",
+    "expected": "616263646566590a",
+    "actual": "616263646566590a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "picture-line-change",
+    "keys": "14506c6c6363581b3a77710d",
+    "expected": "580a6465660a",
+    "actual": "580a6465660a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "picture-block-insert",
+    "keys": "1450166c6c6a6a49581b3a77710d",
+    "expected": "586162630a586465660a586768690a",
+    "actual": "586162630a586465660a586768690a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "help-paste",
+    "keys": "3a68656c700d1b5b3230307e0b48694241441b3a77710d1b5b3230317e71783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "block-insert",
+    "keys": "166a6a492f2f201b3a77710d",
+    "expected": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "actual": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "block-insert-short",
+    "keys": "6c6c166a6a6a49581b3a77710d",
+    "expected": "6162586364650a780a0a4142584344450a",
+    "actual": "6162586364650a780a0a4142584344450a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "block-append-pad",
+    "keys": "6c6c166a6a6a41581b3a77710d",
+    "expected": "6162635864650a782020580a202020580a4142435844450a",
+    "actual": "6162635864650a782020580a202020580a4142435844450a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "block-append-eol",
+    "keys": "166a6a2441581b3a77710d",
+    "expected": "6162580a63646566580a78580a",
+    "actual": "6162580a63646566580a78580a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "block-tab",
+    "keys": "6c6c166a6a49581b3a77710d",
+    "expected": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "actual": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "block-undo-redo",
+    "keys": "166a6a4958591b75123a77710d",
+    "expected": "58596162630a58596465660a58596768690a",
+    "actual": "58596162630a58596465660a58596768690a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "block-paste",
+    "keys": "166a491b5b3230307e581b5b3230317e1b3a77710d",
+    "expected": "586162630a586465660a",
+    "actual": "586162630a586465660a",
+    "passed": true
+  },
+  {
+    "product": "release-package",
+    "case": "block-cancel",
+    "keys": "166a1b783a77710d",
+    "expected": "6162630a65660a",
+    "actual": "6162630a65660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "insert",
+    "keys": "69581b3a77710d",
+    "expected": "58696e697469616c0a",
+    "actual": "58696e697469616c0a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "delete-undo-dot",
+    "keys": "64642e75123a77710d",
+    "expected": "630a640a",
+    "actual": "630a640a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "visual",
+    "keys": "766c6c643a77710d",
+    "expected": "6465660a",
+    "actual": "6465660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "visual-line-change",
+    "keys": "566a63581b3a77710d",
+    "expected": "580a630a",
+    "actual": "580a630a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "copy-paste",
+    "keys": "797777703a77710d",
+    "expected": "6f6e6520746f6e6520776f0a",
+    "actual": "6f6e6520746f6e6520776f0a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "save-failure",
+    "keys": "41211b3a7771206d697373696e672f66696c650d3a77710d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "buffers",
+    "keys": "41211b3a656e65770d696f746865721b3a77206f746865722e7478740d3a6220310d3a770d3a71210d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "saveas",
+    "keys": "41211b3a7361766561732072656e616d65642e7478740d413f1b3a770d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "windows-path",
+    "keys": "3a7720666f6c6465725c636f70792e7478740d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "command-paste",
+    "keys": "3a77201b5b3230307e666f6c6465725c7061737465642e7478741b5b3230317e0d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "find-forward-delete",
+    "keys": "6466783a77710d",
+    "expected": "637864207461696c0a",
+    "actual": "637864207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "find-backward-delete",
+    "keys": "246446783a77710d",
+    "expected": "616278636c0a",
+    "actual": "616278636c0a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "till-forward-delete",
+    "keys": "6474783a77710d",
+    "expected": "78637864207461696c0a",
+    "actual": "78637864207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "till-backward-delete",
+    "keys": "246454783a77710d",
+    "expected": "61627863786c0a",
+    "actual": "61627863786c0a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "till-count-repeat",
+    "keys": "7458323b783a77710d",
+    "expected": "61585863586458207461696c0a",
+    "actual": "61585863586458207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "find-reverse-repeat",
+    "keys": "3266582c3b783a77710d",
+    "expected": "61586263586458207461696c0a",
+    "actual": "61586263586458207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "find-missing-count",
+    "keys": "643266583a77710d",
+    "expected": "61625863640a58206e6578740a",
+    "actual": "61625863640a58206e6578740a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "percent-pair",
+    "keys": "64253a77710d",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "percent-quote",
+    "keys": "25783a77710d",
+    "expected": "2861202729272062207461696c0a",
+    "actual": "2861202729272062207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "percent-comment",
+    "keys": "25783a77710d",
+    "expected": "2f2a20636f6d6d656e74202a207461696c0a",
+    "actual": "2f2a20636f6d6d656e74202a207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "percent-directive",
+    "keys": "64253a77710d",
+    "expected": "420a23656e6469660a",
+    "actual": "420a23656e6469660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "percent-number",
+    "keys": "643530253a77710d",
+    "expected": "650a660a670a",
+    "actual": "650a660a670a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "help-pages",
+    "keys": "3a68656c700d1b5b367e1b5b357e7141211b3a77710d",
+    "expected": "616263646566210a",
+    "actual": "616263646566210a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "help-undo",
+    "keys": "783a680d7864643a656e65770d1b753a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "native-help",
+    "keys": "0b481b5b367e1b5b357e0b683a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "native-window-shortcut",
+    "keys": "0b54783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "options-theme",
+    "keys": "145367727576626f780d3a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "color-menu",
+    "keys": "3a636f6c6f72730d673a636f6c6f72736368656d650d033a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "insert-options-menu",
+    "keys": "69581403591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "options-toggle-insert",
+    "keys": "14146958591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "options-toggle-overtype",
+    "keys": "145414146958591b3a77710d",
+    "expected": "5859636465660a",
+    "actual": "5859636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "insert-options-toggle",
+    "keys": "69581414591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "picture-normal",
+    "keys": "1450386c69581b3a77710d",
+    "expected": "6162636465662020580a",
+    "actual": "6162636465662020580a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "picture-insert-arrows",
+    "keys": "1450691b5b431b5b431b5b431b5b431b5b431b5b431b5b431b5b43581b3a77710d",
+    "expected": "6162636465662020580a",
+    "actual": "6162636465662020580a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "picture-vertical",
+    "keys": "1450246a69581b3a77710d",
+    "expected": "6162636465660a7820202020580a",
+    "actual": "6162636465660a7820202020580a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "picture-append",
+    "keys": "1450386c61581b3a77710d",
+    "expected": "616263646566202020580a",
+    "actual": "616263646566202020580a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "picture-down-undo",
+    "keys": "1450326a753a77710d",
+    "expected": "6162",
+    "actual": "6162",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "picture-readonly",
+    "keys": "1450144f336a3a77210d3a71210d",
+    "expected": "6162",
+    "actual": "6162",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "picture-undo-column",
+    "keys": "1450386c69581b7569591b3a77710d",
+    "expected": "616263646566590a",
+    "actual": "616263646566590a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "picture-line-change",
+    "keys": "14506c6c6363581b3a77710d",
+    "expected": "580a6465660a",
+    "actual": "580a6465660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "picture-block-insert",
+    "keys": "1450166c6c6a6a49581b3a77710d",
+    "expected": "586162630a586465660a586768690a",
+    "actual": "586162630a586465660a586768690a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "help-paste",
+    "keys": "3a68656c700d1b5b3230307e0b48694241441b3a77710d1b5b3230317e71783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "block-insert",
+    "keys": "166a6a492f2f201b3a77710d",
+    "expected": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "actual": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "block-insert-short",
+    "keys": "6c6c166a6a6a49581b3a77710d",
+    "expected": "6162586364650a780a0a4142584344450a",
+    "actual": "6162586364650a780a0a4142584344450a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "block-append-pad",
+    "keys": "6c6c166a6a6a41581b3a77710d",
+    "expected": "6162635864650a782020580a202020580a4142435844450a",
+    "actual": "6162635864650a782020580a202020580a4142435844450a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "block-append-eol",
+    "keys": "166a6a2441581b3a77710d",
+    "expected": "6162580a63646566580a78580a",
+    "actual": "6162580a63646566580a78580a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "block-tab",
+    "keys": "6c6c166a6a49581b3a77710d",
+    "expected": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "actual": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "block-undo-redo",
+    "keys": "166a6a4958591b75123a77710d",
+    "expected": "58596162630a58596465660a58596768690a",
+    "actual": "58596162630a58596465660a58596768690a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "block-paste",
+    "keys": "166a491b5b3230307e581b5b3230317e1b3a77710d",
+    "expected": "586162630a586465660a",
+    "actual": "586162630a586465660a",
+    "passed": true
+  },
+  {
+    "product": "release-dll",
+    "case": "block-cancel",
+    "keys": "166a1b783a77710d",
+    "expected": "6162630a65660a",
+    "actual": "6162630a65660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "insert",
+    "keys": "69581b3a77710d",
+    "expected": "58696e697469616c0a",
+    "actual": "58696e697469616c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "delete-undo-dot",
+    "keys": "64642e75123a77710d",
+    "expected": "630a640a",
+    "actual": "630a640a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "visual",
+    "keys": "766c6c643a77710d",
+    "expected": "6465660a",
+    "actual": "6465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "visual-line-change",
+    "keys": "566a63581b3a77710d",
+    "expected": "580a630a",
+    "actual": "580a630a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "copy-paste",
+    "keys": "797777703a77710d",
+    "expected": "6f6e6520746f6e6520776f0a",
+    "actual": "6f6e6520746f6e6520776f0a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "save-failure",
+    "keys": "41211b3a7771206d697373696e672f66696c650d3a77710d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "buffers",
+    "keys": "41211b3a656e65770d696f746865721b3a77206f746865722e7478740d3a6220310d3a770d3a71210d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "saveas",
+    "keys": "41211b3a7361766561732072656e616d65642e7478740d413f1b3a770d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "windows-path",
+    "keys": "3a7720666f6c6465725c636f70792e7478740d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "command-paste",
+    "keys": "3a77201b5b3230307e666f6c6465725c7061737465642e7478741b5b3230317e0d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "find-forward-delete",
+    "keys": "6466783a77710d",
+    "expected": "637864207461696c0a",
+    "actual": "637864207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "find-backward-delete",
+    "keys": "246446783a77710d",
+    "expected": "616278636c0a",
+    "actual": "616278636c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "till-forward-delete",
+    "keys": "6474783a77710d",
+    "expected": "78637864207461696c0a",
+    "actual": "78637864207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "till-backward-delete",
+    "keys": "246454783a77710d",
+    "expected": "61627863786c0a",
+    "actual": "61627863786c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "till-count-repeat",
+    "keys": "7458323b783a77710d",
+    "expected": "61585863586458207461696c0a",
+    "actual": "61585863586458207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "find-reverse-repeat",
+    "keys": "3266582c3b783a77710d",
+    "expected": "61586263586458207461696c0a",
+    "actual": "61586263586458207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "find-missing-count",
+    "keys": "643266583a77710d",
+    "expected": "61625863640a58206e6578740a",
+    "actual": "61625863640a58206e6578740a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "percent-pair",
+    "keys": "64253a77710d",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "percent-quote",
+    "keys": "25783a77710d",
+    "expected": "2861202729272062207461696c0a",
+    "actual": "2861202729272062207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "percent-comment",
+    "keys": "25783a77710d",
+    "expected": "2f2a20636f6d6d656e74202a207461696c0a",
+    "actual": "2f2a20636f6d6d656e74202a207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "percent-directive",
+    "keys": "64253a77710d",
+    "expected": "420a23656e6469660a",
+    "actual": "420a23656e6469660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "percent-number",
+    "keys": "643530253a77710d",
+    "expected": "650a660a670a",
+    "actual": "650a660a670a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "help-pages",
+    "keys": "3a68656c700d1b5b367e1b5b357e7141211b3a77710d",
+    "expected": "616263646566210a",
+    "actual": "616263646566210a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "help-undo",
+    "keys": "783a680d7864643a656e65770d1b753a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "native-help",
+    "keys": "0b481b5b367e1b5b357e0b683a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "native-window-shortcut",
+    "keys": "0b54783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "options-theme",
+    "keys": "145367727576626f780d3a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "color-menu",
+    "keys": "3a636f6c6f72730d673a636f6c6f72736368656d650d033a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "insert-options-menu",
+    "keys": "69581403591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "options-toggle-insert",
+    "keys": "14146958591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "options-toggle-overtype",
+    "keys": "145414146958591b3a77710d",
+    "expected": "5859636465660a",
+    "actual": "5859636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "insert-options-toggle",
+    "keys": "69581414591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "picture-normal",
+    "keys": "1450386c69581b3a77710d",
+    "expected": "6162636465662020580a",
+    "actual": "6162636465662020580a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "picture-insert-arrows",
+    "keys": "1450691b5b431b5b431b5b431b5b431b5b431b5b431b5b431b5b43581b3a77710d",
+    "expected": "6162636465662020580a",
+    "actual": "6162636465662020580a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "picture-vertical",
+    "keys": "1450246a69581b3a77710d",
+    "expected": "6162636465660a7820202020580a",
+    "actual": "6162636465660a7820202020580a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "picture-append",
+    "keys": "1450386c61581b3a77710d",
+    "expected": "616263646566202020580a",
+    "actual": "616263646566202020580a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "picture-down-undo",
+    "keys": "1450326a753a77710d",
+    "expected": "6162",
+    "actual": "6162",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "picture-readonly",
+    "keys": "1450144f336a3a77210d3a71210d",
+    "expected": "6162",
+    "actual": "6162",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "picture-undo-column",
+    "keys": "1450386c69581b7569591b3a77710d",
+    "expected": "616263646566590a",
+    "actual": "616263646566590a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "picture-line-change",
+    "keys": "14506c6c6363581b3a77710d",
+    "expected": "580a6465660a",
+    "actual": "580a6465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "picture-block-insert",
+    "keys": "1450166c6c6a6a49581b3a77710d",
+    "expected": "586162630a586465660a586768690a",
+    "actual": "586162630a586465660a586768690a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "help-paste",
+    "keys": "3a68656c700d1b5b3230307e0b48694241441b3a77710d1b5b3230317e71783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "block-insert",
+    "keys": "166a6a492f2f201b3a77710d",
+    "expected": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "actual": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "block-insert-short",
+    "keys": "6c6c166a6a6a49581b3a77710d",
+    "expected": "6162586364650a780a0a4142584344450a",
+    "actual": "6162586364650a780a0a4142584344450a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "block-append-pad",
+    "keys": "6c6c166a6a6a41581b3a77710d",
+    "expected": "6162635864650a782020580a202020580a4142435844450a",
+    "actual": "6162635864650a782020580a202020580a4142435844450a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "block-append-eol",
+    "keys": "166a6a2441581b3a77710d",
+    "expected": "6162580a63646566580a78580a",
+    "actual": "6162580a63646566580a78580a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "block-tab",
+    "keys": "6c6c166a6a49581b3a77710d",
+    "expected": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "actual": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "block-undo-redo",
+    "keys": "166a6a4958591b75123a77710d",
+    "expected": "58596162630a58596465660a58596768690a",
+    "actual": "58596162630a58596465660a58596768690a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "block-paste",
+    "keys": "166a491b5b3230307e581b5b3230317e1b3a77710d",
+    "expected": "586162630a586465660a",
+    "actual": "586162630a586465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-package",
+    "case": "block-cancel",
+    "keys": "166a1b783a77710d",
+    "expected": "6162630a65660a",
+    "actual": "6162630a65660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "insert",
+    "keys": "69581b3a77710d",
+    "expected": "58696e697469616c0a",
+    "actual": "58696e697469616c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "delete-undo-dot",
+    "keys": "64642e75123a77710d",
+    "expected": "630a640a",
+    "actual": "630a640a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "visual",
+    "keys": "766c6c643a77710d",
+    "expected": "6465660a",
+    "actual": "6465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "visual-line-change",
+    "keys": "566a63581b3a77710d",
+    "expected": "580a630a",
+    "actual": "580a630a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "copy-paste",
+    "keys": "797777703a77710d",
+    "expected": "6f6e6520746f6e6520776f0a",
+    "actual": "6f6e6520746f6e6520776f0a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "save-failure",
+    "keys": "41211b3a7771206d697373696e672f66696c650d3a77710d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "buffers",
+    "keys": "41211b3a656e65770d696f746865721b3a77206f746865722e7478740d3a6220310d3a770d3a71210d",
+    "expected": "61210a",
+    "actual": "61210a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "saveas",
+    "keys": "41211b3a7361766561732072656e616d65642e7478740d413f1b3a770d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "windows-path",
+    "keys": "3a7720666f6c6465725c636f70792e7478740d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "command-paste",
+    "keys": "3a77201b5b3230307e666f6c6465725c7061737465642e7478741b5b3230317e0d3a71210d",
+    "expected": "610a",
+    "actual": "610a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "find-forward-delete",
+    "keys": "6466783a77710d",
+    "expected": "637864207461696c0a",
+    "actual": "637864207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "find-backward-delete",
+    "keys": "246446783a77710d",
+    "expected": "616278636c0a",
+    "actual": "616278636c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "till-forward-delete",
+    "keys": "6474783a77710d",
+    "expected": "78637864207461696c0a",
+    "actual": "78637864207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "till-backward-delete",
+    "keys": "246454783a77710d",
+    "expected": "61627863786c0a",
+    "actual": "61627863786c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "till-count-repeat",
+    "keys": "7458323b783a77710d",
+    "expected": "61585863586458207461696c0a",
+    "actual": "61585863586458207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "find-reverse-repeat",
+    "keys": "3266582c3b783a77710d",
+    "expected": "61586263586458207461696c0a",
+    "actual": "61586263586458207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "find-missing-count",
+    "keys": "643266583a77710d",
+    "expected": "61625863640a58206e6578740a",
+    "actual": "61625863640a58206e6578740a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "percent-pair",
+    "keys": "64253a77710d",
+    "expected": "207461696c0a",
+    "actual": "207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "percent-quote",
+    "keys": "25783a77710d",
+    "expected": "2861202729272062207461696c0a",
+    "actual": "2861202729272062207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "percent-comment",
+    "keys": "25783a77710d",
+    "expected": "2f2a20636f6d6d656e74202a207461696c0a",
+    "actual": "2f2a20636f6d6d656e74202a207461696c0a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "percent-directive",
+    "keys": "64253a77710d",
+    "expected": "420a23656e6469660a",
+    "actual": "420a23656e6469660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "percent-number",
+    "keys": "643530253a77710d",
+    "expected": "650a660a670a",
+    "actual": "650a660a670a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "help-pages",
+    "keys": "3a68656c700d1b5b367e1b5b357e7141211b3a77710d",
+    "expected": "616263646566210a",
+    "actual": "616263646566210a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "help-undo",
+    "keys": "783a680d7864643a656e65770d1b753a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "native-help",
+    "keys": "0b481b5b367e1b5b357e0b683a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "native-window-shortcut",
+    "keys": "0b54783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "options-theme",
+    "keys": "145367727576626f780d3a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "color-menu",
+    "keys": "3a636f6c6f72730d673a636f6c6f72736368656d650d033a77710d",
+    "expected": "6162636465660a",
+    "actual": "6162636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "insert-options-menu",
+    "keys": "69581403591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "options-toggle-insert",
+    "keys": "14146958591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "options-toggle-overtype",
+    "keys": "145414146958591b3a77710d",
+    "expected": "5859636465660a",
+    "actual": "5859636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "insert-options-toggle",
+    "keys": "69581414591b3a77710d",
+    "expected": "58596162636465660a",
+    "actual": "58596162636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "picture-normal",
+    "keys": "1450386c69581b3a77710d",
+    "expected": "6162636465662020580a",
+    "actual": "6162636465662020580a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "picture-insert-arrows",
+    "keys": "1450691b5b431b5b431b5b431b5b431b5b431b5b431b5b431b5b43581b3a77710d",
+    "expected": "6162636465662020580a",
+    "actual": "6162636465662020580a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "picture-vertical",
+    "keys": "1450246a69581b3a77710d",
+    "expected": "6162636465660a7820202020580a",
+    "actual": "6162636465660a7820202020580a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "picture-append",
+    "keys": "1450386c61581b3a77710d",
+    "expected": "616263646566202020580a",
+    "actual": "616263646566202020580a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "picture-down-undo",
+    "keys": "1450326a753a77710d",
+    "expected": "6162",
+    "actual": "6162",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "picture-readonly",
+    "keys": "1450144f336a3a77210d3a71210d",
+    "expected": "6162",
+    "actual": "6162",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "picture-undo-column",
+    "keys": "1450386c69581b7569591b3a77710d",
+    "expected": "616263646566590a",
+    "actual": "616263646566590a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "picture-line-change",
+    "keys": "14506c6c6363581b3a77710d",
+    "expected": "580a6465660a",
+    "actual": "580a6465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "picture-block-insert",
+    "keys": "1450166c6c6a6a49581b3a77710d",
+    "expected": "586162630a586465660a586768690a",
+    "actual": "586162630a586465660a586768690a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "help-paste",
+    "keys": "3a68656c700d1b5b3230307e0b48694241441b3a77710d1b5b3230317e71783a77710d",
+    "expected": "62636465660a",
+    "actual": "62636465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "block-insert",
+    "keys": "166a6a492f2f201b3a77710d",
+    "expected": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "actual": "2f2f206162630a2f2f206465660a2f2f206768690a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "block-insert-short",
+    "keys": "6c6c166a6a6a49581b3a77710d",
+    "expected": "6162586364650a780a0a4142584344450a",
+    "actual": "6162586364650a780a0a4142584344450a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "block-append-pad",
+    "keys": "6c6c166a6a6a41581b3a77710d",
+    "expected": "6162635864650a782020580a202020580a4142435844450a",
+    "actual": "6162635864650a782020580a202020580a4142435844450a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "block-append-eol",
+    "keys": "166a6a2441581b3a77710d",
+    "expected": "6162580a63646566580a78580a",
+    "actual": "6162580a63646566580a78580a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "block-tab",
+    "keys": "6c6c166a6a49581b3a77710d",
+    "expected": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "actual": "61625863640a20205820202020202058595a0a5a5a585a5a0a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "block-undo-redo",
+    "keys": "166a6a4958591b75123a77710d",
+    "expected": "58596162630a58596465660a58596768690a",
+    "actual": "58596162630a58596465660a58596768690a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "block-paste",
+    "keys": "166a491b5b3230307e581b5b3230317e1b3a77710d",
+    "expected": "586162630a586465660a",
+    "actual": "586162630a586465660a",
+    "passed": true
+  },
+  {
+    "product": "debug-dll",
+    "case": "block-cancel",
+    "keys": "166a1b783a77710d",
+    "expected": "6162630a65660a",
+    "actual": "6162630a65660a",
+    "passed": true
+  }
+]

@@ -1,0 +1,1 @@
+{  "application": "mijoe",  "architecture": "arm64",  "binary_sha256": "e9ccd1369b02a8ac90362364555c020be5aa13393e9385429e90298d0fa482e8",  "prefix": "/usr/local",  "commands": {    "mj": "/usr/local/bin/mj",    "rmj": "/usr/local/bin/rmj",    "xmj": "/usr/local/bin/xmj"  }}

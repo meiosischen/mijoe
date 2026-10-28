@@ -120,6 +120,7 @@ manifest = {
     "sources": {name: hashlib.sha256((root / name).read_bytes()).hexdigest()
                 for name in ("joe/vim.c", "joe/vim.h", "joe/vimhelp.h", "docs/vim-help.txt",
                              "joe/help.c", "joe/help.h", "joe/colors.c", "joe/colors.h", "joe/options.c",
+                             "joe/menu.c", "joe/menu.h", "joe/mmenu.c",
                              "joe/macos.c", "joe/macos.h", "joe/types.h", "joe/main.c", "joe/ushell.c", "joe/termcap.c")},
 }
 (package / "build-info.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")

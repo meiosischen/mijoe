@@ -39,6 +39,11 @@ class UITests(unittest.TestCase):
     def assert_unchanged(self):
         self.assertEqual(self.editor.finish(), b"abcdef\n")
 
+    def reopen(self, initial=b"abcdef\n", options=()):
+        self.editor.finish(save=False)
+        self.editor.close()
+        self.editor = pty_tests.Editor(self.directory, initial, options=options)
+
     def assert_gruvbox(self):
         self.editor.drain(0.15)
         self.assertRegex(self.editor.output, rb"\x1b\[38;(?:5;223|2;235;219;178)m")
@@ -130,6 +135,87 @@ class UITests(unittest.TestCase):
         self.editor.until(b"Color scheme")
         self.editor.send(b"\x03Y\x1b")
         self.assertEqual(self.editor.finish(), b"XYabcdef\n")
+
+    def test_ctrl_t_closes_options_without_enabling_overtype(self):
+        self.editor.send(b"\x14\x14iXY\x1b")
+        self.assertEqual(self.editor.finish(), b"XYabcdef\n")
+
+    def test_ctrl_t_closes_options_without_disabling_overtype(self):
+        self.editor.send(b"\x14T\x14\x14iXY\x1b")
+        self.assertEqual(self.editor.finish(), b"XYcdef\n")
+
+    def test_ctrl_t_toggle_preserves_insert_mode(self):
+        self.editor.send(b"iX\x14\x14Y\x1b")
+        self.assertEqual(self.editor.finish(), b"XYabcdef\n")
+
+    def test_options_explicit_t_still_toggles_overtype(self):
+        self.editor.send(b"\x14T\x14tiXY\x1b")
+        self.assertEqual(self.editor.finish(), b"XYabcdef\n")
+
+    def test_picture_menu_allows_normal_motion_past_eol(self):
+        self.editor.send(b"\x14P8liX\x1b")
+        self.assertEqual(self.editor.finish(), b"abcdef  X\n")
+
+    def test_picture_insert_arrows_move_past_eol(self):
+        self.reopen(options=("-picture",))
+        self.editor.send(b"i" + b"\x1b[C" * 8 + b"X\x1b")
+        self.assertEqual(self.editor.finish(), b"abcdef  X\n")
+
+    def test_picture_vertical_motion_keeps_virtual_column(self):
+        self.reopen(b"abcdef\nx\n", options=("-picture",))
+        self.editor.send(b"$jiX\x1b")
+        self.assertEqual(self.editor.finish(), b"abcdef\nx    X\n")
+
+    def test_picture_left_returns_from_virtual_column(self):
+        self.reopen(options=("-picture",))
+        self.editor.send(b"8l3hiX\x1b")
+        self.assertEqual(self.editor.finish(), b"abcdeXf\n")
+
+    def test_picture_append_after_virtual_cursor(self):
+        self.reopen(options=("-picture",))
+        self.editor.send(b"8laX\x1b")
+        self.assertEqual(self.editor.finish(), b"abcdef   X\n")
+
+    def test_picture_append_eol_resets_virtual_column(self):
+        self.reopen(options=("-picture",))
+        self.editor.send(b"8lAX\x1b")
+        self.assertEqual(self.editor.finish(), b"abcdefX\n")
+
+    def test_picture_down_extends_unterminated_file_and_undoes(self):
+        self.reopen(b"ab", options=("-picture",))
+        self.editor.send(b"2ju")
+        self.assertEqual(self.editor.finish(), b"ab")
+
+    def test_picture_readonly_down_does_not_extend_buffer(self):
+        self.reopen(b"ab", options=("-picture", "-rdonly"))
+        self.editor.send(b"3j")
+        self.editor.ex("w!")
+        self.assertEqual(self.editor.finish(save=False), b"ab")
+
+    def test_picture_virtual_column_uses_display_cells(self):
+        self.reopen("甲b\n".encode(), options=("-picture",))
+        self.editor.send(b"4liX\x1b")
+        self.assertEqual(self.editor.finish(), "甲b X\n".encode())
+
+    def test_picture_visual_and_operator_use_text_ranges(self):
+        self.reopen(options=("-picture",))
+        self.editor.send(b"v2lddl")
+        self.assertEqual(self.editor.finish(), b"ef\n")
+
+    def test_picture_undo_resets_column_to_restored_text(self):
+        self.reopen(options=("-picture",))
+        self.editor.send(b"8liX\x1buiY\x1b")
+        self.assertEqual(self.editor.finish(), b"abcdefY\n")
+
+    def test_picture_line_change_starts_at_text_column(self):
+        self.reopen(b"abc\ndef\n", options=("-picture",))
+        self.editor.send(b"llccX\x1b")
+        self.assertEqual(self.editor.finish(), b"X\ndef\n")
+
+    def test_picture_block_insert_uses_left_edge(self):
+        self.reopen(b"abc\ndef\nghi\n", options=("-picture",))
+        self.editor.send(b"\x16lljjIX\x1b")
+        self.assertEqual(self.editor.finish(), b"Xabc\nXdef\nXghi\n")
 
     def test_color_menu_select_and_cancel(self):
         self.editor.ex("colors")

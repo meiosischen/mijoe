@@ -1,0 +1,58 @@
+VC6 Debug dll: exit=0; log=/Users/meiosis/Workspace/Projects/mijoe/build/picture-menu-20261028/windows/build-debug-dll.log
+
+See the SDK release notes for more information.
+
+	rc.exe /dJOEWIN_VC6 /i"." /i"..\src\common" /i"..\src\exe" /d_DEBUG /dDEBUG /dJOEWIN_DLL_FRONTEND /fo""..\bin\vc6\Debug\obj\joe_dll.res"" joe.rc
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /debug /out:""..\bin\vc6\Debug\dll\joe.exe"" "..\bin\vc6\Debug\dll\joewin.lib" "..\bin\vc6\Debug\obj\dllmain.obj" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib "..\bin\vc6\Debug\obj\joe_dll.res"
+Windows UI test files: /Users/meiosis/Workspace/Projects/mijoe/build/picture-menu-20261028/windows/mijoe-win32-smoke-debug-dll-hm6q1o7w
+vim_win32_smoke.c
+PASS insert
+PASS delete-undo-dot
+PASS visual
+PASS visual-line-change
+PASS copy-paste
+PASS save-failure
+PASS buffers
+PASS saveas
+PASS windows-path
+PASS command-paste
+PASS find-forward-delete
+PASS find-backward-delete
+PASS till-forward-delete
+PASS till-backward-delete
+PASS till-count-repeat
+PASS find-reverse-repeat
+PASS find-missing-count
+PASS percent-pair
+PASS percent-quote
+PASS percent-comment
+PASS percent-directive
+PASS percent-number
+PASS help-pages
+PASS help-undo
+PASS native-help
+PASS native-window-shortcut
+PASS options-theme
+PASS color-menu
+PASS insert-options-menu
+PASS options-toggle-insert
+PASS options-toggle-overtype
+PASS insert-options-toggle
+PASS picture-normal
+PASS picture-insert-arrows
+PASS picture-vertical
+PASS picture-append
+PASS picture-down-undo
+PASS picture-readonly
+PASS picture-undo-column
+PASS picture-line-change
+PASS picture-block-insert
+PASS help-paste
+PASS block-insert
+PASS block-insert-short
+PASS block-append-pad
+PASS block-append-eol
+PASS block-tab
+PASS block-undo-redo
+PASS block-paste
+PASS block-cancel

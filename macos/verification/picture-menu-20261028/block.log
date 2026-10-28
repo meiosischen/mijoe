@@ -1,0 +1,12 @@
+Block transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-4fc9t3zk; Vim oracle cases: 37
+test_bracketed_paste_in_block_insert (__main__.BlockTests.test_bracketed_paste_in_block_insert) ... ok
+test_cancel_before_insert_does_not_replace_dot (__main__.BlockTests.test_cancel_before_insert_does_not_replace_dot) ... ok
+test_multiline_paste_changes_first_line_only (__main__.BlockTests.test_multiline_paste_changes_first_line_only) ... ok
+test_paste_in_selection_does_not_edit (__main__.BlockTests.test_paste_in_selection_does_not_edit) ... ok
+test_readonly_block_insert_keeps_original (__main__.BlockTests.test_readonly_block_insert_keeps_original) ... ok
+test_vim_block_reference_cases (__main__.BlockTests.test_vim_block_reference_cases) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 10.225s
+
+OK
