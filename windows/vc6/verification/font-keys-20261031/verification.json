@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-31",
+  "cause": "JOEWIN_NO_VT dropped all F1-F4 keydown and keyup messages before any typography handling.",
+  "fix": [
+    "Plain F1/F2 change font size by one point; F3/F4 change line spacing by one pixel.",
+    "Rebuild fonts, grid and system caret in a fixed outer window; repaint immediately.",
+    "Keep glyph font height separate from row cell height so spacing does not resize bold/italic/wide variants.",
+    "Persist font size and signed line spacing in the existing JoeEditor registry profile.",
+    "Font size bounds 6-72 points, spacing upper bound 32 pixels, cell height lower bound 2 pixels."
+  ],
+  "builds": [
+    "VC6 Release standalone",
+    "VC6 Release DLL",
+    "VC6 Debug standalone",
+    "VC6 Debug DLL"
+  ],
+  "tests": {
+    "win32_variants": 4,
+    "key_checks_each": 32,
+    "total_key_checks": 128,
+    "macos_native": 112,
+    "xp_pe_static": 6
+  },
+  "test_coverage": [
+    "Normal, Insert, Visual, command input, help, grep and maximized window.",
+    "Real WM_KEYDOWN/WM_KEYUP events, registry font/spacing values and fixed window rectangles.",
+    "Visible system caret dimensions change with font/line height; hidden grep caret dimensions are not used as a font measurement.",
+    "Grep remains modal and discards attempted text input.",
+    "Negative spacing, restart loading, subsequent editing/undo/selection and exact saved file bytes.",
+    "Probe waits for UI work completion and restores original font/spacing registry values."
+  ],
+  "sources": {
+    "windows/src/putty/putty/windows/window.c": "dce9a21f2e9e76d12a77d5d3e118e80a3e51aa1a22162c3a632216838a525d27",
+    "windows/src/putty/win/config.c": "5e0f6b27724abc285a787de7be0ff258c7667ce31ccb041bb36e6faea167a1af",
+    "windows/src/putty/win/jwconfig.h": "a2a99d6d2c7d7cf0e1723387a0c1ff656f61b0c852c5498a57a55d2f3635de39",
+    "tests/win32_typography_test.c": "f28ef7896f2a8ad38acfa8adc16e07de66a225f572f259b7868bc53bb51ead0d",
+    "tools/test_win32_typography.py": "8d64539e4f63c501235d2d1d9f2ac3faeb0824c9b71701a8bb6d4db77d7cc728",
+    "docs/vim-help.txt": "25b4ddd5a7528d0a95c1719ec101f40248bac5d87f288e502202bfa5bba3f190",
+    "joe/vimhelp.h": "f11faf7b4f783aee730e432343a7c9132e0deacb46cd9062d0e7b0e48b10b37a"
+  },
+  "delivery": {
+    "path": "/Users/meiosis/Workspace/Projects/mijoe/build/deliveries/mijoe-xp-f1-f4.zip",
+    "sha256": "e3a5a94f82cb73450456e822ab40cba31607f3eaf20ae4e84cb8784cef5dd283",
+    "binaries": {
+      "joe.exe": "32840a84412a09446ac6a1ea41bc17aa3fb9f1b51ce38fcada666248d2956858",
+      "dll/joe.exe": "063d25fc7d8ef7598ed43ee300233969988f38eaf3f05291d2c8dfd5479b3dfd",
+      "dll/joewin.dll": "7b8a45afce5327012cd536b6efe034ee32f8d7937bcc47a758b25f856f639642"
+    },
+    "zip_contents_verified": true
+  },
+  "macos_help_rebuilt_and_installed": true,
+  "mj_target": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe",
+  "limitations": [
+    "The updated build was executed under Wine, not inside Windows XP. User reported the previous build works on XP except these keys.",
+    "The modern Visual Studio/WiX build was not executed."
+  ],
+  "pe_report": "xp-pe.json",
+  "build_note": "Release standalone was rebuilt before the first successful probe. Its final incremental build was already up to date; release-build-summary.log records the successful RC/link summary and release-up-to-date-summary.log records the final exit=0."
+}

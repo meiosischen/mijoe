@@ -136,6 +136,9 @@ static void show_mouseptr(int show);
 static void reset_window(int);
 static int extra_width, extra_height;
 static int font_width, font_height, font_dualwidth;
+#ifdef JOEWIN
+static int glyph_height;
+#endif
 static int offset_width, offset_height;
 static int was_zoomed = 0;
 static int prev_rows, prev_cols;
@@ -1957,6 +1960,12 @@ static void init_fonts(int pick_width, int pick_height)
     fontflag[0] = fontflag[1] = fontflag[2] = 1;
 
     init_ucs(&cfg, &ucsdata);
+#ifdef JOEWIN
+    /* Cell spacing must not change the cached glyph font sizes. */
+    glyph_height = font_height;
+    font_height = max(2, glyph_height + jw_line_spacing);
+    if (descent >= font_height) descent = font_height - 1;
+#endif
 }
 
 static void another_font(int fontno)
@@ -2002,7 +2011,13 @@ static void another_font(int fontno)
 	t = TRUE;
 
     fonts[fontno] =
-	CreateFont(font_height * (1 + !!(fontno & FONT_HIGH)), x, 0, 0, w,
+	CreateFont(
+#ifdef JOEWIN
+                   glyph_height
+#else
+                   font_height
+#endif
+                   * (1 + !!(fontno & FONT_HIGH)), x, 0, 0, w,
 		   t, u, FALSE, c, OUT_DEFAULT_PRECIS,
 		   CLIP_DEFAULT_PRECIS, FONT_QUALITY(cfg.font_quality),
 		   FIXED_PITCH | FF_DONTCARE, s);
@@ -2020,6 +2035,51 @@ static void deinit_fonts(void)
 	fontflag[i] = 0;
     }
 }
+
+#ifdef JOEWIN
+/* Keep the outer window fixed and rebuild the terminal grid and system caret.
+ * Uses only Win32 APIs available on XP; never sends text to the editor. */
+static void adjust_typography(UINT key)
+{
+    RECT client;
+    int rows, cols, size, spacing, bytes;
+    char *bits;
+    size = cfg.font.height;
+    spacing = jw_line_spacing;
+    if (key == VK_F1) size = min(72, max(6, size + 1));
+    if (key == VK_F2) size = max(6, min(72, size - 1));
+    if (key == VK_F3) spacing = min(32, spacing + 1);
+    if (key == VK_F4) spacing = max(max(-64, 2 - glyph_height), spacing - 1);
+    if (size == cfg.font.height && spacing == jw_line_spacing) return;
+    cfg.font.height = size;
+    jw_line_spacing = spacing;
+    jwSaveSettings(&cfg);
+    deinit_fonts();
+    init_fonts(0, 0);
+    update_font_menu();
+    GetClientRect(hwnd, &client);
+    offset_width = offset_height = cfg.window_border;
+    cols = max(1, (client.right - 2 * offset_width) / font_width);
+    rows = max(1, (client.bottom - 2 * offset_height) / font_height);
+    term_size(term, rows, cols, cfg.savelines);
+    DestroyCaret();
+    if (caretbm) DeleteObject(caretbm);
+    bytes = (font_width + 15) / 16 * 2 * font_height;
+    bits = snewn(bytes, char);
+    memset(bits, 0, bytes);
+    caretbm = CreateBitmap(font_width, font_height, 1, 1, bits);
+    sfree(bits);
+    if (term->has_focus) {
+        CreateCaret(hwnd, caretbm, font_width, font_height);
+        ShowCaret(hwnd);
+    }
+    caret_x = caret_y = -1;
+    sys_cursor(NULL, term->curs.x, term->curs.y);
+    term_invalidate(term);
+    InvalidateRect(hwnd, NULL, TRUE);
+    UpdateWindow(hwnd);
+}
+#endif
 
 void request_resize(void *frontend, int w, int h)
 {
@@ -3465,9 +3525,13 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message,
       case WM_SYSKEYDOWN:
       case WM_KEYUP:
       case WM_SYSKEYUP:
-#ifdef JOEWIN_NO_VT
-        /* Disabled F1-F4 must not reach JOE as unbound escape sequences. */
-        if (wParam >= VK_F1 && wParam <= VK_F4) return 0;
+#ifdef JOEWIN
+        if (wParam >= VK_F1 && wParam <= VK_F4) {
+            if (message == WM_KEYDOWN && !(GetKeyState(VK_SHIFT) & 0x8000) &&
+                !(GetKeyState(VK_CONTROL) & 0x8000) && !(GetKeyState(VK_MENU) & 0x8000))
+                adjust_typography((UINT)wParam);
+            return 0;
+        }
 #endif
 	/*
 	 * Add the scan code and keypress timing to the random

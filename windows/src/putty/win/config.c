@@ -27,6 +27,8 @@
 
 #define JW_ROOT_KEY L"Software\\JoeEditor\\"
 
+int jw_line_spacing;
+
 static wchar_t *getkeyname()
 {
 	static wchar_t keyname[256];
@@ -71,6 +73,7 @@ void jwLoadConfig(Config *cfg)
 	strcpy(cfg->font.name, "Consolas");
 	cfg->font.isbold = 0;
 	cfg->font.height = 10;
+	jw_line_spacing = 0;
 
 	/* Load from registry... */
 
@@ -97,6 +100,10 @@ void jwLoadConfig(Config *cfg)
 		{
 			cfg->font.height = val;
 		}
+
+		sz = sizeof(DWORD);
+		if (ERROR_SUCCESS == RegQueryValueExW(hkey, L"LineSpacing", NULL, &type, (LPBYTE)&val, &sz) && type == REG_DWORD && (int)val >= -64 && (int)val <= 32)
+			jw_line_spacing = (int)val;
 
 		sz = sizeof(DWORD);
 		if (ERROR_SUCCESS == RegQueryValueExW(hkey, L"FontBold", NULL, &type, (LPBYTE)&val, &sz) && type == REG_DWORD)
@@ -130,6 +137,9 @@ void jwSaveSettings(Config *cfg)
 	{
 		tmp = cfg->font.height;
 		RegSetValueExW(hkey, L"FontSize", 0, REG_DWORD, (LPBYTE)&tmp, sizeof(DWORD));
+
+		tmp = (DWORD)jw_line_spacing;
+		RegSetValueExW(hkey, L"LineSpacing", 0, REG_DWORD, (LPBYTE)&tmp, sizeof(DWORD));
 
 		tmp = cfg->font.isbold;
 		RegSetValueExW(hkey, L"FontBold", 0, REG_DWORD, (LPBYTE)&tmp, sizeof(DWORD));

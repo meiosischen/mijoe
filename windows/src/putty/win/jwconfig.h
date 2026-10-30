@@ -20,6 +20,7 @@
 #ifndef _JOEWIN_JWCONFIG_H
 #define _JOEWIN_JWCONFIG_H
 
+extern int jw_line_spacing;
 void jwLoadConfig(Config*);
 void jwSaveSettings(Config *cfg);
 int jwLoadWindowLoc(POINT *point);

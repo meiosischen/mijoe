@@ -264,3 +264,10 @@ VC6 Release/Debug 独立版和 DLL 版均构建通过，各 57 项 Win32/Wine �
 详见 [验证记录](verification/ctrl-c-abort-20261031/verification.json)。
 
 XP 验收包的批处理已在 Wine 中完成 28 项自检，全部通过；校验器也验证了错误的预期字节会返回失败。
+
+## Windows F1–F4 与共享帮助更新（2026-10-31）
+
+Windows 前端补齐字号/行距按键，共享 `:help` 同步说明图形窗口 F1–F4 的用途。
+macOS App 与 `/usr/local/bin/mj` 已重建并更新，112 项原生视图检查通过，源文件与安装二进制哈希、签名已核验。
+Windows 四种 VC6 构建、128 项按键专项及六个 PE 静态检查通过；修复版尚未在实际 XP 系统内运行。
+详见 [Windows 验证记录](../windows/vc6/verification/font-keys-20261031/verification.json)。

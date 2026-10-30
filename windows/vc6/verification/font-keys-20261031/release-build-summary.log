@@ -1,0 +1,6 @@
+VC6 Release package: exit=0; log=build/win-typography/vc6-release-package.log
+
+See the SDK release notes for more information.
+
+	rc.exe /dJOEWIN_VC6 /i"." /i"..\src\common" /i"..\src\exe" /dNDEBUG /fo""..\bin\vc6\Release\obj\joe.res"" joe.rc
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /out:""..\bin\vc6\Release\joe.exe"" "..\bin\vc6\Release\joe.lib" "..\bin\vc6\Release\putty.lib" "..\bin\vc6\Release\common.lib" "..\bin\vc6\Release\obj\main.obj" "..\bin\vc6\Release\obj\joe.res" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib

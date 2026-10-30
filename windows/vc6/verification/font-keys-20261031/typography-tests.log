@@ -1,0 +1,44 @@
+windows/bin/vc6/Release/joe.exe exit 0
+PASS F1-F4 preserve Normal and fixed window geometry
+PASS F1-F4 preserve Insert and fixed window geometry
+PASS F1-F4 preserve Visual and fixed window geometry
+PASS F1-F4 preserve command input and fixed window geometry
+PASS F1-F4 preserve help and fixed window geometry
+PASS F1-F4 preserve grep and fixed window geometry
+PASS F1-F4 preserve maximized window and fixed window geometry
+PASS saved typography loads after restarting the editor
+PASS 32 key checks, visible caret metrics, mode continuity, window geometry and saved text
+
+windows/bin/vc6/Release/dll/joe.exe exit 0
+PASS F1-F4 preserve Normal and fixed window geometry
+PASS F1-F4 preserve Insert and fixed window geometry
+PASS F1-F4 preserve Visual and fixed window geometry
+PASS F1-F4 preserve command input and fixed window geometry
+PASS F1-F4 preserve help and fixed window geometry
+PASS F1-F4 preserve grep and fixed window geometry
+PASS F1-F4 preserve maximized window and fixed window geometry
+PASS saved typography loads after restarting the editor
+PASS 32 key checks, visible caret metrics, mode continuity, window geometry and saved text
+
+windows/bin/vc6/Debug/joe.exe exit 0
+PASS F1-F4 preserve Normal and fixed window geometry
+PASS F1-F4 preserve Insert and fixed window geometry
+PASS F1-F4 preserve Visual and fixed window geometry
+PASS F1-F4 preserve command input and fixed window geometry
+PASS F1-F4 preserve help and fixed window geometry
+PASS F1-F4 preserve grep and fixed window geometry
+PASS F1-F4 preserve maximized window and fixed window geometry
+PASS saved typography loads after restarting the editor
+PASS 32 key checks, visible caret metrics, mode continuity, window geometry and saved text
+
+windows/bin/vc6/Debug/dll/joe.exe exit 0
+PASS F1-F4 preserve Normal and fixed window geometry
+PASS F1-F4 preserve Insert and fixed window geometry
+PASS F1-F4 preserve Visual and fixed window geometry
+PASS F1-F4 preserve command input and fixed window geometry
+PASS F1-F4 preserve help and fixed window geometry
+PASS F1-F4 preserve grep and fixed window geometry
+PASS F1-F4 preserve maximized window and fixed window geometry
+PASS saved typography loads after restarting the editor
+PASS 32 key checks, visible caret metrics, mode continuity, window geometry and saved text
+
