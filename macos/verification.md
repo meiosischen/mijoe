@@ -233,3 +233,17 @@ VC6 Debug/Release 独立版和 DLL 版均构建通过，6 个 PE 的 XP 静态�
 本机 App 与 mj 已更新；实际按 F5 录制 I// <Esc>j，再按 F6 给下一行加注释，
 并通过 :macro 确认六个按键。样例修改已撤销，恢复空白窗口，字体 14、行距 -5 保留。
 详见 [验证记录](verification/register-inspection-macros-20261030/verification.json)。
+
+## console grep 结果缓冲区（2026-10-30）
+
+console/终端的 `:grep -f` 在当前编辑窗口创建新的未命名、可编辑缓冲区，
+原文件与结果一起出现在 `:ls`，支持 `:bn/:bp`、`:b 编号`、`:bd`/`:bd!`。
+macOS 原生版仍请求独立窗口，Windows 图形版保留原有的新编辑窗口路径。
+同时修复删除缓冲区时向 `msgnw` 传入 NULL 导致的崩溃。
+
+16 项 grep 专项、8 项缓冲区、112 项原生视图、46 项 PTY 和 32 项 UI 检查通过；
+覆盖未保存源文件与光标保留、保存结果、删除结果后返回源文件、返回只读懒加载源文件。
+VC6 Debug/Release 独立版和 DLL 版构建通过，6 个 PE 的 XP 静态兼容检查通过；XP 实机未测。
+`/usr/local/bin/mj` 已指向本轮最新构建；已运行的 console 进程需要退出重开。
+原生 App 构建及签名校验通过，未替换正在使用的已安装 GUI。
+详见 [验证记录](verification/console-grep-buffer-20261030/verification.json)。

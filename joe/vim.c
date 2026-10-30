@@ -1900,7 +1900,15 @@ static int grep_export(BW *bw)
 #if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
         handed=mijoe_macos_gui_open_text(path);
 #endif
-        if (!handed) result=import_text_result(bw,path,1);
+        if (!handed) {
+#ifdef JOEWIN
+            result=import_text_result(bw,path,1);
+#else
+            /* Console results belong to the current window's buffer list.
+             * Native macOS already handed off to a new app window above. */
+            result=import_text_result(bw,path,0);
+#endif
+        }
     }
     if (!handed) unlink(path);
     obj_free(path);

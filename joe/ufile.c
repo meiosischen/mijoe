@@ -1239,7 +1239,7 @@ int ulose(W *w, int k)
 	BW *bw;
 	WIND_BW(bw, w);
 	
-	msgnw(bw->parent, NULL);
+	msgnw(bw->parent, "");
 	if (bw->b->count==1 && bw->b->pid) {
 		return ukillpid(w, 0);
 	}

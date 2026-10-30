@@ -1,0 +1,112 @@
+PASS native session starts its own editor
+PASS native session receives editor status
+PASS new view defaults to 13 point font and minus six pixel leading
+PASS F1 enlarges font and refreshes terminal geometry
+PASS status reflects F1 enlarges font and refreshes terminal geometry
+PASS F2 restores font and refreshes terminal geometry
+PASS status reflects F2 restores font and refreshes terminal geometry
+PASS F3 increases leading and refreshes terminal rows
+PASS status reflects F3 increases leading and refreshes terminal rows
+PASS F4 restores leading and refreshes terminal rows
+PASS status reflects F4 restores leading and refreshes terminal rows
+PASS function keys do not insert bytes or modify the document
+PASS input client forwards Insert mode key
+PASS input method marked text and selection are retained
+PASS composition does not modify the editor before commit
+PASS leading shortcuts preserve active input method composition
+PASS Chinese emoji and combining input commit once and save as UTF-8
+PASS discarding composition leaves saved text intact
+PASS view resize updates terminal dimensions
+PASS native screen model retains Unicode display data after resize
+PASS clean session exits and reaps its child process
+PASS native editor defaults to teasp with exact background and caret palette
+PASS native comment RGB matches teaspoon Comment
+PASS native keyword RGB matches teaspoon Type
+PASS native identifier RGB matches teaspoon Identifier
+PASS native numeric RGB matches teaspoon Constant
+PASS native string RGB matches teaspoon String
+PASS switching theme also updates native canvas palette
+PASS switching back to synhill restores exact RGB
+PASS whole-word WARN uses teaspoon Todo pink
+PASS whole-word ERROR uses teaspoon ErrorMsg background
+PASS longer identifiers and lowercase words retain normal text colors
+PASS log asterisks use highlighted orange
+PASS status bar uses high contrast dark text on a light background
+PASS modified status asterisk uses the solid green cursor highlight
+PASS undo clears the modified status marker
+PASS slash search highlights matches with pale white background
+PASS all four visible search matches are highlighted
+PASS cursor remains visible after slash search
+PASS native rendering paints a solid green cursor with readable character
+PASS n and N retain search highlighting
+PASS noh clears match highlighting
+PASS repeat search restores match highlighting after noh
+PASS UTF-8 search highlights the full-width match
+PASS Visual selection uses pale white rather than red
+PASS Normal star highlights complete words and skips substring matches
+PASS command line has bright cyan foreground
+PASS grep opens modal list with all eighty matching lines
+PASS grep hides the text caret while list selection remains visible
+PASS grep caret stays hidden through repeated idle status refreshes
+PASS grep selected line has pale white background and line number
+PASS grep overlay retains document around centered results
+PASS grep modal borders align with full-width Chinese previews
+PASS native Ctrl N advances grep result without editing document
+PASS grep list scrolls to its final result
+PASS Escape dismisses grep and restores original document cursor
+PASS closing grep restores the document caret
+PASS Visual selection inserts into command line through Ctrl R zero
+PASS register-pasted grep finds all matching lines
+PASS JOE Ctrl K marked selection inserts through Ctrl R zero
+PASS quote prefix visibly asks for register name
+PASS register name selection echoes its pending operation
+PASS register viewer shows copied selection without modifying text
+PASS native F5 starts recording with persistent REC status
+PASS native F5 stops and saves four editing keys
+PASS native F6 replays recorded editing once
+PASS macro viewer displays readable recorded keys after undo
+PASS native Normal ft reaches the next t on the same line
+PASS native repeat find reaches the following t
+PASS native viw selects the complete word from its middle
+PASS native text object yank fills the command register
+PASS native inner block delete preserves both delimiters
+PASS native Ctrl U matches full PageUp in each editing mode
+PASS native Ctrl Shift U matches full PageDown in each editing mode
+PASS native Ctrl U matches full PageUp in each editing mode
+PASS native Ctrl Shift U matches full PageDown in each editing mode
+PASS native Ctrl U matches full PageUp in each editing mode
+PASS native Ctrl Shift U matches full PageDown in each editing mode
+PASS horizontal grep fixture opens three results
+PASS native Right pans grep without changing selected result
+PASS all grep rows share the same display-column offset across wide characters
+PASS horizontal grep preserves row numbers borders and source cursor
+PASS native Left pans back one display column
+PASS whole wide character is restored when horizontal viewport moves left
+PASS grep -f emits an independent native window transfer event
+PASS grep -f transfer contains numbered plain text results
+PASS grep -f leaves source document and cursor unchanged
+PASS second native session imports generated text without using Ex input
+PASS generated result is unnamed editable and protected as unsaved
+PASS closing an unsaved grep result requires saving or explicit discard
+PASS generated grep text can be saved as a normal document
+PASS native buffer metadata includes complete names of hidden source buffers
+PASS each native editor reports its own buffers for app-wide aggregation
+PASS app-wide buffer text opens a paged inspector without replacing the source
+PASS buffer inspector can reach its final page
+PASS buffer inspection is read only and preserves the original cursor
+PASS independent result session closes without closing its source session
+PASS cursor movement delivers bounded terminal damage rectangles
+PASS cursor movement avoids full-editor invalidation
+PASS fire-and-forget scrolling still updates the terminal
+PASS scrolling without completion avoids redundant action acknowledgments
+PASS coalesced wheel scrolling preserves all requested lines
+PASS one hundred wheel events become five bounded scroll requests
+PASS subline trackpad deltas are not amplified or carried into another gesture
+PASS trackpad fractions accumulate into a whole scroll line
+PASS trackpad input coalesces without losing its direction
+PASS pending scroll is flushed before a later keyboard movement
+PASS partial native repaint frames never change the displayed terminal model
+PASS split end markers cannot prematurely publish a repaint
+PASS a complete native repaint frame is committed atomically
+PASS unframed terminal output remains compatible
+PASS theme switching preserves the document and exits cleanly

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exercise grep -f export/import and the non-GUI editor-window fallback."""
+"""Exercise grep -f export/import and console buffer management."""
 import importlib.util
 from pathlib import Path
 import unittest
@@ -89,15 +89,45 @@ class LazyGrepFileTests(GrepFileTests):
 
 
 class TerminalGrepFileTests(unittest.TestCase):
-    def test_plain_terminal_opens_a_separate_editing_window(self):
+    def test_plain_terminal_opens_a_buffer_in_the_same_editing_window(self):
         directory=grep.bridge.pty_tests.ARTIFACTS/'terminal-export';directory.mkdir()
         editor=grep.bridge.pty_tests.Editor(directory,b'origin\nhit alpha\nquiet\nhit beta\n')
         try:
             target=directory/'results.txt'
-            editor.ex('grep -f hit');editor.ex('saveas '+str(target))
+            editor.ex('grep -f hit')
+            editor.ex('ls');editor.until(b'MiJoe buffers');editor.until(b'[No Name')
+            self.assertIn(b'sample.tx',editor.output)
+            editor.send('q');editor.ex('bp');editor.ex('bn')
+            editor.ex('saveas '+str(target))
             self.assertEqual(target.read_bytes(),b'2: hit alpha\n4: hit beta\n')
-            editor.ex('q!')
-            self.assertEqual(editor.finish(),b'origin\nhit alpha\nquiet\nhit beta\n')
+            # A single quit exits: grep -f must not leave a second JOE window.
+            self.assertEqual(editor.finish(save=False),b'origin\nhit alpha\nquiet\nhit beta\n')
+        finally:editor.close()
+
+    def test_console_numbered_switches_and_delete_preserve_unsaved_source(self):
+        directory=grep.bridge.pty_tests.ARTIFACTS/'terminal-buffer-manage';directory.mkdir()
+        original=b'origin\nhit alpha\nquiet\nhit beta\n'
+        editor=grep.bridge.pty_tests.Editor(directory,original)
+        try:
+            editor.send('03li!\x1b');editor.ex('grep -f hit')
+            editor.ex('b 1');editor.send('i?\x1b');self.assertEqual(editor.path.read_bytes(),original)
+            editor.ex('b 2');editor.ex('bd!')
+            # Discarding the result must not clear the source's unsaved flag.
+            editor.ex('q');editor.send('iX\x1b');editor.ex('w')
+            self.assertEqual(editor.path.read_bytes(),b'oriX?!gin\nhit alpha\nquiet\nhit beta\n')
+            editor.finish(save=False)
+        finally:editor.close()
+
+    def test_console_can_return_to_lazy_readonly_source(self):
+        directory=grep.bridge.pty_tests.ARTIFACTS/'terminal-lazy-buffer';directory.mkdir()
+        original=b'head\nhit alpha\n'+b'quiet line\n'*160000+b'hit beta\n'
+        editor=grep.bridge.pty_tests.Editor(directory,original,options=('-large_threshold','1','-lazy'))
+        try:
+            editor.ex('grep -f hit');target=directory/'result.txt';editor.ex('saveas '+str(target))
+            self.assertEqual(target.read_bytes(),b'2: hit alpha\n160003: hit beta\n')
+            editor.ex('b 1');editor.send('iX\x1b');editor.ex('w')
+            self.assertEqual(editor.path.read_bytes(),original)
+            editor.ex('b 2');editor.ex('bd');self.assertEqual(editor.finish(save=False),original)
         finally:editor.close()
 
 
