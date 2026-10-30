@@ -1,0 +1,13 @@
+Buffer list transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-l4gh9t9v
+test_all_local_buffers_have_complete_names_and_flags (__main__.BufferListTests.test_all_local_buffers_have_complete_names_and_flags) ... ok
+test_bad_inspection_file_is_rejected_without_changes (__main__.BufferListTests.test_bad_inspection_file_is_rejected_without_changes) ... ok
+test_control_characters_in_filenames_are_escaped (__main__.BufferListTests.test_control_characters_in_filenames_are_escaped) ... ok
+test_global_list_is_paged_readonly_and_closes_to_original_cursor (__main__.BufferListTests.test_global_list_is_paged_readonly_and_closes_to_original_cursor) ... ok
+test_listing_metadata_does_not_close_grep (__main__.BufferListTests.test_listing_metadata_does_not_close_grep) ... ok
+test_ls_emits_app_request_without_mutating_source (__main__.BufferListTests.test_ls_emits_app_request_without_mutating_source) ... ok
+test_ls_shows_a_paged_list_instead_of_a_clipped_status_message (__main__.TerminalBufferListTests.test_ls_shows_a_paged_list_instead_of_a_clipped_status_message) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 8.142s
+
+OK

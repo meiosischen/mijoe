@@ -354,6 +354,18 @@ int main(int argc, const char *argv[]) {
         check(![request(resultSession,MIJOE_GUI_QUIT,nil)[@"ok"] boolValue],@"closing an unsaved grep result requires saving or explicit discard");
         NSString *savedResults=[directory stringByAppendingPathComponent:@"grep-saved.txt"];
         check([request(resultSession,MIJOE_GUI_SAVE_AS,savedResults)[@"ok"] boolValue] && [[NSString stringWithContentsOfFile:savedResults encoding:NSUTF8StringEncoding error:NULL] isEqual:expectedExport],@"generated grep text can be saved as a normal document");
+        NSString *sourceBuffers=request(session,MIJOE_GUI_LIST_BUFFERS,nil)[@"text"];
+        NSString *resultBuffers=request(resultSession,MIJOE_GUI_LIST_BUFFERS,nil)[@"text"];
+        check([sourceBuffers containsString:objectFile] && [sourceBuffers containsString:horizontalFile] && [sourceBuffers containsString:findFile],@"native buffer metadata includes complete names of hidden source buffers");
+        check([resultBuffers containsString:savedResults] && ![resultBuffers containsString:horizontalFile],@"each native editor reports its own buffers for app-wide aggregation");
+        NSString *listFile=[directory stringByAppendingPathComponent:@"buffers-list.txt"];
+        [[NSString stringWithFormat:@"Window 1\n%@\nWindow 2\n%@\nEND_BUFFER_LIST\n",sourceBuffers,resultBuffers] writeToFile:listFile atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+        check([request(session,MIJOE_GUI_SHOW_BUFFERS,listFile)[@"ok"] boolValue],@"app-wide buffer text opens a paged inspector without replacing the source");
+        for(int n=0;n<10;++n)[session sendKey:VTERM_KEY_PAGEDOWN modifiers:VTERM_MOD_NONE];
+        check(waitFor(^BOOL{return [session.screenText containsString:@"END_BUFFER_LIST"];}),@"buffer inspector can reach its final page");
+        [session sendText:@"iddccq"];
+        NSDictionary *afterBuffers=request(session,MIJOE_GUI_STATUS,nil);
+        check([afterBuffers[@"file"] isEqual:horizontalFile] && [afterBuffers[@"fileOffset"] intValue]==0 && ![afterBuffers[@"changed"] boolValue],@"buffer inspection is read only and preserves the original cursor");
         request(resultSession,MIJOE_GUI_DISCARD,nil);check(waitFor(^BOOL{return !resultSession.running;}),@"independent result session closes without closing its source session");
         [NSFileManager.defaultManager removeItemAtPath:exportProbe.generatedPath error:NULL];
         session.delegate=nil;

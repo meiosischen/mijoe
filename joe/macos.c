@@ -161,6 +161,8 @@ const char *mijoe_macos_gui_typography(void)
 }
 
 static const char *gui_open_text_path;
+static unsigned long gui_buffer_list_request;
+static int gui_listing_buffers;
 static void gui_report(unsigned long id, int ok, const char *error, const char *text, int update)
 {
 	BW *bw = gui_buffer();
@@ -197,6 +199,10 @@ static void gui_report(unsigned long id, int ok, const char *error, const char *
 		json=vsncpy(sv(json),sz(",\"openTextFile\":"));
 		json=gui_json_string(json,gui_open_text_path);
 	}
+	if (gui_listing_buffers) {
+		sprintf(number,",\"bufferListRequest\":%lu",gui_buffer_list_request);
+		json=vsncpy(sv(json),sz(number));
+	}
 	json = vsncpy(sv(json), sz("}\n"));
 	if (!update || !last_gui_status || zcmp(last_gui_status, json)) {
 		joe_write(gui_response, json, zlen(json));
@@ -213,6 +219,15 @@ int mijoe_macos_gui_open_text(const char *path)
 	gui_init();
 	if (gui_response<0) return 0;
 	gui_open_text_path=path; gui_report(0,1,NULL,NULL,0); gui_open_text_path=NULL;
+	return 1;
+}
+
+int mijoe_macos_gui_list_buffers(void)
+{
+	gui_init();
+	if (gui_response<0) return 0;
+	++gui_buffer_list_request; gui_listing_buffers=1;
+	gui_report(0,1,NULL,NULL,0); gui_listing_buffers=0;
 	return 1;
 }
 
@@ -248,6 +263,7 @@ int mijoe_macos_gui_action(va_list args)
 	path[length] = 0;
 	if (strlen(path) != length) error = "The filename contains a NUL byte.";
 	else if (action == MIJOE_GUI_STATUS) { /* Status is also available while a menu is open. */ }
+    else if (action == MIJOE_GUI_LIST_BUFFERS) text=vim_buffer_list_text();
     else if (action == MIJOE_GUI_LARGE_CHOICE) {
         int choice = !zcmp(path,"lazy") ? 0 : !zcmp(path,"normal") ? 1 : !zcmp(path,"cancel") ? 2 : -1;
         if (choice < 0 || !bw || !lf_pending(bw->b) || lf_choose(bw,choice)) error = "Large-file opening was not completed.";

@@ -21,8 +21,10 @@
 @property(nonatomic, strong) NSMutableArray<MJDocumentWindow *> *documents;
 @property(nonatomic, strong) NSMutableArray<NSString *> *openingFiles;
 @property(nonatomic) BOOL launched, terminating;
+@property(nonatomic) BOOL bufferListBusy;
 - (void)openFile:(NSString *)file;
 - (void)openGeneratedFile:(NSString *)file;
+- (void)showBufferListFrom:(MJDocumentWindow *)source;
 - (void)documentClosed:(MJDocumentWindow *)document;
 @end
 
@@ -79,6 +81,8 @@ static void showMessage(NSWindow *window, NSString *title, NSString *message) {
         if (self.closing || self.appOwner.terminating) [NSFileManager.defaultManager removeItemAtPath:generated error:NULL];
         else [self.appOwner openGeneratedFile:generated];
     }
+    if ([state[@"bufferListRequest"] unsignedLongLongValue] && ![state[@"bufferListRequest"] isEqual:previous[@"bufferListRequest"]] && !self.closing && !self.appOwner.terminating)
+        [self.appOwner showBufferListFrom:self];
     if ([state[@"largePending"] boolValue] && !self.largePromptVisible && !self.closing) {
         self.largePromptVisible = YES;
         NSAlert *alert = [NSAlert new];
@@ -288,6 +292,48 @@ static void showMessage(NSWindow *window, NSString *title, NSString *message) {
     }];
 }
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender { return NO; }
+- (void)showBufferListFrom:(MJDocumentWindow *)source {
+    if (self.bufferListBusy) return;
+    self.bufferListBusy=YES;
+    NSArray<MJDocumentWindow *> *documents=[self.documents copy];
+    NSMutableArray *responses=[NSMutableArray array];
+    for (NSUInteger i=0;i<documents.count;++i) [responses addObject:NSNull.null];
+    dispatch_group_t group=dispatch_group_create();
+    for (NSUInteger i=0;i<documents.count;++i) {
+        MJDocumentWindow *document=documents[i];
+        if (!document.session.running) continue;
+        dispatch_group_enter(group);
+        [document.session request:MIJOE_GUI_LIST_BUFFERS path:nil completion:^(NSDictionary *result){
+            responses[i]=result;
+            dispatch_group_leave(group);
+        }];
+    }
+    dispatch_group_notify(group,dispatch_get_main_queue(),^{
+        self.bufferListBusy=NO;
+        if (!source.session.running || source.closing || self.terminating || ![self.documents containsObject:source]) return;
+        NSMutableString *body=[NSMutableString stringWithString:@"All open buffers in MiJoe\nNumbers are local to each window. Use the Window menu, then :b N.\nPageUp/PageDown: scroll | q/Esc: close\n\n"];
+        for (NSUInteger i=0;i<documents.count;++i) {
+            MJDocumentWindow *document=documents[i];
+            if (!document.session.running || ![self.documents containsObject:document]) continue;
+            NSString *title=[[document.window.title componentsSeparatedByCharactersInSet:NSCharacterSet.controlCharacterSet] componentsJoinedByString:@" "];
+            [body appendFormat:@"Window %lu%@ - %@\n",(unsigned long)i+1,document==source ? @" [this window]" : @"",title];
+            NSDictionary *response=[responses[i] isKindOfClass:NSDictionary.class] ? responses[i] : nil;
+            if ([response[@"ok"] boolValue] && [response[@"text"] isKindOfClass:NSString.class]) [body appendString:response[@"text"]];
+            else [body appendFormat:@"[Could not list buffers: %@]\n",response[@"error"] ?: @"editor unavailable"];
+            [body appendString:@"\n"];
+        }
+        NSData *data=[body dataUsingEncoding:NSUTF8StringEncoding];
+        if (data.length>16*1024*1024) { showMessage(source.window,@"缓冲区列表过大",@"列表超过 16 MiB，无法显示。文件和缓冲区保持不变。"); return; }
+        NSString *path=[NSTemporaryDirectory() stringByAppendingPathComponent:[@"mijoe-buffers-" stringByAppendingString:NSUUID.UUID.UUIDString]];
+        if (![NSFileManager.defaultManager createFileAtPath:path contents:data attributes:@{NSFilePosixPermissions:@0600}]) {
+            showMessage(source.window,@"无法显示缓冲区列表",@"无法创建临时列表文件。"); return;
+        }
+        [source.session request:MIJOE_GUI_SHOW_BUFFERS path:path completion:^(NSDictionary *result){
+            [NSFileManager.defaultManager removeItemAtPath:path error:NULL];
+            if (![result[@"ok"] boolValue]) showMessage(source.window,@"无法显示缓冲区列表",result[@"error"]);
+        }];
+    });
+}
 - (void)closeForTermination {
     MJDocumentWindow *document = self.documents.lastObject;
     if (!document) { self.terminating=NO; [NSApp replyToApplicationShouldTerminate:YES]; return; }

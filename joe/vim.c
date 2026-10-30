@@ -1279,6 +1279,46 @@ static int inspection_open(BW *bw, const char *title, char *text)
     inspection_text=text;
     return help_text_open(bw->parent,title,inspection_text,1);
 }
+
+char *vim_buffer_list_text(void)
+{
+    BW *bw=current_bw();
+    B *b;
+    char *list=vsdupz("Number  % current  + modified  R readonly  L lazy\n\n");
+    obj_perm(list);
+    for (b=bufs.link.next;b!=&bufs;b=b->link.next) if (!b->internal && !b->scratch) {
+        char flags[96], escaped[16], *name;
+        ptrdiff_t i;
+        sprintf(flags,"%6lu  %c%c%c%c  ",vim_buffer_number(b),bw && b==bw->b ? '%' : ' ',b->changed ? '+' : ' ',b->rdonly ? 'R' : ' ',lf_active(b) ? 'L' : ' ');
+        list=vsncpy(sv(list),sz(flags));
+        name=b->name ? my_iconv(NULL,utf8_map,b->name,locale_map) : vsdupz("[No Name]");
+        for (i=0;name[i];++i) {
+            unsigned char c=(unsigned char)name[i];
+            if (c<32 || c==127) { sprintf(escaped,"<0x%02x>",c); list=vsncpy(sv(list),sz(escaped)); }
+            else list=vsadd(list,(char)c);
+        }
+        obj_free(name); list=vsadd(list,'\n');
+    }
+    return list;
+}
+
+#if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
+static int show_buffer_list(BW *bw, const char *path)
+{
+    FILE *input=fopen(path,"rb");
+    struct stat status;
+    char *raw,*text;
+    size_t length;
+    if (!input) return -1;
+    if (fstat(fileno(input),&status) || (status.st_mode&S_IFMT)!=S_IFREG || status.st_size<0 || status.st_size>16L*1024*1024) { fclose(input); return -1; }
+    length=(size_t)status.st_size; raw=(char *)joe_malloc(length+1);
+    if (fread(raw,1,length,input)!=length) { joe_free(raw); fclose(input); return -1; }
+    fclose(input); raw[length]=0;
+    text=vsdupz(raw); obj_perm(text); joe_free(raw);
+    mode=VM_NORMAL;
+    return inspection_open(bw,"MiJoe buffers - all app windows",text);
+}
+#endif
 static int macro_show(BW *bw)
 {
     char *text=vsdupz("F5: record/stop | F6: playback | Ctrl+C: interrupt\n\n");
@@ -2001,20 +2041,11 @@ int vim_ex(W *w, const char *line)
 		if (!b) { message("No such buffer number (use :ls)"); rc = -1; }
 		else rc = switch_buffer(bw, b);
 	} else if (!zcmp(cmd, "ls") || !zcmp(cmd, "buffers")) {
-		B *b;
-		char *list = vsdupz("");
-		char number[40];
-		if (*arg || bang) { obj_free(list); message("Trailing characters"); rc = -1; goto done; }
-		for (b = bufs.link.next; b != &bufs; b = b->link.next) if (!b->internal && !b->scratch) {
-			joe_snprintf_1(number, SIZEOF(number), "%lu", vim_buffer_number(b));
-			list = vsncpy(sv(list), sz(number));
-			list = vsncpy(sv(list), sz(b == bw->b ? "%" : " "));
-			list = vsncpy(sv(list), sz(b->changed ? "+ " : "  "));
-			list = vsncpy(sv(list), sz(b->name ? b->name : "[No Name]"));
-			list = vsncpy(sv(list), sz("; "));
-		}
-		message(list);
-		obj_free(list);
+		if (*arg || bang) { message("Trailing characters"); rc = -1; goto done; }
+#if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
+        if (!mijoe_macos_gui_list_buffers())
+#endif
+            rc=inspection_open(bw,"MiJoe buffers - :b number",vim_buffer_list_text());
 	} else if (!zcmp(cmd, "bd") || !zcmp(cmd, "bdelete")) {
 		int changed = bw->b->changed;
 		B *b = bw->b;
@@ -2452,6 +2483,7 @@ int vim_gui_action(int action, const char *path)
 	finish_unit(); clear_pending(); sequence_len = 0;
 	switch (action) {
 	case MIJOE_GUI_IMPORT_TEXT: rc=import_text_result(bw,path,0); break;
+	case MIJOE_GUI_SHOW_BUFFERS: rc=show_buffer_list(bw,path); break;
 	case MIJOE_GUI_SAVE: rc = vim_write_file(bw->parent, NULL, 0, 0); break;
 	case MIJOE_GUI_SAVE_AS: rc = vim_write_file(bw->parent, path, 1, 1); break;
 	case MIJOE_GUI_COPY: vim_capture_selection(); break;

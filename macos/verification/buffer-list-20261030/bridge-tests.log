@@ -1,0 +1,19 @@
+GUI bridge transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-wljupszy
+test_close_checks_other_buffers (__main__.BridgeTests.test_close_checks_other_buffers) ... ok
+test_close_refuses_unsaved_buffer (__main__.BridgeTests.test_close_refuses_unsaved_buffer) ... ok
+test_copy_and_cut_return_real_selection (__main__.BridgeTests.test_copy_and_cut_return_real_selection) ... ok
+test_failed_save_preserves_dirty_buffer (__main__.BridgeTests.test_failed_save_preserves_dirty_buffer) ... ok
+test_menu_blocks_file_actions_but_allows_status (__main__.BridgeTests.test_menu_blocks_file_actions_but_allows_status) ... ok
+test_mouse_click_positions_cursor (__main__.BridgeTests.test_mouse_click_positions_cursor) ... ok
+test_native_help_leaves_file_unchanged (__main__.BridgeTests.test_native_help_leaves_file_unchanged) ... ok
+test_pipe_action_does_not_interpret_pasted_private_key (__main__.BridgeTests.test_pipe_action_does_not_interpret_pasted_private_key) ... ok
+test_readonly_cut_and_save_are_rejected (__main__.BridgeTests.test_readonly_cut_and_save_are_rejected) ... ok
+test_save_as_handles_quotes_spaces_and_newline_as_filename (__main__.BridgeTests.test_save_as_handles_quotes_spaces_and_newline_as_filename) ... ok
+test_save_as_overwrite_is_explicit (__main__.BridgeTests.test_save_as_overwrite_is_explicit) ... ok
+test_save_preserves_insert_mode_and_undo_boundary (__main__.BridgeTests.test_save_preserves_insert_mode_and_undo_boundary) ... ok
+test_select_all_copy_and_undo_redo (__main__.BridgeTests.test_select_all_copy_and_undo_redo) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 4.587s
+
+OK

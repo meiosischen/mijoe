@@ -1,0 +1,7 @@
+Buffer list transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-j79w1bbe
+test_lazy_buffers_are_listed_without_reading_more_file_data (__main__.LazyBufferListTests.test_lazy_buffers_are_listed_without_reading_more_file_data) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.572s
+
+OK

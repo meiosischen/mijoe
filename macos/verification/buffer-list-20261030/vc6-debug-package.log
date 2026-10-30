@@ -1,0 +1,1340 @@
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_vim.obj"" /c "..\..\joe\vim.c"
+vim.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_lfile.obj"" /c "..\..\joe\lfile.c"
+lfile.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_b.obj"" /c "..\..\joe\b.c"
+b.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+..\..\joe\b.c(2635) : warning C4101: 's' : unreferenced local variable
+..\..\joe\b.c(2634) : warning C4101: 'x' : unreferenced local variable
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_blocks.obj"" /c "..\..\joe\blocks.c"
+blocks.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_bw.obj"" /c "..\..\joe\bw.c"
+bw.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_cclass.obj"" /c "..\..\joe\cclass.c"
+cclass.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_charmap.obj"" /c "..\..\joe\charmap.c"
+charmap.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_cmd.obj"" /c "..\..\joe\cmd.c"
+cmd.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_colors.obj"" /c "..\..\joe\colors.c"
+colors.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_coroutine.obj"" /c "..\..\joe\coroutine.c"
+coroutine.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_frag.obj"" /c "..\..\joe\frag.c"
+frag.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_gettext.obj"" /c "..\..\joe\gettext.c"
+gettext.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_hash.obj"" /c "..\..\joe\hash.c"
+hash.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_help.obj"" /c "..\..\joe\help.c"
+help.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_kbd.obj"" /c "..\..\joe\kbd.c"
+kbd.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_lattr.obj"" /c "..\..\joe\lattr.c"
+lattr.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_libcoro.obj"" /c "..\..\joe\libcoro.c"
+libcoro.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+..\..\joe\libcoro.c(624) : warning C4101: 'ssze' : unreferenced local variable
+..\..\joe\libcoro.c(625) : warning C4101: 'base' : unreferenced local variable
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_macro.obj"" /c "..\..\joe\macro.c"
+macro.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+..\..\joe\macro.c(569) : warning C4244: 'initializing' : conversion from 'double ' to 'long ', possible loss of data
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_main.obj"" /c "..\..\joe\main.c"
+main.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_menu.obj"" /c "..\..\joe\menu.c"
+menu.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_mmenu.obj"" /c "..\..\joe\mmenu.c"
+mmenu.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_mouse.obj"" /c "..\..\joe\mouse.c"
+mouse.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_obj.obj"" /c "..\..\joe\obj.c"
+obj.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+..\..\joe\obj.c(405) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_options.obj"" /c "..\..\joe\options.c"
+options.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+..\..\joe\options.c(1138) : warning C4244: 'initializing' : conversion from 'double ' to 'int ', possible loss of data
+..\..\joe\options.c(1174) : warning C4244: '=' : conversion from 'double ' to 'int ', possible loss of data
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_path.obj"" /c "..\..\joe\path.c"
+path.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_poshist.obj"" /c "..\..\joe\poshist.c"
+poshist.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_pw.obj"" /c "..\..\joe\pw.c"
+pw.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_queue.obj"" /c "..\..\joe\queue.c"
+queue.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_qw.obj"" /c "..\..\joe\qw.c"
+qw.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_rc.obj"" /c "..\..\joe\rc.c"
+rc.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_regex.obj"" /c "..\..\joe\regex.c"
+regex.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_scrn.obj"" /c "..\..\joe\scrn.c"
+scrn.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_state.obj"" /c "..\..\joe\state.c"
+state.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_syntax.obj"" /c "..\..\joe\syntax.c"
+syntax.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_tab.obj"" /c "..\..\joe\tab.c"
+tab.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_termcap.obj"" /c "..\..\joe\termcap.c"
+termcap.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+..\..\joe\termcap.c(232) : warning C4101: 'idx' : unreferenced local variable
+..\..\joe\termcap.c(236) : warning C4101: 'idxname' : unreferenced local variable
+..\..\joe\termcap.c(236) : warning C4101: 'namebuf' : unreferenced local variable
+..\..\joe\termcap.c(236) : warning C4101: 'npbuf' : unreferenced local variable
+..\..\joe\termcap.c(231) : warning C4101: 'f' : unreferenced local variable
+..\..\joe\termcap.c(236) : warning C4101: 'tp' : unreferenced local variable
+..\..\joe\termcap.c(231) : warning C4101: 'f1' : unreferenced local variable
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_tw.obj"" /c "..\..\joe\tw.c"
+tw.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_ublock.obj"" /c "..\..\joe\ublock.c"
+ublock.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_uedit.obj"" /c "..\..\joe\uedit.c"
+uedit.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+..\..\joe\uedit.c(1473) : warning C4244: '=' : conversion from 'double ' to 'long ', possible loss of data
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_uerror.obj"" /c "..\..\joe\uerror.c"
+uerror.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_ufile.obj"" /c "..\..\joe\ufile.c"
+ufile.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_uformat.obj"" /c "..\..\joe\uformat.c"
+uformat.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_uisrch.obj"" /c "..\..\joe\uisrch.c"
+uisrch.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_umath.obj"" /c "..\..\joe\umath.c"
+umath.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_undo.obj"" /c "..\..\joe\undo.c"
+undo.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_unicat-10.0.0.obj"" /c "..\..\joe\unicat-10.0.0.c"
+unicat-10.0.0.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_unicode.obj"" /c "..\..\joe\unicode.c"
+unicode.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_usearch.obj"" /c "..\..\joe\usearch.c"
+usearch.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_ushell.obj"" /c "..\..\joe\ushell.c"
+ushell.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_utag.obj"" /c "..\..\joe\utag.c"
+utag.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_utf8.obj"" /c "..\..\joe\utf8.c"
+utf8.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_utils.obj"" /c "..\..\joe\utils.c"
+utils.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_vfile.obj"" /c "..\..\joe\vfile.c"
+vfile.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_vt.obj"" /c "..\..\joe\vt.c"
+vt.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_joe_w.obj"" /c "..\..\joe\w.c"
+w.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_win_builtin.obj"" /c "..\src\joe\win\builtin.c"
+builtin.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_win_bupdates.obj"" /c "..\src\joe\win\bupdates.c"
+bupdates.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_win_joedata.obj"" /c "..\src\joe\win\joedata.c"
+joedata.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_win_env.obj"" /c "..\src\joe\win\env.c"
+env.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_win_fs.obj"" /c "..\src\joe\win\fs.c"
+fs.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_win_tty.obj"" /c "..\src\joe\win\tty.c"
+tty.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_win_uwindows.obj"" /c "..\src\joe\win\uwindows.c"
+uwindows.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /I"..\src\joe\win" /I"..\..\joe" /Fo""..\bin\vc6\Debug\obj\joe_win_subproc.obj"" /c "..\src\joe\win\subproc.c"
+subproc.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+..\src\joe\win\subproc.c(308) : warning C4018: '==' : signed/unsigned mismatch
+	lib.exe /nologo /out:""..\bin\vc6\Debug\joe.lib"" @C:\users\meiosis\AppData\Local\Temp\nma00376.
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_putty_dialog.obj"" /c "..\src\putty\putty\dialog.c"
+dialog.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_putty_ldisc.obj"" /c "..\src\putty\putty\ldisc.c"
+ldisc.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_putty_ldiscucs.obj"" /c "..\src\putty\putty\ldiscucs.c"
+ldiscucs.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+..\src\putty\putty\ldiscucs.c(74) : warning C4244: '=' : conversion from 'unsigned long ' to 'char ', possible loss of data
+..\src\putty\putty\ldiscucs.c(75) : warning C4244: '=' : conversion from 'unsigned long ' to 'char ', possible loss of data
+..\src\putty\putty\ldiscucs.c(77) : warning C4244: '=' : conversion from 'unsigned long ' to 'char ', possible loss of data
+..\src\putty\putty\ldiscucs.c(78) : warning C4244: '=' : conversion from 'unsigned long ' to 'char ', possible loss of data
+..\src\putty\putty\ldiscucs.c(79) : warning C4244: '=' : conversion from 'unsigned long ' to 'char ', possible loss of data
+..\src\putty\putty\ldiscucs.c(81) : warning C4244: '=' : conversion from 'unsigned long ' to 'char ', possible loss of data
+..\src\putty\putty\ldiscucs.c(82) : warning C4244: '=' : conversion from 'unsigned long ' to 'char ', possible loss of data
+..\src\putty\putty\ldiscucs.c(83) : warning C4244: '=' : conversion from 'unsigned long ' to 'char ', possible loss of data
+..\src\putty\putty\ldiscucs.c(84) : warning C4244: '=' : conversion from 'unsigned long ' to 'char ', possible loss of data
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_putty_minibidi.obj"" /c "..\src\putty\putty\minibidi.c"
+minibidi.c
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_putty_misc.obj"" /c "..\src\putty\putty\misc.c"
+misc.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_putty_nogss.obj"" /c "..\src\putty\putty\nogss.c"
+nogss.c
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_putty_settings.obj"" /c "..\src\putty\putty\settings.c"
+settings.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+..\src\putty\putty\settings.c(929) : warning C4101: 'ret' : unreferenced local variable
+..\src\putty\putty\settings.c(927) : warning C4101: 'otherbuf' : unreferenced local variable
+..\src\putty\putty\settings.c(930) : warning C4101: 'handle' : unreferenced local variable
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_putty_terminal.obj"" /c "..\src\putty\putty\terminal.c"
+terminal.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+..\src\putty\putty\terminal.c(2464) : warning C4133: 'function' : incompatible types - from 'char [2049]' to 'unsigned short *'
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_putty_timing.obj"" /c "..\src\putty\putty\timing.c"
+timing.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_putty_tree234.obj"" /c "..\src\putty\putty\tree234.c"
+tree234.c
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_putty_version.obj"" /c "..\src\putty\putty\version.c"
+version.c
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_windows_sizetip.obj"" /c "..\src\putty\putty\windows\sizetip.c"
+sizetip.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_windows_winctrls.obj"" /c "..\src\putty\putty\windows\winctrls.c"
+winctrls.c
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_windows_windefs.obj"" /c "..\src\putty\putty\windows\windefs.c"
+windefs.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_windows_window.obj"" /c "..\src\putty\putty\windows\window.c"
+window.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+..\src\putty\putty\windows\window.c(344) : warning C4101: 'morestuff' : unreferenced local variable
+..\src\putty\putty\windows\window.c(345) : warning C4101: 'i' : unreferenced local variable
+..\src\putty\putty\windows\window.c(428) : warning C4101: 'p' : unreferenced local variable
+..\src\putty\putty\windows\window.c(823) : warning C4101: 'str' : unreferenced local variable
+..\src\putty\putty\windows\window.c(5937) : warning C4133: 'return' : incompatible types - from 'unsigned short *' to 'char *'
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_windows_winmisc.obj"" /c "..\src\putty\putty\windows\winmisc.c"
+winmisc.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_windows_winprint.obj"" /c "..\src\putty\putty\windows\winprint.c"
+winprint.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_windows_wintime.obj"" /c "..\src\putty\putty\windows\wintime.c"
+wintime.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_windows_winucs.obj"" /c "..\src\putty\putty\windows\winucs.c"
+winucs.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_windows_winutils.obj"" /c "..\src\putty\putty\windows\winutils.c"
+winutils.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_win_be_joewin_s.obj"" /c "..\src\putty\win\be_joewin_s.c"
+be_joewin_s.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_win_joebackend.obj"" /c "..\src\putty\win\joebackend.c"
+joebackend.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_win_userfuncs.obj"" /c "..\src\putty\win\userfuncs.c"
+userfuncs.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_win_config.obj"" /c "..\src\putty\win\config.c"
+config.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_win_stubs.obj"" /c "..\src\putty\win\stubs.c"
+stubs.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DJOEWIN /DSECURITY_WIN32 /D_WINDOWS /I"..\src\putty\putty" /I"..\src\putty\putty\windows" /I"..\src\putty\putty\charset" /I"..\src\putty\win" /Fo""..\bin\vc6\Debug\obj\putty_win_ui.obj"" /c "..\src\putty\win\ui.c"
+ui.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	lib.exe /nologo /out:""..\bin\vc6\Debug\putty.lib"" @C:\users\meiosis\AppData\Local\Temp\nmb00376.
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DUNICODE /D_UNICODE /Fo""..\bin\vc6\Debug\obj\common_common_builtin.obj"" /c "..\src\common\builtin.c"
+builtin.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DUNICODE /D_UNICODE /Fo""..\bin\vc6\Debug\obj\common_common_comm.obj"" /c "..\src\common\comm.c"
+comm.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DUNICODE /D_UNICODE /Fo""..\bin\vc6\Debug\obj\common_common_globals.obj"" /c "..\src\common\globals.c"
+globals.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DUNICODE /D_UNICODE /Fo""..\bin\vc6\Debug\obj\common_common_tinfl.obj"" /c "..\src\common\tinfl.c"
+tinfl.c
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DUNICODE /D_UNICODE /Fo""..\bin\vc6\Debug\obj\common_common_utils.obj"" /c "..\src\common\utils.c"
+utils.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DUNICODE /D_UNICODE /Fo""..\bin\vc6\Debug\obj\common_common_bentries.obj"" /c "..\src\common\bentries.c"
+bentries.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DUNICODE /D_UNICODE /Fo""..\bin\vc6\Debug\obj\common_common_startup.obj"" /c "..\src\common\startup.c"
+startup.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DUNICODE /D_UNICODE /Fo""..\bin\vc6\Debug\obj\common_common_vc6.obj"" /c "..\src\common\vc6.c"
+vc6.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	lib.exe /nologo /out:""..\bin\vc6\Debug\common.lib"" @C:\users\meiosis\AppData\Local\Temp\nmc00376.
+	cl.exe /nologo /W3 /TC /DWIN32 /DJOEWIN_VC6 /I"." /I"..\src\common" /MTd /Od /Zi /D_DEBUG /DDEBUG /Fd"..\bin\vc6\Debug\obj\vc6.pdb" /DUNICODE /D_UNICODE /Fo""..\bin\vc6\Debug\obj\main.obj"" /c ..\src\exe\standalone\main.c
+main.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+	rc.exe /dJOEWIN_VC6 /i"." /i"..\src\common" /i"..\src\exe" /d_DEBUG /dDEBUG /fo""..\bin\vc6\Debug\obj\joe.res"" joe.rc
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /debug /out:""..\bin\vc6\Debug\joe.exe"" "..\bin\vc6\Debug\joe.lib" "..\bin\vc6\Debug\putty.lib" "..\bin\vc6\Debug\common.lib" "..\bin\vc6\Debug\obj\main.obj" "..\bin\vc6\Debug\obj\joe.res" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib

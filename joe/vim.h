@@ -35,6 +35,7 @@ int vim_grep_count(void);
 int vim_grep_selected(void);
 int vim_grep_column(void);
 int vim_grep_max_column(void);
+char *vim_buffer_list_text(void);
 const char *vim_mode_name(void);
 unsigned long vim_buffer_number(B *b);
 int vim_ex(W *w, const char *line);
