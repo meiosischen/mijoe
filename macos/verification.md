@@ -247,3 +247,20 @@ VC6 Debug/Release 独立版和 DLL 版构建通过，6 个 PE 的 XP 静态兼�
 `/usr/local/bin/mj` 已指向本轮最新构建；已运行的 console 进程需要退出重开。
 原生 App 构建及签名校验通过，未替换正在使用的已安装 GUI。
 详见 [验证记录](verification/console-grep-buffer-20261030/verification.json)。
+
+## Ctrl+C 与 JOE 原版退出判断（2026-10-31）
+
+Vim 编辑模式的 Ctrl+C 先取消选区，否则复用 JOE 原版 `uabort`：
+最后一个修改视图确认是否丢弃修改，多视图共享同一缓冲区时只关当前视图，
+存在后台缓冲区时先返回它，最后一个编辑窗口关闭后退出。
+grep、帮助、寄存器/宏/缓冲区列表及菜单关闭，Ex 命令输入取消；宏播放期间仅中断宏。
+
+8 项 Ctrl+C 专项、46 项 PTY、32 项 UI、12 项宏、14 项 grep 控制、16 项 grep 导出、
+112 项原生视图检查通过。App 与 `/usr/local/bin/mj` 已更新，源文件哈希、安装包与签名已核验。
+VC6 Release/Debug 独立版和 DLL 版均构建通过，各 57 项 Win32/Wine 运行测试通过（共 228 项），
+包含每版 7 项 Ctrl+C 专项；六个 PE 的 XP 静态兼容检查通过。
+本机 UTM 没有配置虚拟机，XP 系统内运行尚未验证。
+提供 `build/deliveries/mijoe-xp-ctrl-c-tests.zip`，含四种产物和不依赖 Python/VC6 的 28 项 XP 验收批处理。
+详见 [验证记录](verification/ctrl-c-abort-20261031/verification.json)。
+
+XP 验收包的批处理已在 Wine 中完成 28 项自检，全部通过；校验器也验证了错误的预期字节会返回失败。

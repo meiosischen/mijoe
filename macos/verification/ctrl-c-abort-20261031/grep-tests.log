@@ -1,0 +1,20 @@
+Grep/control transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-su0gocnx
+test_character_controls_cross_lines_in_insert (__main__.GrepControlTests.test_character_controls_cross_lines_in_insert) ... ok
+test_command_input_is_cyan (__main__.GrepControlTests.test_command_input_is_cyan) ... ok
+test_ctrl_k_ctrl_b_remains_mark_begin (__main__.GrepControlTests.test_ctrl_k_ctrl_b_remains_mark_begin) ... ok
+test_ctrl_k_ctrl_f_remains_find_prompt (__main__.GrepControlTests.test_ctrl_k_ctrl_f_remains_find_prompt) ... ok
+test_grep_caps_results (__main__.GrepControlTests.test_grep_caps_results) ... ok
+test_grep_horizontal_resize_clamps_and_short_lines_do_not_scroll (__main__.GrepControlTests.test_grep_horizontal_resize_clamps_and_short_lines_do_not_scroll) ... ok
+test_grep_no_match_invalid_regex_and_literal_preview (__main__.GrepControlTests.test_grep_no_match_invalid_regex_and_literal_preview) ... ok
+test_grep_regex_preview_confirm_and_escape (__main__.GrepControlTests.test_grep_regex_preview_confirm_and_escape) ... ok
+test_grep_scroll_and_resize (__main__.GrepControlTests.test_grep_scroll_and_resize) ... ok
+test_grep_shared_horizontal_viewport_and_bounds (__main__.GrepControlTests.test_grep_shared_horizontal_viewport_and_bounds) ... ok
+test_insert_end_and_unicode_movement (__main__.GrepControlTests.test_insert_end_and_unicode_movement) ... ok
+test_lazy_grep_and_utf16 (__main__.GrepControlTests.test_lazy_grep_and_utf16) ... ok
+test_navigation_all_three_modes (__main__.GrepControlTests.test_navigation_all_three_modes) ... ok
+test_large_streaming_grep_utf8_and_utf16 (__main__.LazyGrepTests.test_large_streaming_grep_utf8_and_utf16) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 13.667s
+
+OK

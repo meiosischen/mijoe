@@ -1208,7 +1208,8 @@ int vim_macro_next(int *key, int *decoded)
     /* Ctrl+C is unambiguous; leave other typeahead queued until playback ends. */
     if (ttcheck() && havec==3) {
         ttgetch(); macro_playing=0; clear_pending();
-        staupd=dostaupd=1; *key=3; *decoded=1; return 1;
+        /* Interrupt playback without also invoking window abort. */
+        staupd=dostaupd=1; *key=27; *decoded=1; return 1;
     }
     if (macro_position>=macro_length) { macro_playing=0; return 0; }
     *key=macro_keys[macro_position].key; *decoded=macro_keys[macro_position++].decoded;
@@ -2240,7 +2241,17 @@ static int dispatch(BW *bw, int key)
     }
 	if (!replaying && mode == VM_NORMAL && !pending && !g_pending && !find_pending && !object_pending && !count && !register_pending && selected_register=='"') sequence_len = 0;
 	record_key(key);
-	if (key == 27 || key == 3) {
+	if (key == 3) {
+		int selected = markv(0) && markb->b == bw->b;
+		if (mode == VM_INSERT) finish_block_insert(bw);
+		finish_unit(); clear_pending(); sequence_len = 0;
+		clear_visual(); mode = VM_NORMAL;
+		/* Match JOE's abort: dismiss a selection first, then use its
+		 * shared-view, dirty-buffer and orphan-buffer exit rules. */
+		if (selected) return 0;
+		return uabort(bw->parent, 3);
+	}
+	if (key == 27) {
 		if (mode == VM_INSERT) {
 			finish_unit();
 			if (bw->o.picture) u_goto_left(bw->parent, 0);

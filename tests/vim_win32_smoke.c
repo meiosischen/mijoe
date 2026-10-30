@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     DWORD size, code = 0;
     size_t length, i;
     int ok = 0;
-    if (argc != 3) return 2;
+    if (argc != 3 && !(argc == 4 && !strcmp(argv[3], "--verify"))) return 2;
     MultiByteToWideChar(CP_UTF8, 0, argv[1], -1, executable, 1024);
     MultiByteToWideChar(CP_UTF8, 0, argv[2], -1, directory, 1024);
     wsprintfW(input, L"%s\\\x6d4b\x8bd5-vim.txt", directory);
@@ -73,6 +73,24 @@ int main(int argc, char **argv)
     GetExitCodeProcess(child.hProcess, &code);
     if (code) { printf("FAIL editor exit=%lu\n", code); goto done; }
     if (!CopyFileW(input, output, FALSE)) { printf("FAIL result copy\n"); goto done; }
+    if (argc == 4) {
+        size_t expected_length, actual_length;
+        int too_long;
+        sprintf(path, "%s\\expected.bin", argv[2]);
+        file = fopen(path, "rb");
+        if (!file) { printf("FAIL missing expected bytes\n"); goto done; }
+        expected_length = fread(keys, 1, sizeof(keys), file);
+        too_long = fgetc(file) != EOF; fclose(file);
+        if (too_long) { printf("FAIL expected file exceeds test limit\n"); goto done; }
+        sprintf(path, "%s\\result.bin", argv[2]);
+        file = fopen(path, "rb");
+        if (!file) { printf("FAIL missing result bytes\n"); goto done; }
+        actual_length = fread(contents, 1, sizeof(contents), file);
+        too_long = fgetc(file) != EOF; fclose(file);
+        if (too_long || actual_length != expected_length || memcmp(contents, keys, actual_length)) {
+            printf("FAIL result differs from expected bytes\n"); goto done;
+        }
+    }
     printf("PASS child editor opened Unicode filename, handled keys, saved and exited\n");
     ok = 1;
 done:

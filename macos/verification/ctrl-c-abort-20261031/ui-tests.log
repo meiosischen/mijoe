@@ -1,0 +1,38 @@
+UI PTY transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-kjazxk5e
+test_closing_new_help_restores_existing_joe_help (__main__.UITests.test_closing_new_help_restores_existing_joe_help) ... ok
+test_color_by_name_and_missing_theme (__main__.UITests.test_color_by_name_and_missing_theme) ... ok
+test_color_menu_select_and_cancel (__main__.UITests.test_color_menu_select_and_cancel) ... ok
+test_ctrl_k_in_paste_remains_data (__main__.UITests.test_ctrl_k_in_paste_remains_data) ... ok
+test_ctrl_t_closes_options_without_disabling_overtype (__main__.UITests.test_ctrl_t_closes_options_without_disabling_overtype) ... ok
+test_ctrl_t_closes_options_without_enabling_overtype (__main__.UITests.test_ctrl_t_closes_options_without_enabling_overtype) ... ok
+test_ctrl_t_toggle_preserves_insert_mode (__main__.UITests.test_ctrl_t_toggle_preserves_insert_mode) ... ok
+test_help_is_readonly_and_escape_keeps_undo (__main__.UITests.test_help_is_readonly_and_escape_keeps_undo) ... ok
+test_help_lists_pages_and_preserves_cursor (__main__.UITests.test_help_lists_pages_and_preserves_cursor) ... ok
+test_help_page_boundaries_and_alias (__main__.UITests.test_help_page_boundaries_and_alias) ... ok
+test_help_paste_does_not_enter_insert_or_execute (__main__.UITests.test_help_paste_does_not_enter_insert_or_execute) ... ok
+test_help_wraps_and_reflows_after_resize (__main__.UITests.test_help_wraps_and_reflows_after_resize) ... ok
+test_menu_preserves_insert_mode (__main__.UITests.test_menu_preserves_insert_mode) ... ok
+test_native_help_from_new_help_and_back (__main__.UITests.test_native_help_from_new_help_and_back) ... ok
+test_native_help_shortcut_and_paging (__main__.UITests.test_native_help_shortcut_and_paging) ... ok
+test_native_window_shortcut_does_not_start_till_motion (__main__.UITests.test_native_window_shortcut_does_not_start_till_motion) ... ok
+test_options_explicit_t_still_toggles_overtype (__main__.UITests.test_options_explicit_t_still_toggles_overtype) ... ok
+test_options_menu_theme_prompt (__main__.UITests.test_options_menu_theme_prompt) ... ok
+test_picture_append_after_virtual_cursor (__main__.UITests.test_picture_append_after_virtual_cursor) ... ok
+test_picture_append_eol_resets_virtual_column (__main__.UITests.test_picture_append_eol_resets_virtual_column) ... ok
+test_picture_block_insert_uses_left_edge (__main__.UITests.test_picture_block_insert_uses_left_edge) ... ok
+test_picture_down_extends_unterminated_file_and_undoes (__main__.UITests.test_picture_down_extends_unterminated_file_and_undoes) ... ok
+test_picture_insert_arrows_move_past_eol (__main__.UITests.test_picture_insert_arrows_move_past_eol) ... ok
+test_picture_left_returns_from_virtual_column (__main__.UITests.test_picture_left_returns_from_virtual_column) ... ok
+test_picture_line_change_starts_at_text_column (__main__.UITests.test_picture_line_change_starts_at_text_column) ... ok
+test_picture_menu_allows_normal_motion_past_eol (__main__.UITests.test_picture_menu_allows_normal_motion_past_eol) ... ok
+test_picture_readonly_down_does_not_extend_buffer (__main__.UITests.test_picture_readonly_down_does_not_extend_buffer) ... ok
+test_picture_undo_resets_column_to_restored_text (__main__.UITests.test_picture_undo_resets_column_to_restored_text) ... ok
+test_picture_vertical_motion_keeps_virtual_column (__main__.UITests.test_picture_vertical_motion_keeps_virtual_column) ... ok
+test_picture_virtual_column_uses_display_cells (__main__.UITests.test_picture_virtual_column_uses_display_cells) ... ok
+test_picture_visual_and_operator_use_text_ranges (__main__.UITests.test_picture_visual_and_operator_use_text_ranges) ... ok
+test_synhill_default_256color_and_rgb (__main__.UITests.test_synhill_default_256color_and_rgb) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 12.080s
+
+OK

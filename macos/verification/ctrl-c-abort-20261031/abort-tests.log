@@ -1,0 +1,14 @@
+Ctrl+C transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-tdaylxet
+test_clean_last_window_exits (__main__.AbortTests.test_clean_last_window_exits) ... ok
+test_command_line_ctrl_c_cancels_input (__main__.AbortTests.test_command_line_ctrl_c_cancels_input) ... ok
+test_grep_closes_and_restores_cursor (__main__.AbortTests.test_grep_closes_and_restores_cursor) ... ok
+test_insert_dirty_cancel_then_confirm (__main__.AbortTests.test_insert_dirty_cancel_then_confirm) ... ok
+test_inspection_views_close_without_exiting_editor (__main__.AbortTests.test_inspection_views_close_without_exiting_editor) ... ok
+test_orphan_source_returns_before_last_window_closes (__main__.AbortTests.test_orphan_source_returns_before_last_window_closes) ... ok
+test_shared_dirty_buffer_only_prompts_on_last_view (__main__.AbortTests.test_shared_dirty_buffer_only_prompts_on_last_view) ... ok
+test_visual_selection_is_dismissed_before_exit (__main__.AbortTests.test_visual_selection_is_dismissed_before_exit) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 2.462s
+
+OK

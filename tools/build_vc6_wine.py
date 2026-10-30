@@ -57,6 +57,13 @@ if args.target == "dll":
     executable /= "dll"
 executable /= "joe.exe"
 cases = [
+    ("ctrl-c-clean", b"a\n", b"\x03", b"a\n"),
+    ("ctrl-c-dirty-confirm", b"a\n", b"iX\x03y", b"a\n"),
+    ("ctrl-c-dirty-cancel", b"a\n", b"iX\x03niY\x1b:wq\r", b"XYa\n"),
+    ("ctrl-c-help", b"a\n", b":help\r\x03iX\x1b:wq\r", b"Xa\n"),
+    ("ctrl-c-grep", b"a\n", b":grep a\r\x03iX\x1b:wq\r", b"Xa\n"),
+    ("ctrl-c-buffers", b"a\n", b":ls\r\x03iX\x1b:wq\r", b"Xa\n"),
+    ("ctrl-c-shared-view", b"a\n", b"iX\x1b\x0bO\x03:w\r\x03", b"Xa\n"),
     ("insert", b"initial\n", b"iX\x1b:wq\r", b"Xinitial\n"),
     ("delete-undo-dot", b"a\nb\nc\nd\n", b"dd.u\x12:wq\r", b"c\nd\n"),
     ("visual", b"abcdef\n", b"vlld:wq\r", b"def\n"),

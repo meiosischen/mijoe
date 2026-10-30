@@ -26,6 +26,8 @@ i / a：在当前字符前、后插入。
 I / A：在行首非空白处、行尾插入。
 o / O：在下方、上方新建一行并插入。
 Esc / Ctrl+[：结束插入或选择，返回 Normal。
+Ctrl+C：关闭 grep/帮助/列表/菜单，取消命令输入；有选区先取消选择。
+编辑窗口中 Ctrl+C 按 JOE 原版退出：必要时确认丢弃修改，有后台缓冲区先返回它，否则关闭窗口。
 Insert 中：Enter 换行；Backspace / Delete 删除字符。
 Insert 中：方向键、Home/End、PageUp/PageDown 移动。
 x / Delete：删除当前字符；可带次数。

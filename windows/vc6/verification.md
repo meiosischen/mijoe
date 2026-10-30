@@ -57,3 +57,16 @@ Windows XP 实机/UTM 中的加载、中文输入法、打印与所有编辑功�
 全量构建仍有 35 个原代码警告，主要是未使用变量和转换；其中两处 PuTTY 的
 `char *`/`wchar_t *` 类型不匹配警告仍保留。没有将“0 error”表述为“0 warning”。
 现代 Visual Studio 工程、WiX 安装包及 UNIX 构建未执行。
+
+## Ctrl+C 原版退出语义（2026-10-31）
+
+Release/Debug 独立版、DLL 版均使用真正的 VC6 重新编译通过。
+各 57 项 Win32/Wine 运行测试通过，共 228 项；每版包含 7 项 Ctrl+C 用例，
+覆盖无修改退出、确认丢弃、取消后继续编辑、帮助/grep/列表关闭与共享视图关闭。
+六个 EXE/DLL 的 XP PE 静态兼容检查通过。
+XP 系统内运行尚未验证：本机 UTM 虚拟机列表为空，不能用 Wine 运行结果代替 XP 验收。
+已生成 `build/deliveries/mijoe-xp-ctrl-c-tests.zip`，在 XP 解压后运行 `run-tests.cmd`，
+四种产物的 28 项 Ctrl+C 验收结果保存在 `summary.txt` 与各用例目录；`xp-system.txt` 记录系统版本。
+完整构建日志、运行日志及哈希见 [本轮验证记录](../../macos/verification/ctrl-c-abort-20261031/verification.json)。
+
+XP 验收包的批处理已在 Wine 中完成 28 项自检，全部通过；校验器也验证了错误的预期字节会返回失败。
