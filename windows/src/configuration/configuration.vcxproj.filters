@@ -74,6 +74,9 @@
     <SyntaxFile Include="$(JoeSyntaxDir)\c.jsf">
       <Filter>Syntax files</Filter>
     </SyntaxFile>
+    <SyntaxFile Include="$(JoeSyntaxDir)\log.jsf">
+      <Filter>Syntax files</Filter>
+    </SyntaxFile>
     <SyntaxFile Include="$(JoeSyntaxDir)\clojure.jsf">
       <Filter>Syntax files</Filter>
     </SyntaxFile>
@@ -306,6 +309,12 @@
       <Filter>Color schemes</Filter>
     </ColorSchemeFile>
     <ColorSchemeFile Include="$(JoeColorsDir)\solarized.jcf">
+      <Filter>Color schemes</Filter>
+    </ColorSchemeFile>
+    <ColorSchemeFile Include="$(JoeColorsDir)\synhill.jcf">
+      <Filter>Color schemes</Filter>
+    </ColorSchemeFile>
+    <ColorSchemeFile Include="$(JoeColorsDir)\teasp.jcf">
       <Filter>Color schemes</Filter>
     </ColorSchemeFile>
     <ColorSchemeFile Include="$(JoeColorsDir)\wombat.jcf">

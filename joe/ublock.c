@@ -6,6 +6,7 @@
  *	This file is part of JOE (Joe's Own Editor)
  */
 #include "types.h"
+#include "vim.h"
 
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
@@ -537,6 +538,7 @@ int ublkcpy(W *w, int k)
 {
 	BW *bw;
 	WIND_BW(bw, w);
+    vim_capture_selection();
 	if (markv(1)) {
 		if (square) {
 			off_t height = markk->line - markb->line + 1;

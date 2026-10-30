@@ -23,7 +23,7 @@ ARTIFACTS = Path(tempfile.mkdtemp(prefix="mijoe-vim-pty-"))
 
 
 class Editor:
-    def __init__(self, directory, initial=b"", filename="sample.txt", options=()):
+    def __init__(self, directory, initial=b"", filename="sample.txt", options=(), extra_env=None):
         self.directory = directory
         self.path = directory / filename
         self.path.write_bytes(initial)
@@ -33,6 +33,8 @@ class Editor:
         if not self.pid:
             os.chdir(directory)
             env = dict(os.environ, TERM="xterm-256color", LANG="en_US.UTF-8")
+            if extra_env:
+                env.update(extra_env)
             os.execve(BINARY, [BINARY, "-nonotice", "--joe_state", "-nobackups",
                               "-nolocks", *options, str(self.path)], env)
         fcntl.ioctl(self.fd, termios.TIOCSWINSZ, struct.pack("HHHH", 40, 140, 0, 0))
@@ -210,6 +212,9 @@ class VimTests(unittest.TestCase):
 
     def test_arrows_and_lone_escape(self):
         self.result(b"ab\ncd\n", b"iX\x1b\x1b[B\x1b[CX\x1b[A", b"Xab\ncd\n")
+
+    def test_star_on_empty_line_keeps_cursor_and_content(self):
+        self.result(b"\nfoo\n", b"*i!\x1b", b"!\nfoo\n")
 
     def test_search_wrap_and_reverse(self):
         self.result(b"one two one\n", b"/one\rnxNxi!\x1b", b"ne two !ne\n")

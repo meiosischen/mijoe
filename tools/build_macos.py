@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a relocatable native macOS terminal package, without a system install."""
+"""Build a relocatable macOS terminal package and ensure mj uses this build."""
 import argparse
 import hashlib
 import json
@@ -10,9 +10,11 @@ import shutil
 import subprocess
 import tempfile
 import zipfile
+from link_macos_command import ensure_link, setup_command
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--jobs", type=int, default=min(os.cpu_count() or 2, 8))
+parser.add_argument("--no-command-link", action="store_true", help="Explicitly build a portable package without updating /usr/local/bin/mj")
 args = parser.parse_args()
 if platform.system() != "Darwin":
     parser.error("Run this builder on macOS with the Xcode command-line tools.")
@@ -99,6 +101,7 @@ macOS 终端中使用 Command+V 粘贴。
 更多说明见同目录的 操作说明.md。
 """)
 shutil.copy2(root / "docs/vim.md", package / "操作说明.md")
+shutil.copy2(root / "docs/large-files.md", package / "large-files.md")
 (package / "README.txt").write_text("""MiJoe macOS 本机测试版
 
 双击“启动MiJoe.command”在系统终端中打开试用练习。
@@ -108,7 +111,8 @@ shutil.copy2(root / "docs/vim.md", package / "操作说明.md")
 
 程序为本机架构的原生终端应用。仅依赖 macOS 系统库。
 bin、etc、share 需保留在同一目录，可一起移动。
-不会安装到系统目录，也不修改 shell 配置或用户 HOME。
+默认构建会校验 /usr/local/bin/mj 软链指向此目录的 bin/joe；不修改 shell 配置。
+只打便携包可用 --no-command-link。
 双击入口关闭 joe_state 写入；命令行入口沿用 JOE 自身选项。
 重复构建会更新程序与资源，但保留已有“试用练习.txt”。
 """)
@@ -119,8 +123,9 @@ manifest = {
     "dependencies": dependencies,
     "sources": {name: hashlib.sha256((root / name).read_bytes()).hexdigest()
                 for name in ("joe/vim.c", "joe/vim.h", "joe/vimhelp.h", "docs/vim-help.txt",
-                             "joe/help.c", "joe/help.h", "joe/colors.c", "joe/colors.h", "joe/options.c",
-                             "joe/menu.c", "joe/menu.h", "joe/mmenu.c",
+                             "joe/help.c", "joe/help.h", "joe/colors.c", "joe/colors.h", "joe/bw.c", "joe/b.c", "joe/b.h", "joe/mouse.c", "joe/lfile.c", "joe/lfile.h", "joe/ufile.c", "joe/ublock.c", "joe/w.c", "joe/cmd.c", "joe/options.c",
+                             "joe/menu.c", "joe/menu.h", "joe/mmenu.c", "joe/tw.c", "joe/tw.h",
+                             "macos/gui_protocol.h", "colors/synhill.jcf", "colors/teasp.jcf", "syntax/log.jsf", "rc/ftyperc", "rc/joerc.in", "colors/Makefile.am",
                              "joe/macos.c", "joe/macos.h", "joe/types.h", "joe/main.c", "joe/ushell.c", "joe/termcap.c")},
 }
 (package / "build-info.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
@@ -133,5 +138,14 @@ with zipfile.ZipFile(archive_path, "w", zipfile.ZIP_DEFLATED) as archive:
             archive.write(path, package.name + "/" + str(path.relative_to(package)))
 with zipfile.ZipFile(archive_path) as archive:
     assert archive.testzip() is None
+command_link = None
+if not args.no_command_link:
+    try:
+        command_link = ensure_link(package)
+    except PermissionError:
+        raise SystemExit("TUI built, but /usr/local/bin/mj is not linked. Administrator authentication is required once:\n" + setup_command(package))
+    except (OSError, ValueError, KeyError) as error:
+        raise SystemExit("TUI built, but mj verification failed: " + str(error))
 print(json.dumps({"package": str(package), "launcher": str(package / "启动MiJoe.command"),
-                  "cli": str(package / "bin/mijoe"), "zip": str(archive_path)}, ensure_ascii=False, indent=2))
+                  "cli": str(package / "bin/mijoe"), "mj_target": command_link,
+                  "zip": str(archive_path)}, ensure_ascii=False, indent=2))

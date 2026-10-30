@@ -9,6 +9,7 @@ import platform
 import shlex
 import shutil
 import tempfile
+from link_macos_command import ensure_link
 
 ROOT = Path(__file__).resolve().parents[1]
 MARKER = "# MiJoe command launcher; managed by tools/install_macos.py\n"
@@ -47,6 +48,8 @@ def main():
         parser.error("Refusing to replace an unrecognized installation: " + str(payload))
     for name in ("mj", "rmj", "xmj"):
         destination = binaries / name
+        if name == "mj" and destination.is_symlink() and destination.resolve() == binary:
+            continue
         if destination.is_symlink() or (destination.exists() and (
                 not destination.is_file() or MARKER not in destination.read_text(errors="replace"))):
             parser.error("Refusing to replace an existing unrelated command: " + str(destination))
@@ -59,6 +62,9 @@ def main():
         atomic_copy(package / name, payload / name)
     launchers = {"mj": "", "rmj": " -rdonly", "xmj": " -novim -hex"}
     for name, options in launchers.items():
+        if name == "mj":
+            ensure_link(package, binaries / name)
+            continue
         script = ("#!/bin/sh\n" + MARKER + "set -eu\n"
                   + 'if [ "$#" -eq 0 ]; then set -- ""; fi\n'
                   + "exec " + shlex.quote(str(payload / "bin/joe")) + options + ' "$@"\n')
@@ -73,6 +79,7 @@ def main():
                 os.unlink(temporary)
     installed = dict(application="mijoe", architecture=info["architecture"],
                      binary_sha256=info["binary_sha256"], prefix=str(prefix),
+                     mj_target=str(binary),
                      commands={name: str(binaries / name) for name in launchers})
     (payload / "install-info.json").write_text(json.dumps(installed, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps(installed, ensure_ascii=False, indent=2))

@@ -1,0 +1,11 @@
+Running: sh autojoe
+Running: /Users/meiosis/Workspace/Projects/mijoe/configure --prefix=/usr/local
+Running: make -j8
+Running: make install DESTDIR=/Users/meiosis/Workspace/Projects/mijoe/build/macos/arm64/install-6pw3qact
+{
+  "package": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64",
+  "launcher": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/启动MiJoe.command",
+  "cli": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/mijoe",
+  "mj_target": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe",
+  "zip": "/Users/meiosis/Workspace/Projects/mijoe/build/deliveries/mijoe-vim-macos-arm64.zip"
+}

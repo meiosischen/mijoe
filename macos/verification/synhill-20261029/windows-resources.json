@@ -1,0 +1,22 @@
+[
+  {
+    "path": "windows/bin/vc6/Release/joe.exe",
+    "sha256": "0bae766d58d37192361b07c370ef29d782791a964777c46e2b2c5844fc14ae10",
+    "synhill_resource_matches_source": true
+  },
+  {
+    "path": "windows/bin/vc6/Release/dll/joewin.dll",
+    "sha256": "b7fb4f70143525923fb509e394bda752f5216d2f4866ac33bc7d713048505842",
+    "synhill_resource_matches_source": true
+  },
+  {
+    "path": "windows/bin/vc6/Debug/joe.exe",
+    "sha256": "cae6115d9b06a7c6cc0463337d3f9a3fc2700acc3f18cfed6bcd48898b7ecfd1",
+    "synhill_resource_matches_source": true
+  },
+  {
+    "path": "windows/bin/vc6/Debug/dll/joewin.dll",
+    "sha256": "63488bc1099eca382d2e753c3712f7d990b647a9bfd06d9621228635e08b85fb",
+    "synhill_resource_matches_source": true
+  }
+]

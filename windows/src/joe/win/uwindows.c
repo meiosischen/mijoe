@@ -18,6 +18,7 @@
  */
 
 #include "types.h"
+#include "vim.h"
 
 /* Copy block contents to the Windows clipboard */
 
@@ -27,6 +28,7 @@ int uwincopy(W *w, int k)
 	int result = 1;
 
 	WIND_BW(bw, w);
+	vim_capture_selection();
 
 	if (markv(1)) {
 		char *vscopy, *vscopy8;

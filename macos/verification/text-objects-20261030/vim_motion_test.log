@@ -1,0 +1,13 @@
+Motion transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-5oyqe3ru; Vim oracle cases: 95
+test_escape_cancels_find_and_count (__main__.MotionTests.test_escape_cancels_find_and_count) ... ok
+test_failed_find_does_not_cross_line_or_delete (__main__.MotionTests.test_failed_find_does_not_cross_line_or_delete) ... ok
+test_failed_find_preserves_cursor_and_next_command (__main__.MotionTests.test_failed_find_preserves_cursor_and_next_command) ... ok
+test_invalid_percentage_does_not_delete (__main__.MotionTests.test_invalid_percentage_does_not_delete) ... ok
+test_repeat_without_previous_find (__main__.MotionTests.test_repeat_without_previous_find) ... ok
+test_unmatched_percent_does_not_delete (__main__.MotionTests.test_unmatched_percent_does_not_delete) ... ok
+test_vim_reference_cases (__main__.MotionTests.test_vim_reference_cases) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 24.972s
+
+OK

@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-29",
+  "selection": {
+    "foreground": "#222222",
+    "background": "#E8E8E8"
+  },
+  "cursor": {
+    "foreground": "#000000",
+    "background": "#00CC66",
+    "style": "solid block with character redrawn"
+  },
+  "search": "visible matches use selection palette; n/N retain, noh clears",
+  "native_checks": 46,
+  "terminal_editing_checks": 45,
+  "terminal_ui_checks": 32,
+  "vc6_builds": [
+    "Release package",
+    "Release DLL",
+    "Debug package",
+    "Debug DLL"
+  ],
+  "xp_real_machine_tested": false,
+  "installed_files_matching_build": 118,
+  "live_ui_verified": true,
+  "user_resumed_interaction": true,
+  "source_sha256": {
+    "joe/vim.c": "1238bc06d5cabf7f3abe6882256d3920283471c8238ce35de19bcb2fb4885f16",
+    "joe/vim.h": "d72f5c8762523004c0afd535ec0002fe38b48658a0a453006dbc5a1303ccf311",
+    "joe/bw.c": "1865f706035f640b7ab80d9dba98c7fa758f025815279774dfb34635715e6a58",
+    "colors/teasp.jcf": "6e7166f0c33ef30ffc9fcf1e336fd8af2db338703bf54170ee9a011842918c20",
+    "macos/gui/MJEditorView.m": "f841db9ecdfd00a8fdcc74c19764d4a59da83eeb3713961d490cb62923f70bfe",
+    "tests/macos_native_view_test.m": "c6cadcacee8fe4dfe8cf93d3a41dddabea9d7dd8087f23af46757dc72712ebeb"
+  }
+}

@@ -4,7 +4,17 @@
 多缓冲区、保存/另存为、撤销/重做及 `.` 重复修改。操作及 UNIX 构建方法见
 [`docs/vim.md`](docs/vim.md)。使用 `joe -novim` 可恢复传统 JOE 键位。
 
-macOS 本机可运行 `python3 tools/build_macos.py`，然后双击生成的
+超过 512 MiB 的文件先选择只读懒加载、正常打开或取消；二进制文件自动使用 HEX 视图。
+只读懒加载使用约 1 MiB 原文件窗口及 64 位偏移，详见 [大文件说明](docs/large-files.md)。
+
+默认主题为 `teasp`，使用 teaspoon.vim 的原始配色；文本和日志识别 `WARN`、`ERROR`。
+用 `:colors teasp` 切换，或用 `:colors` 打开主题列表；显式配置及已保存的主题选择优先。
+
+macOS 原生独立窗口：运行 `python3 tools/build_macos_app.py --install`，然后打开
+`~/Applications/MiJoe.app`。支持原生菜单、打开/保存对话框、系统剪贴板及中文输入法接口。
+
+macOS 终端版可运行 `python3 tools/build_macos.py`，成功后自动校验 `/usr/local/bin/mj` 软链。
+首次需按提示用管理员身份创建链接；之后编译会自动更新命令。也可双击生成的
 `build/macos/MiJoe-macOS-arm64/启动MiJoe.command`。详见 [macOS 说明](macos/README.md)。
 
 本目录已增加 JOE for Windows 4.6 的 Visual C++ 6.0 移植版。打开

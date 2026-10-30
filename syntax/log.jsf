@@ -1,0 +1,21 @@
+# Plain text / logs: case-sensitive whole ASCII identifier tokens.
+=Idle
+=Warn +TODO
+=Error +Bad
+=Star +Special
+:idle Idle
+ * idle
+ "a-zA-Z0-9_" word buffer
+ "*" star recolor=-1
+:word Idle
+ * idle noeat strings
+ "WARN" warn
+ "ERROR" error
+done
+ "a-zA-Z0-9_" word
+:warn Warn
+ * idle noeat
+:error Error
+ * idle noeat
+:star Star
+ * idle noeat

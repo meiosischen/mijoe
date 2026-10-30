@@ -44,6 +44,7 @@
     <SyntaxFile Include="$(JoeSyntaxDir)\awk.jsf" />
     <SyntaxFile Include="$(JoeSyntaxDir)\batch.jsf" />
     <SyntaxFile Include="$(JoeSyntaxDir)\c.jsf" />
+    <SyntaxFile Include="$(JoeSyntaxDir)\log.jsf" />
     <SyntaxFile Include="$(JoeSyntaxDir)\clojure.jsf" />
     <SyntaxFile Include="$(JoeSyntaxDir)\cobol.jsf" />
     <SyntaxFile Include="$(JoeSyntaxDir)\coffee.jsf" />
@@ -122,6 +123,8 @@
     <ColorSchemeFile Include="$(JoeColorsDir)\ir_black.jcf" />
     <ColorSchemeFile Include="$(JoeColorsDir)\molokai.jcf" />
     <ColorSchemeFile Include="$(JoeColorsDir)\solarized.jcf" />
+    <ColorSchemeFile Include="$(JoeColorsDir)\synhill.jcf" />
+    <ColorSchemeFile Include="$(JoeColorsDir)\teasp.jcf" />
     <ColorSchemeFile Include="$(JoeColorsDir)\wombat.jcf" />
     <ColorSchemeFile Include="$(JoeColorsDir)\xoria.jcf" />
     <ColorSchemeFile Include="$(JoeColorsDir)\zenburn.jcf" />

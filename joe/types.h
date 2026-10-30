@@ -384,6 +384,7 @@ struct highlight_state {
 #include "b.h"
 #include "blocks.h"
 #include "bw.h"
+#include "lfile.h"
 #include "cmd.h"
 #include "hash.h"
 #include "help.h"

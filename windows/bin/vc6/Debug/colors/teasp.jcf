@@ -1,0 +1,240 @@
+# teasp: exact GUI palette from arnau/teaspoon.vim
+# Upstream 215b4010c4be1c3711f69c780ba4224f6c527096
+# Maintainer:   Arnau Siches <http://github.com/arnau/>
+# Version:      0.1
+# Last Change:  February 9th, 2014
+# Credits:      This is a modification of jellybeans.vim color scheme
+# 
+# Copyright (c) 2009-2011 NanoTech
+# Copyright (c) 2012-2014 Arnau Siches
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+# 
+# set background=dark
+
+.colors 16
+-text 15
+-linum 0
+-curlinum 0
+-curlin White/0
+-selection 0/15
+-cursor 0/10
+-status 0/15 bold
+-menu 15/0
+-menusel 0/15
+-prompt 0/15
+-message 0/15
+-help 15
+=Idle 15
+=Ident 11
+=Identifier 11
+=DefinedIdent 11
+=DefinedFunction 14
+=Builtin 14
+=Variable 11
+=StringVariable 11
+=Comment 7
+=TODO 15/0 bold
+=Keyword 9
+=Statement 9
+=Loop 9
+=Conditional 9
+=Operator 9
+=Preproc 9
+=Define 9
+=Type 14
+=StorageClass 14
+=Structure 11
+=Constant 12
+=Number 12
+=Numeric 12
+=String 10
+=Character 10
+=StringDelimiter 2
+=StringEscape 10
+=CharacterEscape 10
+=Escape 10
+=Brace 7
+=Control 7
+=Label 10
+=IncLocal 10
+=IncSystem 10
+=Bad White/4
+=Error White/4
+=Star 11 bold
+=Warn 15/0 bold
+=Title 10 bold
+=Ignore 0
+=Tag 9
+=TagName 9
+=diff.AddLine 0
+=diff.DelLine 0
+=diff.ChgLine 0
+
+.colors 256
+
+-text 188/234
+-linum 235/232
+-curlinum 235/232
+-curlin 188/232
+-selection 234/254
+-cursor 16/41
+-status 234/188 bold
+-menu 231/240
+-menusel 232/254
+-prompt 242/232 italic
+-message 242/232 italic
+-help 188/234
+=Idle 188/234
+=Ident 221 italic
+=Identifier 221 italic
+=DefinedIdent 221 italic
+=DefinedFunction 215
+=Builtin 215
+=Variable 221 italic
+=StringVariable 221 italic
+=Comment 244 italic
+=TODO 197 bold
+=Keyword 44
+=Statement 44
+=Loop 44
+=Conditional 44
+=Operator 44
+=Preproc 44
+=Define 44
+=Type 215
+=StorageClass 215
+=Structure 110
+=Constant 203
+=Number 203
+=Numeric 203
+=String 228
+=Character 228
+=StringDelimiter 227
+=StringEscape 216
+=CharacterEscape 216
+=Escape 216
+=Brace 66
+=Control 66
+=Label 216
+=IncLocal 228
+=IncSystem 228
+=Bad 188/197
+=Error 188/197
+=Star 215 bold
+=Warn 197 bold
+=Title 197 bold
+=Ignore 239/234
+=Tag 44
+=TagName 44
+=diff.AddLine 34/16
+=diff.DelLine 124/16
+=diff.ChgLine 214/16
+-term 0 188/234
+-term 1 203
+-term 2 228
+-term 3 215
+-term 4 44
+-term 5 197 bold
+-term 6 216
+-term 7 188/234
+-term 8 244 italic
+-term 9 188/197
+-term 10 228
+-term 11 215
+-term 12 44
+-term 13 197 bold
+-term 14 44
+-term 15 188/234
+
+.colors *
+
+-text $e8e8d3/$222222
+-linum $343434/$151515
+-curlinum $343434/$151515
+-curlin $e8e8d3/$111111
+-selection $222222/$E8E8E8
+-cursor $000000/$00CC66
+-status $222222/$e8e8d3 bold
+-menu $ffffff/$606060
+-menusel $101010/$eeeeee
+-prompt $787878/$151515 italic
+-message $787878/$151515 italic
+-help $e8e8d3/$222222
+=Idle $e8e8d3/$222222
+=Ident $efd14e italic
+=Identifier $efd14e italic
+=DefinedIdent $efd14e italic
+=DefinedFunction $ffb454
+=Builtin $ffb454
+=Variable $efd14e italic
+=StringVariable $efd14e italic
+=Comment $888888 italic
+=TODO $ff0066 bold
+=Keyword $00C7E7
+=Statement $00C7E7
+=Loop $00C7E7
+=Conditional $00C7E7
+=Operator $00C7E7
+=Preproc $00C7E7
+=Define $00C7E7
+=Type $ffb964
+=StorageClass $ffb964
+=Structure $8fbfdc
+=Constant $ff6666
+=Number $ff6666
+=Numeric $ff6666
+=String $faff8a
+=Character $faff8a
+=StringDelimiter $fcfa6d
+=StringEscape $f1a491
+=CharacterEscape $f1a491
+=Escape $f1a491
+=Brace $668799
+=Control $668799
+=Label $f1a491
+=IncLocal $faff8a
+=IncSystem $faff8a
+=Bad $e8e8d3/$ff0066
+=Error $e8e8d3/$ff0066
+=Star $ffb454 bold
+=Warn $ff0066 bold
+=Title $ff0066 bold
+=Ignore $565656/$222222
+=Tag $00C7E7
+=TagName $00C7E7
+=diff.AddLine $00BB00/$000000
+=diff.DelLine $BB0000/$000000
+=diff.ChgLine $FFAA00/$000000
+-term 0 $e8e8d3/$222222
+-term 1 $ff6666
+-term 2 $faff8a
+-term 3 $ffb454
+-term 4 $00C7E7
+-term 5 $ff0066 bold
+-term 6 $f1a491
+-term 7 $e8e8d3/$222222
+-term 8 $888888 italic
+-term 9 $e8e8d3/$ff0066
+-term 10 $faff8a
+-term 11 $ffb964
+-term 12 $00C7E7
+-term 13 $ff0066 bold
+-term 14 $00C7E7
+-term 15 $e8e8d3/$222222

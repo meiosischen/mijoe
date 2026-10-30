@@ -52,8 +52,13 @@ class UITests(unittest.TestCase):
         self.editor.send("ll:help\r")
         self.editor.until(b"MiJoe :help")
         self.editor.until("已支持的 Vim".encode())
-        self.fresh(b"\x1b[6~", b":saveas")
-        self.fresh(b"\x1b[5~", b"h j k l")
+        # New command sections can move saveas onto a later help page.
+        offset=len(self.editor.output)
+        for _ in range(16):
+            self.editor.send(b"\x1b[6~")
+            if b":saveas" in self.editor.output[offset:]: break
+        self.assertIn(b":saveas",self.editor.output[offset:])
+        self.fresh(b"\x1b[5~" * 16, b"h j k l")
         self.editor.send(b"qxi!\x1b")
         self.assertEqual(self.editor.finish(), b"ab!def\n")
 
@@ -233,6 +238,24 @@ class UITests(unittest.TestCase):
         self.editor.until(b"Color scheme file not found")
         self.editor.ex("colors default")
         self.assert_unchanged()
+
+    def test_synhill_default_256color_and_rgb(self):
+        self.editor.finish(save=False)
+        self.editor.close()
+        source = b'int answer = 42; // synhill comment\nchar *s = "hello";\n'
+        self.editor = pty_tests.Editor(self.directory, source, filename="theme.c", options=("-colors", "synhill"),
+                                      extra_env={"COLORTERM": "", "HOME": str(self.directory)})
+        self.editor.drain(0.2)
+        for color in (167, 230, 135, 39):
+            self.assertIn(f"\x1b[38;5;{color}m".encode(), self.editor.output)
+        self.editor.finish(save=False)
+        self.editor.close()
+        self.editor = pty_tests.Editor(self.directory, source, filename="theme.c", options=("-colors", "synhill"),
+                                      extra_env={"COLORTERM": "truecolor", "HOME": str(self.directory)})
+        self.editor.drain(0.2)
+        for color in ("215;95;95", "255;255;215", "175;95;255", "0;175;255"):
+            self.assertIn(f"\x1b[38;2;{color}m".encode(), self.editor.output)
+        self.assertEqual(self.editor.finish(), source)
 
     def test_ctrl_k_in_paste_remains_data(self):
         self.editor.send(b"i\x1b[200~A\x0bHB\x1b[201~\x1b")

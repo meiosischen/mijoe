@@ -1,0 +1,9 @@
+Paging transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-_ymtx6bc
+test_control_u_is_full_page_up_in_three_modes (__main__.PagingTests.test_control_u_is_full_page_up_in_three_modes) ... ok
+test_paging_counts_and_top_bottom_boundaries (__main__.PagingTests.test_paging_counts_and_top_bottom_boundaries) ... ok
+test_shift_control_u_encodings_are_page_down (__main__.PagingTests.test_shift_control_u_encodings_are_page_down) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 10.028s
+
+OK

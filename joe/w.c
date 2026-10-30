@@ -6,6 +6,7 @@
  *	This file is part of JOE (Joe's Own Editor)
  */
 #include "types.h"
+#include "vim.h"
 
 /* Count no. of main windows */
 
@@ -759,7 +760,7 @@ static void mdisp(SCRN *t, ptrdiff_t y, const char *s)
 		ofst = 0;
 	else
 		ofst = len - (t->co);
-	genfmt(t, 0, y, ofst, s, BG_COLOR(bg_msg), 0, 1);
+	genfmt(t, 0, y, ofst, s, vim_command_active() ? ((BG_COLOR(bg_msg) & ~(FG_MASK|DIM|ITALIC)) | FG_BCYAN) : BG_COLOR(bg_msg), 0, 1);
 	t->updtab[y] = 1;
 }
 

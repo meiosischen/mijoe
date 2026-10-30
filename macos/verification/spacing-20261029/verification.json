@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-29",
+  "native_checks": 26,
+  "installed_app": "~/Applications/MiJoe.app",
+  "line_spacing_extra_pixels_before": 3,
+  "line_spacing_extra_pixels_after": 0,
+  "status_colors": {
+    "foreground": "#222222",
+    "background": "#E8E8D3",
+    "bold": true
+  },
+  "body_asterisk": {
+    "foreground": "#FFB454",
+    "bold": true,
+    "scope": "plain text and logs"
+  },
+  "modified_marker": {
+    "character": "*",
+    "foreground": "#000000",
+    "background": "#FF0066"
+  },
+  "source_sha256": {
+    "joe/tw.c": "1328aad8a35f5bce6eac8c0331966eb26480f255914161c77a40f0807ab4142e",
+    "macos/gui/MJEditorView.m": "d06b95eb5c210d380990777cba787f089d815003531f6301297d50c6c078601c",
+    "colors/teasp.jcf": "254e0e81eeb89da432a2f5e65188a477d75c07960264384b7b5dca897f685c0e",
+    "syntax/log.jsf": "5f9029a9a1d17680f3760cf02b4967653f63ae10e81c086d51b0d7d843c89ea8",
+    "tests/macos_native_view_test.m": "bbd3ffe639373527fd877a0ffc979d58af91a96e5479e7e5464f446584901f69"
+  },
+  "xp_real_machine_tested": false,
+  "terminal_ui_checks": 32,
+  "vc6_builds": [
+    "Release package",
+    "Release DLL",
+    "Debug package",
+    "Debug DLL"
+  ]
+}

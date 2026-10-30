@@ -21,6 +21,24 @@ pty_tests = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(pty_tests)
 sys.argv = arguments
 CASES = [
+    ("find-lowercase-t", "abctdef t end\n", "fti!\x1b"),
+    ("find-lowercase-t-repeat", "abctdef t end\n", "ft;i!\x1b"),
+    ("find-lowercase-t-count", "abctdef t end\n", "2ftx"),
+    ("find-lowercase-t-backward", "abctdef t end\n", "$Ftx"),
+    ("delete-through-lowercase-t", "abctdef t end\n", "dft"),
+    ("star-whole-word", "foo foobar foo food foo\n", "*i!\x1b"),
+    ("star-middle", "alpha foo alpha\n", "ll*i!\x1b"),
+    ("star-count", "foo foo foo foo\n", "2*i!\x1b"),
+    ("star-wrap", "foo bar foo\n", "$h*i!\x1b"),
+    ("star-next-keyword", "  foo bar foo\n", "*i!\x1b"),
+    ("star-punctuation-before-keyword", "++ foo ++ foo\n", "*i!\x1b"),
+    ("star-punctuation-literal", ".* .* .*\n", "*i!\x1b"),
+    ("star-punctuation-without-keyword-ahead", "abc++ ++\n", "lll*i!\x1b"),
+    ("star-punctuation-word", "abc++ ++ abc++\n", "lll*i!\x1b"),
+    ("star-underscore", "foo_bar foo foo_bar\n", "*i!\x1b"),
+    ("star-unicode", "中文 测试 中文\n", "*i!\x1b"),
+    ("star-repeat", "foo foo foo foo\n", "*nNi!\x1b"),
+
     ("find-forward", "abxcxd tail\n", "fxi!\x1b"),
     ("find-backward", "abxcxd tail\n", "$Fxi!\x1b"),
     ("till-forward", "abxcxd tail\n", "txi!\x1b"),
@@ -113,13 +131,14 @@ class MotionTests(unittest.TestCase):
         self.directory = pty_tests.ARTIFACTS / self.id().split(".")[-1]
         self.directory.mkdir()
 
-    def oracle(self, directory, initial, keys):
+    def oracle(self, directory, initial, keys, continuation=""):
         source = directory / "reference.txt"
         result = directory / "reference-result.txt"
         script = directory / "reference.vim"
         source.write_bytes(initial)
         script.write_text("set nocompatible encoding=utf-8 nofixeol nomore\nset cpoptions&vim\ncall cursor(1, 1)\n"
                           + "execute " + vim_string("normal! " + keys) + "\n"
+                          + ("execute " + vim_string("normal! " + continuation) + "\n" if continuation else "")
                           + "execute 'write! ' . fnameescape('" + str(result).replace("'", "''") + "')\nqa!\n")
         run = subprocess.run([VIM, "-Nu", "NONE", "-i", "NONE", "-n", "-es", "-S", str(script), str(source)],
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=10)

@@ -1,0 +1,27 @@
+[
+  {
+    "suite": "bridge",
+    "scenarios": 13,
+    "exit_code": 0
+  },
+  {
+    "suite": "package",
+    "scenarios": 48,
+    "exit_code": 0
+  },
+  {
+    "suite": "motion",
+    "scenarios": 84,
+    "exit_code": 0
+  },
+  {
+    "suite": "block",
+    "scenarios": 42,
+    "exit_code": 0
+  },
+  {
+    "suite": "ui",
+    "scenarios": 31,
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-29",
+  "feature": "Normal * whole-keyword forward search",
+  "added_vim_oracle_cases": 12,
+  "total_vim_oracle_cases": 90,
+  "additional_motion_checks": 6,
+  "native_checks": 47,
+  "terminal_checks": 46,
+  "terminal_ui_checks": 32,
+  "actual_system_mj_tested": true,
+  "native_live_star_and_N_tested": true,
+  "vc6_builds": [
+    "Release package",
+    "Release DLL",
+    "Debug package",
+    "Debug DLL"
+  ],
+  "xp_real_machine_tested": false,
+  "sources": {
+    "joe/vim.c": "15e4891c08a16e87eb450d495cfe06b5f26f0d7d7beb47c52ea6241b03729062",
+    "tests/vim_motion_test.py": "5b010ba152f91888ab4fbd2c483376b3669fdaca8a997f832a2490e7dfb0eb61",
+    "tests/vim_pty_test.py": "dca1b84b220abcb845408ae952f67f7c6443cb98c51151a8163c152ad5d9e9ab",
+    "tests/macos_native_view_test.m": "ec98a457a0790c54794c0abbb7328e489ec18f15087ae5825d79a57ea8851e04",
+    "docs/vim-help.txt": "a70c9b7bdf55d62c7ba4eaea5c59264d685936187ae2faa2a1c30fb64da45927"
+  }
+}

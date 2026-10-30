@@ -1139,6 +1139,9 @@ int init_colors(void)
 		}
 	}
 	
-	/* Try default */
+	/* New installations use Teasp; keep explicit and saved choices above. */
+	if (!apply_scheme(load_scheme("teasp")))
+		return 0;
+	/* Compatibility with an older, incomplete resource installation. */
 	return apply_scheme(load_scheme("default"));
 }

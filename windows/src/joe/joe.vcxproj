@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(JoeExternalSrcDir)\vim.c" />
+    <ClCompile Include="$(JoeExternalSrcDir)\lfile.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\b.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\blocks.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\bw.c" />

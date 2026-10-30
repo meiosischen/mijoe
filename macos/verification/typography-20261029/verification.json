@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-29",
+  "scope": "macOS native window",
+  "defaults": {
+    "font_points": 13,
+    "line_spacing_pixels": -6
+  },
+  "keys": {
+    "F1": "font +1 point",
+    "F2": "font -1 point",
+    "F3": "line spacing +1 pixel",
+    "F4": "line spacing -1 pixel"
+  },
+  "native_checks": 33,
+  "live_ui_function_keys_verified": true,
+  "live_ui_preferences_after_f1": {
+    "font_points": 14,
+    "line_spacing": -6
+  },
+  "live_ui_preferences_after_f2_f3": {
+    "font_points": 13,
+    "line_spacing": -5
+  },
+  "final_preferences": {
+    "font_points": 13,
+    "line_spacing": -6
+  },
+  "installed_files_matching_build": 118,
+  "sources": {
+    "macos/gui/MJEditorView.h": "d3e918d0d2d3b41b866697da03f4672d7e7f59d93da9be3839818e03e306cd2c",
+    "macos/gui/MJEditorView.m": "d05dfc53d2bd0ab9a9f9284e9e39e7300e7db6b26048ab524b6d581d2b8b302a",
+    "macos/gui/main.m": "8bc9711033a3edf8ad001ffd30c58dbdd36f9c7b4328bb16d6c71a27cf1afc70",
+    "tests/macos_native_view_test.m": "6bebebc359de687d644a9de4bbb4d6b52d6e36f806a9d29017ccc212f89e49b8"
+  },
+  "notes": [
+    "Negative leading paints glyphs after all cell backgrounds, without vertical cell clipping.",
+    "Font and spacing shortcuts preserve composition and do not modify buffer contents.",
+    "Shared editor core and Windows frontend were not changed for these shortcuts."
+  ]
+}

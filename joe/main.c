@@ -63,6 +63,9 @@ void edupd(int flg)
 	/* Move windows so that cursors stays on screen */
 	dofollows();
 	ttflsh();
+#if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
+    mijoe_macos_gui_frame(1);
+#endif
 	/* Send scrolling commands to terminal */
 	nscroll(maint->t, BG_COLOR(bg_text));
 	/* Display help */
@@ -78,7 +81,10 @@ void edupd(int flg)
 		w = (W *) (w->link.next);
 	} while (w != maint->curwin);
 	/* Set cursor position */
-	cpos(maint->t, maint->curwin->x + maint->curwin->curx, maint->curwin->y + maint->curwin->cury);
+	if (!vim_grep_render(maint)) cpos(maint->t, maint->curwin->x + maint->curwin->curx, maint->curwin->y + maint->curwin->cury);
+#if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
+    mijoe_macos_gui_frame(0);
+#endif
 	staupd = 0;
 	obj_free(gc);
 }
@@ -128,7 +134,7 @@ int edloop()
 		W *w;
 		MACRO *m;
 		BW *bw;
-		int c;
+		int c, macro_decoded=0, macro_event=0;
 		int auto_off = 0;
 		int word_off = 0;
 		int spaces_off = 0;
@@ -140,11 +146,15 @@ int edloop()
 		}
 		/* Update the screen */
 		edupd(1);
+#if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
+		mijoe_macos_gui_update();
+#endif
 		/* Set ahead when typeahead from before editor startup is done */
 		if (!ahead && !have)
 			ahead = 1;
 		/* Get next character (including nungetc() one) */
-		if (ungot) {
+		if ((macro_event=vim_macro_next(&c,&macro_decoded))) { /* replay through the original dispatch path */ }
+        else if (ungot) {
 			c = ungotc;
 			ungot = 0;
 		} else
@@ -167,15 +177,28 @@ int edloop()
 			c = 13;
 		
 		more_no_auto:
+#if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
+		if (c == MIJOE_GUI_KEY && !vim_gui_pasting() && mijoe_macos_gui_pending()) {
+			co_call(mijoe_macos_gui_action);
+			continue;
+		}
+#endif
+        if (vim_grep_active()) { c=macro_decoded ? c : vim_readkey(c); vim_macro_capture(c,1); co_call(vim_input,c); vim_macro_applied(); continue; }
+        if ((maint->curwin->watom->what & TYPETW) && lf_pending(((BW *)maint->curwin->object)->b)) {
+            vim_macro_capture(c,0); lf_prompt_key((BW *)maint->curwin->object,c); vim_macro_applied(); continue;
+        }
 		/* Vim consumes only ordinary text windows. Prompts, menus and shells
 		 * retain their own keyboard maps and coroutine lifecycle. */
-		if (vim_enabled && (maint->curwin->watom->what & TYPETW) &&
+		if ((!macro_event || macro_decoded) && (vim_enabled || ((maint->curwin->watom->what & TYPETW) && lf_active(((BW *)maint->curwin->object)->b))) && (maint->curwin->watom->what & TYPETW) &&
 		    !((BW *)maint->curwin->object)->b->pid &&
+            (!((BW *)maint->curwin->object)->o.hex || lf_active(((BW *)maint->curwin->object)->b)) &&
 		    (c < KEY_MDOWN || c > KEY_MRDRAG) && !vim_native_key(c)) {
-			co_call(vim_input, vim_readkey(c));
+			c=macro_decoded ? c : vim_readkey(c);
+            vim_macro_capture(c,1); co_call(vim_input,c); vim_macro_applied();
 			continue;
 		}
 
+		vim_macro_capture(c,0);
 		/* Give key to current keyboard handler: it returns a macro to execute when
 		   a full sequence is decoded. Use special kbd if we're handing data to a shell window */
 		bw = (BW *)maint->curwin->object;
@@ -217,6 +240,7 @@ int edloop()
 		/* Execute macro */
 		if (m) {
 			ret = co_call(exemac, m, c);
+            vim_macro_result(ret);
 			/* ret = exemac(m, c); */
 		}
 
@@ -256,6 +280,7 @@ int edloop()
 			}
 		}
 
+        vim_macro_applied();
 	}
 
 	/* prompt can force return of error, which aborts macro */
@@ -573,6 +598,7 @@ void process_args()
 							lnum = ztoo(argv[backopt] + 1);
 							++backopt;
 						} else {
+							lf_startup_option(bw->b,argv[backopt]+1);
 							if (glopt(argv[backopt] + 1, argv[backopt + 1], &bw->o, 0) == 2)
 								backopt += 2;
 							else

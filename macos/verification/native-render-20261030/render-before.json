@@ -1,0 +1,8 @@
+{
+  "cursorDrawMeanMs" : 15.594169497489929,
+  "cursorCallbacks" : 319,
+  "stateResponses" : 51,
+  "cursorDirtyAreaFraction" : 1,
+  "note" : "Offscreen CPU draw cost, not display FPS or OS input latency",
+  "fullDrawMeanMs" : 6.7108035087585449
+}

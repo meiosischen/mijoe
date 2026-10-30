@@ -1,0 +1,21 @@
+Large-file transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-3v85ffcn
+test_real_513mib_text_uses_default_prompt_and_bounded_reads (__main__.DefaultThresholdTests.test_real_513mib_text_uses_default_prompt_and_bounded_reads) ... ok
+test_force_lazy_small_file_and_save_guard (__main__.ForcedLazyTests.test_force_lazy_small_file_and_save_guard) ... ok
+test_cancel_preserves_dirty_previous (__main__.LargeFileTests.test_cancel_preserves_dirty_previous) ... ok
+test_explicit_hex_survives_lazy_choice_for_text (__main__.LargeFileTests.test_explicit_hex_survives_lazy_choice_for_text) ... ok
+test_literal_search_across_windows_and_wrap (__main__.LargeFileTests.test_literal_search_across_windows_and_wrap) ... ok
+test_normal_choice_restores_editing (__main__.LargeFileTests.test_normal_choice_restores_editing) ... ok
+test_paging_text_and_line_jump (__main__.LargeFileTests.test_paging_text_and_line_jump) ... ok
+test_readonly_blocks_edit_save_and_saveas (__main__.LargeFileTests.test_readonly_blocks_edit_save_and_saveas) ... ok
+test_small_binary_auto_hex (__main__.LargeFileTests.test_small_binary_auto_hex) ... ok
+test_source_change_fails_without_saving (__main__.LargeFileTests.test_source_change_fails_without_saving) ... ok
+test_sparse_over_4gb_binary (__main__.LargeFileTests.test_sparse_over_4gb_binary) ... ok
+test_startup_readonly_survives_normal_choice (__main__.LargeFileTests.test_startup_readonly_survives_normal_choice) ... ok
+test_terminal_prompt_keys (__main__.LargeFileTests.test_terminal_prompt_keys) ... ok
+test_utf16_search_and_whole_word (__main__.LargeFileTests.test_utf16_search_and_whole_word) ... ok
+test_utf16_text_detection_and_lazy_mapping (__main__.LargeFileTests.test_utf16_text_detection_and_lazy_mapping) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 9.225s
+
+OK

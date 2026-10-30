@@ -185,7 +185,10 @@ int ulanguage(W *w, int k)
 void lazy_opts(B *b, OPTIONS *o)
 {
 	struct charmap *orgmap = b->o.charmap; /* Remember guessed character map */
-	o->syntax = load_syntax(o->syntax_name);
+    OPTIONS resolved = *o;
+    o = &resolved;
+    lf_options(b,o);
+	o->syntax = b->large ? NULL : load_syntax(o->syntax_name);
 	b->o = *o;
 	if (!b->o.map_name || !(b->o.charmap = find_charmap(b->o.map_name))) {
 		/* Use the guessed one if it wasn't explicitly given */
@@ -404,6 +407,8 @@ struct glopts {
 	{"mouse",	0, &xmouse, NULL, 0, 0, _("Enable mouse"), 0, 0, 0 },
 	{"usetabs",	0, &opt_usetabs, NULL, 0, 0, _("Screen update uses tabs"), 0, 0, 0 },
 	{"assume_color", 0, &assume_color, NULL, 0, 0, _("Assume terminal supports color"), 0, 0, 0 },
+    {"large_threshold", 1, &lf_threshold_mb, NULL, _("Large-file threshold (MiB): "), 0, _("Large-file prompt threshold (MiB)"), 0, 1, 1048576 },
+    {"lazy", 0, &lf_force, NULL, 0, 0, _("Read-only lazy file opening"), 0, 0, 0 },
 	{"assume_256color", 0, &assume_256color, NULL, 0, 0, _("Assume terminal supports 256 colors"), 0, 0, 0 },
 	{"joexterm", 0, &joexterm, NULL, 0, 0, _("Assume xterm patched for JOE"), 0, 0, 0 },
 	{ NULL,		0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0 }
@@ -1023,6 +1028,7 @@ static int olddoopt(BW *bw, int y, int flg)
 				break;
 			} case 4: { /* Local option flag */
 				int oldval = applyopt(bw, (char *)&bw->o + glopts[y].ofst, y, flg);
+                lf_options(bw->b,&bw->o);
 				
 				/* Propagate readonly bit to B */
 				if (glopts[y].ofst == (char *)&fdefault.readonly - (char *)&fdefault)

@@ -439,7 +439,7 @@ int utomouse(W *xx, int k)
 	drag_size = 0;
 	if (w->watom->what == TYPETW) {
 		if (bw->o.hex) {
-			off_t goal_col = x - w->x + bw->offset - 60;
+			off_t goal_col = x - w->x + bw->offset - 60 - (lf_active(bw->b) ? 8 : 0);
 			off_t goal_line;
 			off_t goal_byte;
 			if (goal_col < 0)
@@ -516,7 +516,7 @@ static int tomousestay()
 	bw = (BW *)w->object;
 	if (w->watom->what == TYPETW) {
 		if (bw->o.hex) {
-			off_t goal_col = x - w->x + bw->offset - 60;
+			off_t goal_col = x - w->x + bw->offset - 60 - (lf_active(bw->b) ? 8 : 0);
 			off_t goal_line;
 			off_t goal_byte;
 			if (goal_col < 0)

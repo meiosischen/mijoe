@@ -1,0 +1,32 @@
+{
+  "real_ime_candidates_tested" : false,
+  "passed" : 26,
+  "checks" : [
+    "native session starts its own editor",
+    "native session receives editor status",
+    "input client forwards Insert mode key",
+    "input method marked text and selection are retained",
+    "composition does not modify the editor before commit",
+    "Chinese emoji and combining input commit once and save as UTF-8",
+    "discarding composition leaves saved text intact",
+    "view resize updates terminal dimensions",
+    "native screen model retains Unicode display data after resize",
+    "clean session exits and reaps its child process",
+    "native editor defaults to teasp with exact background and caret palette",
+    "native comment RGB matches teaspoon Comment",
+    "native keyword RGB matches teaspoon Type",
+    "native identifier RGB matches teaspoon Identifier",
+    "native numeric RGB matches teaspoon Constant",
+    "native string RGB matches teaspoon String",
+    "switching theme also updates native canvas palette",
+    "switching back to synhill restores exact RGB",
+    "whole-word WARN uses teaspoon Todo pink",
+    "whole-word ERROR uses teaspoon ErrorMsg background",
+    "longer identifiers and lowercase words retain normal text colors",
+    "log asterisks use highlighted orange",
+    "status bar uses high contrast dark text on a light background",
+    "modified status asterisk uses the bright pink cursor highlight",
+    "undo clears the modified status marker",
+    "theme switching preserves the document and exits cleanly"
+  ]
+}

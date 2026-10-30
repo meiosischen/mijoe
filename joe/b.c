@@ -249,6 +249,7 @@ static B *bmkchn(H *chn, B *prop, off_t amnt, off_t nlines)
 	mset((char *)b->marks, 0, SIZEOF(b->marks));
 	b->rdonly = 0;
 	b->vim_number = 0;
+	b->large = NULL; b->binary_file = 0;
 	b->orphan = 0;
 	b->oldcur = NULL;
 	b->err = NULL;
@@ -322,6 +323,7 @@ void brm(B *b)
 #endif
 
 	if (b && !--b->count) {
+        lf_release(b);
 		if (b->changed)
 			abrerr(b->name);
 		if (b->locked && !b->ignored_lock && plain_file(b))
@@ -356,6 +358,9 @@ void brmall()
 void breplace(B *b, B *n)
 {
 	P *p, *next;
+    lf_release(b);
+    b->large = n->large; n->large = NULL;
+    b->binary_file = n->binary_file;
 
 	/* Take out many references to b */
 
@@ -2024,6 +2029,7 @@ static B *bcut(P *from, P *to)
 
 void bdel(P *from, P *to)
 {
+    if (from->b->large) return;
 	if (to->byte - from->byte) {
 		B *b = bcut(from, to);
 
@@ -2194,6 +2200,7 @@ static void fixupins(P *p, off_t amnt, off_t nlines, H *hdr, ptrdiff_t hdramnt)
 /* Insert a buffer at pointer position (the buffer goes away) */
 P *binsb(P *p, B *b)
 {
+    if (p->b->large) { brm(b); return p; }
 	if (b->eof->byte) {
 		P *q = pdup(p, "binsb");
 
@@ -2216,7 +2223,7 @@ P *binsm(P *p, const char *blk, ptrdiff_t amnt)
 	ptrdiff_t hdramnt = 0; /* Only used if h is set */
 	P *q;
 
-	if (!amnt)
+	if (p->b->large || !amnt)
 		return p;
 	q = pdup(p, "binsm");
 	if (amnt <= GGAPSZ(q->hdr)) {
@@ -2806,6 +2813,7 @@ void joe_pclose(FILE *f)
  */
 B *bload(const char *s)
 {
+    int binary = 0, old_guess;
 	char buffer[SEGSIZ];
 	FILE *fi = 0;
 	B *b = 0;
@@ -2897,8 +2905,15 @@ B *bload(const char *s)
 		}
 	}
 
-	/* Read from stream into new buffer */
-	b = bread(fileno(fi), amnt);
+	/* Probe ordinary files before any whole-file read. */
+    if (!skip && amnt == MAXOFF && n[0] != '!' && zcmp(n,"-")) b = lf_probe(fileno(fi),dequote(n),&binary);
+    if (!b) {
+        old_guess = guess_utf16;
+        if (binary) guess_utf16 = 0;
+        b = bread(fileno(fi),amnt);
+        guess_utf16 = old_guess;
+    }
+    b->binary_file = binary;
 	empty:
 	b->mod_time = mod_time;
 	setopt(b,n);
@@ -3043,6 +3058,7 @@ opnerr:
 	}
 
 	b->er = berror;
+    lf_options(b,&b->o);
 	return b;
 }
 
@@ -3061,7 +3077,7 @@ B *bfind(const char *s)
 		return b;
 	}
 	for (b = bufs.link.next; b != &bufs; b = b->link.next)
-		if (b->name && !fullfilecmp(s, b->name)) {
+		if (!b->large && b->name && !fullfilecmp(s, b->name)) {
 			if (!b->orphan)
 				++b->count; /* Assumes caller is going to put this in a window! */
 			else
@@ -3090,7 +3106,7 @@ B *bfind_scratch(const char *s)
 		return b;
 	}
 	for (b = bufs.link.next; b != &bufs; b = b->link.next)
-		if (b->name && !fullfilecmp(s, b->name)) {
+		if (!b->large && b->name && !fullfilecmp(s, b->name)) {
 			if (!b->orphan)
 				++b->count;
 			else
@@ -3129,7 +3145,7 @@ B *bcheck_loaded(const char *s)
 		return NULL;
 	}
 	for (b = bufs.link.next; b != &bufs; b = b->link.next)
-		if (b->name && !fullfilecmp(s, b->name)) {
+		if (!b->large && b->name && !fullfilecmp(s, b->name)) {
 			return b;
 		}
 
@@ -3167,8 +3183,10 @@ B *borphan(void)
  */
 int bsavefd(P *p, int fd, off_t size)
 {
-	P *np = pdup(p, "bsavefd");
-	ptrdiff_t amnt;
+	P *np;
+    ptrdiff_t amnt;
+    if (p->b->large) return berror = -5;
+    np = pdup(p, "bsavefd");
 
 	while (size > (amnt = GSIZE(np->hdr) - np->ofst)) {
 		if (np->ofst < np->hdr->hole) {
@@ -3261,6 +3279,7 @@ int bsave(P *p, const char *as, off_t size, int flag)
 	off_t skip, amnt;
 	int norm = 0;
 	char *s = parsens(as, &skip, &amnt);
+    if (p->b->large) { obj_free(s); return berror = -5; }
 
 	if (amnt < size)
 		size = amnt;

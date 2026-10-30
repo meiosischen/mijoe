@@ -1,0 +1,23 @@
+{
+  "scheme": "teasp",
+  "upstream": "https://github.com/arnau/teaspoon.vim",
+  "commit": "215b4010c4be1c3711f69c780ba4224f6c527096",
+  "terminal_tests": 32,
+  "native_tests": 22,
+  "vc6_builds": [
+    "Release package",
+    "Release DLL",
+    "Debug package",
+    "Debug DLL"
+  ],
+  "xp_real_machine_tested": false,
+  "installed_app": "~/Applications/MiJoe.app",
+  "terminal_resources": "~/.joe/colors/teasp.jcf, ~/.joe/syntax/log.jsf, ~/.joe/ftyperc",
+  "source_sha256": {
+    "colors/teasp.jcf": "b96598553d85df9d59f1035b6027d15403c172c6b9082b510a07ce29f9058769",
+    "syntax/log.jsf": "b06a3519b915fa429cc990d42df5adb5a73ac64b2ec06d0754c9f7c987c366c5",
+    "joe/colors.c": "da35b881bfc71b8faa578ee0b963fe737e7295d2553d432935a24b40bc32b6c0",
+    "rc/ftyperc": "56f126cc9a35ff0904b7da495f766c3abd9ada47d2745f948e7c4452b66ccba2",
+    "windows/rc/ftyperc": "89975ed84274c89a5d595726e060c6e8c5116a753829cb2056892ad189dfee25"
+  }
+}

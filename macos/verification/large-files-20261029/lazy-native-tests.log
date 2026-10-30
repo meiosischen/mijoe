@@ -1,0 +1,47 @@
+PASS native session starts its own editor
+PASS native session receives editor status
+PASS new view defaults to 13 point font and minus six pixel leading
+PASS F1 enlarges font and refreshes terminal geometry
+PASS status reflects F1 enlarges font and refreshes terminal geometry
+PASS F2 restores font and refreshes terminal geometry
+PASS status reflects F2 restores font and refreshes terminal geometry
+PASS F3 increases leading and refreshes terminal rows
+PASS status reflects F3 increases leading and refreshes terminal rows
+PASS F4 restores leading and refreshes terminal rows
+PASS status reflects F4 restores leading and refreshes terminal rows
+PASS function keys do not insert bytes or modify the document
+PASS input client forwards Insert mode key
+PASS input method marked text and selection are retained
+PASS composition does not modify the editor before commit
+PASS leading shortcuts preserve active input method composition
+PASS Chinese emoji and combining input commit once and save as UTF-8
+PASS discarding composition leaves saved text intact
+PASS view resize updates terminal dimensions
+PASS native screen model retains Unicode display data after resize
+PASS clean session exits and reaps its child process
+PASS native editor defaults to teasp with exact background and caret palette
+PASS native comment RGB matches teaspoon Comment
+PASS native keyword RGB matches teaspoon Type
+PASS native identifier RGB matches teaspoon Identifier
+PASS native numeric RGB matches teaspoon Constant
+PASS native string RGB matches teaspoon String
+PASS switching theme also updates native canvas palette
+PASS switching back to synhill restores exact RGB
+PASS whole-word WARN uses teaspoon Todo pink
+PASS whole-word ERROR uses teaspoon ErrorMsg background
+PASS longer identifiers and lowercase words retain normal text colors
+PASS log asterisks use highlighted orange
+PASS status bar uses high contrast dark text on a light background
+PASS modified status asterisk uses the solid green cursor highlight
+PASS undo clears the modified status marker
+PASS slash search highlights matches with pale white background
+PASS all four visible search matches are highlighted
+PASS cursor remains visible after slash search
+PASS native rendering paints a solid green cursor with readable character
+PASS n and N retain search highlighting
+PASS noh clears match highlighting
+PASS repeat search restores match highlighting after noh
+PASS UTF-8 search highlights the full-width match
+PASS Visual selection uses pale white rather than red
+PASS Normal star highlights complete words and skips substring matches
+PASS theme switching preserves the document and exits cleanly

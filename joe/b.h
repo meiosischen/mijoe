@@ -122,8 +122,11 @@ struct options {
 
 /* A buffer */
 
+struct large_file;
 struct buffer {
 	LINK(B)	link;		/* Doubly-linked list of all buffers */
+	struct large_file *large; /* Immutable source-file window, or NULL. */
+	int binary_file;
 	unsigned long vim_number; /* Stable, session-local user buffer number. */
 	P	*bof;		/* Beginning of file pointer */
 	P	*eof;		/* End of file pointer */

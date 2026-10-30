@@ -1,0 +1,7 @@
+Text object transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-ow69jl0o; Vim oracle cases: 1032
+test_vim_reference_cases (__main__.TextObjectTests.test_vim_reference_cases) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 81.046s
+
+OK

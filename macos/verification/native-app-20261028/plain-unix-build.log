@@ -1,0 +1,168 @@
+Making all in rc
+LC_ALL=C sed 's,@JOERC\@,/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe,; s,@JOEDOC\@,/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/doc/joe,; s,@JOEDATA\@,/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe,; s,@SPELL\@,ispell,' /Users/meiosis/Workspace/Projects/mijoe/rc/joerc.in > joerc
+Making all in po
+make[1]: Nothing to be done for `all'.
+Making all in syntax
+make[1]: Nothing to be done for `all'.
+Making all in joe
+/Library/Developer/CommandLineTools/usr/bin/make  all-recursive
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT b.o -MD -MP -MF .deps/b.Tpo -c -o b.o /Users/meiosis/Workspace/Projects/mijoe/joe/b.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT blocks.o -MD -MP -MF .deps/blocks.Tpo -c -o blocks.o /Users/meiosis/Workspace/Projects/mijoe/joe/blocks.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT bw.o -MD -MP -MF .deps/bw.Tpo -c -o bw.o /Users/meiosis/Workspace/Projects/mijoe/joe/bw.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT cmd.o -MD -MP -MF .deps/cmd.Tpo -c -o cmd.o /Users/meiosis/Workspace/Projects/mijoe/joe/cmd.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT coroutine.o -MD -MP -MF .deps/coroutine.Tpo -c -o coroutine.o /Users/meiosis/Workspace/Projects/mijoe/joe/coroutine.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT hash.o -MD -MP -MF .deps/hash.Tpo -c -o hash.o /Users/meiosis/Workspace/Projects/mijoe/joe/hash.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT help.o -MD -MP -MF .deps/help.Tpo -c -o help.o /Users/meiosis/Workspace/Projects/mijoe/joe/help.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT kbd.o -MD -MP -MF .deps/kbd.Tpo -c -o kbd.o /Users/meiosis/Workspace/Projects/mijoe/joe/kbd.c
+/Users/meiosis/Workspace/Projects/mijoe/joe/bw.c:1136:21: warning: format specifies type 'long' but the argument has type 'off_t' (aka 'long long') [-Wformat]
+ 1136 |                 fprintf(f,"     %ld ",p->line);
+      |                                 ~~~   ^~~~~~~
+      |                                 %lld
+mv -f .deps/coroutine.Tpo .deps/coroutine.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT macro.o -MD -MP -MF .deps/macro.Tpo -c -o macro.o /Users/meiosis/Workspace/Projects/mijoe/joe/macro.c
+mv -f .deps/cmd.Tpo .deps/cmd.Po
+mv -f .deps/kbd.Tpo .deps/kbd.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT main.o -MD -MP -MF .deps/main.Tpo -c -o main.o /Users/meiosis/Workspace/Projects/mijoe/joe/main.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT menu.o -MD -MP -MF .deps/menu.Tpo -c -o menu.o /Users/meiosis/Workspace/Projects/mijoe/joe/menu.c
+mv -f .deps/hash.Tpo .deps/hash.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT obj.o -MD -MP -MF .deps/obj.Tpo -c -o obj.o /Users/meiosis/Workspace/Projects/mijoe/joe/obj.c
+mv -f .deps/help.Tpo .deps/help.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT path.o -MD -MP -MF .deps/path.Tpo -c -o path.o /Users/meiosis/Workspace/Projects/mijoe/joe/path.c
+mv -f .deps/blocks.Tpo .deps/blocks.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT poshist.o -MD -MP -MF .deps/poshist.Tpo -c -o poshist.o /Users/meiosis/Workspace/Projects/mijoe/joe/poshist.c
+/Users/meiosis/Workspace/Projects/mijoe/joe/main.c:716:19: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+  716 |                 fprintf(stderr, joe_gettext(_("Couldn't load termcap/terminfo entry\n")));
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/meiosis/Workspace/Projects/mijoe/joe/types.h:128:24: note: expanded from macro 'joe_gettext'
+  128 | #define joe_gettext(s) my_gettext((s))
+      |                        ^~~~~~~~~~~~~~~
+/Users/meiosis/Workspace/Projects/mijoe/joe/main.c:716:19: note: treat the string as an argument to avoid this
+  716 |                 fprintf(stderr, joe_gettext(_("Couldn't load termcap/terminfo entry\n")));
+      |                                 ^
+      |                                 "%s", 
+/Users/meiosis/Workspace/Projects/mijoe/joe/types.h:128:24: note: expanded from macro 'joe_gettext'
+  128 | #define joe_gettext(s) my_gettext((s))
+      |                        ^
+1 warning generated.
+mv -f .deps/bw.Tpo .deps/bw.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT pw.o -MD -MP -MF .deps/pw.Tpo -c -o pw.o /Users/meiosis/Workspace/Projects/mijoe/joe/pw.c
+mv -f .deps/path.Tpo .deps/path.Po
+1 warning generated.
+mv -f .deps/poshist.Tpo .deps/poshist.Po
+mv -f .deps/main.Tpo .deps/main.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT queue.o -MD -MP -MF .deps/queue.Tpo -c -o queue.o /Users/meiosis/Workspace/Projects/mijoe/joe/queue.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT qw.o -MD -MP -MF .deps/qw.Tpo -c -o qw.o /Users/meiosis/Workspace/Projects/mijoe/joe/qw.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT rc.o -MD -MP -MF .deps/rc.Tpo -c -o rc.o /Users/meiosis/Workspace/Projects/mijoe/joe/rc.c
+mv -f .deps/macro.Tpo .deps/macro.Po
+mv -f .deps/menu.Tpo .deps/menu.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT regex.o -MD -MP -MF .deps/regex.Tpo -c -o regex.o /Users/meiosis/Workspace/Projects/mijoe/joe/regex.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT scrn.o -MD -MP -MF .deps/scrn.Tpo -c -o scrn.o /Users/meiosis/Workspace/Projects/mijoe/joe/scrn.c
+mv -f .deps/obj.Tpo .deps/obj.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT tab.o -MD -MP -MF .deps/tab.Tpo -c -o tab.o /Users/meiosis/Workspace/Projects/mijoe/joe/tab.c
+mv -f .deps/queue.Tpo .deps/queue.Po
+mv -f .deps/qw.Tpo .deps/qw.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT termcap.o -MD -MP -MF .deps/termcap.Tpo -c -o termcap.o /Users/meiosis/Workspace/Projects/mijoe/joe/termcap.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT tty.o -MD -MP -MF .deps/tty.Tpo -c -o tty.o /Users/meiosis/Workspace/Projects/mijoe/joe/tty.c
+mv -f .deps/rc.Tpo .deps/rc.Po
+mv -f .deps/pw.Tpo .deps/pw.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT tw.o -MD -MP -MF .deps/tw.Tpo -c -o tw.o /Users/meiosis/Workspace/Projects/mijoe/joe/tw.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT ublock.o -MD -MP -MF .deps/ublock.Tpo -c -o ublock.o /Users/meiosis/Workspace/Projects/mijoe/joe/ublock.c
+mv -f .deps/tab.Tpo .deps/tab.Po
+/Users/meiosis/Workspace/Projects/mijoe/joe/termcap.c:486:19: warning: passing 'const char *' to parameter of type 'char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+  486 |                 return tgetflag(name);
+      |                                 ^~~~
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/term.h:771:58: note: passing argument to parameter here
+  771 | extern NCURSES_EXPORT(int) tgetflag (NCURSES_CONST char *);
+      |                                                          ^
+/Users/meiosis/Workspace/Projects/mijoe/joe/termcap.c:499:17: warning: passing 'const char *' to parameter of type 'char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+  499 |                 rtn = tgetstr(name, &new_ptr);
+      |                               ^~~~
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/term.h:768:60: note: passing argument to parameter here
+  768 | extern NCURSES_EXPORT(char *) tgetstr (NCURSES_CONST char *, char **);
+      |                                                            ^
+/Users/meiosis/Workspace/Projects/mijoe/joe/termcap.c:517:18: warning: passing 'const char *' to parameter of type 'char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+  517 |                 return tgetnum(name);
+      |                                ^~~~
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/term.h:772:57: note: passing argument to parameter here
+  772 | extern NCURSES_EXPORT(int) tgetnum (NCURSES_CONST char *);
+      |                                                         ^
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT uedit.o -MD -MP -MF .deps/uedit.Tpo -c -o uedit.o /Users/meiosis/Workspace/Projects/mijoe/joe/uedit.c
+mv -f .deps/tty.Tpo .deps/tty.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT uerror.o -MD -MP -MF .deps/uerror.Tpo -c -o uerror.o /Users/meiosis/Workspace/Projects/mijoe/joe/uerror.c
+3 warnings generated.
+mv -f .deps/termcap.Tpo .deps/termcap.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT ufile.o -MD -MP -MF .deps/ufile.Tpo -c -o ufile.o /Users/meiosis/Workspace/Projects/mijoe/joe/ufile.c
+mv -f .deps/tw.Tpo .deps/tw.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT uformat.o -MD -MP -MF .deps/uformat.Tpo -c -o uformat.o /Users/meiosis/Workspace/Projects/mijoe/joe/uformat.c
+mv -f .deps/regex.Tpo .deps/regex.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT uisrch.o -MD -MP -MF .deps/uisrch.Tpo -c -o uisrch.o /Users/meiosis/Workspace/Projects/mijoe/joe/uisrch.c
+mv -f .deps/ublock.Tpo .deps/ublock.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT umath.o -MD -MP -MF .deps/umath.Tpo -c -o umath.o /Users/meiosis/Workspace/Projects/mijoe/joe/umath.c
+mv -f .deps/b.Tpo .deps/b.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT undo.o -MD -MP -MF .deps/undo.Tpo -c -o undo.o /Users/meiosis/Workspace/Projects/mijoe/joe/undo.c
+mv -f .deps/scrn.Tpo .deps/scrn.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT usearch.o -MD -MP -MF .deps/usearch.Tpo -c -o usearch.o /Users/meiosis/Workspace/Projects/mijoe/joe/usearch.c
+mv -f .deps/uerror.Tpo .deps/uerror.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT ushell.o -MD -MP -MF .deps/ushell.Tpo -c -o ushell.o /Users/meiosis/Workspace/Projects/mijoe/joe/ushell.c
+mv -f .deps/uisrch.Tpo .deps/uisrch.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT utag.o -MD -MP -MF .deps/utag.Tpo -c -o utag.o /Users/meiosis/Workspace/Projects/mijoe/joe/utag.c
+mv -f .deps/ufile.Tpo .deps/ufile.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT vfile.o -MD -MP -MF .deps/vfile.Tpo -c -o vfile.o /Users/meiosis/Workspace/Projects/mijoe/joe/vfile.c
+mv -f .deps/uformat.Tpo .deps/uformat.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT w.o -MD -MP -MF .deps/w.Tpo -c -o w.o /Users/meiosis/Workspace/Projects/mijoe/joe/w.c
+mv -f .deps/undo.Tpo .deps/undo.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT utils.o -MD -MP -MF .deps/utils.Tpo -c -o utils.o /Users/meiosis/Workspace/Projects/mijoe/joe/utils.c
+mv -f .deps/uedit.Tpo .deps/uedit.Po
+mv -f .deps/ushell.Tpo .deps/ushell.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT syntax.o -MD -MP -MF .deps/syntax.Tpo -c -o syntax.o /Users/meiosis/Workspace/Projects/mijoe/joe/syntax.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT utf8.o -MD -MP -MF .deps/utf8.Tpo -c -o utf8.o /Users/meiosis/Workspace/Projects/mijoe/joe/utf8.c
+mv -f .deps/usearch.Tpo .deps/usearch.Po
+mv -f .deps/utag.Tpo .deps/utag.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT selinux.o -MD -MP -MF .deps/selinux.Tpo -c -o selinux.o /Users/meiosis/Workspace/Projects/mijoe/joe/selinux.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT charmap.o -MD -MP -MF .deps/charmap.Tpo -c -o charmap.o /Users/meiosis/Workspace/Projects/mijoe/joe/charmap.c
+mv -f .deps/vfile.Tpo .deps/vfile.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT mouse.o -MD -MP -MF .deps/mouse.Tpo -c -o mouse.o /Users/meiosis/Workspace/Projects/mijoe/joe/mouse.c
+mv -f .deps/w.Tpo .deps/w.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT lattr.o -MD -MP -MF .deps/lattr.Tpo -c -o lattr.o /Users/meiosis/Workspace/Projects/mijoe/joe/lattr.c
+mv -f .deps/utf8.Tpo .deps/utf8.Po
+mv -f .deps/umath.Tpo .deps/umath.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT gettext.o -MD -MP -MF .deps/gettext.Tpo -c -o gettext.o /Users/meiosis/Workspace/Projects/mijoe/joe/gettext.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT builtin.o -MD -MP -MF .deps/builtin.Tpo -c -o builtin.o /Users/meiosis/Workspace/Projects/mijoe/joe/builtin.c
+mv -f .deps/selinux.Tpo .deps/selinux.Po
+mv -f .deps/utils.Tpo .deps/utils.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT libcoro.o -MD -MP -MF .deps/libcoro.Tpo -c -o libcoro.o /Users/meiosis/Workspace/Projects/mijoe/joe/libcoro.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT builtins.o -MD -MP -MF .deps/builtins.Tpo -c -o builtins.o /Users/meiosis/Workspace/Projects/mijoe/joe/builtins.c
+mv -f .deps/syntax.Tpo .deps/syntax.Po
+mv -f .deps/builtins.Tpo .deps/builtins.Po
+mv -f .deps/charmap.Tpo .deps/charmap.Po
+mv -f .deps/builtin.Tpo .deps/builtin.Po
+mv -f .deps/gettext.Tpo .deps/gettext.Po
+mv -f .deps/lattr.Tpo .deps/lattr.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT vt.o -MD -MP -MF .deps/vt.Tpo -c -o vt.o /Users/meiosis/Workspace/Projects/mijoe/joe/vt.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT mmenu.o -MD -MP -MF .deps/mmenu.Tpo -c -o mmenu.o /Users/meiosis/Workspace/Projects/mijoe/joe/mmenu.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT state.o -MD -MP -MF .deps/state.Tpo -c -o state.o /Users/meiosis/Workspace/Projects/mijoe/joe/state.c
+mv -f .deps/libcoro.Tpo .deps/libcoro.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT options.o -MD -MP -MF .deps/options.Tpo -c -o options.o /Users/meiosis/Workspace/Projects/mijoe/joe/options.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT unicode.o -MD -MP -MF .deps/unicode.Tpo -c -o unicode.o /Users/meiosis/Workspace/Projects/mijoe/joe/unicode.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT cclass.o -MD -MP -MF .deps/cclass.Tpo -c -o cclass.o /Users/meiosis/Workspace/Projects/mijoe/joe/cclass.c
+mv -f .deps/mouse.Tpo .deps/mouse.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT frag.o -MD -MP -MF .deps/frag.Tpo -c -o frag.o /Users/meiosis/Workspace/Projects/mijoe/joe/frag.c
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT colors.o -MD -MP -MF .deps/colors.Tpo -c -o colors.o /Users/meiosis/Workspace/Projects/mijoe/joe/colors.c
+mv -f .deps/mmenu.Tpo .deps/mmenu.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT vim.o -MD -MP -MF .deps/vim.Tpo -c -o vim.o /Users/meiosis/Workspace/Projects/mijoe/joe/vim.c
+mv -f .deps/state.Tpo .deps/state.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT macos.o -MD -MP -MF .deps/macos.Tpo -c -o macos.o /Users/meiosis/Workspace/Projects/mijoe/joe/macos.c
+mv -f .deps/unicode.Tpo .deps/unicode.Po
+gcc -DHAVE_CONFIG_H -I. -I/Users/meiosis/Workspace/Projects/mijoe/joe  -DJOERC="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/etc/joe/\"" -DJOEDATA="\"/Users/meiosis/Workspace/Projects/mijoe/build/unix-gui-regression/install/share/joe/\""   -O2 -std=gnu99 -MT unicat-9.0.0.o -MD -MP -MF .deps/unicat-9.0.0.Tpo -c -o unicat-9.0.0.o /Users/meiosis/Workspace/Projects/mijoe/joe/unicat-9.0.0.c
+mv -f .deps/frag.Tpo .deps/frag.Po
+mv -f .deps/macos.Tpo .deps/macos.Po
+mv -f .deps/vt.Tpo .deps/vt.Po
+mv -f .deps/options.Tpo .deps/options.Po
+mv -f .deps/colors.Tpo .deps/colors.Po
+mv -f .deps/unicat-9.0.0.Tpo .deps/unicat-9.0.0.Po
+mv -f .deps/cclass.Tpo .deps/cclass.Po
+mv -f .deps/vim.Tpo .deps/vim.Po
+gcc  -O2 -std=gnu99   -o joe b.o blocks.o bw.o cmd.o coroutine.o hash.o help.o kbd.o macro.o main.o menu.o obj.o path.o poshist.o pw.o queue.o qw.o rc.o regex.o scrn.o tab.o termcap.o tty.o tw.o ublock.o uedit.o uerror.o ufile.o uformat.o uisrch.o umath.o undo.o usearch.o ushell.o utag.o vfile.o w.o utils.o syntax.o utf8.o selinux.o charmap.o mouse.o lattr.o gettext.o builtin.o libcoro.o builtins.o vt.o mmenu.o state.o options.o unicode.o cclass.o frag.o colors.o vim.o macos.o unicat-9.0.0.o  -lncurses 
+Making all in colors
+make[1]: Nothing to be done for `all'.
+make[1]: Nothing to be done for `all-am'.

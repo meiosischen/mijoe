@@ -370,7 +370,7 @@ char *stagen(char *stalin, BW *bw, const char *s, char fill)
 				break;
 			case 'm':
 				if (bw->b->changed)
-					stalin = vsncpy(sv(stalin), sz(joe_gettext(_("(Modified)"))));
+					stalin = vsadd(stalin, '*');
 				break;
 			case 'R':
 				if (bw->b->rdonly)
@@ -383,6 +383,7 @@ char *stagen(char *stalin, BW *bw, const char *s, char fill)
 					stalin = vsadd(stalin, fill);
 				break;
 			case 'r':
+                if (lf_row_label(bw,buf,sizeof(buf))) { stalin = vsncpy(sv(stalin),sz(buf)); break; }
 				if (field)
 #ifdef HAVE_LONG_LONG
 					joe_snprintf_1(buf, SIZEOF(buf), "%-4" JOE_INT64_FORMAT "d", (JOE_LONG_LONG)(bw->cursor->line + 1));
@@ -463,6 +464,7 @@ char *stagen(char *stalin, BW *bw, const char *s, char fill)
 				stalin = vsncpy(sv(stalin), sz(buf));
 				break;
 			case 'c':
+                if (lf_column_label(bw,buf,sizeof(buf))) { stalin=vsncpy(sv(stalin),sz(buf)); break; }
 				if (field)
 #ifdef HAVE_LONG_LONG
 					joe_snprintf_1(buf, SIZEOF(buf), "%-3" JOE_INT64_FORMAT "d", (JOE_LONG_LONG)(piscol(bw->cursor) + 1));
@@ -596,7 +598,7 @@ static void disptw(W *w, int flg)
 
 	if (bw->o.hex) {
 		w->cury = TO_DIFF_OK((bw->cursor->byte-bw->top->byte)/16 + bw->y - w->y);
-		w->curx = TO_DIFF_OK((bw->cursor->byte-bw->top->byte)%16 + 60 - bw->offset);
+		w->curx = TO_DIFF_OK((bw->cursor->byte-bw->top->byte)%16 + 60 + (lf_active(bw->b) ? 8 : 0) - bw->offset);
 	} else {
 		w->cury = TO_DIFF_OK(bw->cursor->line - bw->top->line + bw->y - w->y);
 		w->curx = TO_DIFF_OK(bw->cursor->xcol - bw->offset + newcols);
@@ -614,6 +616,14 @@ static void disptw(W *w, int flg)
 			fill = ' ';
 		tw->stalin = stagen(tw->stalin, bw, bw->o.lmsg, fill);
 		tw->staright = stagen(tw->staright, bw, bw->o.rmsg, fill);
+        { const char *macro_label=vim_macro_status(); if (macro_label) tw->staright=vsncpy(sv(tw->staright),sz(macro_label)); }
+        { const char *label = lf_status(bw); if (label) tw->staright = vsncpy(sv(tw->staright),sz(label)); }
+#if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
+		{
+			const char *typography = mijoe_macos_gui_typography();
+			if (typography) tw->staright = vsncpy(sv(tw->staright), sz(typography));
+		}
+#endif
 		if (fmtlen(tw->staright) < w->w) {
 			ptrdiff_t x = fmtpos(tw->stalin, w->w - fmtlen(tw->staright));
 
@@ -623,6 +633,17 @@ static void disptw(W *w, int flg)
 		}
 		tw->stalin = vstrunc(tw->stalin, fmtpos(tw->stalin, w->w));
 		genfmt(w->t->t, w->x, w->y, 0, tw->stalin, bg_stalin, 0, 0);
+		/* Highlight literal asterisks in the status line, including %*. */
+		{
+			SCRN *screen = w->t->t;
+			int column;
+			for (column = 0; column < w->w; ++column) {
+				int position = w->y * screen->co + w->x + column;
+				if (screen->scrn[position][0] == '*')
+					outatr(locale_map, screen, screen->scrn + position, screen->attr + position,
+					       w->x + column, w->y, '*', bg_cursor);
+			}
+		}
 		w->t->t->updtab[w->y] = 0;
 	}
 
@@ -654,6 +675,7 @@ int usplitw(W *w, int k)
 	TW *newtw;
 	BW *newbw;
 	WIND_BW(bw, w);
+    if (bw->b->large) { msgnw(w,"Lazy files: use an independent window instead of splitting this buffer."); return -1; }
 
 	dostaupd = 1;
 	if (newh / 2 < FITHEIGHT)
@@ -683,6 +705,7 @@ int uduptw(W *w, int k)
 	TW *newtw;
 	BW *newbw;
 	WIND_BW(bw, w);
+    if (bw->b->large) { msgnw(w,"Lazy files: use an independent window instead of splitting this buffer."); return -1; }
 
 	dostaupd = 1;
 	neww = wcreate(w->t, w->watom, findbotw(w), NULL, NULL, newh, NULL);

@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-29",
+  "threshold_bytes": 536870912,
+  "source_window_bytes": 1048576,
+  "large_file_cases": 15,
+  "fixtures": [
+    "513 MiB actual text",
+    "5 GiB + 17 byte sparse binary",
+    "UTF-16 and supplementary characters",
+    "cross-window and 64KiB-boundary search"
+  ],
+  "checks": {
+    "pty": 46,
+    "gui_bridge": 13,
+    "ui": 32,
+    "native_view": 47,
+    "vim_motion_test_methods": 7,
+    "vim_reference_subcases": 90,
+    "vc6": [
+      "Release package",
+      "Release dll",
+      "Debug package",
+      "Debug dll"
+    ],
+    "xp_pe_metadata": true,
+    "mj_symlink_and_source_hash": true
+  },
+  "limits": [
+    "lazy search is literal, not general regex",
+    "line jumps/search stream on demand and are cancellable",
+    "unknown global row/partial-line column displayed as question mark",
+    "no actual Windows XP machine acceptance",
+    "interactive AppKit prompt not verified: computer-use desktop unavailable",
+    "installed App not replaced because its old process is still running"
+  ],
+  "backend_binary_sha256": "ee32219dec20caf339c0635f820d9f6c6ce1aca2a00be19755dfe74419c5b665",
+  "source_sha256": {
+    "joe/lfile.c": "f8db56fa9a6b42c60cdd0e47a82ba4076beb55edd52a3bcef61fb8fa623d1eb3",
+    "joe/lfile.h": "1f46aed21de6a2877554edbe87dda73f36f285580821964c836f7e91bcf31d35",
+    "joe/b.c": "1692c2b8729c4ddd35d0bd562154ce11482ac9109a99e4070a10c83c4bd97a99",
+    "joe/options.c": "79d65f8dcfd7811e711e30c7bcca8f022f1fc71d9003c31c07b1f630c32b7d76",
+    "joe/main.c": "5d88a2a11f68fec088b6892a6108a12df45a3c9272d17f59b8c083300706f4b8",
+    "joe/macos.c": "c4b5daca368efd688bfd7a414a98e71ba53c080ac6e9f18e4c96b283b9b6f7fe",
+    "macos/gui/main.m": "1e6fe1fe76ea0b1f2491a00ca1692d7ec9746df7cbfd37cef3f35c1f13ff61b8",
+    "tests/large_file_test.py": "78e04ce2b8a4a5138cf30d9e6e0d3153b6b4f0e8961b67ecc8e91afaf0378caf"
+  }
+}

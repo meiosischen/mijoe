@@ -4357,6 +4357,16 @@ static int TranslateKey(UINT message, WPARAM wParam, LPARAM lParam,
     shift_state = ((keystate[VK_SHIFT] & 0x80) != 0)
 	+ ((keystate[VK_CONTROL] & 0x80) != 0) * 2;
 
+#ifdef JOEWIN
+    /* Preserve Ctrl+Shift+U before ToAscii folds it into Ctrl+U. */
+    if (wParam == 'U' && shift_state == 3 &&
+        !(keystate[VK_MENU] & 0x80) && !(keystate[VK_RMENU] & 0x80)) {
+        if (!key_down) return 0;
+        memcpy(output, "\033[6~", 4);
+        return 4;
+    }
+#endif
+
     /* Note if AltGr was pressed and if it was used as a compose key */
     if (!compose_state) {
 	compose_key = 0x100;

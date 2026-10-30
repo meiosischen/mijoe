@@ -316,7 +316,7 @@ int modify_logic(BW *bw,B *b)
 			notify_changed_buffer(b);
 #endif
 		}
-		if (b->rdonly) {
+		if (b->large || b->rdonly) {
 			msgnw(bw->parent,joe_gettext(_("Other buffer is read only")));
 			if (joe_beep)
 				ttputc(7);
@@ -334,7 +334,7 @@ int modify_logic(BW *bw,B *b)
 			notify_changed_buffer(b);
 #endif
 		}
-		if (b->rdonly) {
+		if (b->large || b->rdonly) {
 			msgnw(bw->parent,joe_gettext(_("Read only")));
 			if (joe_beep)
 				ttputc(7);

@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-30",
+  "installed": "/Users/meiosis/Applications/MiJoe.app",
+  "binary_hashes": {
+    "Contents/MacOS/MiJoe": "ab1eb641adceb1224340b2de5a60ad452ba15db7d13e66176fa570cfec16e097",
+    "Contents/Resources/editor/bin/joe": "7be204a54523c526f38f984ee48ba48a5a72d5474d405dc39af4e8460dee0fab"
+  },
+  "fixture": "build/textobject/viw-window.txt",
+  "text": "prefix alpha suffix",
+  "keys": "09lviw",
+  "visual_result": "Entire alpha visibly selected, including characters before the initial cursor.",
+  "register_check": "y : Ctrl+R 0 displayed :alpha",
+  "final_state": "Fixture left in Visual mode with full alpha selected.",
+  "original_app_exit": "Clean quit with no save prompt.",
+  "installed_matches_build": true,
+  "codesign_verified": true
+}

@@ -449,6 +449,7 @@ static int saver(W *w, int c, void *object)
 
 static int dosave(BW *bw, struct savereq *req)
 {
+    if (bw->b->large) { rmsavereq(req); msgnw(bw->parent,"Read-only lazy source cannot be saved."); return -1; }
 	if (req->block_save)
 	{
 		if (markv(1)) {
@@ -618,6 +619,7 @@ int vim_write_file(W *w, const char *name, int rename_file, int overwrite)
 	struct savereq *req;
 	const char *target;
 	WIND_BW(bw, w);
+    if (bw->b->large) { msgnw(w,"Read-only lazy source cannot be saved, even with ! or Save As."); return -1; }
 	target = name ? name : bw->b->name;
 	if (target && zlen(target) >= 1000) {
 		msgnw(w, "Filename is too long for the file engine");
@@ -1093,6 +1095,15 @@ int get_buffer_in_window(BW *bw, B *b)
 {
 	void *object = bw->object;
 	W *w = bw->parent;
+    if (b->large && b != bw->b && maint && maint->topwin) {
+        W *other=maint->topwin;
+        do {
+            if ((other->watom->what & TYPETW) && other->object && ((BW *)other->object)->b==b) {
+                msgnw(w,"Lazy files cannot share a buffer between panes; open the file independently."); return -1;
+            }
+            other=other->link.next;
+        } while (other!=maint->topwin);
+    }
 	if (b == bw->b) {
 		return 0;
 		/* return -1; this helps with querysave (no error when only one buffer) */

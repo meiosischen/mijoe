@@ -72,6 +72,10 @@ SOURCE=..\..\joe\vim.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\joe\lfile.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\joe\b.c
 # End Source File
 # Begin Source File

@@ -1,0 +1,52 @@
+PTY transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-wtdcdub8
+test_arrows_and_lone_escape (__main__.VimTests.test_arrows_and_lone_escape) ... ok
+test_bracketed_paste_is_data (__main__.VimTests.test_bracketed_paste_is_data) ... ok
+test_change_word_undo_and_dot (__main__.VimTests.test_change_word_undo_and_dot) ... ok
+test_character_yank_and_put (__main__.VimTests.test_character_yank_and_put) ... ok
+test_classic_joe_switch (__main__.VimTests.test_classic_joe_switch) ... ok
+test_command_line_paste (__main__.VimTests.test_command_line_paste) ... ok
+test_copy_write_keeps_original_undo_savepoint (__main__.VimTests.test_copy_write_keeps_original_undo_savepoint) ... ok
+test_counted_change_word (__main__.VimTests.test_counted_change_word) ... ok
+test_counted_delete_and_undo (__main__.VimTests.test_counted_delete_and_undo) ... ok
+test_crlf_preserved (__main__.VimTests.test_crlf_preserved) ... ok
+test_delete_to_end_on_empty_line (__main__.VimTests.test_delete_to_end_on_empty_line) ... ok
+test_dot_delete_and_undo (__main__.VimTests.test_dot_delete_and_undo) ... ok
+test_failed_write_does_not_quit (__main__.VimTests.test_failed_write_does_not_quit) ... ok
+test_final_unterminated_line_delete (__main__.VimTests.test_final_unterminated_line_delete) ... ok
+test_hidden_unsaved_buffer_blocks_exit (__main__.VimTests.test_hidden_unsaved_buffer_blocks_exit) ... ok
+test_horizontal_motion_does_not_cross_line (__main__.VimTests.test_horizontal_motion_does_not_cross_line) ... ok
+test_insert_before_and_append (__main__.VimTests.test_insert_before_and_append) ... ok
+test_insert_session_one_undo (__main__.VimTests.test_insert_session_one_undo) ... ok
+test_insert_unicode_and_escape (__main__.VimTests.test_insert_unicode_and_escape) ... ok
+test_line_and_file_motion (__main__.VimTests.test_line_and_file_motion) ... ok
+test_line_put_on_unterminated_eof (__main__.VimTests.test_line_put_on_unterminated_eof) ... ok
+test_line_yank_and_put (__main__.VimTests.test_line_yank_and_put) ... ok
+test_long_or_unterminated_filename_rejected (__main__.VimTests.test_long_or_unterminated_filename_rejected) ... ok
+test_new_buffer_number_and_switch (__main__.VimTests.test_new_buffer_number_and_switch) ... ok
+test_open_lines (__main__.VimTests.test_open_lines) ... ok
+test_operator_multiplies_counts (__main__.VimTests.test_operator_multiplies_counts) ... ok
+test_operator_to_end_of_file_without_count (__main__.VimTests.test_operator_to_end_of_file_without_count) ... ok
+test_overwrite_requires_bang (__main__.VimTests.test_overwrite_requires_bang) ... ok
+test_paste_escape_and_dot_remain_data (__main__.VimTests.test_paste_escape_and_dot_remain_data) ... ok
+test_pasted_newline_does_not_execute_command (__main__.VimTests.test_pasted_newline_does_not_execute_command) ... ok
+test_readonly_edit_protected (__main__.VimTests.test_readonly_edit_protected) ... ok
+test_search_wrap_and_reverse (__main__.VimTests.test_search_wrap_and_reverse) ... ok
+test_star_on_empty_line_keeps_cursor_and_content (__main__.VimTests.test_star_on_empty_line_keeps_cursor_and_content) ... ok
+test_unicode_search_and_backspace_command (__main__.VimTests.test_unicode_search_and_backspace_command) ... ok
+test_unknown_command_does_not_insert (__main__.VimTests.test_unknown_command_does_not_insert) ... ok
+test_unsaved_buffer_switch_and_close_protection (__main__.VimTests.test_unsaved_buffer_switch_and_close_protection) ... ok
+test_visual_dot (__main__.VimTests.test_visual_dot) ... ok
+test_visual_escape_no_edit (__main__.VimTests.test_visual_escape_no_edit) ... ok
+test_visual_inclusive_delete (__main__.VimTests.test_visual_inclusive_delete) ... ok
+test_visual_line_change (__main__.VimTests.test_visual_line_change) ... ok
+test_visual_paste_replaces_selection (__main__.VimTests.test_visual_paste_replaces_selection) ... ok
+test_word_and_punctuation_motion (__main__.VimTests.test_word_and_punctuation_motion) ... ok
+test_word_delete_preserves_next_indented_line (__main__.VimTests.test_word_delete_preserves_next_indented_line) ... ok
+test_word_end_and_back (__main__.VimTests.test_word_end_and_back) ... ok
+test_write_copy_and_saveas (__main__.VimTests.test_write_copy_and_saveas) ... ok
+test_yank_line_preserves_column (__main__.VimTests.test_yank_line_preserves_column) ... ok
+
+----------------------------------------------------------------------
+Ran 46 tests in 11.895s
+
+OK

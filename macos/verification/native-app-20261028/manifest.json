@@ -1,0 +1,116 @@
+{
+  "date": "2026-10-28",
+  "base_commit": "9906eb2c778dcc91a218d589dfc24f54d819717f",
+  "changes_committed": false,
+  "installed_app": "/Users/meiosis/Applications/MiJoe.app",
+  "architecture": "arm64",
+  "host_macos": "26.3.1",
+  "declared_minimum_macos": "11.0",
+  "old_macos_or_intel_verified": false,
+  "backend_scenarios": 218,
+  "offscreen_appkit_checks": 10,
+  "plain_unix_regression_tests": 45,
+  "real_ime_candidates_tested": false,
+  "windows_build_rerun": false,
+  "native_ui_observations": [
+    "independent AppKit window and native menu bar",
+    "Normal/Insert keyboard input",
+    "Chinese multiline system paste and rendered text",
+    "native save sheet and file saved correctly",
+    "window title and modified state follow editor",
+    "unsaved close confirmation shown"
+  ],
+  "build": {
+    "architecture": "arm64",
+    "minimum_macos": "11.0",
+    "backend": {
+      "architecture": "arm64",
+      "macos_build_host": "26.3.1",
+      "binary_sha256": "d7b824de15575428715318b7d37b593b5ee67c8b5c4dfbdb4a3e6b26ea8362b3",
+      "dependencies": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe:\n\t/usr/lib/libncurses.5.4.dylib (compatibility version 5.4.0, current version 5.4.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+      "sources": {
+        "joe/vim.c": "d3f4316a3ff9f88f05e8cfcd739ff1bd032d6b57c0cf7022fabe1093e23ec1c6",
+        "joe/vim.h": "a0c3daa1bb64099d0ebc9fbf463d499485f2d91c05fb092d4d49a635b47d2e35",
+        "joe/vimhelp.h": "41dcd0d3dfbfa8c4155b3c14715bdb6226e94c2ecd21f90c718fdeb2e61aea23",
+        "docs/vim-help.txt": "2d9cab35ea369d6f3b169d20fbee4e4e46bd86f0c7b698d684a502200682105e",
+        "joe/help.c": "f149a937a042bb5497fffb1b3c529681c0a5c6f8ecd9066606d2aee6172da261",
+        "joe/help.h": "727b44de89de9df3ac5b158ec6a10b69234ebb2efb90bd3a0314c7c42718403c",
+        "joe/colors.c": "f132ab160dcd88c9923e39f7f40dce42b61422c22abc4ea55dd4fc13d07e0a04",
+        "joe/colors.h": "5c492b25d5a66c123e52d67cc3617b282e53eaa9190aac1699d5416db7659df8",
+        "joe/options.c": "e211a4f0968cde845189a77522744b7de7c8b678ee92973cfea432340123a9b8",
+        "joe/menu.c": "6fc427cb8357bed9c2c78b5db3adb630d361300f8cefc44586eae3afd2f34531",
+        "joe/menu.h": "1b925a44f1f76be62f144ce4edae58d3d4aa6f8221399881a968d5bc6f5aa89f",
+        "joe/mmenu.c": "7c551113547dd50cf8b63c07ac4c9628f6169de5c2994a421787e5203d24be5a",
+        "macos/gui_protocol.h": "1d7596c60d9d8fddad9781eee5e4db34b1018823b0ab486c9eed566cd7243691",
+        "joe/macos.c": "1878390ce47263bf0153494d5dacfe2f622838d66f51057b4ea001187f959eb0",
+        "joe/macos.h": "bd52507c6375875bb04cbed796b9bc1f5103d821cc360d2222179a060d7df619",
+        "joe/types.h": "e4ce02bd8ae9bcbbd4eb60b4b697f1deb377f36ab5a36a822a73f9cc7db8c549",
+        "joe/main.c": "b83516306849f2edc346f02533275ab2af34c196282e4d0f1ae36885829cf0a8",
+        "joe/ushell.c": "f6f035f4d21caaefc9464ab1105c8fce68ecef80bf906e7d4ad193fa8e3da0ae",
+        "joe/termcap.c": "d6b46b13225871ef92c42625673bc1e8adc79ef3cf47a4c291ce4c361f399031"
+      }
+    },
+    "binary_sha256": "abb0ec8313b00a0276481763a84f412ac44a958e055ea13bbd0d0ae409c451ab",
+    "sources": {
+      "macos/gui/MJEditorSession.h": "fb1bb8fb146d92d102e2dfc98b1b8a75392f7863c4b8632f66ac2c0d911e9679",
+      "macos/gui/MJEditorSession.m": "58e4a823fe49c036f68c54f90d3aa48f67e15d36ca8e01746bc17a511c8b51b5",
+      "macos/gui/MJEditorView.h": "204965c9e3a20c55f424dcf05ddd4dacdaffbb74e23682b500ec7036c6235356",
+      "macos/gui/MJEditorView.m": "44c4d032c972e25c14baf017c7ea6579f33f979760375356c4cf2e6f85181279",
+      "macos/gui/main.m": "b5f34c4e5b98e9c5cd048749204ddfea268fd553b8399bd129828dbc8516f615"
+    }
+  },
+  "libvterm": {
+    "version": "0.3.3",
+    "source": "https://www.leonerd.org.uk/code/libvterm/libvterm-0.3.3.tar.gz",
+    "sha256": "09156f43dd2128bd347cbeebe50d9a571d32c64e0cf18d211197946aff7226e0",
+    "files": [
+      "include/vterm.h",
+      "include/vterm_keycodes.h",
+      "Makefile",
+      "src/encoding.c",
+      "src/keyboard.c",
+      "src/vterm_internal.h",
+      "src/screen.c",
+      "src/vterm.c",
+      "src/fullwidth.inc",
+      "src/pen.c",
+      "src/encoding/uk.inc",
+      "src/encoding/DECdrawing.inc",
+      "src/utf8.h",
+      "src/unicode.c",
+      "src/mouse.c",
+      "src/rect.h",
+      "src/parser.c",
+      "src/state.c",
+      "LICENSE"
+    ]
+  },
+  "sources": {
+    "macos/gui/MJEditorSession.h": "fb1bb8fb146d92d102e2dfc98b1b8a75392f7863c4b8632f66ac2c0d911e9679",
+    "macos/gui/MJEditorSession.m": "58e4a823fe49c036f68c54f90d3aa48f67e15d36ca8e01746bc17a511c8b51b5",
+    "macos/gui/MJEditorView.h": "204965c9e3a20c55f424dcf05ddd4dacdaffbb74e23682b500ec7036c6235356",
+    "macos/gui/MJEditorView.m": "44c4d032c972e25c14baf017c7ea6579f33f979760375356c4cf2e6f85181279",
+    "macos/gui/main.m": "b5f34c4e5b98e9c5cd048749204ddfea268fd553b8399bd129828dbc8516f615",
+    "tools/build_macos_app.py": "0a426dff3947b518f7e708f78825834d82ef531f9e355a1cbfade35822fea2b5",
+    "tools/test_macos_native_view.py": "c9d8b607236e471cdb788c0d6bd139eda02716e9dca9b817a8923750c080b817",
+    "tests/macos_gui_bridge_test.py": "5c373f80e2595024b91386186df195129a831121569d06dbf7eaa31617bc7d63",
+    "tests/macos_native_view_test.m": "6ba64fb1158efd0348e537e32d60305dfba3c2ae62fd12283479ccad15dcc752",
+    "tests/vim_pty_test.py": "a2ff40fe5e90891d5513932ce66ce8b63fa37e39969fbe4d7eb5aabb67bd1ea2"
+  },
+  "installed_bundle_files": 115,
+  "binaries": [
+    {
+      "path": "Contents/MacOS/MiJoe",
+      "sha256": "abb0ec8313b00a0276481763a84f412ac44a958e055ea13bbd0d0ae409c451ab",
+      "dependencies": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe.app/Contents/MacOS/MiJoe:\n\t/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa (compatibility version 1.0.0, current version 24.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n\t/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit (compatibility version 45.0.0, current version 2685.30.107)\n\t/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 4201.0.0)\n\t/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation (compatibility version 300.0.0, current version 4201.0.0)\n\t/usr/lib/libobjc.A.dylib (compatibility version 1.0.0, current version 228.0.0)\n"
+    },
+    {
+      "path": "Contents/Resources/editor/bin/joe",
+      "sha256": "d7b824de15575428715318b7d37b593b5ee67c8b5c4dfbdb4a3e6b26ea8362b3",
+      "dependencies": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe.app/Contents/Resources/editor/bin/joe:\n\t/usr/lib/libncurses.5.4.dylib (compatibility version 5.4.0, current version 5.4.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    }
+  ],
+  "archive": "build/deliveries/mijoe-native-macos-arm64.zip",
+  "archive_sha256": "5b70e54ae19786cac1cfe267d7a0f5328b2f254351e6a0b971369d5f9a3139f7",
+  "archive_extraction_verified": true
+}

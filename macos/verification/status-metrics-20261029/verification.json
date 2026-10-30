@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-29",
+  "status_labels": [
+    "R",
+    "C",
+    "FS",
+    "H"
+  ],
+  "H_meaning": "pixel offset relative to natural font line height",
+  "native_checks": 37,
+  "bridge_checks": 13,
+  "live_status_after_f1": "R 68 C 59 FS 14 H -5",
+  "live_status_after_f2_f3": "R 68 C 59 FS 13 H -4",
+  "live_status_restored": "R 68 C 59 FS 13 H -5",
+  "installed_files_matching_build": 118,
+  "vc6_builds": [
+    "Release package",
+    "Release DLL",
+    "Debug package",
+    "Debug DLL"
+  ],
+  "xp_real_machine_tested": false,
+  "source_sha256": {
+    "joe/tw.c": "5e8904c983503acf0ee599a5fa6c609dd927bc56f82f06f892a3047391a04c97",
+    "joe/macos.c": "9a1a87255f411c3318c8f45be90824796c4d41a9f5e4feb5f98ee62c2d308dfd",
+    "joe/macos.h": "b0290c73a064b7f393fa6fde9307879ebcace285b0bfc3b8097b4372b47eb909",
+    "macos/gui_protocol.h": "852d7ca09dd436c10a1b7af0d26240c3071374ffc39bfe4d02d52bb38c7ba1ed",
+    "macos/gui/MJEditorSession.h": "e46d51927ff09775f8ca2727cb85d7d0e737b721c9a8f5191f540d84fb7312d5",
+    "macos/gui/MJEditorSession.m": "0a5303750a8fe82f95ac54c02beb8ffa5de543c6c72def5bbbd8049801505717",
+    "macos/gui/MJEditorView.m": "dcbbab520ebb387a026f0d43fd1a9341321ab25f30d73ca5678986d0277ed43f",
+    "rc/joerc.in": "8a63b7116547f2f56a49547919d3d208966c0ebada4e7d8ce4edaa2bdaac32e0",
+    "windows/rc/joerc": "ce93668dec9efc21c39d6c690408865badb0fbd2d63a6bf6bfd9b060cdea1ebd"
+  }
+}

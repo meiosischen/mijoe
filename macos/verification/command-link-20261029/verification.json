@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-29",
+  "command": "/usr/local/bin/mj",
+  "target": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe",
+  "binary_sha256": "0bd88cf6a66a640cf4eddd83e06e1a302f605a9a687983bccb7c17f180a94e2e",
+  "link_tests": 5,
+  "actual_system_command_tested": true,
+  "actual_system_command_checks": [
+    "launch via symlink without resolving argv0 first",
+    "resources from unrelated working directory",
+    "filename containing spaces",
+    "current search highlight and noh command",
+    "Vim editing and saving"
+  ],
+  "normal_rebuild_without_sudo_passed": true,
+  "app_builder_skip_core_link_check_passed": true,
+  "source_sha256": {
+    "tools/build_macos.py": "1a4778cd5a42383ed8f2b4e379e5b9a74f21c0eda7b8db1c4223a586fc7facda",
+    "tools/build_macos_app.py": "5501cae66109ba31de2fb55bc1305f3bfe4af3a413e9fbe578031eafb8fd9592",
+    "tools/link_macos_command.py": "de03c37354d8a6ed73e5a93cc240910ebf20f970727c1c67a4f0c5b272af3a44",
+    "tools/install_macos.py": "9cc2907657f05f42a1a987450e15908f8d25c9bab9d8e71e531c526f03d8309f",
+    "tests/macos_command_link_test.py": "4a9da7e69bddbaa5fcb1a529d415113f8c221debcd4a459977a9caa5e3be0139"
+  }
+}

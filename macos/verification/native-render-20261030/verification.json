@@ -1,0 +1,114 @@
+{
+  "date": "2026-10-30",
+  "scope": "macOS AppKit rendering, native repaint frames and scroll batching",
+  "app_build": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe.app",
+  "installed_app_updated": true,
+  "tui_command": "/usr/local/bin/mj",
+  "tui_target": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe",
+  "app_build_info": {
+    "architecture": "arm64",
+    "minimum_macos": "11.0",
+    "backend": {
+      "architecture": "arm64",
+      "macos_build_host": "26.3.1",
+      "binary_sha256": "9e01541a138f1417cf0ee257aa6432729fa4c989b46ca8412d987edb72209050",
+      "dependencies": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe:\n\t/usr/lib/libncurses.5.4.dylib (compatibility version 5.4.0, current version 5.4.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+      "sources": {
+        "joe/vim.c": "6add6569aebf7628c3a192e26a84bfa5464f5f2ce680ff58ecefbf4175e79a17",
+        "joe/vim.h": "9a0f8690108f61743fe0ece02a2240ce938b91f061c9c4f29a17734156eaa242",
+        "joe/vimhelp.h": "7d2057679d66fc2b4931c8fdb66ee0fd421a38779615457d72a4cd23c02d3858",
+        "docs/vim-help.txt": "187cd928dd7d34ce560a786e980d8d42c38528ee08535cb4d6a5d0e43c95b0c3",
+        "joe/help.c": "f149a937a042bb5497fffb1b3c529681c0a5c6f8ecd9066606d2aee6172da261",
+        "joe/help.h": "727b44de89de9df3ac5b158ec6a10b69234ebb2efb90bd3a0314c7c42718403c",
+        "joe/colors.c": "da35b881bfc71b8faa578ee0b963fe737e7295d2553d432935a24b40bc32b6c0",
+        "joe/colors.h": "5c492b25d5a66c123e52d67cc3617b282e53eaa9190aac1699d5416db7659df8",
+        "joe/bw.c": "9f772240b14654a5e61c329ca800c8c144fb5ef11a958c06df85edb923088761",
+        "joe/b.c": "1692c2b8729c4ddd35d0bd562154ce11482ac9109a99e4070a10c83c4bd97a99",
+        "joe/b.h": "e9362591a4d95d1b2180385e6701fde568389bcc0235567420f7cf891e69b91e",
+        "joe/mouse.c": "2a5e0b73454717136c3f9a7537baf287707920c5583f4bc3617257ecd8d3be32",
+        "joe/lfile.c": "426ecb92d023ac60ac29d63ba86abd7158122787a0fe74bd2593af12f2c9ecd1",
+        "joe/lfile.h": "0852cd05a63f26be74da38a9a829699bc0d2d6e9cf5a68fdc12d94dd7a8164ac",
+        "joe/ufile.c": "211cd4dd01fff90cae6250bd75579fd8a40a5452fc58991d96a36ab0726d098b",
+        "joe/ublock.c": "52f4195a6a13f16fd1840a62c47f5d35d7f6a778ac6731d10353c32b28e922f4",
+        "joe/w.c": "f2a297e8b942933094d613d4efa0b2f5628d167540e279f89844bc096fa1f7f2",
+        "joe/cmd.c": "f05c5a7c371794eb103123dd0f3c32c5733b4a40e196dcfaae02f8e3decbd821",
+        "joe/options.c": "79d65f8dcfd7811e711e30c7bcca8f022f1fc71d9003c31c07b1f630c32b7d76",
+        "joe/menu.c": "6fc427cb8357bed9c2c78b5db3adb630d361300f8cefc44586eae3afd2f34531",
+        "joe/menu.h": "1b925a44f1f76be62f144ce4edae58d3d4aa6f8221399881a968d5bc6f5aa89f",
+        "joe/mmenu.c": "7c551113547dd50cf8b63c07ac4c9628f6169de5c2994a421787e5203d24be5a",
+        "joe/tw.c": "852e0ad00d9ab6b58d598466d55b5d43c2c11cb3eaba1851bc8ae766a9806a04",
+        "joe/tw.h": "09ad1cc2fc1c7140657d2b6ee103c7b0263e58df5f5f431fec6fa2f9d2ba59c2",
+        "macos/gui_protocol.h": "9d616f11475bd8945d636807540a9417e261180a7ea2baa2d0f46aa7918c7a5c",
+        "colors/synhill.jcf": "882a8daf3b0600ac66c4e1d5f85b591e0213f86156b34625b35de33f0701eae6",
+        "colors/teasp.jcf": "6e7166f0c33ef30ffc9fcf1e336fd8af2db338703bf54170ee9a011842918c20",
+        "syntax/log.jsf": "5f9029a9a1d17680f3760cf02b4967653f63ae10e81c086d51b0d7d843c89ea8",
+        "rc/ftyperc": "56f126cc9a35ff0904b7da495f766c3abd9ada47d2745f948e7c4452b66ccba2",
+        "rc/joerc.in": "8a63b7116547f2f56a49547919d3d208966c0ebada4e7d8ce4edaa2bdaac32e0",
+        "colors/Makefile.am": "f088723193d46356ce5f416f36f3dcaab94ade0c07b5ecfc53c2c5ca374e6a64",
+        "joe/macos.c": "a69875c77f4c4b59d0d559e1d2a1fa18a46c34919f9a10064f9d8cc7fec301cf",
+        "joe/macos.h": "9c0a6f6f52d63b9c1453c5c42ceda6252c39fb9ad124ad012f8bf9dad9915452",
+        "joe/types.h": "f734c37d551f4cff5ae86cdfe11269b16295aaacfff87182fddf25dfdd045955",
+        "joe/main.c": "f1f37bcca2f938220dc8f1c734aa5f3d2d3f9a3b1216b8522d81450d7dd6f90c",
+        "joe/ushell.c": "f6f035f4d21caaefc9464ab1105c8fce68ecef80bf906e7d4ad193fa8e3da0ae",
+        "joe/termcap.c": "d6b46b13225871ef92c42625673bc1e8adc79ef3cf47a4c291ce4c361f399031"
+      }
+    },
+    "binary_sha256": "56212a0c57d14986558a4226b27645e21f885f77b7c9fb6dabdb16691c220196",
+    "sources": {
+      "macos/gui/MJEditorSession.h": "302c9fbd233385e57fe08238239ede9258cdd915a50f6988ef444d3b51a74608",
+      "macos/gui/MJEditorSession.m": "b61ce2b4d9f5d1836d6b143c92d3e8f6c23855728dc7ff618a5e6315c6c5d02c",
+      "macos/gui/MJEditorView.h": "c754be492a037a411572cea3dd886f6bade0af4746467b7b40e0edcfea5c60b0",
+      "macos/gui/MJEditorView.m": "9493d6aa220aa5536b80512d40cf36b50e7fbbedac7a3bf674abf520d1f7ef70",
+      "macos/gui/main.m": "0fbba946ba474c42139b726ccfc4a4f72145f922894e8809cba6fac451d68aad"
+    }
+  },
+  "benchmark": {
+    "cursorCallbacks": 48,
+    "cursorDrawMeanMs": 1.300161083539327,
+    "note": "Offscreen CPU draw cost, not display FPS or OS input latency",
+    "stateResponses": 51,
+    "cursorDirtyAreaFraction": 0.057811850311850314,
+    "legacyReplicaFullDrawMeanMs": 15.771698951721191,
+    "fullDrawMeanMs": 11.001253128051758
+  },
+  "benchmark_limitations": [
+    "Offscreen CPU cost, not display FPS or OS input latency.",
+    "Full draw comparison uses a replica of the old drawing loop and the same populated terminal model.",
+    "Early render-before.json fullDrawMeanMs is invalid for full draw comparison because the old session had not finished resize/warmup. Its cursor measurements remain the recorded baseline."
+  ],
+  "ft_status": "Not reproduced in TUI, native test, or currently installed original application. No f motion implementation change claimed. Exact failing line/start/key sequence requested.",
+  "platform_limits": [
+    "This turn did not rebuild Windows or test Windows XP.",
+    "Native release install and real user scrolling comparison remain pending."
+  ],
+  "tests": {
+    "native": 84,
+    "motion_oracle_cases": 95,
+    "bridge": 13,
+    "macros": 12,
+    "registers": 14,
+    "grep": 12,
+    "large_file": 15,
+    "pty": 46,
+    "ui": 32
+  },
+  "source_hashes_verified": true,
+  "codesign_verified": true,
+  "installed_ui_followup": {
+    "date": "2026-10-30",
+    "installed": "/Users/meiosis/Applications/MiJoe.app",
+    "binary_hashes": {
+      "Contents/MacOS/MiJoe": "ab1eb641adceb1224340b2de5a60ad452ba15db7d13e66176fa570cfec16e097",
+      "Contents/Resources/editor/bin/joe": "7be204a54523c526f38f984ee48ba48a5a72d5474d405dc39af4e8460dee0fab"
+    },
+    "fixture": "build/textobject/viw-window.txt",
+    "text": "prefix alpha suffix",
+    "keys": "09lviw",
+    "visual_result": "Entire alpha visibly selected, including characters before the initial cursor.",
+    "register_check": "y : Ctrl+R 0 displayed :alpha",
+    "final_state": "Fixture left in Visual mode with full alpha selected.",
+    "original_app_exit": "Clean quit with no save prompt.",
+    "installed_matches_build": true,
+    "codesign_verified": true
+  }
+}

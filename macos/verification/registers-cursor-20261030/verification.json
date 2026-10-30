@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-30",
+  "changes": [
+    "remove modal blank-and-repaint cycle and forced invalidation",
+    "hide caret during grep, restore on close",
+    "unnamed, yank 0, delete 1-9, small delete -, named a-z and uppercase append, black hole",
+    "Ctrl R register insertion in command and Insert modes",
+    "Visual and JOE-marked selections captured on command entry",
+    "native copy and JOE block copy update registers"
+  ],
+  "tests": {
+    "registers": 14,
+    "native_view": 61,
+    "grep_controls": 12,
+    "pty": 46,
+    "ui": 32,
+    "large_file": 15,
+    "gui_bridge": 13,
+    "motion_methods": 7,
+    "vim_reference_cases": 90,
+    "vc6": [
+      "Release package",
+      "Release dll",
+      "Debug package",
+      "Debug dll"
+    ],
+    "xp_pe_checks": 6
+  },
+  "actual_native_ui": [
+    "Visual select WARN; command Ctrl R zero inserts WARN",
+    "JOE Ctrl K Ctrl B / Ctrl K Ctrl K select WARN; command Ctrl R zero inserts WARN",
+    "grep match list: 3 results, no visible caret; Ctrl N and arrows select last result",
+    "Escape restores source caret; restored blank workspace, FS14 H-5"
+  ],
+  "installed_app": "/Users/meiosis/Applications/MiJoe.app",
+  "mj_target": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe",
+  "binary_sha256": "8013db0c46d333ff6d85582c81daf1255ba1fff7b4b74c4e0756afcbd7f59d2f",
+  "limits": [
+    "registers are in-process, not persisted",
+    "multiline command insertion uses spaces and never auto-executes",
+    "rectangular selection is stored as multiline text",
+    "system clipboard +/* and expression = registers not supported",
+    "Windows XP runtime not tested"
+  ],
+  "sources": {
+    "joe/vim.c": "e37d045e6c9156ba073db739ad308f8a057c0bfa4470a43cf4bebb9bebd5373c",
+    "joe/vim.h": "a7d6944d6ee351d6e351b4410084fe0187783eda4180ac17c6462b42601ded1c",
+    "joe/ublock.c": "52f4195a6a13f16fd1840a62c47f5d35d7f6a778ac6731d10353c32b28e922f4",
+    "joe/macos.c": "6e585800c676c5902ae31003908b41827ce7058388167a972be5fc7c76a95110",
+    "windows/src/joe/win/uwindows.c": "6fdf910288a565175be894491c40984c8fa88bdfd679b2a86f4141440b841067",
+    "tests/vim_register_test.py": "bbd0e6c4ce426c88a8d4c48cec494fb979c0537a567a3bef3b8dd73fcd677c8c",
+    "tests/macos_native_view_test.m": "5e70c54e356071da4e558c86e7a4918f5ef3d8ff49688013302793f19b35f9da"
+  }
+}

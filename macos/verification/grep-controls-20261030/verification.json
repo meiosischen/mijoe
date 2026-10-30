@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-30",
+  "scope": "cyan Ex command foreground; Emacs navigation in N/I/V; current-file grep modal",
+  "tests": {
+    "grep_controls": 12,
+    "navigation_subcases": 18,
+    "native_view": 55,
+    "pty": 46,
+    "ui": 32,
+    "large_file": 15,
+    "gui_bridge": 13,
+    "motion_methods": 7,
+    "vim_reference_subcases": 90,
+    "vc6": [
+      "Release package",
+      "Release dll",
+      "Debug package",
+      "Debug dll"
+    ],
+    "xp_pe_checks": 6
+  },
+  "actual_native_ui": [
+    "cyan command input",
+    "centered half-area modal with Chinese previews",
+    "Ctrl N and arrows preview matching row",
+    "G scroll to final hit",
+    "Ctrl P and Enter confirm selected position",
+    "Escape restores original cursor",
+    "restored blank workspace; FS14 H-5 preserved"
+  ],
+  "installed_app": "/Users/meiosis/Applications/MiJoe.app",
+  "mj_target": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe",
+  "backend_sha256": "c8cf616dd9a73284f9ec76ac5741c61a9fd1f713c29f6f8b6f2ff050f3c83364",
+  "limits": [
+    "current-file scope only",
+    "lazy grep is literal; regular buffer grep supports JOE regex",
+    "one item per matching line, cap 10000; previews truncated",
+    "Windows XP runtime not tested"
+  ],
+  "sources": {
+    "joe/vim.c": "272452e6cefeea0e81ae413e5582b5b629749bf1d08b895b122e163efcedfac2",
+    "joe/vim.h": "22323f19840ab1a3b0ffec71f4330f435ab85f755e4588b0911f977705a67482",
+    "joe/lfile.c": "426ecb92d023ac60ac29d63ba86abd7158122787a0fe74bd2593af12f2c9ecd1",
+    "joe/lfile.h": "0852cd05a63f26be74da38a9a829699bc0d2d6e9cf5a68fdc12d94dd7a8164ac",
+    "joe/w.c": "f2a297e8b942933094d613d4efa0b2f5628d167540e279f89844bc096fa1f7f2",
+    "joe/main.c": "9d458868736ec3001c00f6badca1ce209823b83a6d5920b4a9491549cd0cc9af",
+    "joe/macos.c": "13a21beef031a571575226f1ef776681dcc69f6f44e3db6feec693d90b43e1be",
+    "tests/grep_control_test.py": "24956ce000bc0b080285c17820ee88de0e3e313e60ac11261728c704afc22dbe",
+    "tests/macos_native_view_test.m": "f7f7895f5ca4b66f8d37b8e5fe389e8538bb06c2ecb7a8c7964189ca3e7b9532"
+  }
+}

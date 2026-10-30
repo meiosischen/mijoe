@@ -1,0 +1,339 @@
+# synhill: Synhili's JOE/Xterm palette by Joel Yliluoma (Bisqwit).
+# https://bisqwit.iki.fi/source/synhili.html
+# basic_vm.jsf at 5aab268cd76e0190095fb701e7bff72b3b4bff09.
+# UI gray and FileNumber follow the page's gwbasictetris4.png screenshot.
+# Generic String includes delimiters when the language lexer does not split them.
+# See docs/synhill.md for mappings and terminal limitations.
+
+.colors 16
+
+.set black 0
+.set idle 8
+.set identifier 7
+.set comment 9
+.set keyword 15
+.set number 12
+.set suffix 13
+.set string 14
+.set delimiter 6
+.set label 5
+.set operator 6
+.set brace 2
+.set data 11
+.set dataquote 3
+.set error 9
+.set errorbg 11
+.set file 14
+.set chrome 7
+
+-text [identifier]/[black]
+-linum [label]/[black]
+-curlinum [keyword]/[black]
+-curlin /[black]
+-selection [black]/[chrome]
+-help [identifier]/[black]
+-status [black]/[chrome]
+-menu [black]/[chrome]
+-menusel [chrome]/[black]
+-prompt [black]/[chrome]
+-message [black]/[chrome]
+-cursor [black]/[chrome]
+
+=Idle [idle]
+=Background [idle]/[black]
+=Ident [identifier]
+=Identifier +Ident
+=DefinedIdent +Ident
+=DefinedFunction +Ident
+=Variable +Ident
+=StringVariable +Ident
+=Builtin [keyword]
+=Comment [comment]
+=TODO +Comment
+=Keyword [keyword]
+=Preproc +Keyword
+=Define +Keyword
+=Type +Keyword
+=StorageClass +Keyword
+=Structure +Keyword
+=Statement +Keyword
+=Loop +Keyword
+=Conditional +Keyword
+=Number [number]
+=Numeric +Number
+=Constant +Number
+=NumericSuffix [suffix]
+=String [string]
+=StringContent +String
+=Character +String
+=StringDelimiter [delimiter]
+=StringEscape [delimiter]
+=CharacterEscape +StringEscape
+=Escape +StringEscape
+=IncLocal +String
+=IncSystem +String
+=Operator [operator]
+=Special +Operator
+=Brace [brace]
+=Control +Brace
+=Special2 +Brace
+=Label [label]
+=LineNumber +Label
+=Data [data]
+=DataQuote [dataquote]
+=DataDelim +DataQuote
+=FileNumber [file]
+=Bad [error]/[errorbg]
+=InvalidNumber +Bad
+=Mystery +Bad
+=Tag [operator]
+=TagName +Keyword
+=TagEnd +Tag
+=Title +Keyword
+=Ignore [idle]
+=diff.DelLine [comment]
+=diff.AddLine [brace]
+=diff.ChgLine [suffix]
+=diff.Garbage [idle]
+=diff.FileOld +diff.DelLine
+=diff.FileNew +diff.AddLine
+=diff.Hunk [string]
+
+-term  0 [black]
+-term  1 [comment]
+-term  2 [brace]
+-term  3 [data]
+-term  4 [number]
+-term  5 [label]
+-term  6 [operator]
+-term  7 [identifier]
+-term  8 [idle]
+-term  9 [error]
+-term 10 [brace]
+-term 11 [keyword]
+-term 12 [delimiter]
+-term 13 [suffix]
+-term 14 [string]
+-term 15 [chrome]
+
+.colors 256
+
+.set black 16
+.set idle 102
+.set identifier 145
+.set comment 167
+.set keyword 230
+.set number 135
+.set suffix 171
+.set string 39
+.set delimiter 31
+.set label 127
+.set operator 37
+.set brace 2
+.set data 228
+.set dataquote 137
+.set error 196
+.set errorbg 222
+.set file 81
+.set chrome 250
+
+-text [identifier]/[black]
+-linum [label]/[black]
+-curlinum [keyword]/[black]
+-curlin /[black]
+-selection [black]/[chrome]
+-help [identifier]/[black]
+-status [black]/[chrome]
+-menu [black]/[chrome]
+-menusel [chrome]/[black]
+-prompt [black]/[chrome]
+-message [black]/[chrome]
+-cursor [black]/[chrome]
+
+=Idle [idle]
+=Background [idle]/[black]
+=Ident [identifier]
+=Identifier +Ident
+=DefinedIdent +Ident
+=DefinedFunction +Ident
+=Variable +Ident
+=StringVariable +Ident
+=Builtin [keyword]
+=Comment [comment]
+=TODO +Comment
+=Keyword [keyword]
+=Preproc +Keyword
+=Define +Keyword
+=Type +Keyword
+=StorageClass +Keyword
+=Structure +Keyword
+=Statement +Keyword
+=Loop +Keyword
+=Conditional +Keyword
+=Number [number]
+=Numeric +Number
+=Constant +Number
+=NumericSuffix [suffix]
+=String [string]
+=StringContent +String
+=Character +String
+=StringDelimiter [delimiter]
+=StringEscape [delimiter]
+=CharacterEscape +StringEscape
+=Escape +StringEscape
+=IncLocal +String
+=IncSystem +String
+=Operator [operator]
+=Special +Operator
+=Brace [brace]
+=Control +Brace
+=Special2 +Brace
+=Label [label]
+=LineNumber +Label
+=Data [data]
+=DataQuote [dataquote]
+=DataDelim +DataQuote
+=FileNumber [file]
+=Bad [error]/[errorbg]
+=InvalidNumber +Bad
+=Mystery +Bad
+=Tag [operator]
+=TagName +Keyword
+=TagEnd +Tag
+=Title +Keyword
+=Ignore [idle]
+=diff.DelLine [comment]
+=diff.AddLine [brace]
+=diff.ChgLine [suffix]
+=diff.Garbage [idle]
+=diff.FileOld +diff.DelLine
+=diff.FileNew +diff.AddLine
+=diff.Hunk [string]
+
+-term  0 [black]
+-term  1 [comment]
+-term  2 [brace]
+-term  3 [data]
+-term  4 [number]
+-term  5 [label]
+-term  6 [operator]
+-term  7 [identifier]
+-term  8 [idle]
+-term  9 [error]
+-term 10 [brace]
+-term 11 [keyword]
+-term 12 [delimiter]
+-term 13 [suffix]
+-term 14 [string]
+-term 15 [chrome]
+
+.colors *
+
+.set black $000000
+.set idle $878787
+.set identifier $AFAFAF
+.set comment $D75F5F
+.set keyword $FFFFD7
+.set number $AF5FFF
+.set suffix $D75FFF
+.set string $00AFFF
+.set delimiter $0087D7
+.set label $AF00AF
+.set operator $00AFAF
+.set brace $00CD00
+.set data $FFFF87
+.set dataquote $AF875F
+.set error $FF0000
+.set errorbg $FFD787
+.set file $5FD7FF
+.set chrome $BEBEBE
+
+-text [identifier]/[black]
+-linum [label]/[black]
+-curlinum [keyword]/[black]
+-curlin /[black]
+-selection [black]/[chrome]
+-help [identifier]/[black]
+-status [black]/[chrome]
+-menu [black]/[chrome]
+-menusel [chrome]/[black]
+-prompt [black]/[chrome]
+-message [black]/[chrome]
+-cursor [black]/[chrome]
+
+=Idle [idle]
+=Background [idle]/[black]
+=Ident [identifier]
+=Identifier +Ident
+=DefinedIdent +Ident
+=DefinedFunction +Ident
+=Variable +Ident
+=StringVariable +Ident
+=Builtin [keyword]
+=Comment [comment]
+=TODO +Comment
+=Keyword [keyword]
+=Preproc +Keyword
+=Define +Keyword
+=Type +Keyword
+=StorageClass +Keyword
+=Structure +Keyword
+=Statement +Keyword
+=Loop +Keyword
+=Conditional +Keyword
+=Number [number]
+=Numeric +Number
+=Constant +Number
+=NumericSuffix [suffix]
+=String [string]
+=StringContent +String
+=Character +String
+=StringDelimiter [delimiter]
+=StringEscape [delimiter]
+=CharacterEscape +StringEscape
+=Escape +StringEscape
+=IncLocal +String
+=IncSystem +String
+=Operator [operator]
+=Special +Operator
+=Brace [brace]
+=Control +Brace
+=Special2 +Brace
+=Label [label]
+=LineNumber +Label
+=Data [data]
+=DataQuote [dataquote]
+=DataDelim +DataQuote
+=FileNumber [file]
+=Bad [error]/[errorbg]
+=InvalidNumber +Bad
+=Mystery +Bad
+=Tag [operator]
+=TagName +Keyword
+=TagEnd +Tag
+=Title +Keyword
+=Ignore [idle]
+=diff.DelLine [comment]
+=diff.AddLine [brace]
+=diff.ChgLine [suffix]
+=diff.Garbage [idle]
+=diff.FileOld +diff.DelLine
+=diff.FileNew +diff.AddLine
+=diff.Hunk [string]
+
+-term  0 [black]
+-term  1 [comment]
+-term  2 [brace]
+-term  3 [data]
+-term  4 [number]
+-term  5 [label]
+-term  6 [operator]
+-term  7 [identifier]
+-term  8 [idle]
+-term  9 [error]
+-term 10 [brace]
+-term 11 [keyword]
+-term 12 [delimiter]
+-term 13 [suffix]
+-term 14 [string]
+-term 15 [chrome]

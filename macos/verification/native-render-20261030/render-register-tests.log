@@ -1,0 +1,20 @@
+Register transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-pxb0cexa
+test_grep_repeated_status_does_not_repaint_list (__main__.RegisterTests.test_grep_repeated_status_does_not_repaint_list) ... ok
+test_insert_register_literal_and_undo (__main__.RegisterTests.test_insert_register_literal_and_undo) ... ok
+test_joe_marked_selection_to_command (__main__.RegisterTests.test_joe_marked_selection_to_command) ... ok
+test_named_read_and_special_search_register (__main__.RegisterTests.test_named_read_and_special_search_register) ... ok
+test_named_register_put_and_uppercase_append (__main__.RegisterTests.test_named_register_put_and_uppercase_append) ... ok
+test_named_small_delete_updates_numbered_one (__main__.RegisterTests.test_named_small_delete_updates_numbered_one) ... ok
+test_named_yank_preserves_zero_and_append_updates_unnamed (__main__.RegisterTests.test_named_yank_preserves_zero_and_append_updates_unnamed) ... ok
+test_native_copy_fills_zero_after_selection_cleared (__main__.RegisterTests.test_native_copy_fills_zero_after_selection_cleared) ... ok
+test_numbered_delete_register_and_black_hole (__main__.RegisterTests.test_numbered_delete_register_and_black_hole) ... ok
+test_register_capacity_and_cancel (__main__.RegisterTests.test_register_capacity_and_cancel) ... ok
+test_utf8_and_multiline_register_never_executes_command (__main__.RegisterTests.test_utf8_and_multiline_register_never_executes_command) ... ok
+test_visual_selection_direct_to_command (__main__.RegisterTests.test_visual_selection_direct_to_command) ... ok
+test_visual_yank_register_zero_in_command (__main__.RegisterTests.test_visual_yank_register_zero_in_command) ... ok
+test_yank_zero_survives_small_delete (__main__.RegisterTests.test_yank_zero_survives_small_delete) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 8.258s
+
+OK

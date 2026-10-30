@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-30",
+  "features": [
+    "quote register prefix echo",
+    "reg/registers read-only paged contents viewer with name filter",
+    "F5 start/stop and persistent REC indicator",
+    "F6 playback through original Vim/JOE dispatch",
+    "macro/macros read-only key inspection",
+    "Ctrl C interruption and command error abort"
+  ],
+  "tests": {
+    "macro_inspection": 12,
+    "native_view": 68,
+    "registers": 14,
+    "grep_controls": 12,
+    "pty": 46,
+    "ui": 32,
+    "gui_bridge": 13,
+    "large_file": 15,
+    "motion_methods": 7,
+    "vim_reference_cases": 90,
+    "vc6": [
+      "Release package",
+      "Release dll",
+      "Debug package",
+      "Debug dll"
+    ],
+    "xp_pe_checks": 6
+  },
+  "actual_native_ui": [
+    "quote and register a pending echo",
+    "reg a: line register, six bytes, alpha<NL>",
+    "F5 record I// <Esc>j: six keys, REC status",
+    "F6 adds comment prefix to next line",
+    "macro lists all six captured keys",
+    "sample edits undone; blank workspace and FS14 H-5 restored"
+  ],
+  "installed_app": "/Users/meiosis/Applications/MiJoe.app",
+  "mj_target": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe",
+  "backend_sha256": "388afeaa91a43b6a5c6e3f701ff477296391c56c90cfd5187c60e6e4b5be4991",
+  "limits": [
+    "one latest keyboard macro per process, not persisted",
+    "playback requires recording start mode",
+    "mouse and native menu actions are not recorded",
+    "recording beyond 65536 events is discarded; previous macro retained",
+    "register preview capped at 16 KiB per value",
+    "Windows XP runtime not tested"
+  ],
+  "sources": {
+    "joe/vim.c": "1fa2a9011afa7f917ffdad8044fe3ec2cd2000f6ee542fde35077e23fab8cd98",
+    "joe/vim.h": "9a0f8690108f61743fe0ece02a2240ce938b91f061c9c4f29a17734156eaa242",
+    "joe/main.c": "d4664b4d0ec1bba7340677448219e7d20c3b6ad8a666d07c35a65c56c8f193e1",
+    "joe/tw.c": "852e0ad00d9ab6b58d598466d55b5d43c2c11cb3eaba1851bc8ae766a9806a04",
+    "joe/macos.c": "bc9421ed432a4dcec8d6794a5af14c52146ccac3d2479d0bd4c8b082bdf814e3",
+    "macos/gui/MJEditorView.m": "99790fa8bbfbd23e7765ac1e9b65ec90d47230579bfc25574a17e50695aacae6",
+    "tests/vim_macro_test.py": "b440f542df080db0c5ea7ea3dfb485a6917aecf07225a0fc78fdba32a4a7cc97",
+    "tests/macos_native_view_test.m": "01d8cfc91c368934cc5de6bffd526629510fbeb40344cacf7ab58fae4718029b"
+  }
+}

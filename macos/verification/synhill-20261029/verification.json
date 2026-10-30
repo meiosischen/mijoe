@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-29",
+  "scheme": "synhill",
+  "reference_url": "https://bisqwit.iki.fi/source/synhili.html",
+  "upstream_commit": "5aab268cd76e0190095fb701e7bff72b3b4bff09",
+  "upstream_basic_vm_jsf_sha256": "b44d2e2592f255a195875d1b143bb6ac0142c7bf0e2bcbeae2abfbe3a32865c2",
+  "reference_screenshot_sha256": "ee6089316356d16493eac2eb1ed247b9896fae6b14b9068b90383dff0261354b",
+  "theme_sha256": "882a8daf3b0600ac66c4e1d5f85b591e0213f86156b34625b35de33f0701eae6",
+  "source_sha256": {
+    "colors/synhill.jcf": "882a8daf3b0600ac66c4e1d5f85b591e0213f86156b34625b35de33f0701eae6",
+    "colors/Makefile.am": "23b4857936f8096021690e85b873d8bd187d6274b5d960b1a844a50d49d8b41a",
+    "joe/colors.c": "44b039a3e203989ed2a919dfb19f39cffb9b9ea9fe2f46b2cf26a94f4406c2b5",
+    "joe/macos.c": "87bb8153d9eda0b93e4d28952c6a535c461568e62409ec7f3c8087c77203b5c3",
+    "macos/gui/MJEditorSession.h": "0d8b85162a597c98324880825538d727e93114104e1ca5b90e0bd049d1c98931",
+    "macos/gui/MJEditorSession.m": "98929cba98af33f65697470ef9eaab3f688f178b63480faeb557f049dd2f1633",
+    "macos/gui/MJEditorView.m": "29d3a7da95d9fd6da2e92d75581f46e1278bba71c391d0c26747e97c38f936fb",
+    "windows/src/configuration/configuration.vcxproj": "f5090f353fc02e28ad23efe6b69ec67d138c3c9f3149943ca59a5dfeb2e41e6b",
+    "windows/src/configuration/configuration.vcxproj.filters": "6962f6c04bd18a8d3baa8129eeb4738d3a4068496be766aac40477b2887b47c6",
+    "windows/src/exe/standalone/colors.spec": "f72afb7fc2d4c653ffc06877e9924069b491166a415dab4741910337adddd925",
+    "windows/vc6/builtins.rc": "9c5a531521064298c0bd852c295e69287b0168d0aac8c0068e635baf8d81560f",
+    "tests/vim_ui_test.py": "d4210b1862fdbcc932f13d9b735478b4f524386f6fa6833fa272b35b6a7bdb5a",
+    "tests/macos_native_view_test.m": "b9f9ded75a24fe81596923d194e91329861e40208fa6909b4e010e7eb54571e5",
+    "tools/test_macos_native_view.py": "d6b11342a76fe9e9129c0a709b9bb1431327a7cdfd6c677812a7184b29e02c20"
+  },
+  "tests": {
+    "terminal_ui": 32,
+    "native_appkit": 19,
+    "windows_release_wine": 50,
+    "windows_resource_carriers_matching_source": 4,
+    "pe32_xp_metadata": 6,
+    "installed_legacy_mj_loads_saved_synhill_with_rgb": true,
+    "packaged_theme_test_with_isolated_home": true
+  },
+  "vc6_builds": [
+    "Release standalone",
+    "Release DLL",
+    "Debug standalone",
+    "Debug DLL"
+  ],
+  "native_installed_bundle_files_matching_build": 116,
+  "local_install": {
+    "native_app": "~/Applications/MiJoe.app",
+    "terminal_theme": "~/.joe/colors/synhill.jcf",
+    "terminal_saved_preferences": "synhill",
+    "system_terminal_binary_replaced": false,
+    "previous_terminal_preferences_backup": "~/.joe_state.before-synhill-20261029"
+  },
+  "not_tested": [
+    "Windows XP real machine",
+    "modern Visual Studio",
+    "Intel or older macOS"
+  ],
+  "notes": [
+    "Existing language lexers retain their token classification.",
+    "16-color terminals approximate RGB.",
+    "No git commit or push performed."
+  ]
+}

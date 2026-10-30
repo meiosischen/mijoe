@@ -6,6 +6,7 @@
  *	This file is part of JOE (Joe's Own Editor)
  */
 #include "types.h"
+#include "vim.h"
 
 /* Attributes for line numbers, and current line */
 int bg_linum = 0;
@@ -104,11 +105,11 @@ void bwfllwh(W *thew)
 	}
 
 	/* Adjust scroll offset */
-	if (w->cursor->byte%16+60 < w->offset) {
-		w->offset = w->cursor->byte%16+60;
+	if (w->cursor->byte%16+60+(lf_active(w->b) ? 8 : 0) < w->offset) {
+		w->offset = w->cursor->byte%16+60+(lf_active(w->b) ? 8 : 0);
 		msetI(w->t->t->updtab + w->y, 1, w->h);
-	} else if (w->cursor->byte%16+60 >= w->offset + w->w) {
-		w->offset = w->cursor->byte%16+60 - (w->w - 1);
+	} else if (w->cursor->byte%16+60+(lf_active(w->b) ? 8 : 0) >= w->offset + w->w) {
+		w->offset = w->cursor->byte%16+60+(lf_active(w->b) ? 8 : 0) - (w->w - 1);
 		msetI(w->t->t->updtab + w->y, 1, w->h);
 	}
 }
@@ -218,6 +219,7 @@ void bwfllwt(W *thew)
 void bwfllw(W *w)
 {
 	BW *bw = (BW *)w->object;
+    lf_follow(bw);
 	if (bw->o.hex)
 		bwfllwh(w);
 	else
@@ -371,6 +373,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 	off_t ta;
 	char bc;
 	int ungetit = NO_MORE_DATA;
+	struct vim_highlight highlight;
 
 	struct utf8_sm utf8_sm;
 	struct ansi_sm ansi_sm;
@@ -383,6 +386,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
         int ca = 0;		/* Additional attributes for current character */
         int cm = -1;		/* Attribute mask for current character */
 
+	vim_highlight_begin(&highlight, bw, p);
 	utf8_init(&utf8_sm);
 	ansi_init(&ansi_sm);
 
@@ -458,6 +462,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 				}
 			else
 				SELECT_IF(byte >= from && byte < to);
+			if (vim_highlight_test(&highlight, byte) && cm == -1) { ca = selectatr; cm = selectmask; }
 			++byte;
 			if (bc == '\t') {
 				ta = p->b->o.tab - col % p->b->o.tab;
@@ -592,6 +597,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 			} else {
 				SELECT_IF(byte >= from && byte < to);
 			}
+			if (vim_highlight_test(&highlight, byte) && cm == -1) { ca = selectatr; cm = selectmask; }
 			++byte;
 			if (bc == '\t') {
 				ta = p->b->o.tab - (x - ox + scr) % p->b->o.tab;
@@ -704,6 +710,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 	else
 		p->ofst = (short)(bp - p->ptr - (p->hdr->ehole - p->hdr->hole));
 	p->byte = byte;
+	vim_highlight_end(&highlight);
 	return done;
 
       eosl:
@@ -714,6 +721,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 		p->ofst = (short)(bp - p->ptr - (p->hdr->ehole - p->hdr->hole));
 	p->byte = byte;
 	pnextl(p);
+	vim_highlight_end(&highlight);
 	return 0;
 }
 
@@ -790,73 +798,73 @@ void bwgenh(BW *w)
 	y=w->y;
 	attr = t->attr + y*w->t->w;
 	for (screen = t->scrn + y * w->t->w; y != bot; ++y, (screen += w->t->w), (attr += w->t->w)) {
-		char txt[80];
-		int fmt[80];
-		char bf[16];
-		int x;
-		memset(txt,' ',76);
-		msetI(fmt,BG_COLOR(bg_text),76);
-		txt[76]=0;
+		char txt[96];
+		int fmt[96];
+		char bf[32];
+		int x, extra = lf_active(w->b) ? 8 : 0;
+		memset(txt,' ',76+extra);
+		msetI(fmt,BG_COLOR(bg_text),76+extra);
+		txt[76+extra]=0;
 		if (w->o.hiline && (q->byte & ~15) == (w->cursor->byte & ~15)) {
-			msetI(fmt,BG_COLOR(bg_curlinum),9);
+			msetI(fmt,BG_COLOR(bg_curlinum),9+extra);
 		} else {
-			msetI(fmt,BG_COLOR(bg_linum),9);
+			msetI(fmt,BG_COLOR(bg_linum),9+extra);
 		}
 		if (!flg) {
 #if HAVE_LONG_LONG
-			sprintf(bf,"%8" JOE_INT64_FORMAT "x ",(unsigned JOE_LONG_LONG)q->byte);
+			sprintf(bf,"%*" JOE_INT64_FORMAT "x ",8+extra,(unsigned JOE_LONG_LONG)lf_absolute(w->b,q->byte));
 #else
-			sprintf(bf,"%8lx ",(unsigned long)q->byte);
+			sprintf(bf,"%*lx ",8+extra,(unsigned long)q->byte);
 #endif
-			memcpy(txt,bf,9);
+			memcpy(txt,bf,9+extra);
 			for (x=0; x!=8; ++x) {
 				int c;
 				if (q->byte==w->cursor->byte && !flg) {
-					fmt[10+x*3] = BG_COLOR(bg_cursor);
-					fmt[10+x*3+1] = BG_COLOR(bg_cursor);
+					fmt[10+extra+x*3] = BG_COLOR(bg_cursor);
+					fmt[10+extra+x*3+1] = BG_COLOR(bg_cursor);
 				}
 				if (q->byte>=from && q->byte<to && !flg) {
-					fmt[10+x*3] |= UNDERLINE;
-					fmt[10+x*3+1] |= UNDERLINE;
-					fmt[60+x] |= INVERSE;
+					fmt[10+extra+x*3] |= UNDERLINE;
+					fmt[10+extra+x*3+1] |= UNDERLINE;
+					fmt[60+extra+x] |= INVERSE;
 				}
 				c = pgetb(q);
 				if (c != NO_MORE_DATA) {
 					sprintf(bf,"%2.2x",c);
-					txt[10+x*3] = bf[0];
-					txt[10+x*3+1] = bf[1];
+					txt[10+extra+x*3] = bf[0];
+					txt[10+extra+x*3+1] = bf[1];
 					if (c >= 0x20 && c <= 0x7E)
-						txt[60+x] = TO_CHAR_OK(c);
+						txt[60+extra+x] = TO_CHAR_OK(c);
 					else
-						txt[60+x] = '.';
+						txt[60+extra+x] = '.';
 				} else
 					flg = 1;
 			}
 			for (x=8; x!=16; ++x) {
 				int c;
 				if (q->byte==w->cursor->byte && !flg) {
-					fmt[11+x*3] = BG_COLOR(bg_cursor);
-					fmt[11+x*3+1] = BG_COLOR(bg_cursor);
+					fmt[11+extra+x*3] = BG_COLOR(bg_cursor);
+					fmt[11+extra+x*3+1] = BG_COLOR(bg_cursor);
 				}
 				if (q->byte>=from && q->byte<to && !flg) {
-					fmt[11+x*3] |= UNDERLINE;
-					fmt[11+x*3+1] |= UNDERLINE;
-					fmt[60+x] |= INVERSE;
+					fmt[11+extra+x*3] |= UNDERLINE;
+					fmt[11+extra+x*3+1] |= UNDERLINE;
+					fmt[60+extra+x] |= INVERSE;
 				}
 				c = pgetb(q);
 				if (c != NO_MORE_DATA) {
 					sprintf(bf,"%2.2x",c);
-					txt[11+x*3] = bf[0];
-					txt[11+x*3+1] = bf[1];
+					txt[11+extra+x*3] = bf[0];
+					txt[11+extra+x*3+1] = bf[1];
 					if (c >= 0x20 && c <= 0x7E)
-						txt[60+x] = TO_CHAR_OK(c);
+						txt[60+extra+x] = TO_CHAR_OK(c);
 					else
-						txt[60+x] = '.';
+						txt[60+extra+x] = '.';
 				} else
 					flg = 1;
 			}
 		}
-		genfield(t, screen, attr, 0, y, TO_DIFF_OK(w->offset), txt, 76, BG_COLOR(bg_text), w->w, 1, fmt);
+		genfield(t, screen, attr, 0, y, TO_DIFF_OK(w->offset), txt, 76+extra, BG_COLOR(bg_text), w->w, 1, fmt);
 	}
 	prm(q);
 }

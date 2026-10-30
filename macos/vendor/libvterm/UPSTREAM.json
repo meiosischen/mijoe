@@ -1,0 +1,26 @@
+{
+  "version": "0.3.3",
+  "source": "https://www.leonerd.org.uk/code/libvterm/libvterm-0.3.3.tar.gz",
+  "sha256": "09156f43dd2128bd347cbeebe50d9a571d32c64e0cf18d211197946aff7226e0",
+  "files": [
+    "include/vterm.h",
+    "include/vterm_keycodes.h",
+    "Makefile",
+    "src/encoding.c",
+    "src/keyboard.c",
+    "src/vterm_internal.h",
+    "src/screen.c",
+    "src/vterm.c",
+    "src/fullwidth.inc",
+    "src/pen.c",
+    "src/encoding/uk.inc",
+    "src/encoding/DECdrawing.inc",
+    "src/utf8.h",
+    "src/unicode.c",
+    "src/mouse.c",
+    "src/rect.h",
+    "src/parser.c",
+    "src/state.c",
+    "LICENSE"
+  ]
+}
