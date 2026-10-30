@@ -1632,7 +1632,7 @@ struct grep_hit { JOE_LONG_LONG row, offset; char *text; };
 static struct {
     BW *bw;
     struct grep_hit *hits;
-    int count, selected, top, capped;
+    int count, selected, top, capped, left, widest;
     JOE_LONG_LONG origin, origin_top;
     off_t xcol, scroll;
 } grep_view;
@@ -1640,17 +1640,46 @@ static struct {
 int vim_grep_active(void) { return grep_view.bw!=NULL; }
 int vim_grep_count(void) { return grep_view.count; }
 int vim_grep_selected(void) { return grep_view.selected; }
+int vim_grep_column(void) { return grep_view.left; }
+
+/* Keep row numbers fixed while every result shares one text viewport. */
+static int grep_text_columns(int *gutter)
+{
+    int width, digits=1;
+    JOE_LONG_LONG row;
+    if (!grep_view.bw || !grep_view.count) { *gutter=0; return 0; }
+    width=(int)grep_view.bw->t->w*3/4;
+    if (width<16) width=(int)grep_view.bw->t->w;
+    if (width<4) { *gutter=0; return 0; }
+    row=grep_view.hits[grep_view.count-1].row;
+    while (row>=10) { ++digits; row/=10; }
+    *gutter=digits+2;
+    if (*gutter>width-3) *gutter=width-3;
+    return width-2-*gutter;
+}
+
+int vim_grep_max_column(void)
+{
+    int gutter, columns=grep_text_columns(&gutter);
+    return columns && grep_view.widest>columns ? grep_view.widest-columns : 0;
+}
 
 static int grep_emit(JOE_LONG_LONG row, JOE_LONG_LONG offset, const char *text, void *context)
 {
     struct grep_hit *hit;
     char *clean;
-    ptrdiff_t i, length=zlen(text);
+    ptrdiff_t i, length=zlen(text), columns;
     (void)context;
     if (length>1024) length=1024;
     clean=(char *)joe_malloc(length+1);
     for (i=0;i<length;++i) clean[i]=(unsigned char)text[i]<32 || text[i]==127 ? ' ' : text[i];
     clean[length]=0;
+    if (locale_map->type) columns=txtwidth(locale_map,clean,length);
+    else {
+        char *display=my_iconv(NULL,locale_map,clean,utf8_map);
+        columns=txtwidth(locale_map,display,zlen(display)); obj_free(display);
+    }
+    if (columns>grep_view.widest) grep_view.widest=(int)columns;
     if (!(grep_view.count%64)) grep_view.hits=(struct grep_hit *)joe_realloc(grep_view.hits,(grep_view.count+64)*sizeof(*hit));
     hit=grep_view.hits+grep_view.count++;
     hit->row=row; hit->offset=offset; hit->text=clean;
@@ -1692,6 +1721,14 @@ int vim_grep_key(int key)
     if (!grep_view.bw) return 0;
     if (key==27 || key==3 || key=='q') { grep_close(1); return 1; }
     if (key==13 || key==10) { grep_close(0); return 1; }
+    if (key==VIM_LEFT || key==VIM_RIGHT) {
+        int limit=vim_grep_max_column(), left=grep_view.left;
+        if (left>limit) left=limit;
+        if (key==VIM_RIGHT && left<limit) ++left;
+        if (key==VIM_LEFT && left>0) --left;
+        if (left!=grep_view.left) { grep_view.left=left; staupd=dostaupd=1; }
+        return 1;
+    }
     if (key==VIM_PGDN || key==VIM_PGUP) step=maint->h*2/3-3;
     if (step<1) step=1;
     if (key==VIM_DOWN || key==14 || key=='j' || key==VIM_PGDN) next+=step;
@@ -1706,13 +1743,15 @@ int vim_grep_key(int key)
 int vim_grep_render(Screen *screen)
 {
     SCRN *t=screen->t;
-    int width, height, x, y, row, visible;
-    char label[192], *text;
+    int width, height, x, y, row, visible, gutter, columns, limit;
+    char label[192];
     if (!grep_view.bw || grep_view.bw->t!=screen) return 0;
     width=(int)screen->w*3/4; height=(int)screen->h*2/3;
     if (width<16) width=(int)screen->w;
     if (height<5) height=(int)screen->h;
     if (width<4 || height<4) return 0;
+    columns=grep_text_columns(&gutter); limit=vim_grep_max_column();
+    if (grep_view.left>limit) grep_view.left=limit;
     x=((int)screen->w-width)/2; y=((int)screen->h-height)/2;
     visible=height-3;
     if (grep_view.selected<grep_view.top) grep_view.top=grep_view.selected;
@@ -1723,18 +1762,21 @@ int vim_grep_render(Screen *screen)
         int *attrs=t->attr+(y+row)*screen->w+x;
         int index=grep_view.top+row-1;
         const char *body="";
+        int result_row=row>0 && row<height-2 && index<grep_view.count;
         if (!row) {
-            sprintf(label,"Grep %d/%d%s",grep_view.selected+1,grep_view.count,grep_view.capped ? " (limit)" : ""); body=label; attribute=(bg_menu & ~FG_MASK)|FG_BCYAN|BOLD;
-        } else if (row==height-1) body="Up/Down ^P/^N PgUp/PgDn Enter Esc";
+            sprintf(label,"Grep %d/%d%s | X %d",grep_view.selected+1,grep_view.count,grep_view.capped ? " (limit)" : "",grep_view.left+1); body=label; attribute=(bg_menu & ~FG_MASK)|FG_BCYAN|BOLD;
+        } else if (row==height-1) body="Up/Down ^P/^N | Left/Right: pan";
         else if (row==height-2) body="Enter: keep preview | Esc: restore";
-        else if (index<grep_view.count) {
-            sprintf(label,"%" JOE_INT64_FORMAT "d: ",grep_view.hits[index].row);
-            text=vsdupz(label); text=vsncpy(sv(text),sz(grep_view.hits[index].text));
-            body=text;
+        else if (result_row) {
+            body=grep_view.hits[index].text;
             if (index==grep_view.selected) attribute=selectatr;
         }
         if (!locale_map->type) body=my_iconv(NULL,locale_map,body,utf8_map);
-        genfield(t,cells+1,attrs+1,x+1,y+row,0,body,zlen(body),attribute,width-2,0,NULL);
+        if (result_row) {
+            sprintf(label,"%*" JOE_INT64_FORMAT "d: ",gutter>2 ? gutter-2 : 1,grep_view.hits[index].row);
+            genfield(t,cells+1,attrs+1,x+1,y+row,0,label,zlen(label),attribute,gutter,0,NULL);
+            genfield(t,cells+1+gutter,attrs+1+gutter,x+1+gutter,y+row,grep_view.left,body,zlen(body),attribute,columns,0,NULL);
+        } else genfield(t,cells+1,attrs+1,x+1,y+row,0,body,zlen(body),attribute,width-2,0,NULL);
         outatr(locale_map,t,cells,attrs,x,y+row,!row || row==height-1 ? '+' : '|',bg_menu);
         outatr(locale_map,t,cells+width-1,attrs+width-1,x+width-1,y+row,!row || row==height-1 ? '+' : '|',bg_menu);
     }

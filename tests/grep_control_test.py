@@ -81,6 +81,34 @@ class GrepControlTests(GrepCase):
         self.editor.send('\x10');self.assertEqual(self.call(1)['grepSelected'],98)
         self.assertTrue(self.call(15,'2')['ok']);self.assertEqual(self.call(1)['grepSelected'],96)
         self.editor.send('\r')
+    def test_grep_shared_horizontal_viewport_and_bounds(self):
+        data=b'match short\n'+b'match '+b'x'*300+b' END\n'+b'match tail\n'
+        path=self.open(data)
+        r=self.state(':grep match\r');self.assertEqual(r['grepColumn'],0)
+        self.assertGreater(r['grepMaxColumn'],200)
+        selected=r['grepSelected'];offset=r['fileOffset']
+        r=self.state('\x1b[C'*20)
+        self.assertEqual(r['grepColumn'],20)
+        self.assertEqual((r['grepSelected'],r['fileOffset']),(selected,offset))
+        r=self.state('\x1b[B');self.assertEqual(r['grepColumn'],20);self.assertEqual(r['grepSelected'],1)
+        r=self.state('\x1b[C'*400);self.assertEqual(r['grepColumn'],r['grepMaxColumn'])
+        r=self.state('\x1b[B');self.assertEqual(r['grepSelected'],2);self.assertEqual(r['grepColumn'],r['grepMaxColumn'])
+        r=self.state('\x1b[D'*400);self.assertEqual(r['grepColumn'],0)
+        self.assertFalse(r['changed']);self.assertEqual(path.read_bytes(),data)
+        self.state('\x1b');r=self.state(':grep match\r');self.assertEqual(r['grepColumn'],0)
+        self.state('\x1b')
+
+    def test_grep_horizontal_resize_clamps_and_short_lines_do_not_scroll(self):
+        import fcntl,termios,struct
+        self.open(b'match '+b'x'*180+b'\nmatch short\n')
+        r=self.state(':grep match\r');old=r['grepMaxColumn']
+        r=self.state('\x1b[C'*300);self.assertEqual(r['grepColumn'],old)
+        fcntl.ioctl(self.editor.fd,termios.TIOCSWINSZ,struct.pack('HHHH',40,300,0,0))
+        r=self.state('\x1b[D');self.assertLess(r['grepMaxColumn'],old)
+        self.assertLessEqual(r['grepColumn'],r['grepMaxColumn'])
+        self.state('\x1b');self.open(b'match one\nmatch two\n')
+        r=self.state(':grep match\r\x1b[C'*1);self.assertEqual(r['grepColumn'],0);self.assertEqual(r['grepMaxColumn'],0)
+        self.state('\x1b')
     def test_grep_no_match_invalid_regex_and_literal_preview(self):
         self.open(b'hello\x1b[31mworld\n')
         r=self.state(':grep missing\r');self.assertFalse(r['grepActive'])

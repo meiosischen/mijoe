@@ -176,7 +176,7 @@ static void gui_report(unsigned long id, int ok, const char *error, const char *
     sprintf(number, ",\"fileBytes\":%" JOE_INT64_FORMAT "d,\"fileOffset\":%" JOE_INT64_FORMAT "d,\"readBytes\":%" JOE_INT64_FORMAT "d,\"loadedBytes\":%" JOE_INT64_FORMAT "d",
             lf_size(bw->b),lf_absolute(bw->b,bw->cursor->byte),lf_read_bytes(bw->b),(JOE_LONG_LONG)bw->b->eof->byte);
     json = vsncpy(sv(json),sz(number));
-	sprintf(number,",\"grepActive\":%s,\"grepCount\":%d,\"grepSelected\":%d",vim_grep_active() ? "true" : "false",vim_grep_count(),vim_grep_selected());
+	sprintf(number,",\"grepActive\":%s,\"grepCount\":%d,\"grepSelected\":%d,\"grepColumn\":%d,\"grepMaxColumn\":%d",vim_grep_active() ? "true" : "false",vim_grep_count(),vim_grep_selected(),vim_grep_column(),vim_grep_max_column());
     json=vsncpy(sv(json),sz(number));
 	json = vsncpy(sv(json), sz(",\"scheme\":"));
 	json = gui_json_string(json, scheme_name);

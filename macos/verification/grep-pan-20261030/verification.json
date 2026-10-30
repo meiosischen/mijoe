@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-30",
+  "behavior": "Left/Right pan all grep result text by one display column; fixed row numbers; clamp to widest preview; preserve offset on selection; reset on reopening.",
+  "native_checks": 99,
+  "grep_tests": 14,
+  "source_sha256": {
+    "joe/vim.c": "05d25311b356e4aac6a99cb4f3c4d7bb4ba1ee14505c8adae127bcf275b9792e",
+    "joe/vim.h": "e5047c774c6a922c4ef1bfdba9d5c2f466d4ed7ac155bfa9f4660e4d33af37a4",
+    "joe/macos.c": "dec85d8d366926c7e948fe9ed8dfc03187f1e538920f3d0453f82ad4a643dfc8"
+  },
+  "limitations": [
+    "Existing per-row preview limit around 1 KiB retained.",
+    "Native installed app update deferred until the separately requested grep -f feature is ready.",
+    "Windows rebuild deferred to combined feature verification."
+  ]
+}

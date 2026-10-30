@@ -312,6 +312,32 @@ int main(int argc, const char *argv[]) {
             check([request(session,MIJOE_GUI_STATUS,nil)[@"fileOffset"] longLongValue]==down && down>149*17,@"native Ctrl Shift U matches full PageDown in each editing mode");
         }
         [session sendText:@"\x1b"];
+        NSString *horizontalFile=[directory stringByAppendingPathComponent:@"grep-horizontal.txt"];
+        NSString *longTail=[@"x" stringByPaddingToLength:180 withString:@"x" startingAtIndex:0];
+        NSString *horizontalText=[NSString stringWithFormat:@"hit 中文%@ END\nhit 中文%@ END\nhit short\n",longTail,longTail];
+        [horizontalText writeToFile:horizontalFile atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+        [session sendText:[@":e " stringByAppendingString:[horizontalFile stringByAppendingString:@"\r:grep hit\r"]]];
+        check(waitFor(^BOOL{return [session.state[@"grepActive"] boolValue] && [session.state[@"grepCount"] intValue]==3;}),@"horizontal grep fixture opens three results");
+        int hr,hc;vterm_get_size(session.terminal,&hr,&hc);
+        int hw=hc*3/4,hh=hr*2/3,hx=(hc-hw)/2,hy=(hr-hh)/2;
+        for(int n=0;n<5;++n)[session sendKey:VTERM_KEY_RIGHT modifiers:VTERM_MOD_NONE];
+        check(waitFor(^BOOL{return [session.state[@"grepColumn"] intValue]==5;}),@"native Right pans grep without changing selected result");
+        BOOL sharedPan=YES,pinnedNumbers=YES;
+        for(int n=0;n<2;++n){
+            VTermScreenCell body,digit,border;
+            vterm_screen_get_cell(session.screen,(VTermPos){hy+1+n,hx+4},&body);
+            vterm_screen_get_cell(session.screen,(VTermPos){hy+1+n,hx+1},&digit);
+            vterm_screen_get_cell(session.screen,(VTermPos){hy+1+n,hx+hw-1},&border);
+            if(body.chars[0]!='<')sharedPan=NO;
+            if(digit.chars[0]!='1'+n || border.chars[0]!='|')pinnedNumbers=NO;
+        }
+        check(sharedPan,@"all grep rows share the same display-column offset across wide characters");
+        check(pinnedNumbers && [session.state[@"grepSelected"] intValue]==0 && [session.state[@"fileOffset"] intValue]==0,@"horizontal grep preserves row numbers borders and source cursor");
+        [session sendKey:VTERM_KEY_LEFT modifiers:VTERM_MOD_NONE];
+        check(waitFor(^BOOL{return [session.state[@"grepColumn"] intValue]==4;}),@"native Left pans back one display column");
+        VTermScreenCell wholeChinese;vterm_screen_get_cell(session.screen,(VTermPos){hy+1,hx+4},&wholeChinese);
+        check(wholeChinese.chars[0]==0x4e2d && wholeChinese.width==2,@"whole wide character is restored when horizontal viewport moves left");
+        [session sendText:@"\x1b"];
         [session sendText:[@":e " stringByAppendingString:[grepFile stringByAppendingString:@"\rgg0"]]];
         request(session,MIJOE_GUI_STATUS,nil);
         MJDamageProbe *damageProbe=[MJDamageProbe new];session.delegate=damageProbe;
