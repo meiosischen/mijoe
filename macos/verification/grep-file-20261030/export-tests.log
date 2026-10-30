@@ -1,0 +1,20 @@
+Grep file transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-4_6rt16o
+test_crlf_and_no_final_newline (__main__.GrepFileTests.test_crlf_and_no_final_newline) ... ok
+test_export_preserves_unsaved_source_edits_and_cursor (__main__.GrepFileTests.test_export_preserves_unsaved_source_edits_and_cursor) ... ok
+test_full_lines_export_and_unnamed_editable_import (__main__.GrepFileTests.test_full_lines_export_and_unnamed_editable_import) ... ok
+test_import_failure_preserves_original (__main__.GrepFileTests.test_import_failure_preserves_original) ... ok
+test_quotes_flag_termination_and_empty_invalid_queries (__main__.GrepFileTests.test_quotes_flag_termination_and_empty_invalid_queries) ... ok
+test_result_count_limit_is_explicit_in_plain_text (__main__.GrepFileTests.test_result_count_limit_is_explicit_in_plain_text) ... ok
+test_crlf_and_no_final_newline (__main__.LazyGrepFileTests.test_crlf_and_no_final_newline) ... ok
+test_export_preserves_unsaved_source_edits_and_cursor (__main__.LazyGrepFileTests.test_export_preserves_unsaved_source_edits_and_cursor) ... ok
+test_full_lines_export_and_unnamed_editable_import (__main__.LazyGrepFileTests.test_full_lines_export_and_unnamed_editable_import) ... ok
+test_import_failure_preserves_original (__main__.LazyGrepFileTests.test_import_failure_preserves_original) ... ok
+test_quotes_flag_termination_and_empty_invalid_queries (__main__.LazyGrepFileTests.test_quotes_flag_termination_and_empty_invalid_queries) ... ok
+test_result_count_limit_is_explicit_in_plain_text (__main__.LazyGrepFileTests.test_result_count_limit_is_explicit_in_plain_text) ... ok
+test_utf16_surrogate_at_export_chunk_boundary (__main__.LazyGrepFileTests.test_utf16_surrogate_at_export_chunk_boundary) ... ok
+test_plain_terminal_opens_a_separate_editing_window (__main__.TerminalGrepFileTests.test_plain_terminal_opens_a_separate_editing_window) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 7.641s
+
+OK

@@ -1628,7 +1628,7 @@ static int color_menu(BW *bw)
 }
 
 #define GREP_LIMIT 10000
-struct grep_hit { JOE_LONG_LONG row, offset; char *text; };
+struct grep_hit { JOE_LONG_LONG row, offset, start, end; char *text; };
 static struct {
     BW *bw;
     struct grep_hit *hits;
@@ -1664,7 +1664,7 @@ int vim_grep_max_column(void)
     return columns && grep_view.widest>columns ? grep_view.widest-columns : 0;
 }
 
-static int grep_emit(JOE_LONG_LONG row, JOE_LONG_LONG offset, const char *text, void *context)
+static int grep_emit(JOE_LONG_LONG row, JOE_LONG_LONG offset, JOE_LONG_LONG start, JOE_LONG_LONG end, const char *text, void *context)
 {
     struct grep_hit *hit;
     char *clean;
@@ -1682,7 +1682,7 @@ static int grep_emit(JOE_LONG_LONG row, JOE_LONG_LONG offset, const char *text, 
     if (columns>grep_view.widest) grep_view.widest=(int)columns;
     if (!(grep_view.count%64)) grep_view.hits=(struct grep_hit *)joe_realloc(grep_view.hits,(grep_view.count+64)*sizeof(*hit));
     hit=grep_view.hits+grep_view.count++;
-    hit->row=row; hit->offset=offset; hit->text=clean;
+    hit->row=row; hit->offset=offset; hit->start=start; hit->end=end; hit->text=clean;
     if (grep_view.count==GREP_LIMIT) { grep_view.capped=1; return 1; }
     return 0;
 }
@@ -1783,14 +1783,99 @@ int vim_grep_render(Screen *screen)
     cpos(t,x+1,y+1+grep_view.selected-grep_view.top);
     return 1;
 }
-static int grep_open(BW *bw, const char *expression)
+#define GREP_TEXT_LIMIT (64L*1024*1024)
+
+/* Generated text is an ordinary unnamed, editable buffer: it participates in
+ * unsaved-buffer protection, and saving never overwrites its transfer file. */
+static int import_text_result(BW *bw, const char *path, int new_window)
+{
+    FILE *input=fopen(path,"rb");
+    B *b;
+    struct stat status;
+    int old_guess, error;
+    if (!input) return -1;
+    if (fstat(fileno(input),&status) || (status.st_mode&S_IFMT)!=S_IFREG || status.st_size<0 || status.st_size>GREP_TEXT_LIMIT) { fclose(input); return -1; }
+    old_guess=guess_utf16; guess_utf16=0;
+    b=bread(fileno(input),GREP_TEXT_LIMIT+1); error=berror || b->eof->byte>GREP_TEXT_LIMIT; guess_utf16=old_guess; fclose(input);
+    if (error) { brm(b); return -1; }
+    setopt(b,"");
+    b->internal=b->scratch=b->rdonly=0; b->changed=1;
+    b->o.charmap=utf8_map; b->o.map_name="utf-8"; b->o.readonly=b->o.hex=b->o.crlf=b->o.ansi=0;
+    b->o.syntax=NULL; b->o.syntax_name=NULL; b->o.highlight=0;
+    if (new_window) {
+        BW *next=wmktw(bw->t,b);
+        bw->t->curwin=next->parent; wshowone(next->parent);
+    } else { error=get_buffer_in_window(bw,b); brm(b); }
+    mode=VM_NORMAL; clear_pending(); staupd=dostaupd=1;
+    return error ? -1 : 0;
+}
+
+static int grep_export(BW *bw)
+{
+    char *path=mktmp(NULL);
+    FILE *output;
+    JOE_LONG_LONG written=0;
+    int i, result=0, handed=0;
+    if (!path) { message("Could not create grep transfer file"); return -1; }
+    output=fopen(path,"wb");
+    if (!output) { unlink(path); obj_free(path); message("Could not write grep transfer file"); return -1; }
+    for (i=0;i<grep_view.count && !result;++i) {
+        struct grep_hit *hit=grep_view.hits+i;
+        char label[64];
+        int length=sprintf(label,"%" JOE_INT64_FORMAT "d: ",hit->row);
+        if (written+length+1>GREP_TEXT_LIMIT) { result=-4; break; }
+        if (fwrite(label,1,length,output)!=(size_t)length) { result=-1; break; }
+        written+=length;
+        if (lf_active(bw->b)) result=lf_export_text(bw,hit->start,hit->end,output,&written,GREP_TEXT_LIMIT-1);
+        else {
+            P *p=pdup(bw->cursor,"grep_export");
+            char bytes[65536]; ptrdiff_t used=0;
+            pgoto(p,(off_t)hit->start);
+            while (p->byte<hit->end && !result) {
+                char encoded[8]; off_t at=p->byte;
+                int c=pgetc(p); ptrdiff_t amount;
+                if (!at && c==0xfeff) continue;
+                amount=utf8_encode(encoded,c);
+                memcpy(bytes+used,encoded,amount); used+=amount;
+                if (used>=(ptrdiff_t)sizeof(bytes)-8 || p->byte==hit->end) {
+                    if (written+used>=GREP_TEXT_LIMIT) result=-4;
+                    else if (fwrite(bytes,1,used,output)!=(size_t)used) result=-1;
+                    else written+=used;
+                    used=0;
+                    if (!result && ttcheck()) { int key=ttgetch(); if (key==27 || key==3) result=-2; else nungetc(key); }
+                }
+            }
+            prm(p);
+        }
+        if (!result) { if (fputc('\n',output)==EOF) result=-1; else ++written; }
+    }
+    if (!result && grep_view.capped) {
+        const char *notice="[grep: results limited to 10000 matching lines]\n";
+        if (written+zlen(notice)>GREP_TEXT_LIMIT) result=-4;
+        else if (fputs(notice,output)==EOF) result=-1;
+    }
+    if (fclose(output)) result=-1;
+    grep_close(0);
+    if (!result) {
+#if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
+        handed=mijoe_macos_gui_open_text(path);
+#endif
+        if (!handed) result=import_text_result(bw,path,1);
+    }
+    if (!handed) unlink(path);
+    obj_free(path);
+    if (result) message(result==-4 ? "Grep output exceeds 64 MiB; narrow the expression" : result==-2 ? "Grep export cancelled" : "Could not open grep text results");
+    return result ? -1 : 0;
+}
+
+static int grep_open(BW *bw, const char *expression, int to_file)
 {
     P *line, *scan, *end;
     struct regcomp *compiled;
     char *pattern;
     int result=0;
     long checked=0;
-    if (!*expression || bw->o.hex) { message("Use :grep expression in a text file"); return -1; }
+    if (!*expression || bw->o.hex) { message("Use :grep [-f] expression in a text file"); return -1; }
     clear_visual(); finish_unit(); clear_pending(); mode=VM_NORMAL;
     grep_view.bw=bw;
     grep_view.origin=lf_absolute(bw->b,bw->cursor->byte);
@@ -1826,7 +1911,7 @@ static int grep_open(BW *bw, const char *expression)
                 char *raw, *text;
                 if (amount>1000) amount=1000;
                 raw=brs(line,amount); text=my_iconv(NULL,utf8_map,raw,bw->b->o.charmap); joe_free(raw);
-                result=grep_emit((JOE_LONG_LONG)line->line+1,(JOE_LONG_LONG)candidate,text,NULL); obj_free(text);
+                result=grep_emit((JOE_LONG_LONG)line->line+1,(JOE_LONG_LONG)candidate,(JOE_LONG_LONG)line->byte,(JOE_LONG_LONG)end->byte,text,NULL); obj_free(text);
                 if (result) break;
             }
             if (!(++checked%64) && ttcheck()) {
@@ -1841,6 +1926,7 @@ static int grep_open(BW *bw, const char *expression)
         if (result<0) { grep_close(1); message("Grep cancelled"); return -1; }
     }
     if (!grep_view.count) { grep_close(1); message("Grep: no matching lines"); return 0; }
+    if (to_file) return grep_export(bw);
     if (search_pattern) joe_free(search_pattern);
     search_pattern=zdup(expression); search_highlight=1; search_back=0;
     ttputs("\033[?25l");
@@ -1868,8 +1954,12 @@ int vim_ex(W *w, const char *line)
     } else if (!zcmp(cmd,"macro") || !zcmp(cmd,"macros")) {
         if (bang || *arg) { message("Use :macro to view recorded keys"); rc=-1; } else rc=macro_show(bw);
     } else if (!zcmp(cmd,"grep")) {
-        if (bang) { message("Use :grep expression"); rc=-1; }
-        else rc=grep_open(bw,arg);
+        int to_file=!strncmp(arg,"-f",2) && (!arg[2] || arg[2]==' ' || arg[2]=='\t');
+        if (to_file) { arg+=2; while (*arg==' ' || *arg=='\t') ++arg; }
+        if (!strncmp(arg,"--",2) && (!arg[2] || arg[2]==' ' || arg[2]=='\t')) { arg+=2; while (*arg==' ' || *arg=='\t') ++arg; }
+        arg=filename_arg(arg);
+        if (bang || !arg) { message("Use :grep [-f] expression"); rc=-1; }
+        else rc=grep_open(bw,arg,to_file);
     } else if (!zcmp(cmd, "help") || !zcmp(cmd, "h")) {
 		if (*arg || bang) { message("Use :help to list supported commands"); rc = -1; }
 		else rc = help_text_open(w, "MiJoe :help - supported commands", vim_help_text, 1);
@@ -2361,6 +2451,7 @@ int vim_gui_action(int action, const char *path)
 	if (!bw || paste) return -1;
 	finish_unit(); clear_pending(); sequence_len = 0;
 	switch (action) {
+	case MIJOE_GUI_IMPORT_TEXT: rc=import_text_result(bw,path,0); break;
 	case MIJOE_GUI_SAVE: rc = vim_write_file(bw->parent, NULL, 0, 0); break;
 	case MIJOE_GUI_SAVE_AS: rc = vim_write_file(bw->parent, path, 1, 1); break;
 	case MIJOE_GUI_COPY: vim_capture_selection(); break;

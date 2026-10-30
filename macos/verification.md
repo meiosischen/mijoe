@@ -1,5 +1,17 @@
 # macOS 本机版本验证
 
+2026-10-30 grep 水平视口及 `-f`：左右方向键按显示列统一移动全部结果正文，行号固定，
+上下选择保留偏移，缩放自动限制范围，重新搜索归零；中文宽字符跨视口边界检查通过。
+`:grep -f 表达式` 导出完整匹配行到可编辑、未命名的新窗口，原文档与光标保持不变。
+macOS 原生版为独立窗口，终端/Windows 为新的 JOE 编辑窗口；支持另存为和未保存退出保护。
+保留最多 10000 个命中并注明上限，总输出超过 64 MiB 时取消；长行与 UTF-16 分块导出。
+14 项导出、14 项 grep/导航、107 项原生、15 项大文件、13 项桥接、46 项 PTY、32 项 UI 检查通过。
+VC6 Release/Debug 独立及 DLL 四种构建、6 个 PE 的 XP 静态检查通过；未验证真实 XP 运行。
+新版已安装，实际窗口检查了统一左右滚动、新建独立结果窗口、编辑/另存为及原窗口保留。
+安装版与构建包逐个主程序校验一致，源码哈希和签名完整性通过，mj 软链已刷新。
+详见 [水平视口记录](verification/grep-pan-20261030/verification.json)、
+[完整导出与安装记录](verification/grep-file-20261030/verification.json)。
+
 2026-10-30 翻页快捷键：按用户要求将 `Ctrl+U` 改为整页上翻，新增 `Ctrl+Shift+U`（大写 U）整页下翻，
 分别等同 PageUp/PageDown，在 Normal/Insert/Visual 可用；`Ctrl+D` 保留原半页下翻。
 macOS 和 Windows 窗口区分 Shift，TUI 接受 CSI-u / modifyOtherKeys 独立编码；传统终端若都发送

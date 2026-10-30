@@ -1,0 +1,126 @@
+{
+  "date": "2026-10-30",
+  "feature": "grep -f exports complete numbered matching lines into an editable unnamed buffer in an independent macOS native window, or a new JOE editing window for terminals/Windows.",
+  "source_document_preserved": true,
+  "query_examples": [
+    ":grep -f ERROR",
+    ":grep -f \"WARN.*timeout\"",
+    ":grep -f -- -f"
+  ],
+  "limits": {
+    "matching_lines": 10000,
+    "result_bytes": 67108864,
+    "line_limit_behavior": "Append explicit notice at 10000 hits.",
+    "byte_limit_behavior": "Cancel export, delete transfer file and ask to narrow the expression."
+  },
+  "tests": {
+    "grep_file": 14,
+    "grep_controls_and_horizontal": 14,
+    "native": 107,
+    "large_files": 15,
+    "gui_bridge": 13,
+    "pty": 46,
+    "ui": 32
+  },
+  "coverage": [
+    "Complete long lines beyond the popup preview limit",
+    "UTF-16 non-BMP character crossing 64 KiB export chunk boundary",
+    "Original cursor and unsaved edits preserved",
+    "CRLF and missing final newline",
+    "Editable unnamed buffer, save-as and close protection",
+    "Missing/oversized import rejected",
+    "No match, invalid expression and option termination",
+    "Explicit hit-count cap notice",
+    "Terminal editing window fallback"
+  ],
+  "live_ui": {
+    "horizontal_popup": "Both rows panned together with fixed line numbers; title X 3 after two Right presses.",
+    "generated_window_title": "Grep 结果 — MiJoe",
+    "unnamed_modified_buffer": true,
+    "edit_and_save_as": true,
+    "saved_text_verified": true,
+    "original_window_retained_and_unmodified": true,
+    "final_window": "Restored clean unnamed window."
+  },
+  "windows_builds": [
+    "VC6 Release standalone",
+    "VC6 Release DLL",
+    "VC6 Debug standalone",
+    "VC6 Debug DLL"
+  ],
+  "xp_pe_checks": 6,
+  "limitations": [
+    "Real Windows XP execution was not performed.",
+    "Normal popup retains its existing approximately 1 KiB preview per line; -f exports full lines up to the total byte limit."
+  ],
+  "app_build_info": {
+    "architecture": "arm64",
+    "minimum_macos": "11.0",
+    "backend": {
+      "architecture": "arm64",
+      "macos_build_host": "26.3.1",
+      "binary_sha256": "c03a7b64cd9d63ed2f710a386d8077a3c2f59e92999ef1b2e6872f0183b6e37b",
+      "dependencies": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe:\n\t/usr/lib/libncurses.5.4.dylib (compatibility version 5.4.0, current version 5.4.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+      "sources": {
+        "joe/vim.c": "97ed4c1b02fc7136c26ec93894e12338be0d97bf1a30f5440f6f1b87be87be6c",
+        "joe/vim.h": "e5047c774c6a922c4ef1bfdba9d5c2f466d4ed7ac155bfa9f4660e4d33af37a4",
+        "joe/vimhelp.h": "88ce7dcfd6ca85ee9d6bf827fbea4148f225eac3e3d27dc4292af682f18af10a",
+        "docs/vim-help.txt": "aaa23f29e92d5278f4919b87a3a5fe37171abe0e8447fccdb5af394361011fea",
+        "joe/help.c": "f149a937a042bb5497fffb1b3c529681c0a5c6f8ecd9066606d2aee6172da261",
+        "joe/help.h": "727b44de89de9df3ac5b158ec6a10b69234ebb2efb90bd3a0314c7c42718403c",
+        "joe/colors.c": "da35b881bfc71b8faa578ee0b963fe737e7295d2553d432935a24b40bc32b6c0",
+        "joe/colors.h": "5c492b25d5a66c123e52d67cc3617b282e53eaa9190aac1699d5416db7659df8",
+        "joe/bw.c": "9f772240b14654a5e61c329ca800c8c144fb5ef11a958c06df85edb923088761",
+        "joe/b.c": "1692c2b8729c4ddd35d0bd562154ce11482ac9109a99e4070a10c83c4bd97a99",
+        "joe/b.h": "e9362591a4d95d1b2180385e6701fde568389bcc0235567420f7cf891e69b91e",
+        "joe/mouse.c": "2a5e0b73454717136c3f9a7537baf287707920c5583f4bc3617257ecd8d3be32",
+        "joe/lfile.c": "a3e3ccafc7a1a5e8f9103776829d56273dcb58bf2a79871a75524a7fe971804e",
+        "joe/lfile.h": "4dbf944974bffffd6b4324f7e4c2e1390888efe031dad58534cb9b21a50053cb",
+        "joe/ufile.c": "211cd4dd01fff90cae6250bd75579fd8a40a5452fc58991d96a36ab0726d098b",
+        "joe/ublock.c": "52f4195a6a13f16fd1840a62c47f5d35d7f6a778ac6731d10353c32b28e922f4",
+        "joe/w.c": "f2a297e8b942933094d613d4efa0b2f5628d167540e279f89844bc096fa1f7f2",
+        "joe/cmd.c": "f05c5a7c371794eb103123dd0f3c32c5733b4a40e196dcfaae02f8e3decbd821",
+        "joe/options.c": "79d65f8dcfd7811e711e30c7bcca8f022f1fc71d9003c31c07b1f630c32b7d76",
+        "joe/menu.c": "6fc427cb8357bed9c2c78b5db3adb630d361300f8cefc44586eae3afd2f34531",
+        "joe/menu.h": "1b925a44f1f76be62f144ce4edae58d3d4aa6f8221399881a968d5bc6f5aa89f",
+        "joe/mmenu.c": "7c551113547dd50cf8b63c07ac4c9628f6169de5c2994a421787e5203d24be5a",
+        "joe/tw.c": "852e0ad00d9ab6b58d598466d55b5d43c2c11cb3eaba1851bc8ae766a9806a04",
+        "joe/tw.h": "09ad1cc2fc1c7140657d2b6ee103c7b0263e58df5f5f431fec6fa2f9d2ba59c2",
+        "macos/gui_protocol.h": "6a33f05cb9fa6af7d951f913431ebf72ea507033b9294b38b80b5ad2040ed421",
+        "colors/synhill.jcf": "882a8daf3b0600ac66c4e1d5f85b591e0213f86156b34625b35de33f0701eae6",
+        "colors/teasp.jcf": "6e7166f0c33ef30ffc9fcf1e336fd8af2db338703bf54170ee9a011842918c20",
+        "syntax/log.jsf": "5f9029a9a1d17680f3760cf02b4967653f63ae10e81c086d51b0d7d843c89ea8",
+        "rc/ftyperc": "56f126cc9a35ff0904b7da495f766c3abd9ada47d2745f948e7c4452b66ccba2",
+        "rc/joerc.in": "8a63b7116547f2f56a49547919d3d208966c0ebada4e7d8ce4edaa2bdaac32e0",
+        "colors/Makefile.am": "f088723193d46356ce5f416f36f3dcaab94ade0c07b5ecfc53c2c5ca374e6a64",
+        "joe/macos.c": "f44a69fa7be1bedc80e08cc39a34884a7324f63e4dc12edd84096309042ba8bb",
+        "joe/macos.h": "f41a793b467d13273848785ee729b3881c2b8789a0b9bc9d27458ba6a6ad48cc",
+        "joe/types.h": "f734c37d551f4cff5ae86cdfe11269b16295aaacfff87182fddf25dfdd045955",
+        "joe/main.c": "f1f37bcca2f938220dc8f1c734aa5f3d2d3f9a3b1216b8522d81450d7dd6f90c",
+        "joe/ushell.c": "f6f035f4d21caaefc9464ab1105c8fce68ecef80bf906e7d4ad193fa8e3da0ae",
+        "joe/termcap.c": "d6b46b13225871ef92c42625673bc1e8adc79ef3cf47a4c291ce4c361f399031"
+      }
+    },
+    "binary_sha256": "e24183611f9c05ab0f4c9acf8bcee264f204c35146491e8fceb4560808c00b06",
+    "sources": {
+      "macos/gui/MJEditorSession.h": "302c9fbd233385e57fe08238239ede9258cdd915a50f6988ef444d3b51a74608",
+      "macos/gui/MJEditorSession.m": "b61ce2b4d9f5d1836d6b143c92d3e8f6c23855728dc7ff618a5e6315c6c5d02c",
+      "macos/gui/MJEditorView.h": "c754be492a037a411572cea3dd886f6bade0af4746467b7b40e0edcfea5c60b0",
+      "macos/gui/MJEditorView.m": "1ff5632a3f6fb99ee86a3b4f631d5a53052a2e0113ac19e7e2a925ea69649086",
+      "macos/gui/main.m": "e41e9a03999e55c489a8a0523b99f587dd42dd7ef7b1dca9613974e4e5b4a23f"
+    }
+  },
+  "installed_updated": true,
+  "installed_binary_hashes": {
+    "Contents/MacOS/MiJoe": "e24183611f9c05ab0f4c9acf8bcee264f204c35146491e8fceb4560808c00b06",
+    "Contents/Resources/editor/bin/joe": "c03a7b64cd9d63ed2f710a386d8077a3c2f59e92999ef1b2e6872f0183b6e37b"
+  },
+  "source_hashes_verified": true,
+  "codesign_verified": true,
+  "tui_command": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe",
+  "test_source_hashes": {
+    "tests/grep_file_test.py": "706918b9ffeda8837e306be64fdc706671d11e966d8cbe04e7d6684308568f73",
+    "tests/grep_control_test.py": "bdd78e30d7d5a1d18d74d0f9eb54491de71b1191ee22488c2f6760cb253e1e87",
+    "tests/macos_native_view_test.m": "b76436b1166926f79b242fcc1b503d2446d70d75bc5db0fec25c168c16b17713"
+  }
+}

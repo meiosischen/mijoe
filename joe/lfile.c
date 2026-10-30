@@ -683,7 +683,7 @@ int lf_search(BW *bw, const char *pattern, int backwards, long n)
 }
 
 /* Stream matching lines without materialising the source or its line index. */
-int lf_grep(BW *bw, const char *pattern, int (*emit)(JOE_LONG_LONG,JOE_LONG_LONG,const char *,void *), void *context)
+int lf_grep(BW *bw, const char *pattern, int (*emit)(JOE_LONG_LONG,JOE_LONG_LONG,JOE_LONG_LONG,JOE_LONG_LONG,const char *,void *), void *context)
 {
     struct large_file *f=bw->b->large;
     unsigned char *needle, bytes[LF_IO], preview[1024];
@@ -748,7 +748,7 @@ int lf_grep(BW *bw, const char *pattern, int (*emit)(JOE_LONG_LONG,JOE_LONG_LONG
                         preview[used]=0;
                         text=my_iconv(NULL,utf8_map,(const char *)preview,bw->o.charmap);
                     }
-                    result=emit(row,hit,text,context) ? 1 : 0;
+                    result=emit(row,hit,line_start,position+i+1,text,context) ? 1 : 0;
                     if (f->encoding) joe_free(text); else obj_free(text);
                     if (result) break;
                 }
@@ -761,3 +761,47 @@ int lf_grep(BW *bw, const char *pattern, int (*emit)(JOE_LONG_LONG,JOE_LONG_LONG
     return result;
 }
 int lf_goto_absolute(BW *bw, JOE_LONG_LONG position) { return lf_seek(bw,position,-1); }
+
+/* Export a known matching line with bounded decoding buffers. Never change
+ * the source viewing window or materialise an arbitrarily long source line. */
+int lf_export_text(BW *bw, JOE_LONG_LONG start, JOE_LONG_LONG end, FILE *output, JOE_LONG_LONG *written, JOE_LONG_LONG limit)
+{
+    struct large_file *f=bw->b->large;
+    unsigned char bytes[LF_IO+1];
+    int unit, k;
+    if (!f || start<0 || end<start || end>f->size || !lf_valid(f)) return -1;
+    unit=f->encoding ? 2 : 1;
+    for (k=0;k<2 && end-start>=unit;++k) {
+        int c;
+        if (lf_read(f,end-unit,(char *)bytes,unit)!=unit) return -1;
+        c=unit==1 ? bytes[0] : f->encoding==1 ? bytes[0]|bytes[1]<<8 : bytes[0]<<8|bytes[1];
+        if (c!=(k ? 13 : 10)) break;
+        end-=unit;
+    }
+    if (!start && !f->encoding && bw->b->o.charmap->type && end>=3 && lf_read(f,0,(char *)bytes,3)==3 && !memcmp(bytes,"\357\273\277",3)) start=3;
+    while (start<end) {
+        ptrdiff_t amount=end-start<LF_IO ? (ptrdiff_t)(end-start) : LF_IO, length;
+        char *text;
+        unsigned int *map=NULL;
+        if (lf_cancelled()) return -2;
+        if (lf_read(f,start,(char *)bytes,amount)!=amount || !lf_valid(f)) return -1;
+        if (f->encoding) {
+            struct large_file decoder=*f;
+            int last=amount>=2 ? (f->encoding==1 ? bytes[amount-2]|bytes[amount-1]<<8 : bytes[amount-2]<<8|bytes[amount-1]) : 0;
+            if (start+amount<end && last>=0xd800 && last<=0xdbff) amount-=2;
+            decoder.start=start;
+            text=lf_decode(&decoder,bytes,amount,&length,&map);
+        } else if (bw->b->o.charmap->type) { text=(char *)bytes; length=amount; }
+        else { bytes[amount]=0; text=my_iconv(NULL,utf8_map,(char *)bytes,bw->b->o.charmap); length=zlen(text); }
+        if (*written+length>limit || fwrite(text,1,length,output)!=(size_t)length) {
+            if (map) { joe_free(map); joe_free(text); }
+            else if (text!=(char *)bytes) obj_free(text);
+            return *written+length>limit ? -4 : -1;
+        }
+        *written+=length;
+        if (map) { joe_free(map); joe_free(text); }
+        else if (text!=(char *)bytes) obj_free(text);
+        start+=amount;
+    }
+    return lf_valid(f) ? 0 : -1;
+}

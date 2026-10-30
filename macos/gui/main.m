@@ -14,6 +14,7 @@
 - (void)perform:(int)operation;
 @property(nonatomic) BOOL largePromptVisible;
 @property(nonatomic) NSDictionary *previousState;
+@property(nonatomic, copy) NSString *temporaryTitle;
 @end
 
 @interface MJAppDelegate : NSObject <NSApplicationDelegate>
@@ -21,6 +22,7 @@
 @property(nonatomic, strong) NSMutableArray<NSString *> *openingFiles;
 @property(nonatomic) BOOL launched, terminating;
 - (void)openFile:(NSString *)file;
+- (void)openGeneratedFile:(NSString *)file;
 - (void)documentClosed:(MJDocumentWindow *)document;
 @end
 
@@ -63,7 +65,7 @@ static void showMessage(NSWindow *window, NSString *title, NSString *message) {
     NSString *path = state[@"file"];
     NSDictionary *previous=self.previousState;
     if (![path isEqual:previous[@"file"]] || ![state[@"lazy"] isEqual:previous[@"lazy"]]) {
-        self.window.title=path.length ? [path.lastPathComponent stringByAppendingString:@" — MiJoe"] : @"未命名 — MiJoe";
+        self.window.title=path.length ? [path.lastPathComponent stringByAppendingString:@" — MiJoe"] : self.temporaryTitle ?: @"未命名 — MiJoe";
         self.window.representedURL=path.length ? [NSURL fileURLWithPath:path] : nil;
         if ([state[@"lazy"] boolValue]) self.window.title=[self.window.title stringByAppendingString:@"（只读·懒加载）"];
     }
@@ -72,6 +74,11 @@ static void showMessage(NSWindow *window, NSString *title, NSString *message) {
         ![state[@"textBackground"] isEqual:previous[@"textBackground"]] ||
         ![state[@"cursorBackground"] isEqual:previous[@"cursorBackground"]]) self.editor.needsDisplay=YES;
     self.previousState=state;
+    NSString *generated=state[@"openTextFile"];
+    if ([generated isKindOfClass:NSString.class] && generated.length && ![generated isEqual:previous[@"openTextFile"]]) {
+        if (self.closing || self.appOwner.terminating) [NSFileManager.defaultManager removeItemAtPath:generated error:NULL];
+        else [self.appOwner openGeneratedFile:generated];
+    }
     if ([state[@"largePending"] boolValue] && !self.largePromptVisible && !self.closing) {
         self.largePromptVisible = YES;
         NSAlert *alert = [NSAlert new];
@@ -267,6 +274,19 @@ static void showMessage(NSWindow *window, NSString *title, NSString *message) {
     if (document) [self.documents addObject:document];
 }
 - (void)documentClosed:(MJDocumentWindow *)document { [self.documents removeObject:document]; }
+- (void)openGeneratedFile:(NSString *)file {
+    MJDocumentWindow *document=[[MJDocumentWindow alloc] initWithFile:nil owner:self];
+    if (!document) { [NSFileManager.defaultManager removeItemAtPath:file error:NULL]; return; }
+    document.temporaryTitle=@"Grep 结果 — MiJoe";
+    document.window.title=document.temporaryTitle;
+    [self.documents addObject:document];
+    __weak MJDocumentWindow *weakDocument=document;
+    [document.session request:MIJOE_GUI_IMPORT_TEXT path:file completion:^(NSDictionary *result){
+        [NSFileManager.defaultManager removeItemAtPath:file error:NULL];
+        MJDocumentWindow *current=weakDocument;
+        if (![result[@"ok"] boolValue] && current) showMessage(current.window,@"无法打开 grep 结果",result[@"error"]);
+    }];
+}
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender { return NO; }
 - (void)closeForTermination {
     MJDocumentWindow *document = self.documents.lastObject;

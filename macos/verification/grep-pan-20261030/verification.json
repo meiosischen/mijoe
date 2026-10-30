@@ -12,5 +12,8 @@
     "Existing per-row preview limit around 1 KiB retained.",
     "Native installed app update deferred until the separately requested grep -f feature is ready.",
     "Windows rebuild deferred to combined feature verification."
-  ]
+  ],
+  "combined_verification": "../grep-file-20261030/verification.json",
+  "installed_followup": true,
+  "windows_followup": "All four VC6 builds passed; see combined verification."
 }

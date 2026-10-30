@@ -10,6 +10,7 @@ void mijoe_macos_gui_frame(int begin);
 const char *mijoe_macos_gui_typography(void);
 int mijoe_macos_gui_pending(void);
 int mijoe_macos_gui_action(va_list args);
+int mijoe_macos_gui_open_text(const char *path);
 
 #include "../macos/gui_protocol.h"
 

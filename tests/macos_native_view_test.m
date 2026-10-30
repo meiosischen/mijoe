@@ -74,12 +74,13 @@ static BOOL coloredText(MJEditorSession *session, NSString *text, int foreground
 @interface MJDamageProbe : NSObject <MJEditorSessionDelegate>
 @property(nonatomic,strong) NSMutableArray<NSValue *> *rects;
 @property NSUInteger full, acknowledgments;
+@property(nonatomic,copy) NSString *generatedPath;
 @end
 @implementation MJDamageProbe
 - (instancetype)init { if((self=[super init]))_rects=[NSMutableArray array];return self; }
 - (void)editorContentChanged:(MJEditorSession *)s { self.full++; }
 - (void)editor:(MJEditorSession *)s damagedRect:(VTermRect)rect { [self.rects addObject:[NSValue valueWithBytes:&rect objCType:@encode(VTermRect)]]; }
-- (void)editor:(MJEditorSession *)s stateChanged:(NSDictionary *)state { if([state[@"id"] unsignedIntValue])self.acknowledgments++; }
+- (void)editor:(MJEditorSession *)s stateChanged:(NSDictionary *)state { if([state[@"id"] unsignedIntValue])self.acknowledgments++;if(state[@"openTextFile"])self.generatedPath=state[@"openTextFile"]; }
 - (void)editor:(MJEditorSession *)s exited:(int)status {}
 @end
 @interface MJEditorSession (FrameProtocolTests)
@@ -338,6 +339,24 @@ int main(int argc, const char *argv[]) {
         VTermScreenCell wholeChinese;vterm_screen_get_cell(session.screen,(VTermPos){hy+1,hx+4},&wholeChinese);
         check(wholeChinese.chars[0]==0x4e2d && wholeChinese.width==2,@"whole wide character is restored when horizontal viewport moves left");
         [session sendText:@"\x1b"];
+        MJDamageProbe *exportProbe=[MJDamageProbe new];session.delegate=exportProbe;
+        [session sendText:@":grep -f hit\r"];
+        check(waitFor(^BOOL{return exportProbe.generatedPath.length>0;}),@"grep -f emits an independent native window transfer event");
+        NSString *exported=[NSString stringWithContentsOfFile:exportProbe.generatedPath encoding:NSUTF8StringEncoding error:NULL];
+        NSString *expectedExport=[NSString stringWithFormat:@"1: hit 中文%@ END\n2: hit 中文%@ END\n3: hit short\n",longTail,longTail];
+        check([exported isEqual:expectedExport],@"grep -f transfer contains numbered plain text results");
+        NSDictionary *sourceState=request(session,MIJOE_GUI_STATUS,nil);
+        check([sourceState[@"file"] isEqual:horizontalFile] && ![sourceState[@"changed"] boolValue] && ![sourceState[@"grepActive"] boolValue] && [sourceState[@"fileOffset"] intValue]==0,@"grep -f leaves source document and cursor unchanged");
+        MJEditorSession *resultSession=[[MJEditorSession alloc] initWithExecutable:[NSString stringWithUTF8String:argv[1]] file:nil error:NULL];
+        check([request(resultSession,MIJOE_GUI_IMPORT_TEXT,exportProbe.generatedPath)[@"ok"] boolValue],@"second native session imports generated text without using Ex input");
+        NSDictionary *resultState=request(resultSession,MIJOE_GUI_STATUS,nil);
+        check([resultState[@"file"] isEqual:@""] && [resultState[@"changed"] boolValue] && ![resultState[@"readonly"] boolValue],@"generated result is unnamed editable and protected as unsaved");
+        check(![request(resultSession,MIJOE_GUI_QUIT,nil)[@"ok"] boolValue],@"closing an unsaved grep result requires saving or explicit discard");
+        NSString *savedResults=[directory stringByAppendingPathComponent:@"grep-saved.txt"];
+        check([request(resultSession,MIJOE_GUI_SAVE_AS,savedResults)[@"ok"] boolValue] && [[NSString stringWithContentsOfFile:savedResults encoding:NSUTF8StringEncoding error:NULL] isEqual:expectedExport],@"generated grep text can be saved as a normal document");
+        request(resultSession,MIJOE_GUI_DISCARD,nil);check(waitFor(^BOOL{return !resultSession.running;}),@"independent result session closes without closing its source session");
+        [NSFileManager.defaultManager removeItemAtPath:exportProbe.generatedPath error:NULL];
+        session.delegate=nil;
         [session sendText:[@":e " stringByAppendingString:[grepFile stringByAppendingString:@"\rgg0"]]];
         request(session,MIJOE_GUI_STATUS,nil);
         MJDamageProbe *damageProbe=[MJDamageProbe new];session.delegate=damageProbe;

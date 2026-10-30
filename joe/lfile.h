@@ -23,5 +23,6 @@ const char *lf_status(BW *bw);
 int lf_row_label(BW *bw, char *text, int size);
 int lf_column_label(BW*,char*,int size);
 int lf_goto_absolute(BW *bw, JOE_LONG_LONG position);
-int lf_grep(BW *bw, const char *pattern, int (*emit)(JOE_LONG_LONG,JOE_LONG_LONG,const char *,void *), void *context);
+int lf_grep(BW *bw, const char *pattern, int (*emit)(JOE_LONG_LONG,JOE_LONG_LONG,JOE_LONG_LONG,JOE_LONG_LONG,const char *,void *), void *context);
+int lf_export_text(BW *bw, JOE_LONG_LONG start, JOE_LONG_LONG end, FILE *output, JOE_LONG_LONG *written, JOE_LONG_LONG limit);
 #endif

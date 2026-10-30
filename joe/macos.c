@@ -160,6 +160,7 @@ const char *mijoe_macos_gui_typography(void)
 	return label;
 }
 
+static const char *gui_open_text_path;
 static void gui_report(unsigned long id, int ok, const char *error, const char *text, int update)
 {
 	BW *bw = gui_buffer();
@@ -192,6 +193,10 @@ static void gui_report(unsigned long id, int ok, const char *error, const char *
 	json = vsncpy(sv(json), sz(",\"error\":"));
 	json = gui_json_string(json, error);
 	if (text) { json = vsncpy(sv(json), sz(",\"text\":")); json = gui_json_string(json, text); }
+	if (gui_open_text_path) {
+		json=vsncpy(sv(json),sz(",\"openTextFile\":"));
+		json=gui_json_string(json,gui_open_text_path);
+	}
 	json = vsncpy(sv(json), sz("}\n"));
 	if (!update || !last_gui_status || zcmp(last_gui_status, json)) {
 		joe_write(gui_response, json, zlen(json));
@@ -201,6 +206,14 @@ static void gui_report(unsigned long id, int ok, const char *error, const char *
 		}
 	}
 	obj_free(json);
+}
+
+int mijoe_macos_gui_open_text(const char *path)
+{
+	gui_init();
+	if (gui_response<0) return 0;
+	gui_open_text_path=path; gui_report(0,1,NULL,NULL,0); gui_open_text_path=NULL;
+	return 1;
 }
 
 void mijoe_macos_gui_update(void)
