@@ -115,6 +115,11 @@ Windows XP 构建仍使用 `windows/vc6/build.bat Release package`。
 
 ## Emacs 风格移动与当前文件 grep
 
+新增内置 `awk`、`head -n`、`more`、`less`，与 `grep` 可通过 `|` 任意组合。
+例如 `:grep ERROR | awk '{print $2,$5}' | head -n 20 | less`；
+`-f` 导出整条管道的最终纯文本，console 新建缓冲区、macOS 原生版新建窗口。
+语法、示例、分页操作及处理上限见 [内置文本管道](internal-pipelines.md)。
+
 三种模式均支持 `Ctrl+A/E` 到行首/行尾、`Ctrl+P/N` 上下移动、`Ctrl+B/F` 前后移动一个字符。
 `Ctrl+K` 前缀优先，保留 `Ctrl+K Ctrl+B` 标记起点与 `Ctrl+K Ctrl+F` 查找等原有组合。
 Insert 下 `Ctrl+E` 定位到换行符之前，可直接追加；Ctrl+B/F 可以跨行移动。`:command` 输入行使用 cyan。

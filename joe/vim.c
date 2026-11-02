@@ -5,6 +5,7 @@
 #include "types.h"
 #include "vim.h"
 #include "vimhelp.h"
+#include "vimpipe.h"
 
 #define VM_NORMAL 0
 #define VM_INSERT 1
@@ -1669,11 +1670,14 @@ static int color_menu(BW *bw)
 }
 
 #define GREP_LIMIT 10000
-struct grep_hit { JOE_LONG_LONG row, offset, start, end; char *text; };
+struct grep_hit { JOE_LONG_LONG row, offset, start, end; char *text, *full; };
 static struct {
     BW *bw;
     struct grep_hit *hits;
     int count, selected, top, capped, left, widest;
+    int pipeline;
+    const char *title;
+    JOE_LONG_LONG bytes;
     JOE_LONG_LONG origin, origin_top;
     off_t xcol, scroll;
 } grep_view;
@@ -1711,7 +1715,10 @@ static int grep_emit(JOE_LONG_LONG row, JOE_LONG_LONG offset, JOE_LONG_LONG star
     char *clean;
     ptrdiff_t i, length=zlen(text), columns;
     (void)context;
-    if (length>1024) length=1024;
+    if (length>1024) {
+        length=1024;
+        while (length && ((unsigned char)text[length]&0xc0)==0x80) --length;
+    }
     clean=(char *)joe_malloc(length+1);
     for (i=0;i<length;++i) clean[i]=(unsigned char)text[i]<32 || text[i]==127 ? ' ' : text[i];
     clean[length]=0;
@@ -1723,7 +1730,7 @@ static int grep_emit(JOE_LONG_LONG row, JOE_LONG_LONG offset, JOE_LONG_LONG star
     if (columns>grep_view.widest) grep_view.widest=(int)columns;
     if (!(grep_view.count%64)) grep_view.hits=(struct grep_hit *)joe_realloc(grep_view.hits,(grep_view.count+64)*sizeof(*hit));
     hit=grep_view.hits+grep_view.count++;
-    hit->row=row; hit->offset=offset; hit->start=start; hit->end=end; hit->text=clean;
+    hit->row=row; hit->offset=offset; hit->start=start; hit->end=end; hit->text=clean; hit->full=NULL;
     if (grep_view.count==GREP_LIMIT) { grep_view.capped=1; return 1; }
     return 0;
 }
@@ -1741,7 +1748,10 @@ static void grep_close(int cancel)
         } else { pgoto(bw->cursor,(off_t)grep_view.origin); pgoto(bw->top,(off_t)grep_view.origin_top); }
         bw->cursor->xcol=grep_view.xcol; bw->offset=grep_view.scroll;
     }
-    for (i=0;i<grep_view.count;++i) joe_free(grep_view.hits[i].text);
+    for (i=0;i<grep_view.count;++i) {
+        joe_free(grep_view.hits[i].text);
+        if (grep_view.hits[i].full) joe_free(grep_view.hits[i].full);
+    }
     if (grep_view.hits) joe_free(grep_view.hits);
     memset(&grep_view,0,sizeof(grep_view));
     ttputs("\033[?25h");
@@ -1770,6 +1780,8 @@ int vim_grep_key(int key)
         if (left!=grep_view.left) { grep_view.left=left; staupd=dostaupd=1; }
         return 1;
     }
+    if (grep_view.pipeline && key==' ') key=VIM_PGDN;
+    if (grep_view.pipeline && key=='b') key=VIM_PGUP;
     if (key==VIM_PGDN || key==VIM_PGUP) step=maint->h*2/3-3;
     if (step<1) step=1;
     if (key==VIM_DOWN || key==14 || key=='j' || key==VIM_PGDN) next+=step;
@@ -1805,8 +1817,8 @@ int vim_grep_render(Screen *screen)
         const char *body="";
         int result_row=row>0 && row<height-2 && index<grep_view.count;
         if (!row) {
-            sprintf(label,"Grep %d/%d%s | X %d",grep_view.selected+1,grep_view.count,grep_view.capped ? " (limit)" : "",grep_view.left+1); body=label; attribute=(bg_menu & ~FG_MASK)|FG_BCYAN|BOLD;
-        } else if (row==height-1) body="Up/Down ^P/^N | Left/Right: pan";
+            sprintf(label,"%s %d/%d%s | X %d",grep_view.title ? grep_view.title : "Grep",grep_view.selected+1,grep_view.count,grep_view.capped ? " (limit)" : "",grep_view.left+1); body=label; attribute=(bg_menu & ~FG_MASK)|FG_BCYAN|BOLD;
+        } else if (row==height-1) body=grep_view.pipeline ? "Space/b: page | Arrows: move/pan" : "Up/Down ^P/^N | Left/Right: pan";
         else if (row==height-2) body="Enter: keep preview | Esc: restore";
         else if (result_row) {
             body=grep_view.hits[index].text;
@@ -1863,11 +1875,16 @@ static int grep_export(BW *bw)
     for (i=0;i<grep_view.count && !result;++i) {
         struct grep_hit *hit=grep_view.hits+i;
         char label[64];
-        int length=sprintf(label,"%" JOE_INT64_FORMAT "d: ",hit->row);
+        int length=grep_view.pipeline ? 0 : sprintf(label,"%" JOE_INT64_FORMAT "d: ",hit->row);
         if (written+length+1>GREP_TEXT_LIMIT) { result=-4; break; }
         if (fwrite(label,1,length,output)!=(size_t)length) { result=-1; break; }
         written+=length;
-        if (lf_active(bw->b)) result=lf_export_text(bw,hit->start,hit->end,output,&written,GREP_TEXT_LIMIT-1);
+        if (hit->full) {
+            ptrdiff_t n=zlen(hit->full);
+            if (written+n+1>GREP_TEXT_LIMIT) result=-4;
+            else if (fwrite(hit->full,1,n,output)!=(size_t)n) result=-1;
+            else written+=n;
+        } else if (lf_active(bw->b)) result=lf_export_text(bw,hit->start,hit->end,output,&written,GREP_TEXT_LIMIT-1);
         else {
             P *p=pdup(bw->cursor,"grep_export");
             char bytes[65536]; ptrdiff_t used=0;
@@ -1891,7 +1908,7 @@ static int grep_export(BW *bw)
         if (!result) { if (fputc('\n',output)==EOF) result=-1; else ++written; }
     }
     if (!result && grep_view.capped) {
-        const char *notice="[grep: results limited to 10000 matching lines]\n";
+        const char *notice=grep_view.pipeline ? "[pipeline: results limited to 10000 lines]\n" : "[grep: results limited to 10000 matching lines]\n";
         if (written+zlen(notice)>GREP_TEXT_LIMIT) result=-4;
         else if (fputs(notice,output)==EOF) result=-1;
     }
@@ -1983,16 +2000,65 @@ static int grep_open(BW *bw, const char *expression, int to_file)
     return 0;
 }
 
+static int pipeline_emit(JOE_LONG_LONG row, JOE_LONG_LONG offset, const char *text, void *context)
+{
+    ptrdiff_t n=zlen(text);
+    int result;
+    (void)context;
+    if (grep_view.bytes+n+1>GREP_TEXT_LIMIT) return -4;
+    result=grep_emit(row,offset,offset,offset,text,NULL);
+    grep_view.hits[grep_view.count-1].full=zdup(text);
+    grep_view.bytes+=n+1;
+    return result;
+}
+
+static int pipeline_open(BW *bw, const char *command)
+{
+    struct vim_pipeline *pipeline;
+    const char *error;
+    char *utf8;
+    int result, to_file;
+    if (bw->o.hex) { message("Internal pipelines require a text file"); return -1; }
+    utf8=my_iconv(NULL,utf8_map,command,locale_map);
+    pipeline=vp_compile(utf8,&error); obj_free(utf8);
+    if (!pipeline) { message(error); return -1; }
+    clear_visual(); finish_unit(); clear_pending(); mode=VM_NORMAL;
+    grep_view.bw=bw; grep_view.pipeline=1; grep_view.title=vp_title(pipeline);
+    grep_view.origin=lf_absolute(bw->b,bw->cursor->byte);
+    grep_view.origin_top=lf_absolute(bw->b,bw->top->byte);
+    grep_view.xcol=bw->cursor->xcol; grep_view.scroll=bw->offset;
+    to_file=vp_to_file(pipeline);
+    result=vp_run(pipeline,bw,pipeline_emit,NULL);
+    if (result<0) {
+        grep_close(1);
+        message(result==-4 && !strcmp(vp_error(pipeline),"Pipeline failed") ? "Pipeline output exceeds 64 MiB; narrow the query" : vp_error(pipeline));
+        vp_free(pipeline); return -1;
+    }
+    vp_free(pipeline);
+    if (!grep_view.count) { grep_close(1); message("Pipeline: no output lines"); return 0; }
+    if (to_file) return grep_export(bw);
+    ttputs("\033[?25l"); grep_preview(); return 0;
+}
+
 int vim_ex(W *w, const char *line)
 {
 	BW *bw = (BW *)w->object;
 	char *copy = zdup(line), *cmd = copy, *arg, *end;
-	int bang = 0, rc = 0;
+	int bang = 0, rc = 0, adjacent_pipe = 0;
 	while (*cmd == ':' || *cmd == ' ' || *cmd == '\t') ++cmd;
 	end = cmd;
-	while (*end && *end != ' ' && *end != '\t' && *end != '!') ++end;
+	while (*end && *end != ' ' && *end != '\t' && *end != '!' && *end != '|') ++end;
 	if (*end == '!') { bang = 1; *end++ = 0; }
+	else if (*end == '|') { adjacent_pipe=1; *end++=0; }
 	else if (*end) *end++ = 0;
+    if (!zcmp(cmd,"awk") || !zcmp(cmd,"head") || !zcmp(cmd,"more") || !zcmp(cmd,"less") ||
+        (!zcmp(cmd,"grep") && (adjacent_pipe || vp_has_pipe(end)))) {
+        char *pipeline;
+        if (bang) { message("Internal pipelines do not accept !"); rc=-1; goto done; }
+        pipeline=vsfmt(NULL,0,"%s %s%s",cmd,adjacent_pipe ? "|" : "",end);
+        rc=pipeline_open(bw,pipeline); obj_free(pipeline); goto done;
+    }
+    if (adjacent_pipe) { message("Pipes support grep, awk, head, more and less only"); rc=-1; goto done; }
 	arg = filename_arg(end);
 	if (!arg) { message("Unterminated filename quote"); rc = -1; goto done; }
 	/* The existing file engine's dequote buffer is 1024 bytes. */

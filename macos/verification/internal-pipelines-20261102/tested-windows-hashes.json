@@ -1,0 +1,8 @@
+{
+  "windows/bin/vc6/Release/joe.exe": "461f4eeabb25347d8538692b3758877b12c324221c493348995a4e22d58b48d1",
+  "windows/bin/vc6/Debug/joe.exe": "f2dedd9348360f4e1b0e75afd51eac0d4aeedd66f17cf69aa95673856cdeda98",
+  "windows/bin/vc6/Debug/dll/joe.exe": "cf8e8e5d1a69a06cf066f62dd2ee40551a43b03125c842f3d273a1ab74ac3e19",
+  "windows/bin/vc6/Debug/dll/joewin.dll": "f107920d0747bd4b4c9e38f389b43154cf7090b74c24d643c71247e01525e69f",
+  "windows/bin/vc6/Release/dll/joe.exe": "e653ce5a9496521ce825700504e681560bdb19de1798d4d759cf8b37b473dce0",
+  "windows/bin/vc6/Release/dll/joewin.dll": "d57a2dbc40a797b8546fda49ba2605e02653846eb50c0f0b0792ecdf5ca9b1fd"
+}

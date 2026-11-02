@@ -762,6 +762,66 @@ int lf_grep(BW *bw, const char *pattern, int (*emit)(JOE_LONG_LONG,JOE_LONG_LONG
 }
 int lf_goto_absolute(BW *bw, JOE_LONG_LONG position) { return lf_seek(bw,position,-1); }
 
+/* Stream complete UTF-8 records for internal filters, with a strict per-line
+ * allocation limit and no index, source-buffer reload or whole-file copy. */
+int lf_each_line(BW *bw, ptrdiff_t limit,
+                 int (*emit)(JOE_LONG_LONG,JOE_LONG_LONG,JOE_LONG_LONG,const char *,void *), void *context)
+{
+    struct large_file *f=bw->b->large;
+    unsigned char bytes[LF_IO], *raw=NULL;
+    ptrdiff_t used=0, capacity=0, maximum;
+    JOE_LONG_LONG position=0, start=0, row=1;
+    int unit, result=0;
+    if (!f || f->pending || bw->o.hex || !lf_valid(f)) return -1;
+    unit=f->encoding ? 2 : 1; maximum=limit*unit+4;
+    while (position<f->size && !result) {
+        ptrdiff_t want=f->size-position<LF_IO ? (ptrdiff_t)(f->size-position) : LF_IO;
+        ptrdiff_t amount=lf_read(f,position,(char *)bytes,want), i;
+        if (amount!=want || !lf_valid(f)) { result=-1; break; }
+        if (lf_cancelled()) { result=-2; break; }
+        for (i=0;i<amount;++i) {
+            int eol;
+            if (used==maximum) { result=-4; break; }
+            if (used==capacity) {
+                ptrdiff_t next=capacity ? capacity*2 : 4096;
+                if (next>maximum) next=maximum;
+                raw=(unsigned char *)joe_realloc(raw,next+1); capacity=next;
+            }
+            raw[used++]=bytes[i];
+            eol=unit==1 ? bytes[i]==10 : used>=2 && !((position+i+1)%2) &&
+                (f->encoding==1 ? raw[used-2]==10 && !raw[used-1] : !raw[used-2] && raw[used-1]==10);
+            if (eol || position+i+1==f->size) {
+                char *text;
+                unsigned int *map=NULL;
+                ptrdiff_t length, n=used;
+                int k;
+                for (k=0;k<2 && n>=unit;++k) {
+                    int c=unit==1 ? raw[n-1] : f->encoding==1 ? raw[n-2]|raw[n-1]<<8 : raw[n-2]<<8|raw[n-1];
+                    if (c!=(k ? 13 : 10)) break;
+                    n-=unit;
+                }
+                if (f->encoding) {
+                    struct large_file decoder=*f;
+                    decoder.start=start; text=lf_decode(&decoder,raw,n,&length,&map);
+                } else {
+                    ptrdiff_t skip=(!start && bw->o.charmap->type && n>=3 && !memcmp(raw,"\357\273\277",3)) ? 3 : 0;
+                    raw[n]=0; text=my_iconv(NULL,utf8_map,(char *)raw+skip,bw->o.charmap); length=zlen(text);
+                    if (memchr(raw,0,n)) result=-5;
+                }
+                if (!result && length>limit) result=-4;
+                if (!result && memchr(text,0,length)) result=-5;
+                if (!result) result=emit(row,start,position+i+1,text,context);
+                if (map) { joe_free(map); joe_free(text); } else obj_free(text);
+                if (result) break;
+                ++row; start=position+i+1; used=0;
+            }
+        }
+        position+=amount;
+    }
+    if (raw) joe_free(raw);
+    return lf_valid(f) ? result : -1;
+}
+
 /* Export a known matching line with bounded decoding buffers. Never change
  * the source viewing window or materialise an arbitrarily long source line. */
 int lf_export_text(BW *bw, JOE_LONG_LONG start, JOE_LONG_LONG end, FILE *output, JOE_LONG_LONG *written, JOE_LONG_LONG limit)

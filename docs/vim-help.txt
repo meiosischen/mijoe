@@ -121,6 +121,14 @@ gg / G：文件首尾；数字%：按字节比例跳转；:数字 / 数字G：�
 命令行：mj -lazy 文件 强制只读懒加载；-large_threshold 512 设置阈值（MiB）。
 
 【当前文件 grep】
+内置管道：grep / awk / head / more / less 可用 | 任意组合，全部处理当前文件。
+:awk '{print $1,$3}'；:awk -F ',' '$3>=100 {print NR,$1}'；支持 $0、NR、NF、比较和 /正则/ 条件。
+:grep ERROR | awk '{print $2,$5}' | grep timeout | head -n 20 | less
+:head 默认前 10 行，-n N / -nN 指定行数；more/less 为只读分页，Space/b 或 PgDn/PgUp 翻页。
+窗口行号和跳转指向原文件，awk NR 从当前输入流计数；字符串或正则里的 | 需要引号。
+管道 -f 导出最终纯文本；console 新 buffer，原生 macOS 新窗口；单独 grep -f 保持行号前缀。
+最多 16 阶段、1 MiB/行、4096 字段、64 print 项、10000 结果、64 MiB 输出，超限提示。
+awk 不支持算术、赋值、循环、数组、函数或 BEGIN/END；详见 docs/internal-pipelines.md。
 :grep 表达式：列出当前文件的匹配行，显示行号和内容，不运行外部 shell。
 :grep -f 表达式：完整匹配行写入新的纯文本临时窗口，可编辑、另存为；原文件和光标不变。
 -f 在 console/终端中新建当前窗口的缓冲区，用 :ls、:bn/:bp、:b 编号、:bd 管理。

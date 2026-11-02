@@ -57,6 +57,18 @@ if args.target == "dll":
     executable /= "dll"
 executable /= "joe.exe"
 cases = [
+    ("pipe-preview", b"WARN alpha\nINFO beta\nWARN gamma\n", b":grep WARN|awk '{print $2}'|grep gamma|less\r\r0x:wq\r", b"WARN alpha\nINFO beta\nARN gamma\n"),
+    ("pipe-numeric", b"one 2\ntwo 10\n", b":awk '$2>=10 {print $1}'\r\r0x:wq\r", b"one 2\nwo 10\n"),
+    ("pipe-last-field", b"one alpha\ntwo beta\n", b":awk '{print $NF}'|grep beta\r\r0x:wq\r", b"one alpha\nwo beta\n"),
+    ("pipe-head", b"one\ntwo\nthree\n", b":head -n2\rG\r0x:wq\r", b"one\nwo\nthree\n"),
+    ("pipe-head-before-filter", b"one\ntarget\n", b":head -n1|grep target\riX\x1b:wq\r", b"Xone\ntarget\n"),
+    ("pipe-pagers", b"WARN alpha\nINFO beta\n", b":more|head -n1|awk '{print $2}'|grep alpha|less\r\r0x:wq\r", b"ARN alpha\nINFO beta\n"),
+    ("pipe-restore", b"WARN alpha\nINFO beta\n", b"03l:awk '{print $2}'\rj\x03iX\x1b:wq\r", b"WARXN alpha\nINFO beta\n"),
+    ("pipe-syntax", b"one 2\n", b":awk '{print $1+1}'|head\riX\x1b:wq\r", b"Xone 2\n"),
+    ("pipe-regex-or", b"WARN alpha\nINFO beta\nERROR gamma\n", b":awk '/WARN|ERROR/ {print $2}'\rG\r0x:wq\r", b"WARN alpha\nINFO beta\nRROR gamma\n"),
+    ("pipe-separator", b"a,20\nb,5\n", b":awk -F',' '$2>=10 {print $1}'\r\r0x:wq\r", b",20\nb,5\n"),
+    ("pipe-export", b"WARN alpha\nINFO beta\n", b":awk -f '{print $2}'|head -n1\r:saveas pipeline.txt\r:q!\r:wq\r", b"WARN alpha\nINFO beta\n"),
+    ("pipe-empty-export", b"one\ntwo\n", b":head -f -n0\r:q!\r", b"one\ntwo\n"),
     ("ctrl-c-clean", b"a\n", b"\x03", b"a\n"),
     ("ctrl-c-dirty-confirm", b"a\n", b"iX\x03y", b"a\n"),
     ("ctrl-c-dirty-cancel", b"a\n", b"iX\x03niY\x1b:wq\r", b"XYa\n"),
@@ -131,6 +143,8 @@ for name, initial, keys, expected in cases:
         sys.exit(1)
     if name == "saveas" and (directory / "renamed.txt").read_bytes() != b"a!?\n":
         raise AssertionError("saveas did not change the active filename")
+    if name == "pipe-export" and (directory / "pipeline.txt").read_bytes() != b"alpha\n":
+        raise AssertionError("pipeline export did not contain final transformed text")
     if name == "windows-path" and (directory / "folder/copy.txt").read_bytes() != b"a\n":
         raise AssertionError("Windows path separators were not preserved")
     if name == "command-paste" and (directory / "folder/pasted.txt").read_bytes() != b"a\n":

@@ -368,6 +368,18 @@ int main(int argc, const char *argv[]) {
         check([afterBuffers[@"file"] isEqual:horizontalFile] && [afterBuffers[@"fileOffset"] intValue]==0 && ![afterBuffers[@"changed"] boolValue],@"buffer inspection is read only and preserves the original cursor");
         request(resultSession,MIJOE_GUI_DISCARD,nil);check(waitFor(^BOOL{return !resultSession.running;}),@"independent result session closes without closing its source session");
         [NSFileManager.defaultManager removeItemAtPath:exportProbe.generatedPath error:NULL];
+        exportProbe.generatedPath=nil;
+        [session sendText:@":grep hit | awk -f '{print NR,$1}' | head -n 2\r"];
+        check(waitFor(^BOOL{return exportProbe.generatedPath.length>0;}),@"internal pipeline exports through the independent native window event");
+        NSString *pipelineText=[NSString stringWithContentsOfFile:exportProbe.generatedPath encoding:NSUTF8StringEncoding error:NULL];
+        check([pipelineText isEqual:@"1 hit\n2 hit\n"],@"pipeline export contains final awk text without source-number prefixes");
+        MJEditorSession *pipelineSession=[[MJEditorSession alloc] initWithExecutable:[NSString stringWithUTF8String:argv[1]] file:nil error:NULL];
+        check([request(pipelineSession,MIJOE_GUI_IMPORT_TEXT,exportProbe.generatedPath)[@"ok"] boolValue],@"independent native session imports pipeline output as editable text");
+        NSString *pipelineSaved=[directory stringByAppendingPathComponent:@"pipeline-results.txt"];
+        check([request(pipelineSession,MIJOE_GUI_SAVE_AS,pipelineSaved)[@"ok"] boolValue] && [[NSString stringWithContentsOfFile:pipelineSaved encoding:NSUTF8StringEncoding error:NULL] isEqual:pipelineText],@"native pipeline output saves exact final bytes");
+        request(pipelineSession,MIJOE_GUI_DISCARD,nil);
+        check(waitFor(^BOOL{return !pipelineSession.running && session.running;}),@"closing pipeline output keeps the native source session running");
+        [NSFileManager.defaultManager removeItemAtPath:exportProbe.generatedPath error:NULL];
         session.delegate=nil;
         [session sendText:[@":e " stringByAppendingString:[grepFile stringByAppendingString:@"\rgg0"]]];
         request(session,MIJOE_GUI_STATUS,nil);

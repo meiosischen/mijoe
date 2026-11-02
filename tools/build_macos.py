@@ -102,6 +102,7 @@ macOS 终端中使用 Command+V 粘贴。
 """)
 shutil.copy2(root / "docs/vim.md", package / "操作说明.md")
 shutil.copy2(root / "docs/large-files.md", package / "large-files.md")
+shutil.copy2(root / "docs/internal-pipelines.md", package / "internal-pipelines.md")
 (package / "README.txt").write_text("""MiJoe macOS 本机测试版
 
 双击“启动MiJoe.command”在系统终端中打开试用练习。
@@ -122,7 +123,7 @@ manifest = {
     "binary_sha256": hashlib.sha256(binary.read_bytes()).hexdigest(),
     "dependencies": dependencies,
     "sources": {name: hashlib.sha256((root / name).read_bytes()).hexdigest()
-                for name in ("joe/vim.c", "joe/vim.h", "joe/vimhelp.h", "docs/vim-help.txt",
+                for name in ("joe/vim.c", "joe/vim.h", "joe/vimpipe.c", "joe/vimpipe.h", "joe/vimhelp.h", "docs/vim-help.txt",
                              "joe/help.c", "joe/help.h", "joe/colors.c", "joe/colors.h", "joe/bw.c", "joe/b.c", "joe/b.h", "joe/mouse.c", "joe/lfile.c", "joe/lfile.h", "joe/ufile.c", "joe/ublock.c", "joe/w.c", "joe/cmd.c", "joe/options.c",
                              "joe/menu.c", "joe/menu.h", "joe/mmenu.c", "joe/tw.c", "joe/tw.h",
                              "macos/gui_protocol.h", "colors/synhill.jcf", "colors/teasp.jcf", "syntax/log.jsf", "rc/ftyperc", "rc/joerc.in", "colors/Makefile.am",

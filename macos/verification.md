@@ -271,3 +271,21 @@ Windows 前端补齐字号/行距按键，共享 `:help` 同步说明图形窗�
 macOS App 与 `/usr/local/bin/mj` 已重建并更新，112 项原生视图检查通过，源文件与安装二进制哈希、签名已核验。
 Windows 四种 VC6 构建、128 项按键专项及六个 PE 静态检查通过；修复版尚未在实际 XP 系统内运行。
 详见 [Windows 验证记录](../windows/vc6/verification/font-keys-20261031/verification.json)。
+
+## 内置 awk、head 与文本管道（2026-11-02）
+
+新增共享 C89 模块 `vimpipe.c`，支持当前文件 grep/awk/head/more/less 任意组合。
+awk 提供单字符 -F、$0/$n/$NF、NR/NF、print、拼接、单个正则或比较条件；head 到达 N 后停止上游扫描。
+结果沿用只读居中窗口与源行跳转，Space/b 和 PgDn/PgUp 分页；管道 -f 导出最终纯文本。
+console 在当前窗口新建缓冲区，macOS 原生版仍开独立窗口，Windows 图形版仍开新编辑窗口。
+普通文件读取未保存缓冲区；懒加载文件按块解码，包括 UTF-16 与跨块代理对，内存及结果上限明确。
+
+41 项管道专项通过，包含普通/强制只读懒加载两条路径，以及 40 个与系统 awk 比对的子用例。
+117 项原生、14 项 grep 控制、16 项 grep 导出、8 项缓冲区、46 项 PTY、32 项 UI、8 项 Ctrl+C、
+15 项大文件检查通过，共 297 项。VC6 Debug/Release 独立版和 DLL 版均构建通过，
+每版 69 项 Win32/Wine 运行测试通过（其中 12 项新管道用例，共 276 项），六个 PE 静态检查通过。
+
+`/usr/local/bin/mj` 已更新；已安装 GUI 正在使用，保留其会话未替换。
+新 App 为 `build/macos/MiJoe.app`，待退出旧版后使用；XP 包为 `build/deliveries/mijoe-xp-internal-pipelines.zip`。
+实际 XP 运行与现代 VS/WiX 构建未验证。语法和子集边界见 [使用说明](../docs/internal-pipelines.md)，
+完整日志、哈希和交付记录见 [本轮验证记录](verification/internal-pipelines-20261102/verification.json)。

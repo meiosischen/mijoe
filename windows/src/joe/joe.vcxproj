@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(JoeExternalSrcDir)\vim.h" />
+    <ClInclude Include="$(JoeExternalSrcDir)\vimpipe.h" />
     <ClInclude Include="$(JoeExternalSrcDir)\b.h" />
     <ClInclude Include="$(JoeExternalSrcDir)\blocks.h" />
     <ClInclude Include="$(JoeExternalSrcDir)\builtin.h" />
@@ -105,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(JoeExternalSrcDir)\vim.c" />
+    <ClCompile Include="$(JoeExternalSrcDir)\vimpipe.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\lfile.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\b.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\blocks.c" />

@@ -86,3 +86,17 @@ VC6 Release/Debug 的独立版与 DLL 版均构建通过，每版 32 项按键�
 新版产物保存在 `build/deliveries/mijoe-xp-f1-f4.zip`，ZIP 内二进制与编译输出逐一核验。
 本轮程序运行验证在 Wine 中进行；用户反馈此前版本可在 XP 运行，但修复版仍待实际 XP 复测。
 详见 [验证记录](verification/font-keys-20261031/verification.json)。
+
+## 内置文本管道（2026-11-02）
+
+共享 C89 模块新增 grep/awk/head/more/less 管道，VC6 source list 与 Developer Studio 工程同步生成。
+Release/Debug 独立版与 DLL 版全部构建通过，各 69 项 Win32/Wine 按键与保存结果测试通过，
+共 276 项，其中每版含 12 项管道用例；六个 PE 的 XP 静态检查通过。
+验证包含筛选后源行预览、$NF、字段比较、head 截止、分页器组合、取消恢复、错误保护、
+新编辑窗口中的纯文本导出，以及此前 Ctrl+C、Vim、菜单和 picture 功能。
+最终离线文档刷新后核对六个二进制哈希均与已测版本一致。
+
+交付 `build/deliveries/mijoe-xp-internal-pipelines.zip`，普通使用运行根目录 `joe.exe`，
+共享版使用匹配的 `dll/joe.exe` 与 `joewin.dll`。建议整目录替换，避免混用旧 EXE/DLL。
+本轮实际运行在 Wine；修复版尚未在 XP 系统内执行。
+详见 [使用说明](../../docs/internal-pipelines.md) 与 [验证记录](../../macos/verification/internal-pipelines-20261102/verification.json)。
