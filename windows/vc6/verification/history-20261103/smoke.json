@@ -1,0 +1,197 @@
+{
+  "passed": 32,
+  "checks": [
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-i2k9fpyi",
+      "case": "ctrl-c-help",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-i2k9fpyi",
+      "case": "history-errors",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-i2k9fpyi",
+      "case": "history-macro",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-i2k9fpyi",
+      "case": "history-readonly",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-i2k9fpyi",
+      "case": "history-search",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-i2k9fpyi",
+      "case": "history-view",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-i2k9fpyi",
+      "case": "substitute-global",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-i2k9fpyi",
+      "case": "temp-hl-add",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-okqnvep5",
+      "case": "ctrl-c-help",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-okqnvep5",
+      "case": "history-errors",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-okqnvep5",
+      "case": "history-macro",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-okqnvep5",
+      "case": "history-readonly",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-okqnvep5",
+      "case": "history-search",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-okqnvep5",
+      "case": "history-view",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-okqnvep5",
+      "case": "substitute-global",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-okqnvep5",
+      "case": "temp-hl-add",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-m6x5sqow",
+      "case": "ctrl-c-help",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-m6x5sqow",
+      "case": "history-errors",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-m6x5sqow",
+      "case": "history-macro",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-m6x5sqow",
+      "case": "history-readonly",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-m6x5sqow",
+      "case": "history-search",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-m6x5sqow",
+      "case": "history-view",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-m6x5sqow",
+      "case": "substitute-global",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-m6x5sqow",
+      "case": "temp-hl-add",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-6l0_ozup",
+      "case": "ctrl-c-help",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-6l0_ozup",
+      "case": "history-errors",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-6l0_ozup",
+      "case": "history-macro",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-6l0_ozup",
+      "case": "history-readonly",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-6l0_ozup",
+      "case": "history-search",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-6l0_ozup",
+      "case": "history-view",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-6l0_ozup",
+      "case": "substitute-global",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-6l0_ozup",
+      "case": "temp-hl-add",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    }
+  ]
+}

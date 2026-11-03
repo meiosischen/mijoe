@@ -15,14 +15,14 @@ noinst_HEADERS = b.h blocks.h bw.h cmd.h config.h coroutine.h hash.h help.h kbd.
 	ufile.h uformat.h uisrch.h umath.h undo.h usearch.h ushell.h utag.h \
 	utils.h vfile.h w.h utf8.h syntax.h charmap.h mouse.h libcoro.h \
 	lattr.h gettext.h builtin.h vt.h mmenu.h state.h options.h \
-	unicode.h cclass.h frag.h colors.h vim.h vimhelp.h macos.h lfile.h vimpipe.h profile.h recent.h
+	unicode.h cclass.h frag.h colors.h vim.h vimhelp.h macos.h lfile.h vimpipe.h profile.h recent.h cmdhistory.h
 
 bin_PROGRAMS = joe
 AM_CPPFLAGS = -DJOERC="\"$(sysconf_joedir)/\"" -DJOEDATA="\"$(data_joedir)/\""
 
 # joe_LDADD = -lm
 
-joe_SOURCES = b.c blocks.c bw.c softwrap.c profile.c recent.c cmd.c coroutine.c hash.c help.c kbd.c macro.c main.c menu.c \
+joe_SOURCES = b.c blocks.c bw.c softwrap.c profile.c recent.c cmdhistory.c cmd.c coroutine.c hash.c help.c kbd.c macro.c main.c menu.c \
 	obj.c path.c poshist.c pw.c queue.c qw.c rc.c regex.c scrn.c tab.c termcap.c \
 	tty.c tw.c ublock.c uedit.c uerror.c ufile.c uformat.c uisrch.c umath.c \
 	undo.c usearch.c ushell.c utag.c vfile.c w.c utils.c syntax.c \

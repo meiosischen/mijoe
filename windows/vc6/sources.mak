@@ -9,6 +9,7 @@ JOE_OBJS = \
     "$(OBJDIR)\joe_joe_softwrap.obj" \
     "$(OBJDIR)\joe_joe_profile.obj" \
     "$(OBJDIR)\joe_joe_recent.obj" \
+    "$(OBJDIR)\joe_joe_cmdhistory.obj" \
     "$(OBJDIR)\joe_joe_cclass.obj" \
     "$(OBJDIR)\joe_joe_charmap.obj" \
     "$(OBJDIR)\joe_joe_cmd.obj" \
@@ -132,6 +133,9 @@ COMMON_OBJS = \
 
 "$(OBJDIR)\joe_joe_recent.obj": "..\..\joe\recent.c" $(HEADERS)
 	$(CC) $(CFLAGS) $(JOEFLAGS) /Fo"$@" /c "..\..\joe\recent.c"
+
+"$(OBJDIR)\joe_joe_cmdhistory.obj": "..\..\joe\cmdhistory.c" $(HEADERS)
+	$(CC) $(CFLAGS) $(JOEFLAGS) /Fo"$@" /c "..\..\joe\cmdhistory.c"
 
 "$(OBJDIR)\joe_joe_cclass.obj": "..\..\joe\cclass.c" $(HEADERS)
 	$(CC) $(CFLAGS) $(JOEFLAGS) /Fo"$@" /c "..\..\joe\cclass.c"

@@ -58,6 +58,11 @@ if args.target == "dll":
     executable /= "dll"
 executable /= "joe.exe"
 cases = [
+    ("history-view", b"abc\n", b":set-hl abc\r:history\rq:wq\r", b"abc\n"),
+    ("history-readonly", b"abc\n", b":history\riBADdd\x03iX\x1b:wq\r", b"Xabc\n"),
+    ("history-macro", b"abc\n", b"\x1b[15~:set-hl abc\r\x1b[15~\x1b[17~:history\rq:wq\r", b"abc\n"),
+    ("history-search", b"abc\n", b"/abc\r?abc\r:history\rq:wq\r", b"abc\n"),
+    ("history-errors", b"abc\n", b":unknown-history-test\r:history\rq:wq\r", b"abc\n"),
     ("temp-hl-add", b"gogogo 123\n", b':set-hl gogogo 123\r:wq\r', b"gogogo 123\n"),
     ("temp-hl-quotes", b"gogogo 123\n", b':set-hl "gogogo 123"\r:set-hl ERROR\r:wq\r', b"gogogo 123\n"),
     ("temp-hl-clear", b"abc\n", b":set-hl abc\r:clear-hl\riX\x1b:wq\r", b"Xabc\n"),
@@ -177,4 +182,15 @@ for name, initial, keys, expected in cases:
     if name=="recent-modes":
         records=(directory/"profile/.recent").read_text()
         assert any(line and line[0].isdigit() and int(line.split("\t",1)[0])&3==3 for line in records.splitlines()), "Recent mode flags were lost"
+    if name.startswith("history-"):
+        import ast
+        rows=[(int(a),int(b),ast.literal_eval(c)) for a,b,c in
+              (line.split("\t",2) for line in (directory/"profile/.history").read_text().splitlines()[1:])]
+        expected_rows={"history-view":[(0,":wq"),(0,":set-hl abc")],
+                       "history-readonly":[(0,":wq")],
+                       "history-macro":[(0,":wq"),(2,":set-hl abc"),(1,":set-hl abc")],
+                       "history-search":[(0,":wq"),(0,"?abc"),(0,"/abc")],
+                       "history-errors":[(0,":wq"),(0,":unknown-history-test")]}
+        assert [(origin,text) for _,origin,text in rows]==expected_rows[name], rows
+        assert [number for number,_,_ in rows]==list(range(len(rows),0,-1)), rows
     print(f"PASS {name}", flush=True)

@@ -9,6 +9,7 @@ MiJoe 的个人全局配置统一使用 `~/.mj`。Windows 的 `~` 是当前用�
 | `joerc` | 完整的个人 JOE 按键/菜单配置；没有此文件时使用程序自带按键配置 |
 | `state` | 编辑状态、搜索等历史、主题状态；遵循 `joe_state` 开关 |
 | `.recent` | 最近打开的 200 个文件及模式，不受 `joe_state` 开关影响 |
+| `.history` | 最近 200 条已提交命令栏输入，含宏中的命令；不受 `joe_state` 开关影响 |
 | `colors/`、`syntax/`、`charmaps/` | 个人主题、语法和字符映射 |
 | `macos.json` | macOS 窗口版字号、行距 |
 | `windows.ini` | Windows 窗口大小/位置、字体、行距和光标设置 |

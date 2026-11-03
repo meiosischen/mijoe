@@ -1,0 +1,31 @@
+PASS native control request responds
+PASS native control request responds
+PASS native control request responds
+PASS native control request responds
+PASS native control request responds
+PASS history shows only the five submitted command-bar inputs
+PASS history distinguishes input, macro recording and macro playback
+PASS quoted command and both search prefixes render literally
+PASS native control request responds
+PASS native control request responds
+PASS native control request responds
+PASS latest entries appear first, including Unicode text
+PASS native control request responds
+PASS PageDown advances the history viewport
+PASS native control request responds
+PASS PageUp restores the newest history entries
+PASS native control request responds
+PASS history reflows on a narrower native view
+PASS native control request responds
+PASS typing in history and cancelling preserves the document and cursor
+PASS queries, paging and cancellation do not add command-history rows
+PASS native control request responds
+PASS first owned session exits cleanly
+PASS native control request responds
+PASS persisted set-hl text does not restore temporary highlights
+PASS native control request responds
+PASS the next editor process can print the previous command history
+PASS native control request responds
+PASS history never changes source-file bytes
+PASS native control request responds
+PASS second owned session exits cleanly

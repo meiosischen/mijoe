@@ -2631,7 +2631,14 @@ int vim_ex(W *w, const char *line)
 	/* The existing file engine's dequote buffer is 1024 bytes. */
 	if (zlen(arg) >= 1000) { message("Filename argument is too long"); rc = -1; goto done; }
 	if (!*cmd) goto done;
-    if (!zcmp(cmd,"recent")) {
+    if (!zcmp(cmd,"history")) {
+        if (bang || *arg) {message("Use :history");rc=-1;}
+        else {
+            char *text=mj_cmdhistory_text();
+            if(!text){message(mj_cmdhistory_error());rc=-1;}
+            else rc=inspection_open(bw,"MiJoe :history - last 200 command-bar inputs",text);
+        }
+    } else if (!zcmp(cmd,"recent")) {
         if (bang || *arg) {message("Use :recent");rc=-1;} else rc=mj_recent_open(bw);
     } else if (!zcmp(cmd,"set") && (!zcmp(arg,"wrap") || !zcmp(arg,"nowrap"))) {
         bw->o.softwrap=!zcmp(arg,"wrap"); bw->b->o.softwrap=bw->o.softwrap;
@@ -2779,6 +2786,7 @@ static int command_key(BW *bw, int key)
         command_sub_range(1);
 		mode = VM_NORMAL;
 		strcpy(history, command);
+        mj_cmdhistory_add(command_kind,command,macro_playing ? 2 : macro_recording ? 1 : 0);
 		if (command_kind == ':') { strcpy(last_ex,command); return vim_ex(bw->parent, command); }
 		if (*command) {
 			if (search_pattern) joe_free(search_pattern);

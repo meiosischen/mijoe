@@ -432,6 +432,7 @@ struct highlight_state {
 #include "state.h"
 #include "profile.h"
 #include "recent.h"
+#include "cmdhistory.h"
 #include "options.h"
 #include "selinux.h"
 

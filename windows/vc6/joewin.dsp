@@ -104,6 +104,10 @@ SOURCE=..\..\joe\recent.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\joe\cmdhistory.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\joe\cclass.c
 # End Source File
 # Begin Source File

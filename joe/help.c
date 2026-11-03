@@ -322,18 +322,29 @@ int help_text_active(Screen *t)
 
 /* Wrap by display cells, so UTF-8 descriptions remain readable in narrow
  * windows. Store source spans instead of duplicating the complete manual. */
+/* Histories may contain long command lines. Index display rows instead of
+ * reserving one span for every source byte. */
+static void help_text_span(const char *start,ptrdiff_t length,ptrdiff_t *capacity)
+{
+    if(text_count==*capacity) {
+        *capacity=*capacity ? *capacity*2 : 64;
+        text_spans=(struct help_span *)joe_realloc(text_spans,*capacity*SIZEOF(struct help_span));
+    }
+    text_spans[text_count].start=start;
+    text_spans[text_count++].len=length;
+}
+
 static void help_text_wrap(Screen *t)
 {
 	const char *p = text_source, *start = p, *next, *end = p + zlen(p);
-	ptrdiff_t width = 0, remaining, cells;
+	ptrdiff_t width = 0, remaining, cells, capacity=0;
 	int c;
 	if (text_spans) joe_free(text_spans);
-	text_spans = (struct help_span *)joe_malloc((zlen(text_source) + 1) * SIZEOF(struct help_span));
+	text_spans = NULL;
 	text_count = 0;
 	while (*p) {
 		if (*p == '\n') {
-			text_spans[text_count].start = start;
-			text_spans[text_count++].len = p - start;
+			help_text_span(start,p-start,&capacity);
 			start = ++p; width = 0; continue;
 		}
 		next = p; remaining = end - p;
@@ -341,21 +352,19 @@ static void help_text_wrap(Screen *t)
 		cells = joe_wcwidth(help_is_utf8 ? 1 : !!locale_map->type, c);
 		if (cells < 1) cells = 1;
 		if (width && width + cells > (t->w > 1 ? t->w - 1 : 1)) {
-			text_spans[text_count].start = start;
-			text_spans[text_count++].len = p - start;
+			help_text_span(start,p-start,&capacity);
 			start = p; width = 0;
 		}
 		width += cells; p = next;
 	}
 	if (p != start || !text_count) {
-		text_spans[text_count].start = start;
-		text_spans[text_count++].len = p - start;
+		help_text_span(start,p-start,&capacity);
 	}
 }
 
 static void help_text_render(Screen *t)
 {
-	ptrdiff_t available = t->h - FITMIN - skiptop, i, j, last;
+	ptrdiff_t available = t->h - FITMIN - skiptop, i, j, last, bytes;
 	char *out;
 	if (text_width != t->w) help_text_wrap(t);
 	text_width = t->w; text_height = t->h;
@@ -365,7 +374,9 @@ static void help_text_render(Screen *t)
 	text_top = text_top / text_rows * text_rows;
 	if (text_top > last) text_top = last;
 	if (text_help.text) joe_free(text_help.text);
-	text_help.text = (char *)joe_malloc(2 * zlen(text_source) + 2 * text_count + zlen(text_title) + 256);
+	bytes=zlen(text_title)+256;
+    for(i=text_top;i<text_count && i<text_top+text_rows;++i)bytes+=2*text_spans[i].len+1;
+    text_help.text = (char *)joe_malloc(bytes);
 	out = text_help.text;
 	text_help.lines = 0;
 	if (available > 1) {
