@@ -1,0 +1,9 @@
+{
+  "windows/bin/vc6/Release/joe.exe": "contains updated compressed ftyperc",
+  "windows/bin/vc6/Release/dll/joewin.dll": "contains updated compressed ftyperc",
+  "windows/bin/vc6/Debug/joe.exe": "contains updated compressed ftyperc",
+  "windows/bin/vc6/Debug/dll/joewin.dll": "contains updated compressed ftyperc",
+  "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/etc/joe/ftyperc": "matches corrected source ftyperc",
+  "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe.app/Contents/Resources/editor/etc/joe/ftyperc": "matches corrected source ftyperc",
+  "/Users/meiosis/.mj/ftyperc": "matches corrected source ftyperc"
+}

@@ -5,8 +5,6 @@
 [text]
  No '.' in file name?  Assume it's a text file and we want wordwrap on.
 *
- Text file.
-*.txt
 -syntax log
 
  Not a text file
@@ -14,12 +12,6 @@
  File name with '.'?  It's probably not a text file.
 *.*
 -wordwrap
-
- Log files
-[log]
-*.log
-*.log.*
--syntax log
 
  Diff
 [diff]
@@ -41,6 +33,13 @@
 *.1.in
 -wordwrap
 -syntax troff
+
+ Plain text and log files (after generic and manual-page rules).
+[log]
+*.txt
+*.log
+*.log.*
+-syntax log
 
  TeX
 [tex]

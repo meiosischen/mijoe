@@ -1,0 +1,3 @@
+Updated: /Users/meiosis/.mj/ftyperc
+Backup: /Users/meiosis/.mj/ftyperc.before-txt-log-20261103-164523-653176
+Change: move *.txt into the existing [log] section, preserve remaining rules.

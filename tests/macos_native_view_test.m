@@ -204,6 +204,17 @@ int main(int argc, const char *argv[]) {
         check(waitFor(^BOOL { return coloredText(session,@"ERROR",0xe8e8d3,0xff0066); }),@"whole-word ERROR uses teaspoon ErrorMsg background");
         check(coloredText(session,@"WARNING XERROR ERROR_code warn error",0xe8e8d3,0x222222),@"longer identifiers and lowercase words retain normal text colors");
         check(coloredText(session,@"**",0xffb454,0x222222),@"log asterisks use highlighted orange");
+        for (NSString *filename in @[@"levels.txt",@"levels.log.1"]) {
+            NSString *file=[directory stringByAppendingPathComponent:filename];
+            [@"WARN ERROR WARNING XERROR ERROR_code warn error **\n" writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+            [session sendText:[NSString stringWithFormat:@":e %@\r",file]];
+            check(waitFor(^BOOL { return [session.state[@"file"] isEqual:file] && coloredText(session,@"WARN",0xff0066,0x222222); }),[filename stringByAppendingString:@" highlights whole-word WARN like .log"]);
+            check(waitFor(^BOOL { return coloredText(session,@"ERROR",0xe8e8d3,0xff0066); }),[filename stringByAppendingString:@" highlights whole-word ERROR like .log"]);
+            check(coloredText(session,@"WARNING XERROR ERROR_code warn error",0xe8e8d3,0x222222),[filename stringByAppendingString:@" preserves case-sensitive identifier boundaries"]);
+            check(coloredText(session,@"**",0xffb454,0x222222),[filename stringByAppendingString:@" highlights asterisks like .log"]);
+        }
+        [session sendText:[NSString stringWithFormat:@":e %@\r",logfile]];
+        check(waitFor(^BOOL { return [session.state[@"file"] isEqual:logfile] && coloredText(session,@"WARN",0xff0066,0x222222); }),@"returning from .txt and rotated .log retains original .log highlighting");
         check(waitFor(^BOOL { return coloredText(session,@"R",0x222222,0xe8e8d3); }),@"status bar uses high contrast dark text on a light background");
         [session sendText:@"iX\x1b"];
         check(waitFor(^BOOL { return coloredText(session,@"*",0x000000,0x00cc66); }),@"modified status asterisk uses the solid green cursor highlight");

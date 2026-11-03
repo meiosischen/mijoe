@@ -1,0 +1,9 @@
+{
+  "Contents/MacOS/MiJoe": "2b450d882ee31d0a0fd8a0e84ad77b0ddac4054a04c461232da6c6835c3a4479",
+  "Contents/Resources/editor/bin/joe": "81cd75830e6191ae91f9a979994884ebf77a627d2d40f4e8ad66171ff919b490",
+  "Contents/Resources/editor/etc/joe/ftyperc": "9f9a5543cda777e57a1570813e858ac9a6d7f650aea48d9919bbdc3db4d9e312",
+  "installed": "/Users/meiosis/Applications/MiJoe.app",
+  "signature": "verified",
+  "command": "/usr/local/bin/mj",
+  "target": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe"
+}
