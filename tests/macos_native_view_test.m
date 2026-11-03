@@ -184,7 +184,7 @@ int main(int argc, const char *argv[]) {
         check([session.screenText containsString:@"中文"],@"native screen model retains Unicode display data after resize");
         check([request(session,MIJOE_GUI_QUIT,nil)[@"ok"] boolValue] && waitFor(^BOOL { return !session.running; }),@"clean session exits and reaps its child process");
         file=[directory stringByAppendingPathComponent:@"synhill.c"];
-        [@"int answer = 42; // synhill comment\nchar *message = \"hello synhill\";\n" writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+        [@"int answer = 42; // synhill comment\nchar *message = \"hello synhill\";\nint compare(int a,int b) { return (a != b) && (a <= b); }\n" writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:NULL];
         session=[[MJEditorSession alloc] initWithExecutable:[NSString stringWithUTF8String:argv[1]] file:file error:&error];
         NSDictionary *theme=request(session,MIJOE_GUI_STATUS,nil);
         check([theme[@"scheme"] isEqual:@"teasp"] && [theme[@"textBackground"] intValue]==0x222222 && [theme[@"textForeground"] intValue]==0xe8e8d3 && [theme[@"cursorBackground"] intValue]==0x00cc66,@"native editor defaults to teasp with exact background and caret palette");
@@ -192,6 +192,14 @@ int main(int argc, const char *argv[]) {
         check(coloredText(session,@"int",0xffb964,0x222222),@"native keyword RGB matches teaspoon Type");
         check(coloredText(session,@"answer",0xefd14e,0x222222),@"native identifier RGB matches teaspoon Identifier");
         check(coloredText(session,@"42",0xff6666,0x222222),@"native numeric RGB matches teaspoon Constant");
+        check(coloredText(session,@"!=",0x00ffff,0x222222),@"teasp C inequality renders in bright cyan");
+        check(coloredText(session,@"(",0x00ffff,0x222222),@"teasp C opening parenthesis renders in bright cyan");
+        check(coloredText(session,@")",0x00ffff,0x222222),@"teasp C closing parenthesis renders in bright cyan");
+        check(coloredText(session,@"{",0x00ffff,0x222222),@"teasp C opening brace renders in bright cyan");
+        check(coloredText(session,@"}",0x00ffff,0x222222),@"teasp C closing brace renders in bright cyan");
+        check(coloredText(session,@"&&",0x00ffff,0x222222),@"teasp C logical AND renders in bright cyan");
+        check(coloredText(session,@"<=",0x00ffff,0x222222),@"teasp C comparison renders in bright cyan");
+        check(coloredText(session,@"*",0x00ffff,0x222222),@"teasp C pointer operator renders in bright cyan");
         check(waitFor(^BOOL { return coloredText(session,@"hello synhill",0xfaff8a,0x222222); }),@"native string RGB matches teaspoon String");
         [session sendText:@":colors gruvbox\r"];
         check(waitFor(^BOOL { return [session.state[@"scheme"] isEqual:@"gruvbox"] && [session.state[@"textBackground"] intValue]==0x282828; }),@"switching theme also updates native canvas palette");

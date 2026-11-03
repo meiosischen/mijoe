@@ -1,0 +1,9 @@
+{
+  "decompression_matches": true,
+  "embedded_resources_match": [
+    "windows/bin/vc6/Release/joe.exe",
+    "windows/bin/vc6/Release/dll/joewin.dll",
+    "windows/bin/vc6/Debug/joe.exe",
+    "windows/bin/vc6/Debug/dll/joewin.dll"
+  ]
+}

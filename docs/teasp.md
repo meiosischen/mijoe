@@ -2,7 +2,7 @@
 
 默认主题 `teasp` 移植自 https://github.com/arnau/teaspoon.vim ，固定版本
 `215b4010c4be1c3711f69c780ba4224f6c527096`。主题文件保留原作者的许可声明。
-真彩色/Windows GUI 使用原始 RGB；256 色使用原主题 Vim 函数计算的 cterm 色号，
+除下表标出的 MiJoe 显示调整外，真彩色/Windows GUI 使用原始 RGB；256 色使用原主题 Vim 函数计算的 cterm 色号，
 16 色使用原主题的低色彩定义。MiJoe 沿用已有语言语法分类，因此不同编辑器的分类范围可能不同。
 
 | 分类 | 原主题组 | RGB |
@@ -10,7 +10,8 @@
 | 正文/背景 | Normal | #E8E8D3 / #222222 |
 | 注释 | Comment | #888888 |
 | 标识符 | Identifier | #EFD14E |
-| 关键字/运算符 | Statement | #00C7E7 |
+| 关键字 | Statement | #00C7E7 |
+| 运算符、括号（本项目调整） | Operator / Control / Brace | #00FFFF |
 | 类型 | Type | #FFB964 |
 | 数字常量 | Constant | #FF6666 |
 | 字符串 | String | #FAFF8A |
@@ -34,3 +35,6 @@
 未保存状态用 `*` 标记，使用光标的绿色背景单独高亮；撤销到未修改状态后自动清除。
 
 Normal 的 `/`、`?`、`n/N` 对可见匹配项使用选区的浅白底色；`:noh` 可清除。
+
+C 的 `!=`、`()`、`[]`、`{}`、`&&`、`*` 等符号统一使用亮 cyan，
+对应真彩色 `#00FFFF`、256 色 51、16 色亮青 14。
