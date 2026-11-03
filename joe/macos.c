@@ -192,7 +192,9 @@ static void gui_report(unsigned long id, int ok, const char *error, const char *
     json = vsncpy(sv(json),sz(number));
     sprintf(number,",\"recentActive\":%s,\"recentCount\":%d,\"recentSelected\":%d,\"recentTop\":%d,\"recentRows\":%d",mj_recent_active() ? "true" : "false",mj_recent_count(),mj_recent_selected(),mj_recent_top(),mj_recent_rows());
     json=vsncpy(sv(json),sz(number));
-	sprintf(number,",\"grepActive\":%s,\"grepCount\":%d,\"grepSelected\":%d,\"grepColumn\":%d,\"grepMaxColumn\":%d",vim_grep_active() ? "true" : "false",vim_grep_count(),vim_grep_selected(),vim_grep_column(),vim_grep_max_column());
+	sprintf(number,",\"linePercent\":%d",tw_line_percent(bw));
+    json=vsncpy(sv(json),sz(number));
+    sprintf(number,",\"grepActive\":%s,\"grepCount\":%d,\"grepSelected\":%d,\"grepColumn\":%d,\"grepMaxColumn\":%d",vim_grep_active() ? "true" : "false",vim_grep_count(),vim_grep_selected(),vim_grep_column(),vim_grep_max_column());
     json=vsncpy(sv(json),sz(number));
 	json = vsncpy(sv(json), sz(",\"scheme\":"));
 	json = gui_json_string(json, scheme_name);

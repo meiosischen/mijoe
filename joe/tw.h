@@ -33,6 +33,7 @@ int uabort(W *w, int k);
 int uabort1(W *w, int k);
 void setline(B *b, off_t line);
 int abortit(W *w, int k);
+int tw_line_percent(BW *bw);
 char *stagen(char *stalin, BW *bw, const char *s, char fill);
 extern int staen;
 extern int staupd;

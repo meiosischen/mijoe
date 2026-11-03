@@ -1,0 +1,10 @@
+{
+  "Contents/MacOS/MiJoe": "47836cbe8d6e38870a08bd3fcadca32e2f3bd1ee06cc5260f003c44637ed6f6c",
+  "Contents/Resources/editor/bin/joe": "81cd75830e6191ae91f9a979994884ebf77a627d2d40f4e8ad66171ff919b490",
+  "command": "/usr/local/bin/mj",
+  "target": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe",
+  "installed": "/Users/meiosis/Applications/MiJoe.app",
+  "signature": "verified",
+  "source_manifest": "verified",
+  "native_ui_observation": "R 1 C 1 100% FS 14 H -4 (CUA accessibility state after relaunch)"
+}

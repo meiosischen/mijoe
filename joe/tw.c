@@ -331,6 +331,24 @@ char *duplicate_backslashes(const char *s, ptrdiff_t len)
 	return m;
 }
 
+/* Logical text lines exclude the final newline's empty sentinel line.
+ * Computing this label never asks a lazy source to scan for its total. */
+int tw_line_percent(BW *bw)
+{
+    JOE_LONG_LONG row, total;
+    if (lf_active(bw->b) || lf_pending(bw->b)) return lf_line_percent(bw);
+    if (bw->o.hex) {
+        row=(JOE_LONG_LONG)bw->cursor->byte/16+1;
+        total=(JOE_LONG_LONG)bw->b->eof->byte/16+!!(bw->b->eof->byte%16);
+    } else {
+        row=(JOE_LONG_LONG)bw->cursor->line+1;
+        total=(JOE_LONG_LONG)bw->b->eof->line+1;
+        if (total>1 && pisbol(bw->b->eof)) --total;
+    }
+    if (total<=0 || row>=total) return 100;
+    return (int)(100.0*(double)row/(double)total);
+}
+
 char *stagen(char *stalin, BW *bw, const char *s, char fill)
 {
 	char buf[80];
@@ -749,6 +767,13 @@ static void disptw(W *w, int flg)
 			fill = ' ';
 		tw->stalin = stagen(tw->stalin, bw, bw->o.lmsg, fill);
 		tw->staright = stagen(tw->staright, bw, bw->o.rmsg, fill);
+        {
+            int percent=tw_line_percent(bw);
+            char progress[16];
+            if (percent<0) strcpy(progress," --%");
+            else sprintf(progress," %d%%",percent);
+            tw->staright=vsncpy(sv(tw->staright),sz(progress));
+        }
         { const char *macro_label=vim_macro_status(); if (macro_label) tw->staright=vsncpy(sv(tw->staright),sz(macro_label)); }
         { const char *label = lf_status(bw); if (label) tw->staright = vsncpy(sv(tw->staright),sz(label)); }
 #if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)

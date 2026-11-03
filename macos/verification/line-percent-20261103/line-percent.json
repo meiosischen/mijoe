@@ -1,0 +1,21 @@
+{
+  "passed" : 16,
+  "checks" : [
+    "line percentage native session starts",
+    "native status request responds",
+    "right status shows 25 percent on line one of four, despite its long byte length",
+    "native status request responds",
+    "line movement updates the rendered percentage",
+    "native status request responds",
+    "last real text line shows 100 percent with a final newline",
+    "native status request responds",
+    "native status request responds",
+    "paging through soft-wrapped rows retains logical-line progress",
+    "native status request responds",
+    "percentage remains visible after native window resize",
+    "native status request responds",
+    "empty buffer shows a defined 100 percent without division by zero",
+    "native status request responds",
+    "owned native child exits cleanly"
+  ]
+}

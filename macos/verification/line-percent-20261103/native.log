@@ -1,0 +1,16 @@
+PASS line percentage native session starts
+PASS native status request responds
+PASS right status shows 25 percent on line one of four, despite its long byte length
+PASS native status request responds
+PASS line movement updates the rendered percentage
+PASS native status request responds
+PASS last real text line shows 100 percent with a final newline
+PASS native status request responds
+PASS native status request responds
+PASS paging through soft-wrapped rows retains logical-line progress
+PASS native status request responds
+PASS percentage remains visible after native window resize
+PASS native status request responds
+PASS empty buffer shows a defined 100 percent without division by zero
+PASS native status request responds
+PASS owned native child exits cleanly

@@ -558,6 +558,24 @@ const char *lf_status(BW *bw)
                  lf_absolute(bw->b,bw->cursor->byte),f->size);
     return text;
 }
+int lf_line_percent(BW *bw)
+{
+    struct large_file *f=bw->b->large;
+    JOE_LONG_LONG row, total;
+    if (!f || f->pending) return -1;
+    if (bw->o.hex) {
+        row=lf_absolute(bw->b,bw->cursor->byte)/16+1;
+        total=f->size/16+!!(f->size%16);
+    } else {
+        if (f->start || f->end!=f->size) return -1;
+        row=(JOE_LONG_LONG)bw->cursor->line+1;
+        total=(JOE_LONG_LONG)bw->b->eof->line+1;
+        if (total>1 && pisbol(bw->b->eof)) --total;
+    }
+    if (total<=0 || row>=total) return 100;
+    return (int)(100.0*(double)row/(double)total);
+}
+
 int lf_row_label(BW *bw, char *text, int size)
 {
     struct large_file *f = bw->b->large;

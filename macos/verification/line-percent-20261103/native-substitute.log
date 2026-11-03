@@ -1,0 +1,20 @@
+PASS substitute native session starts
+PASS native control request responds
+PASS native control request responds
+PASS confirmation prompt renders
+PASS only the current replacement match has a pale selection background
+PASS native control request responds
+PASS native save is blocked during confirmation
+PASS native control request responds
+PASS confirmation choices update rendered text
+PASS native control request responds
+PASS native save resumes after confirmation
+PASS saved native replacement bytes are correct
+PASS native control request responds
+PASS one undo restores the complete confirmed command
+PASS native control request responds
+PASS native control request responds
+PASS native control request responds
+PASS Ctrl+C cancels confirmation without closing the document
+PASS native control request responds
+PASS owned native child exits cleanly

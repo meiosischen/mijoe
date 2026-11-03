@@ -20,6 +20,7 @@ JOE_LONG_LONG lf_absolute(B *b, off_t byte);
 JOE_LONG_LONG lf_size(B *b);
 JOE_LONG_LONG lf_read_bytes(B *b);
 const char *lf_status(BW *bw);
+int lf_line_percent(BW *bw);
 int lf_row_label(BW *bw, char *text, int size);
 int lf_column_label(BW*,char*,int size);
 int lf_goto_absolute(BW *bw, JOE_LONG_LONG position);
