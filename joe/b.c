@@ -6,6 +6,7 @@
  *	This file is part of JOE (Joe's Own Editor)
  */
 #include "types.h"
+#include "vim.h"
 
 #ifdef HAVE_PWD_H
 #include <pwd.h>
@@ -250,6 +251,7 @@ static B *bmkchn(H *chn, B *prop, off_t amnt, off_t nlines)
 	b->rdonly = 0;
 	b->vim_number = 0;
 	b->large = NULL; b->binary_file = 0;
+    b->temporary_highlights = NULL;
 	b->orphan = 0;
 	b->oldcur = NULL;
 	b->err = NULL;
@@ -323,6 +325,7 @@ void brm(B *b)
 #endif
 
 	if (b && !--b->count) {
+        vim_temp_clear(b);
         lf_release(b);
 		if (b->changed)
 			abrerr(b->name);

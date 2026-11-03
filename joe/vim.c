@@ -47,6 +47,7 @@ static struct regcomp *highlight_regex;
 static struct charmap *highlight_map;
 static char *highlight_pattern;
 static int sub_highlight(struct vim_highlight *h, BW *bw);
+static void message(const char *s);
 
 void vim_highlight_begin(struct vim_highlight *h, BW *bw, P *line)
 {
@@ -96,6 +97,159 @@ void vim_highlight_end(struct vim_highlight *h)
 {
     if (h->scan) prm(h->scan);
 }
+/* Buffer-owned literal overlays. They are never written to the document,
+ * recent-file history or personal state, and never index an entire file. */
+#define TEMP_HL_LIMIT 32
+#define TEMP_HL_BYTES 1024
+#define TEMP_HL_TOTAL 8192
+struct vim_temporary_highlights {
+    char *terms[TEMP_HL_LIMIT]; /* UTF-8 literals, independent of buffer encoding. */
+    int count, max_chars;
+    const char *error;
+    struct regcomp *regex;
+    struct charmap *map;
+};
+
+int vim_temp_count(B *b)
+{
+    return b->temporary_highlights ? b->temporary_highlights->count : 0;
+}
+
+void vim_temp_clear(B *b)
+{
+    struct vim_temporary_highlights *list=b->temporary_highlights;
+    int i;
+    if (!list) return;
+    for (i=0;i<list->count;++i) joe_free(list->terms[i]);
+    if (list->regex) joe_regfree(list->regex);
+    joe_free(list); b->temporary_highlights=NULL;
+}
+
+static int temp_compile(struct vim_temporary_highlights *list, struct charmap *map)
+{
+    char *expression=vsdupz(""), *encoded;
+    int i;
+    if (list->regex) joe_regfree(list->regex);
+    list->regex=NULL; list->map=map; list->max_chars=0; list->error=NULL;
+    for (i=0;i<list->count;++i) {
+        const char *s=list->terms[i], *p=s;
+        ptrdiff_t left=zlen(s);
+        int chars=0;
+        while (left>0) {
+            int c=utf8_decode_fwrd(&p,&left);
+            if (c<0 || (!map->type && from_uni(map,c)<0)) {
+                list->error="Highlight literal cannot be represented in this file encoding";
+                obj_free(expression); return 0;
+            }
+            ++chars;
+        }
+        if (chars>list->max_chars) list->max_chars=chars;
+        if (i) expression=vsadd(expression,'|');
+        while (*s) {
+            if (strchr("\\.^$[]()|*+?{}",(unsigned char)*s)) expression=vsadd(expression,'\\');
+            expression=vsadd(expression,*s++);
+        }
+    }
+    encoded=my_iconv(NULL,map,expression,utf8_map);
+    list->regex=joe_regcomp(map,encoded,zlen(encoded),0,1,0);
+    obj_free(expression);
+    list->error=list->regex->err;
+    return !list->error;
+}
+
+void vim_temp_begin(struct vim_temporary_match *h, BW *bw, P *p)
+{
+    struct vim_temporary_highlights *list=bw->b->temporary_highlights;
+    h->scan=h->match=NULL; h->regex=NULL; h->covered=-1; h->ready=0; h->lookbehind=0;
+    if (!list || bw->o.hex || !list->count) return;
+    if (((!list->regex && !list->error) || list->map!=bw->b->o.charmap) && !temp_compile(list,bw->b->o.charmap)) return;
+    if (!list->regex || list->error) return;
+    h->regex=list->regex; h->lookbehind=list->max_chars-1;
+    h->scan=pdup(p,"temporary highlight scan"); h->match=pdup(p,"temporary highlight match");
+}
+
+int vim_temp_test(struct vim_temporary_match *h, off_t byte)
+{
+    if (!h->scan) return 0;
+    if (!h->ready) {
+        int n=h->lookbehind;
+        pgoto(h->scan,byte);
+        while (n-- && !pisbol(h->scan)) prgetc(h->scan);
+        h->ready=1;
+    }
+    while (h->scan->byte<=byte && !piseof(h->scan) && !piseol(h->scan)) {
+        off_t candidate=h->scan->byte;
+        pset(h->match,h->scan);
+        /* No unbounded quantifiers: a match inspects at most the longest
+         * literal. Advance starts by one character so overlaps are merged. */
+        if (!joe_regexec_greedy(h->regex,h->match,0,NULL,0,h->scan->b->eof->byte) && h->match->byte>h->covered)
+            h->covered=h->match->byte;
+        pgoto(h->scan,candidate); pgetc(h->scan);
+    }
+    return byte<h->covered;
+}
+
+void vim_temp_end(struct vim_temporary_match *h)
+{
+    if (h->scan) prm(h->scan);
+    if (h->match) prm(h->match);
+}
+
+static int temp_command(BW *bw, const char *input)
+{
+    struct vim_temporary_highlights *old=bw->b->temporary_highlights, *next;
+    const char *s=input, *error=NULL;
+    int i, added=0;
+    if (bw->o.hex) { message("Temporary highlights require a text view"); return -1; }
+    while (*s==' ' || *s=='\t') ++s;
+    if (!*s) {
+        char *summary=vsfmt(NULL,0,"Temporary highlights (%d):",vim_temp_count(bw->b));
+        if (old) for(i=0;i<old->count;++i) summary=vsfmt(summary,vslen(summary)," \"%s\"",old->terms[i]);
+        message(summary); obj_free(summary); return 0;
+    }
+    next=(struct vim_temporary_highlights *)joe_malloc(sizeof(*next)); memset(next,0,sizeof(*next));
+    if (old) for(i=0;i<old->count;++i) next->terms[next->count++]=zdup(old->terms[i]);
+    while (*s && !error) {
+        char *raw=vsdupz(""), *utf8;
+        int quote=0, duplicate=0;
+        while (*s==' ' || *s=='\t') ++s;
+        if (!*s) {obj_free(raw);break;}
+        while (*s && (quote || (*s!=' ' && *s!='\t'))) {
+            int c=(unsigned char)*s++;
+            if (c=='"') {quote=!quote;continue;}
+            if (c=='\\' && (*s=='"' || *s=='\\')) c=(unsigned char)*s++;
+            if (c<32 && c!='\t') {error="Highlight literals cannot contain line breaks or control characters";break;}
+            raw=vsadd(raw,c);
+        }
+        if (quote) error="Unterminated highlight quote";
+        if (!*raw && !error) error="Highlight literals cannot be empty";
+        utf8=my_iconv(NULL,utf8_map,raw,locale_map);
+        if (zlen(utf8)>TEMP_HL_BYTES) error="Highlight literal exceeds 1024 UTF-8 bytes";
+        if (!error) {
+            for(i=0;i<next->count;++i) if (!zcmp(next->terms[i],utf8)) {duplicate=1;break;}
+            if (!duplicate) {
+                if (next->count==TEMP_HL_LIMIT) error="At most 32 temporary highlight literals per file";
+                else {next->terms[next->count++]=zdup(utf8);++added;}
+            }
+        }
+        obj_free(raw);
+    }
+    if (!error) {
+        ptrdiff_t total=0;
+        for(i=0;i<next->count;++i) total+=zlen(next->terms[i]);
+        if(total>TEMP_HL_TOTAL)error="Temporary highlight literals exceed 8192 UTF-8 bytes in total";
+    }
+    if (!error && !temp_compile(next,bw->b->o.charmap)) error=next->error;
+    if (error) {
+        for(i=0;i<next->count;++i) joe_free(next->terms[i]);
+        if(next->regex)joe_regfree(next->regex);joe_free(next);message(error);return -1;
+    }
+    vim_temp_clear(bw->b); bw->b->temporary_highlights=next;
+    updall(); staupd=dostaupd=1;
+    {char status[96];sprintf(status,"Temporary highlights: %d total, %d added",next->count,added);message(status);}
+    return 0;
+}
+
 static int queued_keys[40], queued_count, queued_index;
 
 static void finish_block_insert(BW *bw);
@@ -2462,6 +2616,16 @@ int vim_ex(W *w, const char *line)
         rc=pipeline_open(bw,pipeline); obj_free(pipeline); goto done;
     }
     if (adjacent_pipe) { message("Pipes support grep, awk, head, more and less only"); rc=-1; goto done; }
+    if (!zcmp(cmd,"set-hl") || !zcmp(cmd,"clear-hl")) {
+        if (bang || adjacent_pipe) {message("Use :set-hl text or :clear-hl");rc=-1;}
+        else if (!zcmp(cmd,"set-hl")) rc=temp_command(bw,end);
+        else {
+            const char *p=end;while(*p==' ' || *p=='\t')++p;
+            if (*p) {message("Use :clear-hl without arguments");rc=-1;}
+            else {vim_temp_clear(bw->b);updall();staupd=dostaupd=1;message("Temporary highlights cleared");}
+        }
+        goto done;
+    }
 	arg = filename_arg(end);
 	if (!arg) { message("Unterminated filename quote"); rc = -1; goto done; }
 	/* The existing file engine's dequote buffer is 1024 bytes. */

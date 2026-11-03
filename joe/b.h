@@ -124,10 +124,12 @@ struct options {
 /* A buffer */
 
 struct large_file;
+struct vim_temporary_highlights;
 struct buffer {
 	LINK(B)	link;		/* Doubly-linked list of all buffers */
 	struct large_file *large; /* Immutable source-file window, or NULL. */
 	int binary_file;
+    struct vim_temporary_highlights *temporary_highlights; /* This open buffer only. */
 	unsigned long vim_number; /* Stable, session-local user buffer number. */
 	P	*bof;		/* Beginning of file pointer */
 	P	*eof;		/* End of file pointer */

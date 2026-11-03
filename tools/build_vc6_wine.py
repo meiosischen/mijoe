@@ -58,6 +58,12 @@ if args.target == "dll":
     executable /= "dll"
 executable /= "joe.exe"
 cases = [
+    ("temp-hl-add", b"gogogo 123\n", b':set-hl gogogo 123\r:wq\r', b"gogogo 123\n"),
+    ("temp-hl-quotes", b"gogogo 123\n", b':set-hl "gogogo 123"\r:set-hl ERROR\r:wq\r', b"gogogo 123\n"),
+    ("temp-hl-clear", b"abc\n", b":set-hl abc\r:clear-hl\riX\x1b:wq\r", b"Xabc\n"),
+    ("temp-hl-close", b"abc\n", b":set-hl abc\r:bd\r:recent\r\riX\x1b:wq\r", b"Xabc\n"),
+    ("temp-hl-invalid", b"abc\n", b':set-hl abc\r:set-hl "bad\riX\x1b:wq\r', b"Xabc\n"),
+    ("temp-hl-readonly", b"abc\n", b"\x14O:set-hl abc\r:clear-hl\r:q!\r", b"abc\n"),
     ("substitute-global", b"foo foo\nfoo\n", b":%s/foo/bar/g\r:wq\r", b"bar bar\nbar\n"),
     ("substitute-range", b"foo\nfoo foo\nfoo\n", b":2,3s/foo/bar/\r:wq\r", b"foo\nbar foo\nbar\n"),
     ("substitute-capture", b"abc-123\n", br":s/\([a-z]\+\)-\([0-9]\+\)/\2-\1/"+b"\r:wq\r", b"123-abc\n"),

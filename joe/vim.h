@@ -14,6 +14,18 @@ struct vim_highlight {
 void vim_highlight_begin(struct vim_highlight *highlight, BW *bw, P *line);
 int vim_highlight_test(struct vim_highlight *highlight, off_t byte);
 void vim_highlight_end(struct vim_highlight *highlight);
+struct vim_temporary_match {
+    P *scan, *match;
+    struct regcomp *regex;
+    off_t covered;
+    int ready, lookbehind;
+};
+void vim_temp_begin(struct vim_temporary_match *h, BW *bw, P *p);
+int vim_temp_test(struct vim_temporary_match *h, off_t byte);
+void vim_temp_end(struct vim_temporary_match *h);
+void vim_temp_clear(B *b);
+int vim_temp_count(B *b);
+
 int vim_input(va_list args);
 int vim_readkey(int key);
 int vim_getch(void);

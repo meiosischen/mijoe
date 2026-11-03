@@ -1,0 +1,69 @@
+PASS native control request responds
+PASS native control request responds
+PASS quoted phrase includes its exact separating space in the yellow highlight
+PASS quoted phrase does not highlight separated words elsewhere
+PASS native control request responds
+PASS unquoted terms highlight separately, including literal substrings
+PASS spaces between separate terms are not highlighted
+PASS native control request responds
+PASS Visual selection takes priority over a temporary match
+PASS native control request responds
+PASS search matches take priority over the temporary color
+PASS native control request responds
+PASS nohlsearch leaves temporary matches active
+PASS native control request responds
+PASS editing refreshes temporary match locations
+PASS native control request responds
+PASS undo restores contents while preserving the temporary set
+PASS native control request responds
+PASS clear-hl removes the overlay without changing text
+PASS native control request responds
+PASS test file opens in its own buffer
+PASS native control request responds
+PASS regex punctuation and pipe are literal text
+PASS native control request responds
+PASS test file opens in its own buffer
+PASS native control request responds
+PASS overlapping literal matches form the complete union
+PASS native control request responds
+PASS test file opens in its own buffer
+PASS native control request responds
+PASS wide Unicode phrase highlights whole glyphs and its internal space
+PASS native control request responds
+PASS native control request responds
+PASS representable Latin-1 literals match exact encoded text
+PASS native control request responds
+PASS unrepresentable Unicode is rejected without turning replacement characters into regex operators
+PASS native control request responds
+PASS test file opens in its own buffer
+PASS native control request responds
+PASS a match beginning left of the horizontal viewport remains highlighted
+PASS native control request responds
+PASS test file opens in its own buffer
+PASS native control request responds
+PASS one literal remains highlighted across soft-wrapped display rows
+PASS native control request responds
+PASS fixture triggers normal-open large-file syntax protection
+PASS native control request responds
+PASS temporary highlighting works above the automatic syntax cutoff
+PASS native control request responds
+PASS temporary highlights work after jumping to the end of a large file
+PASS native control request responds
+PASS all display commands preserve original source bytes
+PASS native control request responds
+PASS an active temporary set exists immediately before process exit
+PASS native control request responds
+PASS first owned child exits cleanly
+PASS native control request responds
+PASS restarting an editor does not restore temporary terms
+PASS native control request responds
+PASS native control request responds
+PASS native control request responds
+PASS native control request responds
+PASS temporary highlights do not scan or load additional lazy-file data
+PASS read-only lazy text displays literal matches
+PASS native control request responds
+PASS lazy-region replacement preserves the open buffer's highlight set
+PASS recent-file paths persist without storing temporary highlight words
+PASS native control request responds
+PASS second owned child exits cleanly

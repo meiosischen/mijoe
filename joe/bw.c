@@ -379,6 +379,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 	char bc;
 	int ungetit = NO_MORE_DATA;
 	struct vim_highlight highlight;
+    struct vim_temporary_match temporary;
 
 	struct utf8_sm utf8_sm;
 	struct ansi_sm ansi_sm;
@@ -392,6 +393,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
         int cm = -1;		/* Attribute mask for current character */
 
 	vim_highlight_begin(&highlight, bw, p);
+    vim_temp_begin(&temporary,bw,p);
 	utf8_init(&utf8_sm);
 	ansi_init(&ansi_sm);
 
@@ -468,6 +470,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 			else
 				SELECT_IF(byte >= from && byte < to);
 			if (vim_highlight_test(&highlight, byte) && cm == -1) { ca = selectatr; cm = selectmask; }
+            if (temporary.scan && cm==-1 && col>=scr && vim_temp_test(&temporary,byte)) {ca=FG_BLACK|BG_BYELLOW;cm=0;}
 			++byte;
 			if (bc == '\t') {
 				ta = p->b->o.tab - col % p->b->o.tab;
@@ -603,6 +606,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 				SELECT_IF(byte >= from && byte < to);
 			}
 			if (vim_highlight_test(&highlight, byte) && cm == -1) { ca = selectatr; cm = selectmask; }
+            if (temporary.scan && cm==-1 && vim_temp_test(&temporary,byte)) {ca=FG_BLACK|BG_BYELLOW;cm=0;}
 			++byte;
 			if (bc == '\t') {
 				ta = p->b->o.tab - (x - ox + scr) % p->b->o.tab;
@@ -716,6 +720,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 		p->ofst = (short)(bp - p->ptr - (p->hdr->ehole - p->hdr->hole));
 	p->byte = byte;
 	vim_highlight_end(&highlight);
+    vim_temp_end(&temporary);
 	return done;
 
       eosl:
@@ -727,6 +732,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 	p->byte = byte;
 	if (!wrap) pnextl(p);
 	vim_highlight_end(&highlight);
+    vim_temp_end(&temporary);
 	return 0;
 }
 

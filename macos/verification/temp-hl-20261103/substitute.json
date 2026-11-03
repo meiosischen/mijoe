@@ -1,0 +1,25 @@
+{
+  "passed" : 20,
+  "checks" : [
+    "substitute native session starts",
+    "native control request responds",
+    "native control request responds",
+    "confirmation prompt renders",
+    "only the current replacement match has a pale selection background",
+    "native control request responds",
+    "native save is blocked during confirmation",
+    "native control request responds",
+    "confirmation choices update rendered text",
+    "native control request responds",
+    "native save resumes after confirmation",
+    "saved native replacement bytes are correct",
+    "native control request responds",
+    "one undo restores the complete confirmed command",
+    "native control request responds",
+    "native control request responds",
+    "native control request responds",
+    "Ctrl+C cancels confirmation without closing the document",
+    "native control request responds",
+    "owned native child exits cleanly"
+  ]
+}
