@@ -366,6 +366,14 @@ static void record_key(int key)
 
 /* Feed complete JOE prefix sequences to the configured keymap.  Terminal
  * escapes, find arguments, Ex input and bracketed paste still belong to Vim. */
+/* Idle notifications must not consume pending Vim operands, paste or macro input. */
+int vim_external_ready(void)
+{
+    return (!vim_enabled || mode==VM_NORMAL) && !paste && !pending && !g_pending && !find_pending &&
+        !object_pending && !count && !register_pending && !vim_macro_recording() && !vim_macro_playing() &&
+        queued_index>=queued_count;
+}
+
 int vim_command_active(void) { return mode == VM_COMMAND; }
 const char *vim_command_text(void) { return mode==VM_COMMAND ? command : ""; }
 

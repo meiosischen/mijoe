@@ -1,0 +1,19 @@
+PASS native control request responds
+PASS idle native window prompts without a keyboard event
+PASS native control request responds
+PASS yes reloads external contents in the same native window
+PASS native control request responds
+PASS dirty buffer receives an explicit discard warning
+PASS native control request responds
+PASS no preserves native buffer edits
+PASS native control request responds
+PASS native save still refuses to overwrite the declined external version
+PASS native control request responds
+PASS manual reload after declining still supports dirty confirmation
+PASS native control request responds
+PASS native command bar is not interrupted
+PASS deferred notice appears after leaving command mode
+PASS native control request responds
+PASS deferred refresh displays the latest source
+PASS native control request responds
+PASS owned native session exits cleanly

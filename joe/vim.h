@@ -79,4 +79,5 @@ void vim_gui_mouse_prepare(void);
 #define VIM_F5 0x200010
 #define VIM_F6 0x200011
 
+int vim_external_ready(void);
 #endif

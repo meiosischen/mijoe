@@ -6,6 +6,7 @@
  *	This file is part of JOE (Joe's Own Editor)
  */
 #include "types.h"
+#include "vim.h"
 
 #ifdef HAVE_UTIME_H
 #include <utime.h>
@@ -417,6 +418,7 @@ static int saver(W *w, int c, void *object)
 		if (bw->b->name && !fullfilecmp(bw->b->name, req->name)) {
 			bw_unlock(bw);
 			bw->b->changed = 0;
+            b_disk_reset(bw->b);
 			saverr(bw->b->name);
 		}
 		if (!req->vim_request || (bw->b->name && !fullfilecmp(bw->b->name, req->name))) {
@@ -1404,10 +1406,65 @@ int ukilljoe(W *w, int k)
 	return 0;
 }
 
+static int reload_current(BW *bw)
+{
+    B *n;
+    int readonly=bw->b->rdonly;
+    JOE_LONG_LONG offset=lf_absolute(bw->b,bw->cursor->byte);
+    n=bload(bw->b->name);
+    if(berror) {brm(n);msgnw(bw->parent,joe_gettext(msgs[-berror]));return -1;}
+    n->o=bw->o;
+    if(lf_refresh_prepare(n,offset,bw->o.hex)) {
+        brm(n);msgnw(bw->parent,"Cannot reload file; current buffer kept");return -1;
+    }
+    n->rdonly=n->rdonly || readonly;
+    n->o.readonly=n->rdonly;
+    lf_options(n,&n->o);
+    vim_cancel_selection();
+    bw->b->o=n->o;
+    breplace(bw->b,n);
+    bw->o=bw->b->o;
+    if(lf_active(bw->b))lf_goto_absolute(bw,offset);
+    nredraw(bw->parent->t->t);staupd=dostaupd=1;
+    msgnw(bw->parent,"File reloaded");return 0;
+}
+static int external_query(va_list args)
+{
+    BW *bw=va_arg(args,BW *);
+    struct disk_version noticed=bw->b->disk_notified;
+    int answer;
+    const char *prompt=!noticed.exists ? "File removed from disk. Current buffer kept (press any key)." :
+        bw->b->changed ? "File changed on disk. Reload and DISCARD unsaved changes? (y/n, Esc cancels) " :
+                        "File changed on disk. Reload current file? (y/n, Esc cancels) ";
+    answer=query(bw->parent,sz(prompt),QW_NOMACRO);
+    if(noticed.exists && (answer==YES_CODE || yncheck(yes_key,answer)))return reload_current(bw);
+    return 0;
+}
+int mj_external_waiting;
+void mj_external_poll(void)
+{
+    static time_t checked;
+    time_t now=time(NULL);
+    BW *bw;
+    struct disk_version version;
+    if(!mj_external_waiting || now==checked || leave || !maint || !maint->curwin || nomodcheck)return;
+    if(!(maint->curwin->watom->what&TYPETW) || maint->curwin->kbd->x ||
+       !vim_external_ready() || vim_grep_active() || vim_substitute_active() ||
+       mj_recent_active() || help_text_active(maint))return;
+    bw=(BW *)maint->curwin->object;
+    if(!bw || bw->b->pid || bw->b->internal || !plain_file(bw->b) || lf_pending(bw->b))return;
+    if(have || ttcheck())return;
+    checked=now;
+    if(!bw->b->disk_original.valid || b_disk_version(bw->b->name,&version))return;
+    if(b_disk_equal(&version,&bw->b->disk_original) || b_disk_equal(&version,&bw->b->disk_notified))return;
+    /* Leave the saved baseline intact so declining cannot bypass :w protection. */
+    bw->b->disk_notified=version;bw->b->gave_notice=1;
+    co_call(external_query,bw);
+}
+
 int ureload(W *w, int k)
 {
 	BW *bw;
-	B *n;
 	WIND_BW(bw, w);
 	
 	if (!plain_file(bw->b)) {
@@ -1420,16 +1477,7 @@ int ureload(W *w, int k)
 			return -1;
 		}
 	}
-	n = bload(bw->b->name);
-	if (berror) {
-		brm(n);
-		msgnw(bw->parent, joe_gettext(msgs[-berror]));
-		return -1;
-	}
-	breplace(bw->b, n);
-	nredraw(bw->parent->t->t);
-	msgnw(bw->parent, joe_gettext(_("File reloaded")));
-	return 0;
+	return reload_current(bw);
 }
 
 int ureload_all(W *w, int k)

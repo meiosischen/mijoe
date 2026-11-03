@@ -331,6 +331,17 @@ static int lf_load(B *b, JOE_LONG_LONG target, JOE_LONG_LONG line_hint)
     }
     return 0;
 }
+/* Refresh large sources through the same bounded read-only window loader. */
+int lf_refresh_prepare(B *fresh,JOE_LONG_LONG offset,int hex)
+{
+    if(!fresh->large)return 0;
+    fresh->large->view_hex=hex || fresh->binary_file;
+    fresh->large->options_seen=1;
+    if(offset<0)offset=0;
+    if(offset>=fresh->large->size)offset=fresh->large->size ? fresh->large->size-1 : 0;
+    return lf_load(fresh,offset,-1);
+}
+
 static int lf_seek(BW *bw, JOE_LONG_LONG target, JOE_LONG_LONG line_hint)
 {
     struct large_file *f = bw->b->large;

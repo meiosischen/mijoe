@@ -58,6 +58,8 @@ if args.target == "dll":
     executable /= "dll"
 executable /= "joe.exe"
 cases = [
+    ("external-reload", b"abc\n", b"y0iX\x1b:wq\r", b"Xexternal text\n"),
+    ("external-decline-dirty", b"abc\n", b"n:w!\r:q\r", b"LOCALabc\n"),
     ("history-view", b"abc\n", b":set-hl abc\r:history\rq:wq\r", b"abc\n"),
     ("history-readonly", b"abc\n", b":history\riBADdd\x03iX\x1b:wq\r", b"Xabc\n"),
     ("history-macro", b"abc\n", b"\x1b[15~:set-hl abc\r\x1b[15~\x1b[17~:history\rq:wq\r", b"abc\n"),
@@ -162,7 +164,7 @@ for name, initial, keys, expected in cases:
     (directory / "initial.bin").write_bytes(initial)
     (directory / "keys.bin").write_bytes(keys)
     (directory / "expected.bin").write_bytes(expected)
-    flags=["--path"] if name=="status-path" else ["--wrap"] if name=="softwrap-mouse" else []
+    flags=["--external"] if name=="external-reload" else ["--external-dirty"] if name=="external-decline-dirty" else ["--path"] if name=="status-path" else ["--wrap"] if name=="softwrap-mouse" else []
     run = subprocess.run([str(args.wine), winpath(helper), winpath(executable), winpath(directory), *flags],
                          env=dict(env,MIJOE_CONFIG_HOME=winpath(directory / "profile")), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=40)
     (directory / "run.log").write_bytes(run.stdout)

@@ -52,3 +52,7 @@ int ureload_all(W *w, int k);
 int dodropfiles (va_list);
 #endif
 
+
+void mj_external_poll(void);
+
+extern int mj_external_waiting;

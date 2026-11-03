@@ -272,6 +272,8 @@ static B *bmkchn(H *chn, B *prop, off_t amnt, off_t nlines)
 	b->bof = palloc();
 	b->mod_time = 0;
 	b->check_time = time(NULL);
+    memset(&b->disk_original,0,sizeof(b->disk_original));
+    memset(&b->disk_notified,0,sizeof(b->disk_notified));
 	izque(P, link, b->bof);
 	b->bof->end = 0;
 	b->bof->b = b;
@@ -465,6 +467,8 @@ void breplace(B *b, B *n)
 	b->changed = 0;
 	b->rdonly = n->rdonly;
 	b->mod_time = n->mod_time;
+    if (n->disk_original.valid) { b->disk_original=n->disk_original; b->disk_notified=n->disk_notified; }
+    b->gave_notice=0;
 
 	/* Delete rest of n */
 	brm(n);
@@ -3062,6 +3066,7 @@ opnerr:
 
 	b->er = berror;
     lf_options(b,&b->o);
+    b_disk_reset(b);
 	return b;
 }
 
@@ -3650,17 +3655,73 @@ int plain_file(B *b)
 
 /* True if file changed under us */
 
+int b_disk_equal(const struct disk_version *a,const struct disk_version *b)
+{
+    return a->valid && b->valid && a->exists==b->exists && a->size==b->size &&
+        a->stamp==b->stamp && a->subsecond==b->subsecond && a->device==b->device && a->identity==b->identity;
+}
+int b_disk_version(const char *name,struct disk_version *v)
+{
+    memset(v,0,sizeof(*v));
+#ifdef JOEWIN
+    {
+        HANDLE handle;
+        BY_HANDLE_FILE_INFORMATION info;
+        DWORD error;
+        wchar_t *wide;
+        int count;
+        char *utf8=my_iconv(NULL,utf8_map,dequote(name),locale_map);
+        count=MultiByteToWideChar(CP_UTF8,0,utf8,-1,NULL,0);
+        if(!count){obj_free(utf8);return -1;}
+        wide=(wchar_t *)joe_malloc(count*sizeof(wchar_t));
+        MultiByteToWideChar(CP_UTF8,0,utf8,-1,wide,count);obj_free(utf8);
+        handle=CreateFileW(wide,FILE_READ_ATTRIBUTES,FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,NULL,OPEN_EXISTING,0,NULL);
+        error=GetLastError();joe_free(wide);
+        if(handle==INVALID_HANDLE_VALUE) {
+            if(error!=ERROR_FILE_NOT_FOUND && error!=ERROR_PATH_NOT_FOUND)return -1;
+            v->valid=1;return 0;
+        }
+        if(!GetFileInformationByHandle(handle,&info)){CloseHandle(handle);return -1;}
+        CloseHandle(handle);
+        if(info.dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY)return -1;
+        v->size=((JOE_LONG_LONG)info.nFileSizeHigh<<32)|info.nFileSizeLow;
+        v->stamp=((JOE_LONG_LONG)info.ftLastWriteTime.dwHighDateTime<<32)|info.ftLastWriteTime.dwLowDateTime;
+        v->device=info.dwVolumeSerialNumber;
+        v->identity=((JOE_LONG_LONG)info.nFileIndexHigh<<32)|info.nFileIndexLow;
+    }
+#else
+    {
+        struct stat st;
+        if(stat(dequote(name),&st)) {
+            if(errno!=ENOENT && errno!=ENOTDIR)return -1;
+            v->valid=1;return 0;
+        }
+        if(!S_ISREG(st.st_mode))return -1;
+        v->size=st.st_size;v->stamp=st.st_mtime;v->device=st.st_dev;v->identity=st.st_ino;
+#if defined(__APPLE__)
+        v->subsecond=st.st_mtimespec.tv_nsec;
+#elif defined(__linux__)
+        v->subsecond=st.st_mtim.tv_nsec;
+#endif
+    }
+#endif
+    v->valid=v->exists=1;return 0;
+}
+void b_disk_reset(B *b)
+{
+    memset(&b->disk_original,0,sizeof(b->disk_original));
+    memset(&b->disk_notified,0,sizeof(b->disk_notified));
+    if(plain_file(b))b_disk_version(b->name,&b->disk_original);
+    b->gave_notice=0;
+}
 int check_mod(B *b)
 {
-	struct stat sbuf;
-	if (!plain_file(b))
-		return 0;
-	if (!stat(b->name,&sbuf)) {
-		if (sbuf.st_mtime>b->mod_time) {
-			return 1;
-		}
-	}
-	return 0;
+    struct disk_version now;
+    struct stat st;
+    if(!plain_file(b))return 0;
+    if(b->disk_original.valid)
+        return !b_disk_version(b->name,&now) && !b_disk_equal(&b->disk_original,&now);
+    return !stat(b->name,&st) && st.st_mtime>b->mod_time;
 }
 
 /* True if file exists */

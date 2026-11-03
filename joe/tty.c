@@ -666,6 +666,7 @@ char ttgetc(void)
 		ttflsh();
 	}
 	if (ticked) {
+        mj_external_poll();
 		edupd(flg);
 		ttflsh();
 		tickon();

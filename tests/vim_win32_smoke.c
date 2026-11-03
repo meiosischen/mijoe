@@ -101,7 +101,7 @@ int main(int argc, char **argv)
     DWORD size, code = 0;
     size_t length, i;
     int ok = 0;
-    if (argc != 3 && !(argc == 4 && (!strcmp(argv[3], "--verify") || !strcmp(argv[3], "--path") || !strcmp(argv[3], "--wrap")))) return 2;
+    if (argc != 3 && !(argc == 4 && (!strcmp(argv[3], "--verify") || !strcmp(argv[3], "--path") || !strcmp(argv[3], "--wrap") || !strcmp(argv[3], "--external") || !strcmp(argv[3], "--external-dirty")))) return 2;
     MultiByteToWideChar(CP_UTF8, 0, argv[1], -1, executable, 1024);
     MultiByteToWideChar(CP_UTF8, 0, argv[2], -1, directory, 1024);
     wsprintfW(input, L"%s\\\x6d4b\x8bd5-vim.txt", directory);
@@ -149,6 +149,19 @@ int main(int argc, char **argv)
         y=info.rcCaret.top+height+height/2;
         PostMessage(editor_window,WM_LBUTTONDOWN,MK_LBUTTON,MAKELPARAM(x,y));Sleep(50);
         PostMessage(editor_window,WM_LBUTTONUP,0,MAKELPARAM(x,y));Sleep(100);
+    }
+    if(argc==4 && !strncmp(argv[3],"--external",10)) {
+        const char *replacement="external text\n";
+        if(!strcmp(argv[3],"--external-dirty")) {
+            const char *edit="iLOCAL\033";
+            while(*edit){PostMessage(editor_window,WM_CHAR,(unsigned char)*edit++,1);Sleep(12);}
+            Sleep(200);
+        }
+        handle=CreateFileW(input,GENERIC_WRITE,FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,NULL,CREATE_ALWAYS,0,NULL);
+        if(handle==INVALID_HANDLE_VALUE){printf("FAIL external write\n");goto done;}
+        WriteFile(handle,replacement,(DWORD)strlen(replacement),&size,NULL);CloseHandle(handle);
+        /* No keyboard input during this wait: the idle timer must raise the query. */
+        Sleep(2200);
     }
     for (i = 0; i < length; ++i) {
         PostMessage(editor_window, WM_CHAR, keys[i], 1);

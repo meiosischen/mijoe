@@ -158,8 +158,11 @@ int edloop()
         else if (ungot) {
 			c = ungotc;
 			ungot = 0;
-		} else
+		} else {
+            mj_external_waiting=1;
 			c = vim_enabled ? vim_getch() : ttgetch();
+            mj_external_waiting=0;
+        }
 
 		/* Clear temporary messages */
 		w = maint->curwin;

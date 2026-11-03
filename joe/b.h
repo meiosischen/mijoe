@@ -125,6 +125,11 @@ struct options {
 
 struct large_file;
 struct vim_temporary_highlights;
+/* Metadata only: no document contents are read by the external-change poll. */
+struct disk_version {
+    int valid, exists;
+    JOE_LONG_LONG size, stamp, subsecond, device, identity;
+};
 struct buffer {
 	LINK(B)	link;		/* Doubly-linked list of all buffers */
 	struct large_file *large; /* Immutable source-file window, or NULL. */
@@ -139,6 +144,7 @@ struct buffer {
 	int didfirst;		/* Set after user attempted first change */
 	time_t	mod_time;	/* Last modification time for file */
 	time_t	check_time;	/* Last time we checked the file on disk */
+	struct disk_version disk_original, disk_notified;
 	int	gave_notice;	/* Set if we already gave file changed notice for this file */
 	int	orphan;		/* Set if buffer is orphaned: refcount is bumped up by one in this case */
 	int	count;		/* Reference count.  Buffer is deleted if brm decrements count to 0 */
@@ -347,3 +353,7 @@ int ansi_code(char *s);
 char *ansi_string(int code);
 
 extern int guess_utf16;
+
+int b_disk_version(const char *name, struct disk_version *version);
+void b_disk_reset(B *b);
+int b_disk_equal(const struct disk_version *a,const struct disk_version *b);
