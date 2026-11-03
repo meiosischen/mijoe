@@ -404,6 +404,7 @@ mode,"overwrite",rtn	T Overtype %Zoverwrite%
 mode,"hex",rtn	' Hex edit mode
 mode,"autoindent",rtn	I Autoindent %Zautoindent%
 mode,"wordwrap",rtn	W Word wrap %Zwordwrap%
+mode,"softwrap",rtn	Q Soft wrap %Zsoftwrap%
 mode,"tab",rtn	D Tab width %Ztab%
 mode,"lmargin",rtn	L Left margin %Zlmargin%
 mode,"rmargin",rtn	R Right margin %Zrmargin%

@@ -511,6 +511,7 @@ int utomouse(W *xx, int k)
 					goal_line = y - w->y + bw->top->line - 1;
 			else
 				goal_line = y - w->y + bw->top->line;
+			if (bwsoft(bw)) return bwsoft_mouse(bw,(int)(y-bw->y),(int)(x-bw->x));
 			pline(bw->cursor, goal_line);
 			pcol(bw->cursor, goal_col);
 			if (floatmouse)
@@ -616,6 +617,10 @@ static int tomousestay()
 					goal_line = w->h + bw->top->line - 1;
 				} else
 					goal_line = y - w->y + bw->top->line;
+            if (bwsoft(bw)) {
+                bwsoft_mouse(bw,(int)(y-bw->y),(int)(x-bw->x));
+                tmspos=piscol(bw->cursor); return 0;
+            }
 			pline(bw->cursor, goal_line);
 			pcol(bw->cursor, goal_col);
 			tmspos = bw->cursor->xcol = goal_col;

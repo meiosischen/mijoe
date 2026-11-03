@@ -309,6 +309,7 @@ struct glopts {
 	{"ansi",4, NULL, (char *) &fdefault.ansi, _("Hide ANSI sequences"), _("Reveal ANSI sequences"), _("Hide ANSI mode"), 0, 0, 0 },
 	{"title",4, NULL, (char *) &fdefault.title, _("Status line context enabled"), _("Status line context disabled"), _("Status line context display mode"), 0, 0, 0 },
 	{"autoindent",	4, NULL, (char *) &fdefault.autoindent, _("Autoindent enabled"), _("Autoindent disabled"), _("Autoindent mode"), 0, 0, 0 },
+	{"softwrap",4, NULL, (char *)&fdefault.softwrap, _("Soft wrap enabled"), _("Soft wrap disabled"), _("Soft wrap display mode"), 0, 0, 0 },
 	{"wordwrap",	4, NULL, (char *) &fdefault.wordwrap, _("Wordwrap enabled"), _("Wordwrap disabled"), _("Word wrap mode"), 0, 0, 0 },
 	{"tab",	14, NULL, (char *) &fdefault.tab, _("Tab width (%lld): "), 0, _("Tab width"), 0, 1, 64 },
 	{"lmargin",	7, NULL, (char *) &fdefault.lmargin, _("Left margin (%d): "), 0, _("Left margin "), 0, 0, 63 },

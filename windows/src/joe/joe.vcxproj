@@ -111,6 +111,7 @@
     <ClCompile Include="$(JoeExternalSrcDir)\b.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\blocks.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\bw.c" />
+    <ClCompile Include="$(JoeExternalSrcDir)\softwrap.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\cclass.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\charmap.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\cmd.c" />

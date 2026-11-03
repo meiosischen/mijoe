@@ -58,6 +58,7 @@ if args.target == "dll":
     executable /= "dll"
 executable /= "joe.exe"
 cases = [
+    ("softwrap-mouse", b"abcdefghijklmnopqrstuvwxyz\n", b"i!\x1b:wq\r", b"abcdefghijkl!mnopqrstuvwxyz\n"),
     ("status-path", b"path unchanged\n", b":wq\r", b"path unchanged\n"),
     ("pipe-preview", b"WARN alpha\nINFO beta\nWARN gamma\n", b":grep WARN|awk '{print $2}'|grep gamma|less\r\r0x:wq\r", b"WARN alpha\nINFO beta\nARN gamma\n"),
     ("pipe-numeric", b"one 2\ntwo 10\n", b":awk '$2>=10 {print $1}'\r\r0x:wq\r", b"one 2\nwo 10\n"),
@@ -141,7 +142,7 @@ for name, initial, keys, expected in cases:
     (directory / "initial.bin").write_bytes(initial)
     (directory / "keys.bin").write_bytes(keys)
     (directory / "expected.bin").write_bytes(expected)
-    flags=["--path"] if name=="status-path" else []
+    flags=["--path"] if name=="status-path" else ["--wrap"] if name=="softwrap-mouse" else []
     run = subprocess.run([str(args.wine), winpath(helper), winpath(executable), winpath(directory), *flags],
                          env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=40)
     (directory / "run.log").write_bytes(run.stdout)

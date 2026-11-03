@@ -22,7 +22,7 @@ AM_CPPFLAGS = -DJOERC="\"$(sysconf_joedir)/\"" -DJOEDATA="\"$(data_joedir)/\""
 
 # joe_LDADD = -lm
 
-joe_SOURCES = b.c blocks.c bw.c cmd.c coroutine.c hash.c help.c kbd.c macro.c main.c menu.c \
+joe_SOURCES = b.c blocks.c bw.c softwrap.c cmd.c coroutine.c hash.c help.c kbd.c macro.c main.c menu.c \
 	obj.c path.c poshist.c pw.c queue.c qw.c rc.c regex.c scrn.c tab.c termcap.c \
 	tty.c tw.c ublock.c uedit.c uerror.c ufile.c uformat.c uisrch.c umath.c \
 	undo.c usearch.c ushell.c utag.c vfile.c w.c utils.c syntax.c \

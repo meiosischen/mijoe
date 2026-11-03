@@ -181,6 +181,8 @@ static void gui_report(unsigned long id, int ok, const char *error, const char *
         json=vsncpy(sv(json),sz(number));
         if (gui_clipboard_text) { json=vsncpy(sv(json),sz(",\"clipboardText\":")); json=gui_json_string(json,gui_clipboard_text); }
     }
+    sprintf(number,",\"softwrap\":%s,\"wrapWidth\":%d",bw->o.softwrap ? "true" : "false",bwsoft_width(bw));
+    json=vsncpy(sv(json),sz(number));
     sprintf(number, ",\"largePending\":%s,\"lazy\":%s,\"binary\":%s,\"normalAllowed\":%s",
             lf_pending(bw->b) ? "true" : "false", lf_active(bw->b) ? "true" : "false",
             bw->b->binary_file ? "true" : "false", lf_size(bw->b) <= (JOE_LONG_LONG)MAXOFF ? "true" : "false");

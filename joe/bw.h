@@ -28,6 +28,7 @@ struct bw {
 	char	*prompt;
 	int promptofst;
 	int promptlen;
+	struct softwrap *soft;
 };
 
 extern int dspasis;	/* Display characters above 127 as-is */
@@ -71,3 +72,18 @@ extern int restore_file_pos;
 void set_file_pos_all(Screen *t);
 
 BW *vtmaster(Screen *t, B *b);
+
+/* Bounded display-row layout; logical file lines and buffer bytes do not change. */
+struct bwsoft_row { off_t byte, col, basecol, index, endcol; int *syn; };
+int bwsoft(BW *w);
+int bwsoft_width(BW *w);
+int bwsoft_follow(BW *w);
+void bwsoft_cursor(BW *w, int *x, int *y);
+void bwsoft_top(BW *w, P *line, off_t *number);
+int bwsoft_step(BW *w, P *line, off_t *number, int direction);
+void bwsoft_get(BW *w, P *line, off_t number, struct bwsoft_row *row);
+int bwsoft_move(BW *w, long rows);
+int bwsoft_mouse(BW *w, int y, int x);
+void bwsoft_scroll(BW *w, int rows, int fixed);
+void bwsoft_invalidate(BW *w);
+void bwsoft_free(BW *w);

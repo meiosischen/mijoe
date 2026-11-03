@@ -729,6 +729,9 @@ static void disptw(W *w, int flg)
 	if (bw->o.hex) {
 		w->cury = TO_DIFF_OK((bw->cursor->byte-bw->top->byte)/16 + bw->y - w->y);
 		w->curx = TO_DIFF_OK((bw->cursor->byte-bw->top->byte)%16 + 60 + (lf_active(bw->b) ? 8 : 0) - bw->offset);
+	} else if (bwsoft(bw)) {
+		int x,y; bwsoft_cursor(bw,&x,&y);
+		w->curx=x+newcols; w->cury=y+bw->y-w->y;
 	} else {
 		w->cury = TO_DIFF_OK(bw->cursor->line - bw->top->line + bw->y - w->y);
 		w->curx = TO_DIFF_OK(bw->cursor->xcol - bw->offset + newcols);

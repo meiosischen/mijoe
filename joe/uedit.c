@@ -1211,6 +1211,8 @@ void scrup(BW *bw, ptrdiff_t n, int flg)
 	ptrdiff_t cursoramnt = 0;
 	ptrdiff_t x;
 
+	if (bwsoft(bw)) { bwsoft_scroll(bw,-(int)n,flg); return; }
+
 	/* Decide number of lines we're really going to scroll */
 
 	if (bw->o.hex) {
@@ -1273,6 +1275,8 @@ void scrdn(BW *bw, ptrdiff_t n, int flg)
 	ptrdiff_t cursoramnt = 0;
 	ptrdiff_t x;
 
+	if (bwsoft(bw)) { bwsoft_scroll(bw,(int)n,flg); return; }
+
 	/* How much we're really going to scroll... */
 	if (bw->o.hex) {
 		if (bw->top->b->eof->byte/16 < bw->top->byte/16 + bw->h) {
@@ -1324,6 +1328,7 @@ int upgup(W *w, int k)
 {
 	BW *bw;
 	WIND_BW(bw, w);
+	if (bwsoft(bw)) { bwsoft_scroll(bw,-1 * (int)bw->h,1); return 0; }
 	if (menu_above) {
 		if (w->link.prev->watom == &watommenu && w->link.prev->win == w) {
 			return umpgup(w->link.prev, 0);
@@ -1352,6 +1357,7 @@ int upgdn(W *w, int k)
 {
 	BW *bw;
 	WIND_BW(bw, w);
+	if (bwsoft(bw)) { bwsoft_scroll(bw,1 * (int)bw->h,1); return 0; }
 	if (menu_above) {
 		if (w->link.prev->watom == &watommenu && w->link.prev->win == w) {
 			return umpgdn(w->link.prev, 0);
@@ -1379,6 +1385,7 @@ int uupslide(W *w, int k)
 {
 	BW *bw;
 	WIND_BW(bw, w);
+	if (bwsoft(bw)) { bwsoft_scroll(bw,-1,0); return 0; }
 	if (bw->o.hex ? bw->top->byte/16 : bw->top->line) {
 		if (bw->o.hex ? bw->top->byte/16 + bw->h -1 != bw->cursor->byte/16 : bw->top->line + bw->h - 1 != bw->cursor->line)
 			udnarw(w, 0);
@@ -1398,6 +1405,7 @@ int udnslide(W *w, int k)
 {
 	BW *bw;
 	WIND_BW(bw, w);
+	if (bwsoft(bw)) { bwsoft_scroll(bw,1,0); return 0; }
 	if (bw->o.hex ? bw->top->line/16 + bw->h <= bw->top->b->eof->byte/16 : bw->top->line + bw->h <= bw->top->b->eof->line) {
 		if (bw->o.hex ? bw->top->byte/16 != bw->cursor->byte/16 : bw->top->line != bw->cursor->line)
 			uuparw(w, 0);
@@ -1891,8 +1899,8 @@ static int utypebw_raw(BW *bw, int k, int no_decode)
 		if (bw->o.picture && bw->cursor->xcol!=piscol(bw->cursor))
 			pfill(bw->cursor,bw->cursor->xcol,' '); /* Why no tabs? */
 
-		upd = bw->parent->t->t->updtab[bw->y + bw->cursor->line - bw->top->line];
-		simple = 1;
+		upd = bwsoft(bw) ? 1 : bw->parent->t->t->updtab[bw->y + bw->cursor->line - bw->top->line];
+		simple = !bwsoft(bw);
 
 		if (pisblank(bw->cursor))
 			while (piscol(bw->cursor) < bw->o.lmargin) {

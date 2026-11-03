@@ -6,6 +6,7 @@ JOE_OBJS = \
     "$(OBJDIR)\joe_joe_b.obj" \
     "$(OBJDIR)\joe_joe_blocks.obj" \
     "$(OBJDIR)\joe_joe_bw.obj" \
+    "$(OBJDIR)\joe_joe_softwrap.obj" \
     "$(OBJDIR)\joe_joe_cclass.obj" \
     "$(OBJDIR)\joe_joe_charmap.obj" \
     "$(OBJDIR)\joe_joe_cmd.obj" \
@@ -120,6 +121,9 @@ COMMON_OBJS = \
 
 "$(OBJDIR)\joe_joe_bw.obj": "..\..\joe\bw.c" $(HEADERS)
 	$(CC) $(CFLAGS) $(JOEFLAGS) /Fo"$@" /c "..\..\joe\bw.c"
+
+"$(OBJDIR)\joe_joe_softwrap.obj": "..\..\joe\softwrap.c" $(HEADERS)
+	$(CC) $(CFLAGS) $(JOEFLAGS) /Fo"$@" /c "..\..\joe\softwrap.c"
 
 "$(OBJDIR)\joe_joe_cclass.obj": "..\..\joe\cclass.c" $(HEADERS)
 	$(CC) $(CFLAGS) $(JOEFLAGS) /Fo"$@" /c "..\..\joe\cclass.c"

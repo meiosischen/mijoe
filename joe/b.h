@@ -118,6 +118,7 @@ struct options {
 	MACRO	*msnew;		/* Macro to execute before saving new files */
 	MACRO	*msold;		/* Macro to execute before saving existing files */
 	MACRO	*mfirst;	/* Macro to execute on first change */
+	int softwrap; /* Display-only line wrapping, disabled by default. */
 };
 
 /* A buffer */

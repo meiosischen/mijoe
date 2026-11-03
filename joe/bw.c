@@ -121,6 +121,7 @@ void bwfllwt(W *thew)
 	BW *w = (BW *)thew->object;
 	P *newtop;
 
+	if (bwsoft_follow(w)) return;
 	if (!pisbol(w->top)) {
 		p_goto_bol(w->top);
 	}
@@ -248,6 +249,8 @@ static HIGHLIGHT_STATE get_highlight_state(BW *w, P *p, off_t line)
 
 void bwins(BW *w, off_t l, off_t n, int flg)
 {
+	bwsoft_invalidate(w);
+	if (bwsoft(w)) { msetI(w->t->t->updtab+w->y,1,w->h); return; }
 	/* If highlighting is enabled... */
 	if (w->o.highlight && w->o.syntax) {
 		/* Invalidate cache */
@@ -283,6 +286,8 @@ void bwins(BW *w, off_t l, off_t n, int flg)
 
 void bwdel(BW *w, off_t l, off_t n, int flg)
 {
+	bwsoft_invalidate(w);
+	if (bwsoft(w)) { msetI(w->t->t->updtab+w->y,1,w->h); return; }
 	/* If highlighting is enabled... */
 	if (w->o.highlight && w->o.syntax) {
 		/* lattr_cut(w->db, l + 1); */
@@ -352,7 +357,7 @@ static void ansi_init(struct ansi_sm *sm)
 
 /* Update a single line */
 
-static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff_t x, ptrdiff_t w, P *p, off_t scr, off_t from, off_t to,HIGHLIGHT_STATE st,BW *bw)
+static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff_t x, ptrdiff_t w, P *p, off_t scr, off_t from, off_t to,HIGHLIGHT_STATE st,BW *bw, struct bwsoft_row *wrap)
         
       
             			/* Screen line address */
@@ -365,7 +370,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 	ptrdiff_t ox = x;
 	int tach;
 	int done = 1;
-	off_t col = 0;
+	off_t col = wrap ? wrap->basecol : 0;
 	off_t byte = p->byte;
 	char *bp;	/* Buffer pointer, 0 if not set */
 	ptrdiff_t amnt;		/* Amount left in this segment of the buffer */
@@ -378,10 +383,10 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 	struct utf8_sm utf8_sm;
 	struct ansi_sm ansi_sm;
 
-        int *syn = 0;
+        int *syn = wrap ? wrap->syn : 0;
         P *tmp;
-        int idx=0;
-        int defatr = (bw->o.hiline && bw->cursor->line == y - bw->y + bw->top->line) ? (bg_text & curlinmask) | bg_curlin : bg_text;
+        int idx=wrap ? (int)wrap->index : 0;
+        int defatr = (bw->o.hiline && bw->cursor->line == p->line) ? (bg_text & curlinmask) | bg_curlin : bg_text;
         int atr = BG_COLOR(defatr);
         int ca = 0;		/* Additional attributes for current character */
         int cm = -1;		/* Attribute mask for current character */
@@ -390,7 +395,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 	utf8_init(&utf8_sm);
 	ansi_init(&ansi_sm);
 
-	if(st.state!=-1) {
+	if(st.state!=-1 && !wrap) {
 		tmp=pdup(p, "lgen");
 		p_goto_bol(tmp);
 		parse(bw->o.syntax,tmp,st,p->b->o.charmap);
@@ -418,7 +423,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 				bc = TO_CHAR_OK(ungetit);
 				ungetit = NO_MORE_DATA;
 			}
-			if(st.state!=-1) {
+			if(syn) {
 				atr = syn[idx++] & ~CONTEXT_MASK;
 				if (!(atr & BG_MASK))
 					atr |= defatr & BG_MASK;
@@ -553,7 +558,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 				bc = TO_CHAR_OK(ungetit);
 				ungetit = NO_MORE_DATA;
 			}
-			if(st.state!=-1) {
+			if(syn) {
 				atr = syn[idx++] & ~CONTEXT_MASK;
 				if (!(atr & BG_MASK))
 					atr |= defatr & BG_MASK;
@@ -720,7 +725,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 	else
 		p->ofst = (short)(bp - p->ptr - (p->hdr->ehole - p->hdr->hole));
 	p->byte = byte;
-	pnextl(p);
+	if (!wrap) pnextl(p);
 	vim_highlight_end(&highlight);
 	return 0;
 }
@@ -869,6 +874,61 @@ void bwgenh(BW *w)
 	prm(q);
 }
 
+/* The row renderer shares syntax, search and selection painting with lgen.
+ * Parse each logical line once, then paint only its visible segments. */
+static void bwgen_soft(BW *w, int linchg, int square_range, off_t from, off_t to, off_t fromline, off_t toline)
+{
+    SCRN *t=w->t->t;
+    P *line=pdup(w->top,"softwrap draw"), *p=pdup(w->top,"softwrap paint");
+    off_t number, parsed=-1;
+    int y, ended=0, *syntax=NULL;
+    HIGHLIGHT_STATE invalid;
+    invalidate_state(&invalid);
+    bwsoft_top(w,line,&number);
+    for (y=(int)w->y;y<w->y+w->h;++y) {
+        int (*screen)[COMPOSE]=t->scrn+y*t->co;
+        int *attr=t->attr+y*t->co;
+        if (ifhave) break;
+        if (w->lincols) {
+            char text[48];
+            int atr=w->o.hiline && line->line==w->cursor->line ? bg_curlinum : bg_linum;
+            text[0]=0;
+            if (!ended && !number) {
+                joe_snprintf_1(text,sizeof(text),"%" JOE_INT64_FORMAT "d",(JOE_LONG_LONG)(line->line+1));
+            }
+            genfield(t,screen,attr,w->x-w->lincols,y,0,text,zlen(text),BG_COLOR(atr),w->lincols,0,NULL);
+        }
+        if (linchg || t->updtab[y]) {
+            int retry=0;
+            if (ended) retry=eraeol(t,w->x,y,BG_COLOR(bg_text));
+            else {
+                struct bwsoft_row row;
+                int width;
+                off_t a=from,z=to;
+                bwsoft_get(w,line,number,&row);
+                if (line->line!=parsed) {
+                    HIGHLIGHT_STATE highlight=get_highlight_state(w,line,line->line);
+                    syntax=NULL;
+                    if (highlight.state!=-1) {
+                        pset(p,line); parse(w->o.syntax,p,highlight,w->b->o.charmap); syntax=attr_buf;
+                    }
+                    parsed=line->line;
+                }
+                row.syn=syntax; width=(int)(row.endcol-row.col);
+                if (width>w->w) width=(int)w->w;
+                if (width<1) width=1;
+                if (square_range && (line->line<fromline || line->line>toline)) a=z=0;
+                pset(p,line); pgoto(p,row.byte);
+                retry=lgen(t,y,screen,attr,w->x,w->x+width,p,row.col,a,z,invalid,w,&row);
+                if (!retry && width<w->w) retry=eraeol(t,w->x+width,y,BG_COLOR(w->o.hiline && line->line==w->cursor->line ? (bg_text & curlinmask)|bg_curlin : bg_text));
+            }
+            t->updtab[y]=retry;
+        }
+        if (!ended && !bwsoft_step(w,line,&number,1)) ended=1;
+    }
+    prm(p); prm(line);
+}
+
 void bwgen(BW *w, int linums, int linchg)
 {
 	int (*screen)[COMPOSE];
@@ -922,6 +982,8 @@ void bwgen(BW *w, int linums, int linchg)
 	if (marking && w==(BW *)maint->curwin->object)
 		msetI(t->updtab + w->y, 1, w->h);
 
+	if (bwsoft(w)) { bwgen_soft(w,linchg,dosquare,from,to,fromline,toline); return; }
+
 	q = pdup(w->cursor, "bwgen");
 
 	y = TO_DIFF_OK(w->cursor->line - w->top->line) + w->y;
@@ -951,11 +1013,11 @@ void bwgen(BW *w, int linums, int linchg)
 			}
 			if (dosquare)
 				if (w->top->line + y - w->y >= fromline && w->top->line + y - w->y <= toline)
-					t->updtab[y] = lgen(t, y, screen, attr, idx, w->x + w->w, p, w->offset, from, to, get_highlight_state(w,p,w->top->line+y-w->y),w);
+					t->updtab[y] = lgen(t, y, screen, attr, idx, w->x + w->w, p, w->offset, from, to, get_highlight_state(w,p,w->top->line+y-w->y),w,NULL);
 				else
-					t->updtab[y] = lgen(t, y, screen, attr, idx, w->x + w->w, p, w->offset, 0L, 0L, get_highlight_state(w,p,w->top->line+y-w->y),w);
+					t->updtab[y] = lgen(t, y, screen, attr, idx, w->x + w->w, p, w->offset, 0L, 0L, get_highlight_state(w,p,w->top->line+y-w->y),w,NULL);
 			else
-				t->updtab[y] = lgen(t, y, screen, attr, idx, w->x + w->w, p, w->offset, from, to, get_highlight_state(w,p,w->top->line+y-w->y),w);
+				t->updtab[y] = lgen(t, y, screen, attr, idx, w->x + w->w, p, w->offset, from, to, get_highlight_state(w,p,w->top->line+y-w->y),w,NULL);
 		}
 	}
 
@@ -981,11 +1043,11 @@ void bwgen(BW *w, int linums, int linchg)
 			} */
 			if (dosquare)
 				if (w->top->line + y - w->y >= fromline && w->top->line + y - w->y <= toline)
-					t->updtab[y] = lgen(t, y, screen, attr, w->x, w->x + w->w, p, w->offset, from, to, get_highlight_state(w,p,w->top->line+y-w->y),w);
+					t->updtab[y] = lgen(t, y, screen, attr, w->x, w->x + w->w, p, w->offset, from, to, get_highlight_state(w,p,w->top->line+y-w->y),w,NULL);
 				else
-					t->updtab[y] = lgen(t, y, screen, attr, w->x, w->x + w->w, p, w->offset, 0L, 0L, get_highlight_state(w,p,w->top->line+y-w->y),w);
+					t->updtab[y] = lgen(t, y, screen, attr, w->x, w->x + w->w, p, w->offset, 0L, 0L, get_highlight_state(w,p,w->top->line+y-w->y),w,NULL);
 			else
-				t->updtab[y] = lgen(t, y, screen, attr, w->x, w->x + w->w, p, w->offset, from, to, get_highlight_state(w,p,w->top->line+y-w->y),w);
+				t->updtab[y] = lgen(t, y, screen, attr, w->x, w->x + w->w, p, w->offset, from, to, get_highlight_state(w,p,w->top->line+y-w->y),w,NULL);
 		}
 	}
 	prm(q);
@@ -1049,6 +1111,7 @@ BW *bwmk(W *window, B *b, int prompt, const char *ps)
 	w->t = window->t;
 	w->object = NULL;
 	w->offset = 0;
+	w->soft = NULL;
 	w->o = w->b->o;
 	w->lincols = 0;
 	w->curlin = 0;
@@ -1204,6 +1267,7 @@ BW *vtmaster(Screen *t, B *b)
 
 void bwrm(BW *w)
 {
+	bwsoft_free(w);
 	if (w->b == errbuf && w->b->count == 1) {
 		/* Do not lose message buffer */
 		orphit(w);

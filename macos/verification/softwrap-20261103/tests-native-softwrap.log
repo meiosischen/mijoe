@@ -1,0 +1,42 @@
+PASS native wrapped editor starts
+PASS editor responds without stalling
+PASS soft wrap defaults off
+PASS disabled wrapping preserves the original single-row display
+PASS existing logical line paints three complete display rows without dropping characters
+PASS editor responds without stalling
+PASS cursor crosses a soft boundary to the next display row
+PASS editor responds without stalling
+PASS Vim j retains logical-line motion
+PASS editor responds without stalling
+PASS Visual selection spans soft rows using the normal selection colors
+PASS editor responds without stalling
+PASS copy uses file bytes without inserting display newlines
+PASS editor responds without stalling
+PASS search matching retains highlighting in wrapped rows
+PASS editor responds without stalling
+PASS changing Right Margin immediately reflows existing content
+PASS editor responds without stalling
+PASS turning soft wrap off restores the original layout
+PASS editor responds without stalling
+PASS display controls never dirty or rewrite the file
+PASS editor responds without stalling
+PASS syntax highlighting remains correct across soft boundaries
+PASS editor responds without stalling
+PASS wide characters move intact to the next row rather than showing clipping markers
+PASS a tab crossing the margin preserves its remaining display cells
+PASS combining marks remain attached to their base character
+PASS editor responds without stalling
+PASS continuation rows leave the line-number gutter blank
+PASS editor responds without stalling
+PASS editor responds without stalling
+PASS end of an over-screen logical line scrolls into view
+PASS editor responds without stalling
+PASS editor responds without stalling
+PASS PageUp moves through display rows inside a single file line
+PASS editor responds without stalling
+PASS editor responds without stalling
+PASS soft wrap width is limited by the resized text viewport
+PASS resized viewport repaints from the correct file position
+PASS editor responds without stalling
+PASS clean wrapped document closes without a save prompt
+PASS test child exits cleanly

@@ -666,6 +666,11 @@ static int motion(BW *bw, int key, long n, int explicit_count, int *linewise, in
 	P *p = bw->cursor;
 	off_t col = p->xcol;
 	*linewise = *inclusive = 0;
+    if (bwsoft(bw) && (key==VIM_PGUP || key==VIM_PGDN || key==21 || key==4)) {
+        long step=(key==21 || key==4) ? (bw->h>1 ? bw->h/2 : 1) : bw->h;
+        bwsoft_move(bw,(key==21 || key==VIM_PGUP ? -n : n)*step);
+        return 1;
+    }
     if (lf_active(bw->b)) { int result = lf_motion(bw,key,n,explicit_count); if (result) return result; }
 	/* Reuse JOE's virtual-column movement for ordinary picture editing.
 	 * Operators and selections continue to use their text-range semantics. */
@@ -2064,7 +2069,10 @@ int vim_ex(W *w, const char *line)
 	/* The existing file engine's dequote buffer is 1024 bytes. */
 	if (zlen(arg) >= 1000) { message("Filename argument is too long"); rc = -1; goto done; }
 	if (!*cmd) goto done;
-	if (!zcmp(cmd,"reg") || !zcmp(cmd,"registers")) {
+    if (!zcmp(cmd,"set") && (!zcmp(arg,"wrap") || !zcmp(arg,"nowrap"))) {
+        bw->o.softwrap=!zcmp(arg,"wrap"); bw->b->o.softwrap=bw->o.softwrap;
+        bwsoft_invalidate(bw); updall(); staupd=1;
+    } else if (!zcmp(cmd,"reg") || !zcmp(cmd,"registers")) {
         if (bang) { message("Use :reg [names]"); rc=-1; } else rc=registers_show(bw,arg);
     } else if (!zcmp(cmd,"macro") || !zcmp(cmd,"macros")) {
         if (bang || *arg) { message("Use :macro to view recorded keys"); rc=-1; } else rc=macro_show(bw);
