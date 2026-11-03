@@ -145,7 +145,7 @@ cases = [
     ("block-insert-short", b"abcde\nx\n\nABCDE\n", b"ll\x16jjjIX\x1b:wq\r", b"abXcde\nx\n\nABXCDE\n"),
     ("block-append-pad", b"abcde\nx\n\nABCDE\n", b"ll\x16jjjAX\x1b:wq\r", b"abcXde\nx  X\n   X\nABCXDE\n"),
     ("block-append-eol", b"ab\ncdef\nx\n", b"\x16jj$AX\x1b:wq\r", b"abX\ncdefX\nxX\n"),
-    ("block-tab", b"abcd\n\tXYZ\nZZZZ\n", b"ll\x16jjIX\x1b:wq\r", b"abXcd\n  X      XYZ\nZZXZZ\n"),
+    ("block-tab", b"abcd\n\tXYZ\nZZZZ\n", b"ll\x16jjIX\x1b:wq\r", b"abXcd\n  X  XYZ\nZZXZZ\n"),
     ("block-undo-redo", b"abc\ndef\nghi\n", b"\x16jjIXY\x1bu\x12:wq\r", b"XYabc\nXYdef\nXYghi\n"),
     ("block-paste", b"abc\ndef\n", b"\x16jI\x1b[200~X\x1b[201~\x1b:wq\r", b"Xabc\nXdef\n"),
     ("block-cancel", b"abc\ndef\n", b"\x16j\x1bx:wq\r", b"abc\nef\n"),

@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-03",
+  "tab_default": 4,
+  "native_checks": 138,
+  "block_vim_reference_cases": 37,
+  "block_tests": 6,
+  "softwrap_tests": 11,
+  "windows_builds": [
+    "Release package",
+    "Release dll",
+    "Debug package",
+    "Debug dll"
+  ],
+  "windows_smoke": [
+    "insert in all four variants",
+    "block-tab with width 4 in Release package"
+  ],
+  "windows_xp_runtime": "not tested",
+  "mj_target": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe",
+  "app_candidate": "build/macos/MiJoe.app",
+  "installed_app": "pending close of running application",
+  "windows_binaries": {
+    "windows/bin/vc6/Release/joe.exe": "655f0c7244e49bf6a273ff57721deb44d71f4c444aecd2f5677b2e704021b9e6",
+    "windows/bin/vc6/Debug/joe.exe": "e98d84eac4f8d8623c619da616c1c32f2a2845df8aea6bb3e10e10ee71f1cf77",
+    "windows/bin/vc6/Debug/dll/joe.exe": "9ab3a97f53d9566b9256c647400856a1002ad15e71176d240f288d3946ca7b62",
+    "windows/bin/vc6/Debug/dll/joewin.dll": "5c869c1ca92e83b36d7ae91d6bb50fbcebd96a82ed519828be15b7dc70953f36",
+    "windows/bin/vc6/Release/dll/joe.exe": "7f3ae5d550287b88f2c27fb7290a068968c9a8dada29300456507f0e773f6e24",
+    "windows/bin/vc6/Release/dll/joewin.dll": "e281f9b551ae02bb5a4fc06130ef55ca534222e4d6f54bcd67f67b35f7fef641"
+  }
+}

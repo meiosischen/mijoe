@@ -35,7 +35,7 @@ OPTIONS pdefault = {
 	0,		/* autoindent */
 	0,		/* wordwrap */
 	0,		/* nobackup */
-	8,		/* tab */
+	4,		/* tab */
 	' ',		/* indent char */
 	1,		/* indent step */
 	NULL,		/* *context */
@@ -99,7 +99,7 @@ OPTIONS fdefault = {
 	0,		/* autoindent */
 	0,		/* wordwrap */
 	0,		/* nobackup */
-	8,		/* tab */
+	4,		/* tab */
 	' ',		/* indent char */
 	1,		/* indent step */
 	"main",		/* *context */

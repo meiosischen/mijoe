@@ -736,7 +736,7 @@ line.
 
 If you want to indent the text you enter, you can use the __Tab__ key. 
 This inserts a special control character which makes the characters which
-follow it begin at the next tab stop.  Tab stops normally occur every 8
+follow it begin at the next tab stop.  Tab stops normally occur every 4
 columns, but this can be changed with the __^T D__ command.  PASCAL and C
 programmers often set tab stops on every 4 columns.
 

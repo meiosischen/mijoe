@@ -136,7 +136,7 @@ class MotionTests(unittest.TestCase):
         result = directory / "reference-result.txt"
         script = directory / "reference.vim"
         source.write_bytes(initial)
-        script.write_text("set nocompatible encoding=utf-8 nofixeol nomore\nset cpoptions&vim\ncall cursor(1, 1)\n"
+        script.write_text("set nocompatible encoding=utf-8 nofixeol nomore tabstop=4\nset cpoptions&vim\ncall cursor(1, 1)\n"
                           + "execute " + vim_string("normal! " + keys) + "\n"
                           + ("execute " + vim_string("normal! " + continuation) + "\n" if continuation else "")
                           + "execute 'write! ' . fnameescape('" + str(result).replace("'", "''") + "')\nqa!\n")
