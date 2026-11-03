@@ -58,6 +58,10 @@ if args.target == "dll":
     executable /= "dll"
 executable /= "joe.exe"
 cases = [
+    ("line-hl-basic", b"one\ntwo\n", b":set-hl :1 :2 ERROR\r:wq\r", b"one\ntwo\n"),
+    ("line-hl-clear", b"abc\n", b":set-hl :1\r:clear-hl\riX\x1b:wq\r", b"Xabc\n"),
+    ("line-hl-quoted", b":1 abc\n", b':set-hl ":1" :1\r:wq\r', b":1 abc\n"),
+    ("line-hl-invalid", b"abc\n", b":set-hl :1\r:set-hl :2 :0\riX\x1b:wq\r", b"Xabc\n"),
     ("external-reload", b"abc\n", b"y0iX\x1b:wq\r", b"Xexternal text\n"),
     ("external-decline-dirty", b"abc\n", b"n:w!\r:q\r", b"LOCALabc\n"),
     ("history-view", b"abc\n", b":set-hl abc\r:history\rq:wq\r", b"abc\n"),

@@ -587,6 +587,12 @@ int lf_line_percent(BW *bw)
     return (int)(100.0*(double)row/(double)total);
 }
 
+JOE_LONG_LONG lf_logical_line(B *b,off_t line)
+{
+    struct large_file *f=b->large;
+    if(!f)return (JOE_LONG_LONG)line+1;
+    return !f->pending && f->known_line ? f->line_base+line+1 : -1;
+}
 int lf_row_label(BW *bw, char *text, int size)
 {
     struct large_file *f = bw->b->large;

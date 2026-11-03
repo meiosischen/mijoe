@@ -22,6 +22,7 @@ JOE_LONG_LONG lf_read_bytes(B *b);
 const char *lf_status(BW *bw);
 int lf_line_percent(BW *bw);
 int lf_row_label(BW *bw, char *text, int size);
+JOE_LONG_LONG lf_logical_line(B *b,off_t line);
 int lf_column_label(BW*,char*,int size);
 int lf_goto_absolute(BW *bw, JOE_LONG_LONG position);
 int lf_grep(BW *bw, const char *pattern, int (*emit)(JOE_LONG_LONG,JOE_LONG_LONG,JOE_LONG_LONG,JOE_LONG_LONG,const char *,void *), void *context);

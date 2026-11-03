@@ -103,7 +103,8 @@ void vim_highlight_end(struct vim_highlight *h)
 #define TEMP_HL_BYTES 1024
 #define TEMP_HL_TOTAL 8192
 struct vim_temporary_highlights {
-    char *terms[TEMP_HL_LIMIT]; /* UTF-8 literals, independent of buffer encoding. */
+    char *terms[TEMP_HL_LIMIT]; /* UTF-8 literals, or canonical :line labels. */
+    JOE_LONG_LONG lines[TEMP_HL_LIMIT]; /* Zero denotes a literal. */
     int count, max_chars;
     const char *error;
     struct regcomp *regex;
@@ -128,13 +129,14 @@ void vim_temp_clear(B *b)
 static int temp_compile(struct vim_temporary_highlights *list, struct charmap *map)
 {
     char *expression=vsdupz(""), *encoded;
-    int i;
+    int i, literals=0;
     if (list->regex) joe_regfree(list->regex);
     list->regex=NULL; list->map=map; list->max_chars=0; list->error=NULL;
     for (i=0;i<list->count;++i) {
         const char *s=list->terms[i], *p=s;
         ptrdiff_t left=zlen(s);
         int chars=0;
+        if(list->lines[i])continue;
         while (left>0) {
             int c=utf8_decode_fwrd(&p,&left);
             if (c<0 || (!map->type && from_uni(map,c)<0)) {
@@ -144,12 +146,13 @@ static int temp_compile(struct vim_temporary_highlights *list, struct charmap *m
             ++chars;
         }
         if (chars>list->max_chars) list->max_chars=chars;
-        if (i) expression=vsadd(expression,'|');
+        if (literals++) expression=vsadd(expression,'|');
         while (*s) {
             if (strchr("\\.^$[]()|*+?{}",(unsigned char)*s)) expression=vsadd(expression,'\\');
             expression=vsadd(expression,*s++);
         }
     }
+    if(!literals){obj_free(expression);return 1;}
     encoded=my_iconv(NULL,map,expression,utf8_map);
     list->regex=joe_regcomp(map,encoded,zlen(encoded),0,1,0);
     obj_free(expression);
@@ -157,12 +160,25 @@ static int temp_compile(struct vim_temporary_highlights *list, struct charmap *m
     return !list->error;
 }
 
+int vim_temp_line(B *b,off_t line)
+{
+    struct vim_temporary_highlights *list=b->temporary_highlights;
+    JOE_LONG_LONG number;
+    int i;
+    if(!list)return 0;
+    number=lf_logical_line(b,line);
+    if(number<1)return 0;
+    for(i=0;i<list->count;++i)if(list->lines[i]==number)return 1;
+    return 0;
+}
+
 void vim_temp_begin(struct vim_temporary_match *h, BW *bw, P *p)
 {
     struct vim_temporary_highlights *list=bw->b->temporary_highlights;
-    h->scan=h->match=NULL; h->regex=NULL; h->covered=-1; h->ready=0; h->lookbehind=0;
+    h->scan=h->match=NULL; h->regex=NULL; h->covered=-1; h->ready=0; h->lookbehind=0; h->line=0;
     if (!list || bw->o.hex || !list->count) return;
-    if (((!list->regex && !list->error) || list->map!=bw->b->o.charmap) && !temp_compile(list,bw->b->o.charmap)) return;
+    h->line=vim_temp_line(bw->b,p->line);
+    if (((!list->regex && list->max_chars && !list->error) || list->map!=bw->b->o.charmap) && !temp_compile(list,bw->b->o.charmap)) return;
     if (!list->regex || list->error) return;
     h->regex=list->regex; h->lookbehind=list->max_chars-1;
     h->scan=pdup(p,"temporary highlight scan"); h->match=pdup(p,"temporary highlight match");
@@ -170,6 +186,7 @@ void vim_temp_begin(struct vim_temporary_match *h, BW *bw, P *p)
 
 int vim_temp_test(struct vim_temporary_match *h, off_t byte)
 {
+    if(h->line)return 1;
     if (!h->scan) return 0;
     if (!h->ready) {
         int n=h->lookbehind;
@@ -204,19 +221,20 @@ static int temp_command(BW *bw, const char *input)
     while (*s==' ' || *s=='\t') ++s;
     if (!*s) {
         char *summary=vsfmt(NULL,0,"Temporary highlights (%d):",vim_temp_count(bw->b));
-        if (old) for(i=0;i<old->count;++i) summary=vsfmt(summary,vslen(summary)," \"%s\"",old->terms[i]);
+        if (old) for(i=0;i<old->count;++i) summary=vsfmt(summary,vslen(summary),old->lines[i] ? " %s" : " \"%s\"",old->terms[i]);
         message(summary); obj_free(summary); return 0;
     }
     next=(struct vim_temporary_highlights *)joe_malloc(sizeof(*next)); memset(next,0,sizeof(*next));
-    if (old) for(i=0;i<old->count;++i) next->terms[next->count++]=zdup(old->terms[i]);
+    if (old) for(i=0;i<old->count;++i) {next->lines[next->count]=old->lines[i];next->terms[next->count++]=zdup(old->terms[i]);}
     while (*s && !error) {
         char *raw=vsdupz(""), *utf8;
-        int quote=0, duplicate=0;
+        int quote=0, quoted=0, duplicate=0;
+        JOE_LONG_LONG line=0;
         while (*s==' ' || *s=='\t') ++s;
         if (!*s) {obj_free(raw);break;}
         while (*s && (quote || (*s!=' ' && *s!='\t'))) {
             int c=(unsigned char)*s++;
-            if (c=='"') {quote=!quote;continue;}
+            if (c=='"') {quote=!quote;quoted=1;continue;}
             if (c=='\\' && (*s=='"' || *s=='\\')) c=(unsigned char)*s++;
             if (c<32 && c!='\t') {error="Highlight literals cannot contain line breaks or control characters";break;}
             raw=vsadd(raw,c);
@@ -225,11 +243,21 @@ static int temp_command(BW *bw, const char *input)
         if (!*raw && !error) error="Highlight literals cannot be empty";
         utf8=my_iconv(NULL,utf8_map,raw,locale_map);
         if (zlen(utf8)>TEMP_HL_BYTES) error="Highlight literal exceeds 1024 UTF-8 bytes";
+        if(!error && !quoted && utf8[0]==':' && ((utf8[1]>='0' && utf8[1]<='9') || utf8[1]=='-' || utf8[1]=='+')) {
+            const char *digit=utf8+1;
+            while(*digit && !error) {
+                if(*digit<'0' || *digit>'9' || line>((JOE_LONG_LONG)MAXLONGLONG-(*digit-'0'))/10)
+                    error="Highlight line must be a positive integer within range";
+                else line=line*10+(*digit++-'0');
+            }
+            if(!line)error="Highlight line must be a positive integer within range";
+            if(!error)utf8=vsfmt(NULL,0,":%" JOE_INT64_FORMAT "d",line);
+        }
         if (!error) {
-            for(i=0;i<next->count;++i) if (!zcmp(next->terms[i],utf8)) {duplicate=1;break;}
+            for(i=0;i<next->count;++i) if (next->lines[i]==line && (line || !zcmp(next->terms[i],utf8))) {duplicate=1;break;}
             if (!duplicate) {
-                if (next->count==TEMP_HL_LIMIT) error="At most 32 temporary highlight literals per file";
-                else {next->terms[next->count++]=zdup(utf8);++added;}
+                if (next->count==TEMP_HL_LIMIT) error="At most 32 temporary highlights per file";
+                else {next->lines[next->count]=line;next->terms[next->count++]=zdup(utf8);++added;}
             }
         }
         obj_free(raw);

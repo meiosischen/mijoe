@@ -18,13 +18,14 @@ struct vim_temporary_match {
     P *scan, *match;
     struct regcomp *regex;
     off_t covered;
-    int ready, lookbehind;
+    int ready, lookbehind, line;
 };
 void vim_temp_begin(struct vim_temporary_match *h, BW *bw, P *p);
 int vim_temp_test(struct vim_temporary_match *h, off_t byte);
 void vim_temp_end(struct vim_temporary_match *h);
 void vim_temp_clear(B *b);
 int vim_temp_count(B *b);
+int vim_temp_line(B *b,off_t line);
 
 int vim_input(va_list args);
 int vim_readkey(int key);

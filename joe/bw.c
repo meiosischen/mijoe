@@ -394,6 +394,9 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 
 	vim_highlight_begin(&highlight, bw, p);
     vim_temp_begin(&temporary,bw,p);
+    /* At EOF p is reused for later empty screen rows; those are not file lines. */
+    if(!wrap && p->line!=bw->top->line+y-bw->y)temporary.line=0;
+    if(temporary.line){defatr=FG_BLACK|BG_BYELLOW;atr=BG_COLOR(defatr);}
 	utf8_init(&utf8_sm);
 	ansi_init(&ansi_sm);
 
@@ -470,7 +473,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 			else
 				SELECT_IF(byte >= from && byte < to);
 			if (vim_highlight_test(&highlight, byte) && cm == -1) { ca = selectatr; cm = selectmask; }
-            if (temporary.scan && cm==-1 && col>=scr && vim_temp_test(&temporary,byte)) {ca=FG_BLACK|BG_BYELLOW;cm=0;}
+            if ((temporary.line || temporary.scan) && cm==-1 && (temporary.line || col>=scr) && vim_temp_test(&temporary,byte)) {ca=FG_BLACK|BG_BYELLOW;cm=0;}
 			++byte;
 			if (bc == '\t') {
 				ta = p->b->o.tab - col % p->b->o.tab;
@@ -606,7 +609,7 @@ static int lgen(SCRN *t, ptrdiff_t y, int (*screen)[COMPOSE], int *attr, ptrdiff
 				SELECT_IF(byte >= from && byte < to);
 			}
 			if (vim_highlight_test(&highlight, byte) && cm == -1) { ca = selectatr; cm = selectmask; }
-            if (temporary.scan && cm==-1 && vim_temp_test(&temporary,byte)) {ca=FG_BLACK|BG_BYELLOW;cm=0;}
+            if ((temporary.line || temporary.scan) && cm==-1 && vim_temp_test(&temporary,byte)) {ca=FG_BLACK|BG_BYELLOW;cm=0;}
 			++byte;
 			if (bc == '\t') {
 				ta = p->b->o.tab - (x - ox + scr) % p->b->o.tab;
@@ -926,7 +929,7 @@ static void bwgen_soft(BW *w, int linchg, int square_range, off_t from, off_t to
                 if (square_range && (line->line<fromline || line->line>toline)) a=z=0;
                 pset(p,line); pgoto(p,row.byte);
                 retry=lgen(t,y,screen,attr,w->x,w->x+width,p,row.col,a,z,invalid,w,&row);
-                if (!retry && width<w->w) retry=eraeol(t,w->x+width,y,BG_COLOR(w->o.hiline && line->line==w->cursor->line ? (bg_text & curlinmask)|bg_curlin : bg_text));
+                if (!retry && width<w->w) retry=eraeol(t,w->x+width,y,BG_COLOR(vim_temp_line(w->b,line->line) ? FG_BLACK|BG_BYELLOW : w->o.hiline && line->line==w->cursor->line ? (bg_text & curlinmask)|bg_curlin : bg_text));
             }
             t->updtab[y]=retry;
         }

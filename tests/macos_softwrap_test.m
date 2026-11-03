@@ -68,7 +68,8 @@ int main(int argc,const char **argv) {
         }),@"syntax highlighting remains correct across soft boundaries");
         NSString *unicode=[dir stringByAppendingPathComponent:@"unicode.txt"];
         [@"abcdefghijk中文Z\n123456789\tXYZ\ne\u0301abcdefghij中文\n" writeToFile:unicode atomically:YES encoding:NSUTF8StringEncoding error:NULL];
-        [s sendText:[NSString stringWithFormat:@":e %@\r\x14R12\r:set wrap\r",unicode]];request(s,MIJOE_GUI_STATUS,nil);
+        /* This fixture deliberately spans a tab across column 12; keep its width explicit. */
+        [s sendText:[NSString stringWithFormat:@":e %@\r\024D8\r\x14R12\r:set wrap\r",unicode]];request(s,MIJOE_GUI_STATUS,nil);
         check(waitFor(^BOOL{return cell(s,2,0).chars[0]==0x4e2d && cell(s,2,0).width==2 && cell(s,2,2).chars[0]==0x6587;}),@"wide characters move intact to the next row rather than showing clipping markers");
         check(waitFor(^BOOL{return [ascii(s,4,7) isEqual:@"    XYZ"];}),@"a tab crossing the margin preserves its remaining display cells");
         check(cell(s,5,0).chars[0]=='e' && cell(s,5,0).chars[1]==0x301,@"combining marks remain attached to their base character");

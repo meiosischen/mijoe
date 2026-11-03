@@ -1,0 +1,197 @@
+{
+  "passed": 32,
+  "checks": [
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-6o7wcb4g",
+      "case": "history-view",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-6o7wcb4g",
+      "case": "insert",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-6o7wcb4g",
+      "case": "line-hl-basic",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-6o7wcb4g",
+      "case": "line-hl-clear",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-6o7wcb4g",
+      "case": "line-hl-invalid",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-6o7wcb4g",
+      "case": "line-hl-quoted",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-6o7wcb4g",
+      "case": "temp-hl-clear",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-dll-6o7wcb4g",
+      "case": "temp-hl-quotes",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-41l080a4",
+      "case": "history-view",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-41l080a4",
+      "case": "insert",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-41l080a4",
+      "case": "line-hl-basic",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-41l080a4",
+      "case": "line-hl-clear",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-41l080a4",
+      "case": "line-hl-invalid",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-41l080a4",
+      "case": "line-hl-quoted",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-41l080a4",
+      "case": "temp-hl-clear",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-debug-package-41l080a4",
+      "case": "temp-hl-quotes",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-mcgk5cc1",
+      "case": "history-view",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-mcgk5cc1",
+      "case": "insert",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-mcgk5cc1",
+      "case": "line-hl-basic",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-mcgk5cc1",
+      "case": "line-hl-clear",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-mcgk5cc1",
+      "case": "line-hl-invalid",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-mcgk5cc1",
+      "case": "line-hl-quoted",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-mcgk5cc1",
+      "case": "temp-hl-clear",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-dll-mcgk5cc1",
+      "case": "temp-hl-quotes",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-mtzuxcz5",
+      "case": "history-view",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-mtzuxcz5",
+      "case": "insert",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-mtzuxcz5",
+      "case": "line-hl-basic",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-mtzuxcz5",
+      "case": "line-hl-clear",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-mtzuxcz5",
+      "case": "line-hl-invalid",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-mtzuxcz5",
+      "case": "line-hl-quoted",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-mtzuxcz5",
+      "case": "temp-hl-clear",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    },
+    {
+      "variant": "mijoe-win32-smoke-release-package-mtzuxcz5",
+      "case": "temp-hl-quotes",
+      "passed": true,
+      "run": "PASS child editor opened Unicode filename, handled keys, saved and exited\n"
+    }
+  ]
+}

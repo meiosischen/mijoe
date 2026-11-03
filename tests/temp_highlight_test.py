@@ -9,6 +9,30 @@ class TemporaryHighlightTests(GrepCase):
     def count(self,command=None):
         if command is not None:self.editor.ex(command)
         return self.call(1)['temporaryHighlights']
+    def test_line_numbers_mix_with_literals_and_deduplicate(self):
+        self.assertEqual(self.count('set-hl :1 :005 ERROR'),3)
+        self.assertEqual(self.count('set-hl :01 :5'),3)
+        self.assertEqual(self.count('set-hl ":1"'),4)
+        self.assertEqual(self.count('clear-hl'),0)
+    def test_line_query_identifies_lines_and_quoted_literals(self):
+        self.count('set-hl :01 ":1"');start=len(self.editor.output)
+        self.count('set-hl');output=self.editor.output[start:]
+        self.assertIn(b' :1',output);self.assertIn(b'":1"',output)
+    def test_invalid_line_is_atomic(self):
+        self.count('set-hl keep :1')
+        for token in [':0',':-1',':+1',':2x',':999999999999999999999999']:
+            self.assertEqual(self.count('set-hl :3 '+token),2,token)
+    def test_lines_use_shared_limit(self):
+        self.assertEqual(self.count('set-hl '+' '.join(':'+str(n+1) for n in range(32))),32)
+        self.assertEqual(self.count('set-hl :33'),32)
+        self.assertEqual(self.count('set-hl word'),32)
+    def test_line_commands_do_not_change_file_or_undo(self):
+        self.editor.send('iX\x1b');self.count('set-hl :1 :9999999999');self.editor.send('u')
+        self.assertFalse(self.call(1)['changed']);self.assertEqual(self.count(),2)
+        self.assertTrue(self.call(2)['ok']);self.assertEqual(self.editor.path.read_bytes(),b'abcdef\n')
+    def test_line_only_works_with_single_byte_map(self):
+        self.editor.send('\x14Ec\r');self.assertEqual(self.count('set-hl :1'),1)
+        self.assertEqual(self.count('set-hl ERROR :2'),3)
     def test_quoted_phrase_and_separate_words(self):
         self.assertEqual(self.count('set-hl "gogogo 123"'),1)
         self.assertEqual(self.count('clear-hl'),0)
