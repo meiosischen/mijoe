@@ -39,6 +39,8 @@ void mouseup(ptrdiff_t x, ptrdiff_t y);
 
 /* mousedrag(int x, int y) - handle a mouse drag event */
 void mousedrag(ptrdiff_t x, ptrdiff_t y);
+void mouse_copy_text(const char *text);
+int mouse_terminal_event(int button, ptrdiff_t x, ptrdiff_t y, int release);
 
 /* user command handlers */
 int uxtmouse(W *, int);		/* handle an xterm mouse control sequence */

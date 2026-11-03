@@ -13,6 +13,129 @@ int staupd = 0;
 int keepup = 0;
 int bg_stalin;
 
+/* A status-path selection is independent of buffer marks and Vim modes. */
+static W *path_window;
+static char *path_value;
+static ptrdiff_t path_anchor, path_focus;
+static int path_dragging, path_whole;
+
+char *tw_full_path(B *b)
+{
+    char *name, *full, *result;
+    if (!b || !b->name || !b->name[0] || b->name[0]=='!') return zdup("");
+    name=canonical(dequotevs(vsdupz(b->name)),CANFLAG_NORESTART);
+    if (ISDIRSEP(name[0])
+#ifdef JOEWIN
+        || (name[0] && name[1]==':')
+#endif
+       ) full=name;
+    else full=vsfmt(NULL,0,"%s/%s",pwd(),name);
+    result=zdup(full); return result;
+}
+static char *path_display(const char *text)
+{
+    char *s=zdup(text);
+    ptrdiff_t i;
+    for (i=0;s[i];++i) if ((unsigned char)s[i]<32 || s[i]==127) s[i]='?';
+    return s;
+}
+void tw_path_clear(void)
+{
+    if (!path_value) return;
+    if (path_value) joe_free(path_value);
+    path_value=NULL; path_window=NULL; path_dragging=path_whole=0;
+    path_anchor=path_focus=0; staupd=1;
+}
+static BW *path_at(ptrdiff_t x, ptrdiff_t y)
+{
+    W *w;
+    BW *bw;
+    TW *tw;
+    if (!maint || vim_grep_active() || help_text_active(maint)) return NULL;
+    w=watpos(maint,x,y);
+    if (!w || w->watom!=&watomtw || !w->object) return NULL;
+    bw=(BW *)w->object; tw=(TW *)bw->object;
+    if (!tw->staon || y!=w->y || tw->path_start<0 || x<w->x+tw->path_start || x>=w->x+tw->path_end) return NULL;
+    return bw;
+}
+int tw_path_hit(ptrdiff_t x, ptrdiff_t y) { return path_at(x,y)!=NULL; }
+static int path_current(BW *bw)
+{
+    char *full;
+    int equal;
+    if (!path_value || !bw || path_window!=bw->parent) return 0;
+    full=tw_full_path(bw->b); equal=!zcmp(full,path_value); joe_free(full);
+    return equal;
+}
+/* Map display cells to complete locale characters, including wide names. */
+static ptrdiff_t path_byte(ptrdiff_t column)
+{
+    const char *at=path_value;
+    ptrdiff_t left=zlen(path_value), offset=0, cells=0;
+    while (left>0) {
+        const char *before=at;
+        int c, width;
+        if (locale_map->type) c=utf8_decode_fwrd(&at,&left);
+        else { c=to_uni(locale_map,(unsigned char)*at++); --left; }
+        width=c<32 || c==127 ? 1 : joe_wcwidth(1,c);
+        if (width<0) width=1;
+        if (cells+width>column) break;
+        cells+=width; offset+=at-before;
+    }
+    return offset;
+}
+char *tw_path_selection(void)
+{
+    W *w;
+    int found=0;
+    ptrdiff_t a,z;
+    char *result;
+    if (!path_value || !maint || !maint->topwin) return NULL;
+    w=maint->topwin;
+    do {
+        if (w==path_window && w->watom==&watomtw && path_current((BW *)w->object)) { found=1; break; }
+        w=w->link.next;
+    } while (w!=maint->topwin);
+    if (!found) { tw_path_clear(); return NULL; }
+    a=path_anchor<path_focus ? path_anchor : path_focus;
+    z=path_anchor>path_focus ? path_anchor : path_focus;
+    a=path_whole ? 0 : path_byte(a); z=path_whole ? zlen(path_value) : path_byte(z);
+    if (z<=a) return NULL;
+    result=(char *)joe_malloc(z-a+1); memcpy(result,path_value+a,z-a); result[z-a]=0; return result;
+}
+int tw_path_mouse(int action, ptrdiff_t x, ptrdiff_t y, int clicks)
+{
+    BW *bw;
+    TW *tw;
+    if (action==1) {
+        bw=path_at(x,y);
+        tw_path_clear();
+        if (!bw) return 0;
+        tw=(TW *)bw->object; path_window=bw->parent; path_value=tw_full_path(bw->b);
+        path_anchor=path_focus=x-bw->parent->x-tw->path_start;
+        path_dragging=1;
+        if (clicks>=2) { path_whole=1; path_anchor=0; path_focus=txtwidth(locale_map,path_value,zlen(path_value)); }
+    } else {
+        W *w;
+        if (!path_dragging || !maint || !maint->topwin) return 0;
+        w=maint->topwin;
+        do { if (w==path_window) break; w=w->link.next; } while (w!=maint->topwin);
+        if (w!=path_window || w->watom!=&watomtw || !path_current((BW *)w->object)) { tw_path_clear(); return 1; }
+        bw=(BW *)w->object; tw=(TW *)bw->object;
+        if (!path_whole) {
+            path_focus=x-w->x-tw->path_start;
+            if (path_focus<0) path_focus=0;
+            if (path_focus>tw->path_end-tw->path_start) path_focus=tw->path_end-tw->path_start;
+        }
+        if (action==3) {
+            char *text=tw_path_selection();
+            path_dragging=0;
+            if (text) { mouse_copy_text(text); joe_free(text); }
+        }
+    }
+    staupd=1; return 1;
+}
+
 /* Move text window */
 
 static void movetw(W *w, ptrdiff_t x, ptrdiff_t y)
@@ -213,12 +336,15 @@ char *stagen(char *stalin, BW *bw, const char *s, char fill)
 	char buf[80];
 	int x;
 	int field;
+	int left=s==bw->o.lmsg;
 	W *w = bw->parent;
+	TW *tw=(TW *)bw->object;
 	time_t n=time(NULL);
 	struct tm *cas;
 	cas=localtime(&n);
 
 	stalin = vstrunc(stalin, 0);
+	if (left) tw->path_start=tw->path_end=-1;
 	obj_perm(stalin);
 	if (s == bw->o.lmsg && !bw->b->pid) {
 		stalin = vsncpy(sv(stalin), sz("["));
@@ -360,9 +486,13 @@ char *stagen(char *stalin, BW *bw, const char *s, char fill)
 			case 'n':
 				{
 				if (bw->b->name) {
-					char *tmp = simplify_prefix(bw->b->name);
-					char *tmp1 = duplicate_backslashes(sv(tmp));
+					char *full=tw_full_path(bw->b);
+					char *tmp=path_display(*full ? full : bw->b->name);
+					char *tmp1 = duplicate_backslashes(tmp,zlen(tmp));
+					if (left && *full) tw->path_start=fmtlen(stalin);
 					stalin = vsncpy(sv(stalin), sv(tmp1));
+					if (left && *full) tw->path_end=fmtlen(stalin);
+					joe_free(tmp); joe_free(full);
 				} else {
 					stalin = vsncpy(sv(stalin), sz(joe_gettext(_("Unnamed"))));
 				}
@@ -624,6 +754,19 @@ static void disptw(W *w, int flg)
 			if (typography) tw->staright = vsncpy(sv(tw->staright), sz(typography));
 		}
 #endif
+		/* Keep the modified/read-only flags visible even when an absolute
+		 * path is longer than the status line. Only clip the path field. */
+		if (tw->path_start>=0 && fmtlen(tw->staright)<w->w) {
+			ptrdiff_t suffix=fmtlen(tw->stalin)-tw->path_end;
+			ptrdiff_t budget=w->w-fmtlen(tw->staright)-tw->path_start-suffix;
+			if (budget<0) budget=0;
+			if (tw->path_end-tw->path_start>budget) {
+				char *tail=vsdupz(tw->stalin+fmtpos(tw->stalin,tw->path_end));
+				tw->stalin=vstrunc(tw->stalin,fmtpos(tw->stalin,tw->path_start+budget));
+				tw->path_end=fmtlen(tw->stalin);
+				tw->stalin=vsncpy(sv(tw->stalin),sv(tail));
+			}
+		}
 		if (fmtlen(tw->staright) < w->w) {
 			ptrdiff_t x = fmtpos(tw->stalin, w->w - fmtlen(tw->staright));
 
@@ -632,6 +775,8 @@ static void disptw(W *w, int flg)
 			tw->stalin = vsncpy(tw->stalin, fmtpos(tw->stalin, w->w - fmtlen(tw->staright)), sv(tw->staright));
 		}
 		tw->stalin = vstrunc(tw->stalin, fmtpos(tw->stalin, w->w));
+		if (tw->path_end>w->w-fmtlen(tw->staright)) tw->path_end=w->w-fmtlen(tw->staright);
+		if (tw->path_end<tw->path_start) tw->path_end=tw->path_start;
 		genfmt(w->t->t, w->x, w->y, 0, tw->stalin, bg_stalin, 0, 0);
 		/* Highlight literal asterisks in the status line, including %*. */
 		{
@@ -643,6 +788,19 @@ static void disptw(W *w, int flg)
 					outatr(locale_map, screen, screen->scrn + position, screen->attr + position,
 					       w->x + column, w->y, '*', bg_cursor);
 			}
+		}
+		if (path_current(bw)) {
+			ptrdiff_t a=path_anchor<path_focus ? path_anchor : path_focus;
+			ptrdiff_t z=path_anchor>path_focus ? path_anchor : path_focus;
+			char *safe=path_display(path_value);
+			ptrdiff_t start=path_whole ? 0 : txtwidth(locale_map,safe,path_byte(a));
+			ptrdiff_t end=path_whole ? tw->path_end-tw->path_start : txtwidth(locale_map,safe,path_byte(z));
+			ptrdiff_t at;
+			if (end>tw->path_end-tw->path_start) end=tw->path_end-tw->path_start;
+			at=w->y*w->t->t->co+w->x+tw->path_start+start;
+			if (end>start && tw->path_start>=0)
+				genfield(w->t->t,w->t->t->scrn+at,w->t->t->attr+at,w->x+tw->path_start+start,w->y,start,safe,zlen(safe),selectatr,end-start,0,NULL);
+			joe_free(safe);
 		}
 		w->t->t->updtab[w->y] = 0;
 	}
@@ -664,6 +822,7 @@ static void iztw(TW *tw, ptrdiff_t y)
 	tw->changed = -1;
 	tw->prevline = -1;
 	tw->staon = (!staen || y);
+	tw->path_start=tw->path_end=-1;
 	tw->prev_b = 0;
 }
 

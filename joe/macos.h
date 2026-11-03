@@ -12,6 +12,7 @@ int mijoe_macos_gui_pending(void);
 int mijoe_macos_gui_action(va_list args);
 int mijoe_macos_gui_open_text(const char *path);
 int mijoe_macos_gui_list_buffers(void);
+int mijoe_macos_gui_copy_text(const char *text);
 
 #include "../macos/gui_protocol.h"
 

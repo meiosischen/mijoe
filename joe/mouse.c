@@ -131,6 +131,14 @@ static int joe_mouse_event()
 	return 0;
 }
 
+int mouse_terminal_event(int button, ptrdiff_t x, ptrdiff_t y, int release)
+{
+	if (button < 0 || button > 127 || x < 1 || y < 1) return -1;
+	Cb = release ? button | 3 : button;
+	Cx = x; Cy = y;
+	return joe_mouse_event();
+}
+
 int uxtmouse(W *w, int k)
 {
 	Cb = (unsigned char)ttgetc() - 32;
@@ -188,30 +196,36 @@ long mnow()
 
 void mousedn(ptrdiff_t x,ptrdiff_t y)
 {
+	int key=KEY_MDOWN;
+	unsigned long interval=MOUSE_MULTI_THRESH;
+#ifdef JOEWIN
+	interval=GetDoubleClickTime();
+#endif
 	Cx = x, Cy = y;
-	if (last_msec == 0 || mnow() - last_msec > MOUSE_MULTI_THRESH) {
+	if (last_msec == 0 || mnow() - last_msec > interval) {
 		/* not a multiple click */
 		clicks=1;
-		fake_key(KEY_MDOWN);
+		key=KEY_MDOWN;
 	} else if (Lx == Cx && Ly == Cy) {
 		if (clicks == 1) {
 			/* double click */
 			clicks = 2;
-			fake_key(KEY_M2DOWN);
+			key=KEY_M2DOWN;
 		} else if (clicks == 2) {
 			/* triple click */
 			clicks = 3;
-			fake_key(KEY_M3DOWN);
+			key=KEY_M3DOWN;
 		} else {
 			/* start over */
 			clicks = 1;
-			fake_key(KEY_MDOWN);
+			key=KEY_MDOWN;
 		}
 	} else {
 		clicks = 1;
-		fake_key(KEY_MDOWN);
+		key=KEY_MDOWN;
 	}
 	Lx = Cx, Ly = Cy;
+	if (!tw_path_mouse(1,x-1,y-1,clicks)) fake_key(key);
 }
 
 #ifndef JOEWIN /* We can do better in Windows... */
@@ -229,7 +243,7 @@ ptrdiff_t base64_pad = 0;
 
 static void ttputs64(char *pp, ptrdiff_t length)
 {
-	char *p = pp;
+	const unsigned char *p = (const unsigned char *)pp;
         char buf[65];
         ptrdiff_t x = 0;
         while (length--) {
@@ -295,6 +309,22 @@ static void ttputs64_flush()
 }
 
 #endif
+
+void mouse_copy_text(const char *text)
+{
+#if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
+    if (mijoe_macos_gui_copy_text(text)) return;
+#endif
+#ifdef JOEWIN
+    jw_copy_path_text(text);
+#else
+    {
+        char *utf8=my_iconv(NULL,utf8_map,text,locale_map);
+        ttputs("\033]52;c;"); ttputs64(utf8,zlen(utf8)); ttputs64_flush(); ttputs("\033\\");
+        obj_free(utf8);
+    }
+#endif
+}
 
 static void select_done(struct charmap *map)
 {
@@ -363,6 +393,7 @@ static void select_done(struct charmap *map)
 void mouseup(ptrdiff_t x,ptrdiff_t y)
 {
 	Cx = x, Cy = y;
+	if (tw_path_mouse(3,x-1,y-1,0)) { last_msec=mnow(); return; }
 	switch(clicks) {
 		case 1:
 			fake_key(KEY_MUP);
@@ -382,6 +413,10 @@ void mouseup(ptrdiff_t x,ptrdiff_t y)
 void mousedrag(ptrdiff_t x,ptrdiff_t y)
 {
 #ifdef JOEWIN
+	ptrdiff_t w, h;
+#endif
+	if (tw_path_mouse(2,x-1,y-1,0)) return;
+#ifdef JOEWIN
 	// HACK: PuTTY sends multiple mouse updates even if the pointer has moved
 	// by a pixel but not to the point that it covers a different character.
 	// This makes for a bad mouse experience in most cases -- you inadvertently
@@ -394,8 +429,6 @@ void mousedrag(ptrdiff_t x,ptrdiff_t y)
 	// SO, we make an exception in the case when the cursors is outside of the
 	// editor's bounds -- if you keep moving the mouse, it will keep selecting
 	// more characters.
-	ptrdiff_t w, h;
-
 	ttgtsz(&w, &h);
 
 	Cx = x, Cy = y;

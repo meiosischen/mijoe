@@ -1,0 +1,3 @@
+CONFIRMED unsupported: s/foo/bar/ ; file unchanged
+CONFIRMED unsupported: %s/foo/bar/g ; file unchanged
+CONFIRMED unsupported: %s/foo/bar/gc ; file unchanged

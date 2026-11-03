@@ -2,6 +2,10 @@
 Normal 普通模式；Insert 插入模式；Visual 选择模式。
 PageDown / Space 下一页；PageUp / b 上一页；q / Esc 关闭帮助。
 
+【顶部文件路径】
+状态栏显示绝对路径；鼠标拖选复制，图形窗口双击复制完整路径（含未显示部分）。
+独立于正文选区，不改变光标或模式。控制台需 -mouse 和支持 OSC 52 的终端；也可 Shift 拖选并使用终端复制。
+
 【移动与定位】
 h j k l / 方向键：左、下、上、右移动。
 Normal/Insert/Visual：Ctrl+A/E 行首/行尾，Ctrl+P/N 上行/下行。

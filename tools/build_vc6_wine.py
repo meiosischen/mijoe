@@ -15,6 +15,7 @@ parser.add_argument("--config", choices=("Release", "Debug"), default="Release")
 parser.add_argument("--target", choices=("all", "package", "dll"), default="package")
 parser.add_argument("--log", required=True, type=Path)
 parser.add_argument("--smoke", action="store_true", help="Compile and run child-window input tests")
+parser.add_argument("--case", action="append", dest="selected_cases", help="Run only the named smoke case (repeatable)")
 args = parser.parse_args()
 root = Path(__file__).resolve().parents[1]
 
@@ -57,6 +58,7 @@ if args.target == "dll":
     executable /= "dll"
 executable /= "joe.exe"
 cases = [
+    ("status-path", b"path unchanged\n", b":wq\r", b"path unchanged\n"),
     ("pipe-preview", b"WARN alpha\nINFO beta\nWARN gamma\n", b":grep WARN|awk '{print $2}'|grep gamma|less\r\r0x:wq\r", b"WARN alpha\nINFO beta\nARN gamma\n"),
     ("pipe-numeric", b"one 2\ntwo 10\n", b":awk '$2>=10 {print $1}'\r\r0x:wq\r", b"one 2\nwo 10\n"),
     ("pipe-last-field", b"one alpha\ntwo beta\n", b":awk '{print $NF}'|grep beta\r\r0x:wq\r", b"one alpha\nwo beta\n"),
@@ -127,13 +129,20 @@ cases = [
     ("block-paste", b"abc\ndef\n", b"\x16jI\x1b[200~X\x1b[201~\x1b:wq\r", b"Xabc\nXdef\n"),
     ("block-cancel", b"abc\ndef\n", b"\x16j\x1bx:wq\r", b"abc\nef\n"),
 ]
+if args.selected_cases:
+    unknown=set(args.selected_cases)-{case[0] for case in cases}
+    if unknown: parser.error("Unknown smoke case: "+", ".join(sorted(unknown)))
+    cases=[case for case in cases if case[0] in args.selected_cases]
+
 for name, initial, keys, expected in cases:
     directory = work / name
     directory.mkdir(exist_ok=True)
     (directory / "folder").mkdir(exist_ok=True)
     (directory / "initial.bin").write_bytes(initial)
     (directory / "keys.bin").write_bytes(keys)
-    run = subprocess.run([str(args.wine), winpath(helper), winpath(executable), winpath(directory)],
+    (directory / "expected.bin").write_bytes(expected)
+    flags=["--path"] if name=="status-path" else []
+    run = subprocess.run([str(args.wine), winpath(helper), winpath(executable), winpath(directory), *flags],
                          env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=40)
     (directory / "run.log").write_bytes(run.stdout)
     actual = (directory / "result.bin").read_bytes() if (directory / "result.bin").exists() else None

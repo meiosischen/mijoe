@@ -2565,6 +2565,7 @@ int vim_gui_action(int action, const char *path)
 	BW *bw = current_bw();
 	int rc = 0;
 	if (!bw || paste) return -1;
+	if (action!=MIJOE_GUI_COPY) tw_path_clear();
 	finish_unit(); clear_pending(); sequence_len = 0;
 	switch (action) {
 	case MIJOE_GUI_IMPORT_TEXT: rc=import_text_result(bw,path,0); break;
@@ -2614,6 +2615,7 @@ int vim_input(va_list args)
 	BW *bw = current_bw();
 	unsigned long number;
 	if (!bw || bw->b->pid || (!vim_enabled && !lf_active(bw->b))) return 0;
+	if (key!=VIM_UNKNOWN) tw_path_clear();
 	number = vim_buffer_number(bw->b);
 	if (active_number != number) {
 		clear_visual(); finish_unit(); clear_pending(); mode = VM_NORMAL;
@@ -2695,6 +2697,24 @@ int vim_readkey(int key)
 		queued_index = 0; queued_count = len + 1; queued_keys[0] = 'O';
 		for (i = 0; i < len; ++i) queued_keys[i + 1] = (unsigned char)seq[i];
 		return 27;
+	}
+	/* Mouse reports bypass Vim key translation; header selection must also
+	 * work in Insert and Visual without feeding coordinates into the file. */
+	if (prefix == '[' && seq[0] == '<' && (c == 'M' || c == 'm')) {
+		int button, x, y; char end, extra;
+		if (sscanf(seq + 1, "%6d;%6d;%6d%c%c", &button, &x, &y, &end, &extra) == 4 &&
+		    end == c && x <= 100000 && y <= 100000)
+			mouse_terminal_event(button, x, y, c == 'm');
+		return VIM_UNKNOWN;
+	}
+	if (prefix == '[' && !strcmp(seq, "M")) {
+		unsigned char raw[3]; int i;
+		for (i = 0; i < 3; ++i) {
+			if (!ttwaitkey(100)) return VIM_UNKNOWN;
+			raw[i] = (unsigned char)ttgetc();
+		}
+		mouse_terminal_event((int)raw[0] - 32, (int)raw[1] - 32, (int)raw[2] - 32, 0);
+		return VIM_UNKNOWN;
 	}
 	if (!strcmp(seq, "200~")) return VIM_PASTE;
 	if (!strcmp(seq, "201~")) return VIM_PASTE_END;

@@ -14,6 +14,7 @@ struct tw {
 	char	*stalin;	/* Status line info */
 	char	*staright;
 	int	staon;		/* Set if status line was on */
+	ptrdiff_t path_start, path_end;
 	off_t	prevline;	/* Previous cursor line number */
 	int	changed;	/* Previous changed value */
 	B	*prev_b;	/* Previous buffer (we need to update status line on nbuf/pbuf) */
@@ -41,5 +42,10 @@ extern int bg_stalin;
 extern WATOM watomtw;
 
 char *duplicate_backslashes(const char *s, ptrdiff_t len);
+char *tw_full_path(B *b);
+int tw_path_hit(ptrdiff_t x, ptrdiff_t y);
+int tw_path_mouse(int action, ptrdiff_t x, ptrdiff_t y, int clicks);
+char *tw_path_selection(void);
+void tw_path_clear(void);
 
 #endif

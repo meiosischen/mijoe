@@ -97,6 +97,7 @@ static BW *gui_buffer(void)
 	if (!(w->watom->what & TYPETW)) w = w->main;
 	return w && (w->watom->what & TYPETW) ? (BW *)w->object : NULL;
 }
+static const char *gui_clipboard_text;
 
 static int gui_dirty_count(void)
 {
@@ -172,6 +173,14 @@ static void gui_report(unsigned long id, int ok, const char *error, const char *
 	        id, ok ? "true" : "false", bw->b->changed ? "true" : "false",
 	        gui_dirty_count(), bw->b->rdonly ? "true" : "false");
 	json = gui_json_string(vsdupz(number), bw->b->name);
+    {
+        char *full=tw_full_path(bw->b);
+        TW *tw=(TW *)bw->object;
+        json=vsncpy(sv(json),sz(",\"fullPath\":")); json=gui_json_string(json,full); joe_free(full);
+        sprintf(number,",\"pathColumn\":%d,\"pathEndColumn\":%d,\"pathRow\":%d",(int)tw->path_start,(int)tw->path_end,(int)bw->parent->y);
+        json=vsncpy(sv(json),sz(number));
+        if (gui_clipboard_text) { json=vsncpy(sv(json),sz(",\"clipboardText\":")); json=gui_json_string(json,gui_clipboard_text); }
+    }
     sprintf(number, ",\"largePending\":%s,\"lazy\":%s,\"binary\":%s,\"normalAllowed\":%s",
             lf_pending(bw->b) ? "true" : "false", lf_active(bw->b) ? "true" : "false",
             bw->b->binary_file ? "true" : "false", lf_size(bw->b) <= (JOE_LONG_LONG)MAXOFF ? "true" : "false");
@@ -220,6 +229,14 @@ int mijoe_macos_gui_open_text(const char *path)
 	if (gui_response<0) return 0;
 	gui_open_text_path=path; gui_report(0,1,NULL,NULL,0); gui_open_text_path=NULL;
 	return 1;
+}
+int mijoe_macos_gui_copy_text(const char *text)
+{
+    char *utf8;
+    gui_init(); if (gui_response<0) return 0;
+    utf8=my_iconv(NULL,utf8_map,text,locale_map);
+    gui_clipboard_text=utf8; gui_report(0,1,NULL,NULL,0); gui_clipboard_text=NULL;
+    obj_free(utf8); return 1;
 }
 
 int mijoe_macos_gui_list_buffers(void)
@@ -281,7 +298,8 @@ int mijoe_macos_gui_action(va_list args)
 		int event, column, row;
 		if (sscanf(path, "%d;%d;%d", &event, &column, &row) != 3 ||
 		    column < 0 || column > 999 || row < 0 || row > 499) error = "Invalid mouse position.";
-		else if (event == 1) { vim_gui_mouse_prepare(); mousedn(column + 1, row + 1); }
+        else if (event==4 && tw_path_hit(column,row)) tw_path_mouse(1,column,row,2);
+		else if (event == 1 || event==4) { if (!tw_path_hit(column,row)) vim_gui_mouse_prepare(); mousedn(column + 1, row + 1); }
 		else if (event == 2) mousedrag(column + 1, row + 1);
 		else if (event == 3) mouseup(column + 1, row + 1);
 		else error = "Invalid mouse event.";
@@ -299,6 +317,14 @@ int mijoe_macos_gui_action(va_list args)
 		error = "Close the editor menu or prompt before using this command.";
 	} else {
 		if (action == MIJOE_GUI_COPY || action == MIJOE_GUI_CUT) {
+            {
+                char *selected=tw_path_selection();
+                if (selected) {
+                    if (action==MIJOE_GUI_CUT) { joe_free(selected); gui_report(id,0,"The status path can be copied, but cannot be cut.",NULL,0); return -1; }
+                    text=my_iconv(NULL,utf8_map,selected,locale_map); joe_free(selected);
+                    gui_report(id,1,NULL,text,0); obj_free(text); return 0;
+                }
+            }
 			if (!markv(0) || markb->b != bw->b || square) error = "Select text with v/V or the mouse first.";
 			else if (markk->byte - markb->byte > 16 * 1024 * 1024) error = "The selection exceeds 16 MiB.";
 			else {

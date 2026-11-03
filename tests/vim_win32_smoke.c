@@ -1,5 +1,7 @@
 /* VC6/XP-compatible UI test. Operates only on the child editor it starts. */
 #define WIN32_LEAN_AND_MEAN
+#define WINVER 0x0500
+#define _WIN32_WINNT 0x0500
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,6 +23,44 @@ static BOOL CALLBACK find_editor(HWND window, LPARAM unused)
     return TRUE;
 }
 
+/* Detect the cell geometry from this child's caret, then double click
+ * only the status row. Compare UTF-16 clipboard data with its full path. */
+static int status_path_copy(const wchar_t *expected)
+{
+    GUITHREADINFO info;
+    DWORD thread=GetWindowThreadProcessId(editor_window,NULL);
+    int width,height,x,y,column,found=0;
+    memset(&info,0,sizeof(info));info.cbSize=sizeof(info);
+    if (!GetGUIThreadInfo(thread,&info) || info.hwndCaret!=editor_window) return 0;
+    width=info.rcCaret.right-info.rcCaret.left;
+    height=info.rcCaret.bottom-info.rcCaret.top;
+    if (width<1 || height<1) return 0;
+    y=info.rcCaret.top-height+height/2;
+    for(column=1;column<26 && !found;++column) {
+        int click;
+        x=info.rcCaret.left+column*width+width/2;
+        for(click=0;click<2;++click) {
+            PostMessage(editor_window,WM_LBUTTONDOWN,MK_LBUTTON,MAKELPARAM(x,y));Sleep(40);
+            PostMessage(editor_window,WM_LBUTTONUP,0,MAKELPARAM(x,y));Sleep(40);
+        }
+        if (OpenClipboard(NULL)) {
+            HANDLE value=GetClipboardData(CF_UNICODETEXT);
+            if(value) {
+                wchar_t *text=(wchar_t *)GlobalLock(value);
+                if(text) {
+                    wchar_t normalized[1400];int n;
+                    wcsncpy(normalized,text,1399);normalized[1399]=0;
+                    for(n=0;normalized[n];++n)if(normalized[n]==L'/')normalized[n]=L'\\';
+                    found=!_wcsicmp(normalized,expected);
+                    GlobalUnlock(value);
+                }
+            }
+            CloseClipboard();
+        }
+    }
+    return found;
+}
+
 int main(int argc, char **argv)
 {
     wchar_t executable[1024], directory[1024], input[1200], output[1200], command[4096];
@@ -33,7 +73,7 @@ int main(int argc, char **argv)
     DWORD size, code = 0;
     size_t length, i;
     int ok = 0;
-    if (argc != 3 && !(argc == 4 && !strcmp(argv[3], "--verify"))) return 2;
+    if (argc != 3 && !(argc == 4 && (!strcmp(argv[3], "--verify") || !strcmp(argv[3], "--path")))) return 2;
     MultiByteToWideChar(CP_UTF8, 0, argv[1], -1, executable, 1024);
     MultiByteToWideChar(CP_UTF8, 0, argv[2], -1, directory, 1024);
     wsprintfW(input, L"%s\\\x6d4b\x8bd5-vim.txt", directory);
@@ -63,6 +103,10 @@ int main(int argc, char **argv)
     }
     if (!editor_window) { printf("FAIL no editor window; exit=%lu\n", code); goto done; }
     Sleep(300);
+    if (argc==4 && !strcmp(argv[3],"--path")) {
+        if (!status_path_copy(input)) { printf("FAIL status path clipboard\n"); goto done; }
+        printf("PASS status double click copied the full Unicode path\n");
+    }
     for (i = 0; i < length; ++i) {
         PostMessage(editor_window, WM_CHAR, keys[i], 1);
         Sleep(8);

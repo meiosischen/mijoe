@@ -273,6 +273,10 @@ static const VTermScreenCallbacks callbacks = {
         NSDictionary *message = [NSJSONSerialization JSONObjectWithData:line options:0 error:NULL];
         if (![message isKindOfClass:NSDictionary.class]) continue;
         self.state = message;
+        if ([message[@"clipboardText"] isKindOfClass:NSString.class]) {
+            [NSPasteboard.generalPasteboard clearContents];
+            [NSPasteboard.generalPasteboard setString:message[@"clipboardText"] forType:NSPasteboardTypeString];
+        }
         [self.delegate editor:self stateChanged:message];
         NSNumber *identifier = message[@"id"];
         void (^completion)(NSDictionary *) = _pending[identifier];

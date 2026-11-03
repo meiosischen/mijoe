@@ -20,6 +20,41 @@
 #include "types.h"
 #include "vim.h"
 
+/* A real owner is required by EmptyClipboard/SetClipboardData on Windows.
+ * The editor core may run on a different thread from its frontend. */
+static BOOL CALLBACK clipboard_owner_window(HWND window, LPARAM owner)
+{
+    DWORD process;
+    GetWindowThreadProcessId(window,&process);
+    if (process==GetCurrentProcessId() && IsWindowVisible(window)) {
+        *(HWND *)owner=window; return FALSE;
+    }
+    return TRUE;
+}
+
+/* Copy status text without touching the edit buffer or its block marks. */
+int jw_copy_path_text(const char *text)
+{
+    char *utf8=my_iconv(NULL,utf8_map,text,locale_map);
+    int n=MultiByteToWideChar(CP_UTF8,0,utf8,-1,NULL,0), ok=0;
+    HGLOBAL memory;
+    HWND owner=NULL;
+    EnumWindows(clipboard_owner_window,(LPARAM)&owner);
+    if (n>0 && owner && OpenClipboard(owner)) {
+        memory=GlobalAlloc(GMEM_MOVEABLE,n*sizeof(wchar_t));
+        if (memory) {
+            wchar_t *target=(wchar_t *)GlobalLock(memory);
+            if (target) {
+                MultiByteToWideChar(CP_UTF8,0,utf8,-1,target,n); GlobalUnlock(memory);
+                if (EmptyClipboard() && SetClipboardData(CF_UNICODETEXT,memory)) ok=1;
+            }
+            if (!ok) GlobalFree(memory);
+        }
+        CloseClipboard();
+    }
+    obj_free(utf8); return ok ? 0 : -1;
+}
+
 /* Copy block contents to the Windows clipboard */
 
 int uwincopy(W *w, int k)
@@ -28,6 +63,7 @@ int uwincopy(W *w, int k)
 	int result = 1;
 
 	WIND_BW(bw, w);
+	{ char *path=tw_path_selection(); if (path) { int rc=jw_copy_path_text(path); joe_free(path); return rc; } }
 	vim_capture_selection();
 
 	if (markv(1)) {

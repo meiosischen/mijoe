@@ -23,3 +23,5 @@ int uwinblkcpy (W *w, int k);
 int uwincontext (W *w, int k);
 int uwinrawvt (W *w, int k);
 
+
+int jw_copy_path_text(const char *text);

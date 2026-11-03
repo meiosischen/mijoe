@@ -52,6 +52,12 @@ static BOOL coloredText(MJEditorSession *session, NSString *text, int foreground
 }
 
 /* Owned test payloads, not synthesized operating-system events. */
+@interface MJMousePayload : NSObject
+@property NSPoint locationInWindow;
+@property NSInteger clickCount;
+@end
+@implementation MJMousePayload
+@end
 @interface MJScrollPayload : NSObject
 @property CGFloat delta;
 @property BOOL precise;
@@ -124,6 +130,33 @@ int main(int argc, const char *argv[]) {
         check(view.lineSpacing==-6 && view.refreshRequested && adjustedRows==initialRows,@"F4 restores leading and refreshes terminal rows");
         check(waitFor(^BOOL { return [session.screenText containsString:@"FS 13 H -6"]; }),@"status reflects F4 restores leading and refreshes terminal rows");
         check(![request(session,MIJOE_GUI_STATUS,nil)[@"changed"] boolValue],@"function keys do not insert bytes or modify the document");
+        /* Exercise the actual view double-click path and session pasteboard
+         * event without creating or touching any user application window. */
+        NSPasteboard *pasteboard=NSPasteboard.generalPasteboard;
+        NSMutableArray<NSPasteboardItem *> *savedClipboard=[NSMutableArray array];
+        for (NSPasteboardItem *item in pasteboard.pasteboardItems) {
+            NSPasteboardItem *copy=[NSPasteboardItem new];
+            for (NSString *type in item.types) { NSData *data=[item dataForType:type];if(data)[copy setData:data forType:type]; }
+            [savedClipboard addObject:copy];
+        }
+        @try {
+            NSDictionary *pathState=request(session,MIJOE_GUI_STATUS,nil);
+            CGFloat cw=[[view valueForKey:@"cellWidth"] doubleValue],ch=[[view valueForKey:@"cellHeight"] doubleValue];
+            MJMousePayload *mouse=[MJMousePayload new];mouse.clickCount=2;
+            mouse.locationInWindow=[view convertPoint:NSMakePoint(8+([pathState[@"pathColumn"] intValue]+1.5)*cw,8+0.5*ch) toView:nil];
+            [view mouseDown:(NSEvent *)mouse];[view mouseUp:(NSEvent *)mouse];
+            NSDictionary *after=request(session,MIJOE_GUI_STATUS,nil);
+            check([[pasteboard stringForType:NSPasteboardTypeString] isEqual:pathState[@"fullPath"]],@"native status double click automatically copies the complete absolute path");
+            check([after[@"mode"] isEqual:pathState[@"mode"]] && [after[@"fileOffset"] isEqual:pathState[@"fileOffset"]] && ![after[@"changed"] boolValue],@"native status selection preserves document mode cursor and contents");
+            check([request(session,MIJOE_GUI_COPY,nil)[@"text"] isEqual:pathState[@"fullPath"]],@"native Copy also returns the selected status path");
+            check(coloredText(session,@"/",0x222222,0xe8e8e8),@"selected status path uses the pale white selection background");
+            NSBitmapImageRep *pathPreview=[view bitmapImageRepForCachingDisplayInRect:view.bounds];
+            [view cacheDisplayInRect:view.bounds toBitmapImageRep:pathPreview];
+            [[pathPreview representationUsingType:NSBitmapImageFileTypePNG properties:@{}] writeToFile:[directory stringByAppendingPathComponent:@"status-path.png"] atomically:YES];
+            mouse.clickCount=1;mouse.locationInWindow=[view convertPoint:NSMakePoint(9,8+1.5*ch) toView:nil];
+            [view mouseDown:(NSEvent *)mouse];
+            [view mouseUp:(NSEvent *)mouse];request(session,MIJOE_GUI_STATUS,nil);
+        } @finally { [pasteboard clearContents];if(savedClipboard.count)[pasteboard writeObjects:savedClipboard]; }
         [view insertText:@"i" replacementRange:NSMakeRange(NSNotFound,0)];
         check([request(session,MIJOE_GUI_STATUS,nil)[@"mode"] isEqual:@"I"],@"input client forwards Insert mode key");
         [view setMarkedText:@"zhongwen" selectedRange:NSMakeRange(8,0) replacementRange:NSMakeRange(NSNotFound,0)];

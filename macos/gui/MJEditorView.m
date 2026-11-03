@@ -284,6 +284,7 @@ static const CGFloat padding = 8;
     int row = MAX(0,(int)floor((point.y-padding)/_cellHeight));
     int column = MAX(0,(int)floor((point.x-padding)/_cellWidth));
     int kind = button ? (pressed ? 1 : 3) : 2;
+    if (kind==1 && event.clickCount>=2) kind=4;
     [self.session request:MIJOE_GUI_MOUSE path:[NSString stringWithFormat:@"%d;%d;%d",kind,column,row] completion:nil];
 }
 - (void)mouseDown:(NSEvent *)event { [self mouseAt:event button:1 pressed:YES]; }
