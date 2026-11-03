@@ -85,11 +85,13 @@ ptrdiff_t mcoord(ptrdiff_t x)
 static int joe_mouse_event()
 {
 	if ((Cb & 0x41) == 0x40) {
+        if(mj_recent_active()){mj_recent_key(KEY_MWUP);return 0;}
 		fake_key(KEY_MWUP);
 		return 0;
 	}
 
 	if ((Cb & 0x41) == 0x41) {
+        if(mj_recent_active()){mj_recent_key(KEY_MWDOWN);return 0;}
 		fake_key(KEY_MWDOWN);
 		return 0;
 	}
@@ -202,6 +204,7 @@ void mousedn(ptrdiff_t x,ptrdiff_t y)
 	interval=GetDoubleClickTime();
 #endif
 	Cx = x, Cy = y;
+    if (mj_recent_mouse(1,(int)x-1,(int)y-1)) return;
 	if (last_msec == 0 || mnow() - last_msec > interval) {
 		/* not a multiple click */
 		clicks=1;
@@ -393,6 +396,7 @@ static void select_done(struct charmap *map)
 void mouseup(ptrdiff_t x,ptrdiff_t y)
 {
 	Cx = x, Cy = y;
+    if (mj_recent_mouse(3,(int)x-1,(int)y-1)) return;
 	if (tw_path_mouse(3,x-1,y-1,0)) { last_msec=mnow(); return; }
 	switch(clicks) {
 		case 1:
@@ -415,6 +419,7 @@ void mousedrag(ptrdiff_t x,ptrdiff_t y)
 #ifdef JOEWIN
 	ptrdiff_t w, h;
 #endif
+    if (mj_recent_mouse(2,(int)x-1,(int)y-1)) return;
 	if (tw_path_mouse(2,x-1,y-1,0)) return;
 #ifdef JOEWIN
 	// HACK: PuTTY sends multiple mouse updates even if the pointer has moved

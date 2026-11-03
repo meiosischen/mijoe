@@ -61,6 +61,34 @@ static int status_path_copy(const wchar_t *expected)
     return found;
 }
 
+static void capture_failure(const char *directory)
+{
+    RECT r;
+    HDC dc=GetDC(editor_window),memory;
+    HBITMAP bitmap,previous;
+    BITMAPINFO info;
+    BITMAPFILEHEADER header;
+    unsigned char *pixels;
+    DWORD bytes;
+    FILE *file;
+    char path[1400];
+    if(!dc || !GetClientRect(editor_window,&r))return;
+    memory=CreateCompatibleDC(dc);bitmap=CreateCompatibleBitmap(dc,r.right,r.bottom);
+    previous=(HBITMAP)SelectObject(memory,bitmap);BitBlt(memory,0,0,r.right,r.bottom,dc,0,0,SRCCOPY);
+    memset(&info,0,sizeof(info));info.bmiHeader.biSize=sizeof(BITMAPINFOHEADER);
+    info.bmiHeader.biWidth=r.right;info.bmiHeader.biHeight=-r.bottom;
+    info.bmiHeader.biPlanes=1;info.bmiHeader.biBitCount=32;info.bmiHeader.biCompression=BI_RGB;
+    bytes=r.right*r.bottom*4;pixels=(unsigned char *)malloc(bytes);
+    SelectObject(memory,previous);
+    if(pixels && GetDIBits(dc,bitmap,0,r.bottom,pixels,&info,DIB_RGB_COLORS)) {
+        memset(&header,0,sizeof(header));header.bfType=0x4d42;
+        header.bfOffBits=sizeof(header)+sizeof(BITMAPINFOHEADER);header.bfSize=header.bfOffBits+bytes;
+        sprintf(path,"%s\\failure.bmp",directory);file=fopen(path,"wb");
+        if(file){fwrite(&header,1,sizeof(header),file);fwrite(&info.bmiHeader,1,sizeof(BITMAPINFOHEADER),file);fwrite(pixels,1,bytes,file);fclose(file);}
+    }
+    if(pixels)free(pixels);DeleteObject(bitmap);DeleteDC(memory);ReleaseDC(editor_window,dc);
+}
+
 int main(int argc, char **argv)
 {
     wchar_t executable[1024], directory[1024], input[1200], output[1200], command[4096];
@@ -127,7 +155,7 @@ int main(int argc, char **argv)
         Sleep(8);
     }
     if (WaitForSingleObject(child.hProcess, 15000) != WAIT_OBJECT_0) {
-        printf("FAIL editor did not exit\n"); goto done;
+        printf("FAIL editor did not exit; pid=%lu window=%d\n",editor_pid,IsWindow(editor_window));capture_failure(argv[2]); goto done;
     }
     GetExitCodeProcess(child.hProcess, &code);
     if (code) { printf("FAIL editor exit=%lu\n", code); goto done; }

@@ -81,7 +81,7 @@ void edupd(int flg)
 		w = (W *) (w->link.next);
 	} while (w != maint->curwin);
 	/* Set cursor position */
-	if (!vim_grep_render(maint)) cpos(maint->t, maint->curwin->x + maint->curwin->curx, maint->curwin->y + maint->curwin->cury);
+	if (!mj_recent_render(maint) && !vim_grep_render(maint)) cpos(maint->t, maint->curwin->x + maint->curwin->curx, maint->curwin->y + maint->curwin->cury);
 #if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
     mijoe_macos_gui_frame(0);
 #endif
@@ -183,6 +183,7 @@ int edloop()
 			continue;
 		}
 #endif
+        if (mj_recent_active()) { c=macro_decoded ? c : vim_readkey(c); co_call(mj_recent_input,c); continue; }
         if (vim_grep_active()) { c=macro_decoded ? c : vim_readkey(c); vim_macro_capture(c,1); co_call(vim_input,c); vim_macro_applied(); continue; }
         if ((maint->curwin->watom->what & TYPETW) && lf_pending(((BW *)maint->curwin->object)->b)) {
             vim_macro_capture(c,0); lf_prompt_key((BW *)maint->curwin->object,c); vim_macro_applied(); continue;
@@ -191,7 +192,7 @@ int edloop()
 		 * retain their own keyboard maps and coroutine lifecycle. */
 		if ((!macro_event || macro_decoded) && (vim_enabled || ((maint->curwin->watom->what & TYPETW) && lf_active(((BW *)maint->curwin->object)->b))) && (maint->curwin->watom->what & TYPETW) &&
 		    !((BW *)maint->curwin->object)->b->pid &&
-            (!((BW *)maint->curwin->object)->o.hex || lf_active(((BW *)maint->curwin->object)->b)) &&
+            (!((BW *)maint->curwin->object)->o.hex || lf_active(((BW *)maint->curwin->object)->b) || c==':' || vim_command_active()) &&
 		    (c < KEY_MDOWN || c > KEY_MRDRAG) && !vim_native_key(c)) {
 			c=macro_decoded ? c : vim_readkey(c);
             vim_macro_capture(c,1); co_call(vim_input,c); vim_macro_applied();
@@ -402,32 +403,15 @@ int joerc()
 	else
 		time_rc = 0;
 
-	/* User's joerc file */
-	s = getenv("HOME");
-	if (s) {
-		s = vsncpy(NULL, 0, sz(s));
-#ifndef JOEWIN
-		s = vsncpy(sv(s), sc("/."));
-#else
-		/* No dot-names in Windows */
-		s = vsncpy(sv(s), sc("\\"));
-#endif
-		s = vsncpy(sv(s), sc("joerc"));
-
-		if (!stat(s,&sbuf)) {
-			if (sbuf.st_mtime < time_rc) {
-				logmessage_2(joe_gettext(_("Warning: %s is newer than your %s.\n")),t,s);
-			}
-		}
-
-		c = procrc(cap, s);
-		if (c == 0) {
-			goto donerc;
-		}
-		if (c == 1) {
-			logerror_1(joe_gettext(_("There were errors in '%s'.  Falling back on default.\n")), s);
-		}
-	}
+	/* Personal settings are rooted at ~/.mj; keep legacy files as backups. */
+    mj_profile_migrate();
+    mj_recent_initialize();
+    s=mj_profile_path("joerc",0);
+    if (s) {
+        c=procrc(cap,s);
+        if (!c) goto donerc;
+        if (c==1) logerror_1("Errors in personal joerc: %s",s);
+    }
 
 	s = t;
 	c = procrc(cap, s);
@@ -452,6 +436,7 @@ int joerc()
 
 	donerc:
 
+    mj_profile_configure();
 	if (validate_rc()) {
 		logerror_0(joe_gettext(_("rc file has no :main key binding section or no bindings.  Bye.\n")));
 		return 1;
@@ -610,6 +595,7 @@ void process_args()
 				lazy_opts(bw->b, &bw->o);
 				bw->o = bw->b->o;
 				bw->b->rdonly = bw->o.readonly;
+                if (!er) mj_recent_record(bw,1);
 				/* Put cursor in window, so macros work properly */
 				maint->curwin = bw->parent;
 				/* Hmm... window might not exist any more... depends on what macro does... */

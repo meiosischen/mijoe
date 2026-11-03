@@ -1,0 +1,16 @@
+test_unicode_path_osc52_without_gui_bridge (__main__.ConsoleClipboardTests.test_unicode_path_osc52_without_gui_bridge) ... ok
+test_body_click_clears_header_selection (__main__.StatusPathTests.test_body_click_clears_header_selection) ... ok
+test_drag_both_directions_preserves_editor_modes_and_cursor (__main__.StatusPathTests.test_drag_both_directions_preserves_editor_modes_and_cursor) ... ok
+test_header_cut_does_not_delete_a_retained_visual_selection (__main__.StatusPathTests.test_header_cut_does_not_delete_a_retained_visual_selection) ... ok
+test_legacy_x10_terminal_mouse (__main__.StatusPathTests.test_legacy_x10_terminal_mouse) ... ok
+test_native_double_click_copies_entire_clipped_path (__main__.StatusPathTests.test_native_double_click_copies_entire_clipped_path) ... ok
+test_new_keyboard_selection_replaces_header_copy_target (__main__.StatusPathTests.test_new_keyboard_selection_replaces_header_copy_target) ... ok
+test_save_as_invalidates_previous_selection (__main__.StatusPathTests.test_save_as_invalidates_previous_selection) ... ok
+test_sgr_terminal_mouse_preserves_insert_mode (__main__.StatusPathTests.test_sgr_terminal_mouse_preserves_insert_mode) ... ok
+test_unicode_control_and_backslash_names_are_copied_verbatim (__main__.StatusPathTests.test_unicode_control_and_backslash_names_are_copied_verbatim) ... ok
+test_unicode_drag_never_splits_a_wide_character (__main__.StatusPathTests.test_unicode_drag_never_splits_a_wide_character) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 9.607s
+
+OK

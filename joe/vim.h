@@ -28,6 +28,7 @@ void vim_macro_applied(void);
 void vim_macro_result(int result);
 int vim_command_active(void);
 const char *vim_command_text(void);
+int vim_recent_open(BW *bw, const char *path, int flags);
 int vim_grep_active(void);
 int vim_grep_key(int key);
 int vim_grep_render(Screen *t);

@@ -46,6 +46,8 @@
     <ClInclude Include="$(JoeExternalSrcDir)\blocks.h" />
     <ClInclude Include="$(JoeExternalSrcDir)\builtin.h" />
     <ClInclude Include="$(JoeExternalSrcDir)\bw.h" />
+    <ClInclude Include="$(JoeExternalSrcDir)\profile.h" />
+    <ClInclude Include="$(JoeExternalSrcDir)\recent.h" />
     <ClInclude Include="$(JoeExternalSrcDir)\cclass.h" />
     <ClInclude Include="$(JoeExternalSrcDir)\charmap.h" />
     <ClInclude Include="$(JoeExternalSrcDir)\cmd.h" />
@@ -112,6 +114,8 @@
     <ClCompile Include="$(JoeExternalSrcDir)\blocks.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\bw.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\softwrap.c" />
+    <ClCompile Include="$(JoeExternalSrcDir)\profile.c" />
+    <ClCompile Include="$(JoeExternalSrcDir)\recent.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\cclass.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\charmap.c" />
     <ClCompile Include="$(JoeExternalSrcDir)\cmd.c" />

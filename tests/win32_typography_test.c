@@ -8,11 +8,8 @@
 
 static DWORD pid, tid;
 static HWND editor;
-static HKEY settings;
-static const char *keyname = "Software\\JoeEditor\\joe";
+static char settings[1400];
 static const char *names[2] = { "FontSize", "LineSpacing" };
-static DWORD saved[2], types[2];
-static int existed[2];
 static PROCESS_INFORMATION process;
 static int checks;
 static int visible_caret = 1;
@@ -46,9 +43,7 @@ static void text(const char *s)
 
 static int value(int which)
 {
-    DWORD n = 0, type, bytes = sizeof(n);
-    if (RegQueryValueExA(settings, names[which], NULL, &type, (BYTE *)&n, &bytes) || type != REG_DWORD) return -999;
-    return (int)n;
+    return (int)GetPrivateProfileIntA("joe",names[which],-999,settings);
 }
 
 static int pair(UINT key, int font, int spacing, int dh)
@@ -94,19 +89,17 @@ static int cycle(const char *mode)
 int main(int argc, char **argv)
 {
     STARTUPINFOA startup;
-    DWORD disposition, n, bytes;
+    DWORD n, bytes;
     char command[4096], file[1200], contents[80];
     FILE *input;
     int i, ok = 0, base_height;
     RECT caret;
     if (argc != 3) return 2;
-    if (RegCreateKeyExA(HKEY_CURRENT_USER, keyname, 0, NULL, 0, KEY_ALL_ACCESS,
-                        NULL, &settings, &disposition)) return 3;
-    for (i = 0; i < 2; ++i) {
-        bytes = sizeof(DWORD);
-        existed[i] = !RegQueryValueExA(settings, names[i], NULL, &types[i], (BYTE *)&saved[i], &bytes);
-        n = i ? 0 : 14; RegSetValueExA(settings, names[i], 0, REG_DWORD, (BYTE *)&n, sizeof(n));
-    }
+    sprintf(settings,"%s\\profile",argv[2]);CreateDirectoryA(settings,NULL);
+    SetEnvironmentVariableA("MIJOE_CONFIG_HOME",settings);
+    strcat(settings,"\\windows.ini");
+    WritePrivateProfileStringA("joe","FontSize","14",settings);
+    WritePrivateProfileStringA("joe","LineSpacing","0",settings);
     sprintf(file, "%s\\input.txt", argv[2]);
     input = fopen(file, "wb"); if (!input) goto done;
     fputs("alpha\nbeta\n", input); fclose(input);
@@ -145,7 +138,7 @@ int main(int argc, char **argv)
     }
     CloseHandle(process.hThread); CloseHandle(process.hProcess);
     memset(&process, 0, sizeof(process));
-    n = (DWORD)-2; RegSetValueExA(settings, names[1], 0, REG_DWORD, (BYTE *)&n, sizeof(n));
+    WritePrivateProfileStringA("joe","LineSpacing","-2",settings);
     editor = NULL;
     if (!CreateProcessA(NULL, command, NULL, NULL, FALSE, 0, NULL, argv[2], &startup, &process)) goto done;
     pid = process.dwProcessId;
@@ -168,10 +161,5 @@ done:
         if (n == STILL_ACTIVE) TerminateProcess(process.hProcess, 1);
         CloseHandle(process.hThread); CloseHandle(process.hProcess);
     }
-    for (i = 0; i < 2; ++i) {
-        if (existed[i]) RegSetValueExA(settings, names[i], 0, types[i], (BYTE *)&saved[i], sizeof(DWORD));
-        else RegDeleteValueA(settings, names[i]);
-    }
-    RegCloseKey(settings);
     return ok ? 0 : 1;
 }

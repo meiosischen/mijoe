@@ -80,12 +80,8 @@ void save_state()
 	if (!home)
 		return;
 	
-#ifndef JOEWIN
-	path = vsfmt(NULL, 0, "%s/.joe_state", home);
-#else
-	/* Don't use dot-files in Windows */
-	path = vsfmt(NULL, 0, "%s\\joe_state", home);
-#endif
+	path=mj_profile_path("state",1);
+    if (!path) return;
 	old_mask = umask(0066);
 	f = fopen(path, "w");
 	umask(old_mask);
@@ -123,12 +119,8 @@ void load_state()
 		return;
 	if (!path)
 		return;
-#ifndef JOEWIN
-	path = vsfmt(NULL, 0, "%s/.joe_state", path);
-#else
-	/* Don't use dotfiles in Windows */
-	path = vsfmt(NULL, 0, "%s\\joe_state", path);
-#endif
+	path=mj_profile_path("state",0);
+    if (!path) return;
 	f = fopen(path, "r");
 	if(!f)
 		return;

@@ -1,0 +1,13 @@
+recent_test 0
+softwrap_test 0
+status_path_test 0
+vim_pty_test 0
+macos_gui_bridge_test 0
+vim_ui_test 0
+grep_control_test 0
+vim_abort_test 0
+large_file_test 0
+internal_pipeline_test 0
+vim_register_test 0
+buffer_list_test 0
+grep_file_test 0

@@ -1,0 +1,9 @@
+{
+  "Contents/MacOS/MiJoe": "f57a1e1e5f8a74a50a4b6cd74663b566c6667040d651068b379e6bf12b6a27a7",
+  "Contents/Resources/editor/bin/joe": "a423bd5a7376bb92e1eb07d4521fe01288c0a1cec914d51b0241544bd664ea4f",
+  "command": "/usr/local/bin/mj",
+  "target": "/Users/meiosis/Workspace/Projects/mijoe/build/macos/MiJoe-macOS-arm64/bin/joe",
+  "installed": "/Users/meiosis/Applications/MiJoe.app",
+  "signature": "verified",
+  "source_manifest": "verified"
+}

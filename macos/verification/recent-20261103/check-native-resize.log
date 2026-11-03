@@ -1,0 +1,54 @@
+PASS recent-file native session starts
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS editor responds to native control requests
+PASS recent modal contains all files including the startup document
+PASS long Unicode paths consume multiple display rows
+PASS the latest entry shows its saved read-only text mode
+PASS overflowing recent-file viewport paints a scrollbar thumb
+PASS modal hides the document caret
+PASS editor responds to native control requests
+PASS PageDown advances the wrapped viewport and its selected item
+PASS editor responds to native control requests
+PASS PageUp returns to the newest entry
+PASS editor responds to native control requests
+PASS the recent modal blocks background native editing commands
+PASS editor responds to native control requests
+PASS Enter reopens the entire Unicode path with its saved read-only mode
+PASS editor responds to native control requests
+PASS missing file is removed from persistent history without closing the chooser
+PASS missing-file deletion displays a visible error
+PASS editor responds to native control requests
+PASS resizing the modal clears the previous popup footprint
+PASS editor responds to native control requests
+PASS Ctrl+C dismisses the modal without editing a file
+PASS closing the recent modal restores the green document caret
+PASS native typography persists inside ~/.mj/macos.json
+PASS malformed preference values fall back safely
+PASS reading malformed preference values preserves the original personal file
+PASS editor responds to native control requests
+PASS recent-file test child exits cleanly

@@ -385,6 +385,7 @@ int lf_choose(BW *bw, int choice)
         breplace(b,n); lf_window_options(b);
     } else if (lf_load(b,0,0)) { msgnw(bw->parent,"Could not open lazy source."); return -1; }
     p_goto_bof(bw->cursor); p_goto_bof(bw->top);
+    mj_recent_record(bw,1);
     nredraw(bw->t->t); staupd = dostaupd = 1;
     return 0;
 }

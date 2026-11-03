@@ -315,16 +315,9 @@ SCHEME *load_scheme(const char *name)
 	}
 	
 	/* Find file */
-	p = getenv("HOME");
-	if (p) {
-#ifndef JOEWIN
-		buf = vsfmt(buf, 0, "%s/.joe/colors/%s.jcf", p, name);
-#else
-		buf = vsfmt(buf, 0, "%s\\colors\\%s.jcf", p, name);
-#endif
-		f = jfopen(buf, "r");
-	}
-	
+	buf=mj_profile_asset("colors",name,".jcf");
+    if (buf) f=jfopen(buf,"r");
+
 	if (!f) {
 		buf = vsfmt(buf, 0, "%scolors/%s.jcf", JOEDATA, name);
 		f = jfopen(buf, "r");

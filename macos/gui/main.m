@@ -1,4 +1,5 @@
 #import "MJEditorView.h"
+#import "MJPreferences.h"
 #include <signal.h>
 
 @class MJAppDelegate;
@@ -47,10 +48,11 @@ static void showMessage(NSWindow *window, NSString *title, NSString *message) {
     window.tabbingMode = NSWindowTabbingModeDisallowed;
     [window center];
     self.editor = [[MJEditorView alloc] initWithFrame:window.contentView.bounds];
-    CGFloat size = [NSUserDefaults.standardUserDefaults doubleForKey:@"EditorFontSize"];
+    NSDictionary *preferences=MJPreferences.typography;
+    CGFloat size = [preferences[@"EditorFontSize"] doubleValue];
     if (size) self.editor.fontSize = size;
-    if ([NSUserDefaults.standardUserDefaults objectForKey:@"EditorLineSpacing"])
-        self.editor.lineSpacing = [NSUserDefaults.standardUserDefaults doubleForKey:@"EditorLineSpacing"];
+    if (preferences[@"EditorLineSpacing"])
+        self.editor.lineSpacing = [preferences[@"EditorLineSpacing"] doubleValue];
     [window.contentView addSubview:self.editor];
     NSString *executable = [NSBundle.mainBundle.resourcePath stringByAppendingPathComponent:@"editor/bin/joe"];
     NSError *error;
@@ -369,7 +371,7 @@ static void showMessage(NSWindow *window, NSString *title, NSString *message) {
 - (void)previousBuffer:(id)sender { [[self currentDocument] perform:MIJOE_GUI_PREV_BUFFER]; }
 - (void)editorHelp:(id)sender { [[self currentDocument] perform:MIJOE_GUI_HELP]; }
 - (void)editorOptions:(id)sender { uint8_t key=20; [[[self currentDocument] session] sendData:[NSData dataWithBytes:&key length:1]]; }
-- (void)setFontSize:(CGFloat)size { [self currentDocument].editor.fontSize=size; [NSUserDefaults.standardUserDefaults setDouble:[self currentDocument].editor.fontSize forKey:@"EditorFontSize"]; }
+- (void)setFontSize:(CGFloat)size { [self currentDocument].editor.fontSize=size; [MJPreferences saveFontSize:[self currentDocument].editor.fontSize lineSpacing:[self currentDocument].editor.lineSpacing]; }
 - (void)zoomIn:(id)sender { [self setFontSize:[self currentDocument].editor.fontSize+1]; }
 - (void)zoomOut:(id)sender { [self setFontSize:[self currentDocument].editor.fontSize-1]; }
 - (void)resetZoom:(id)sender { [self setFontSize:13]; }

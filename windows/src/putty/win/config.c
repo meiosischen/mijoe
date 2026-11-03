@@ -39,6 +39,33 @@ static wchar_t *getkeyname()
 	return keyname;
 }
 
+/* Personal frontend settings use the same root as the editor core. */
+static const wchar_t *profile_path(void)
+{
+    static wchar_t path[MAX_PATH];
+    wchar_t root[MAX_PATH];
+    DWORD length;
+    if(path[0])return path;
+    length=GetEnvironmentVariableW(L"MIJOE_CONFIG_HOME",root,MAX_PATH);
+    if(!length) {
+        length=GetEnvironmentVariableW(L"USERPROFILE",root,MAX_PATH);
+        if(!length || length>=MAX_PATH-20)return NULL;
+        wcscat(root,L"\\.mj");
+    } else if(length>=MAX_PATH-20)return NULL;
+    if(!CreateDirectoryW(root,NULL) && GetLastError()!=ERROR_ALREADY_EXISTS)return NULL;
+    wcscpy(path,root);wcscat(path,L"\\windows.ini");return path;
+}
+static int profile_number(const wchar_t *key,int fallback)
+{
+    const wchar_t *path=profile_path();
+    return path ? (int)GetPrivateProfileIntW(jw_personality,key,fallback,path) : fallback;
+}
+static void save_number(const wchar_t *key,int value)
+{
+    const wchar_t *path=profile_path();wchar_t text[40];
+    if(path) {wsprintfW(text,L"%d",value);WritePrivateProfileStringW(jw_personality,key,text,path);}
+}
+
 void jwLoadConfig(Config *cfg)
 {
 	HKEY hkey;
@@ -123,6 +150,28 @@ void jwLoadConfig(Config *cfg)
 		RegCloseKey(hkey);
 	}
 
+    /* Existing registry values are a read-only migration fallback. */
+    cfg->height=profile_number(L"Rows",cfg->height);
+    cfg->width=profile_number(L"Columns",cfg->width);
+    cfg->font.height=profile_number(L"FontSize",cfg->font.height);
+    jw_line_spacing=profile_number(L"LineSpacing",jw_line_spacing);
+    cfg->font.isbold=profile_number(L"FontBold",cfg->font.isbold);
+    cfg->cursor_type=profile_number(L"Cursor",cfg->cursor_type);
+    if(cfg->font.height<6 || cfg->font.height>72)cfg->font.height=10;
+    if(jw_line_spacing < -64 || jw_line_spacing>32)jw_line_spacing=0;
+    if(cfg->height<2 || cfg->height>500)cfg->height=40;
+    if(cfg->width<10 || cfg->width>1000)cfg->width=120;
+    if(profile_path()) {
+        /* Use the wide API for the Unicode profile filename. */
+        {
+            wchar_t font[64],fallback[64];
+            MultiByteToWideChar(CP_ACP,0,cfg->font.name,-1,fallback,64);
+            GetPrivateProfileStringW(jw_personality,L"FontName",fallback,font,64,profile_path());
+            WideCharToMultiByte(CP_ACP,0,font,-1,cfg->font.name,sizeof(cfg->font.name),NULL,NULL);
+        }
+        jwSaveSettings(cfg);save_number(L"Rows",cfg->height);save_number(L"Columns",cfg->width);
+    }
+
 	/* Cheat: preset the window x and y coordinates so that JOE doesn't get a resize and kill the copyright banner */
 	jw_initialcols = cfg->width;
 	jw_initialrows = cfg->height;
@@ -130,27 +179,14 @@ void jwLoadConfig(Config *cfg)
 
 void jwSaveSettings(Config *cfg)
 {
-	HKEY hkey;
-	DWORD tmp;
-
-	if (ERROR_SUCCESS == RegCreateKeyExW(HKEY_CURRENT_USER, getkeyname(), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hkey, NULL))
-	{
-		tmp = cfg->font.height;
-		RegSetValueExW(hkey, L"FontSize", 0, REG_DWORD, (LPBYTE)&tmp, sizeof(DWORD));
-
-		tmp = (DWORD)jw_line_spacing;
-		RegSetValueExW(hkey, L"LineSpacing", 0, REG_DWORD, (LPBYTE)&tmp, sizeof(DWORD));
-
-		tmp = cfg->font.isbold;
-		RegSetValueExW(hkey, L"FontBold", 0, REG_DWORD, (LPBYTE)&tmp, sizeof(DWORD));
-
-		RegSetValueExA(hkey, "FontName", 0, REG_SZ, (LPBYTE)cfg->font.name, sizeof(char) * ((DWORD)strlen(cfg->font.name) + 1));
-		
-		tmp = cfg->cursor_type;
-		RegSetValueExW(hkey, L"Cursor", 0, REG_DWORD, (LPBYTE)&tmp, sizeof(DWORD));
-
-		RegCloseKey(hkey);
-	}
+    const wchar_t *path=profile_path();
+    wchar_t font[64];
+    save_number(L"FontSize",cfg->font.height);save_number(L"LineSpacing",jw_line_spacing);
+    save_number(L"FontBold",cfg->font.isbold);save_number(L"Cursor",cfg->cursor_type);
+    if(path) {
+        MultiByteToWideChar(CP_ACP,0,cfg->font.name,-1,font,64);
+        WritePrivateProfileStringW(jw_personality,L"FontName",font,path);
+    }
 }
 
 int jwLoadWindowLoc(POINT *point)
@@ -181,6 +217,10 @@ int jwLoadWindowLoc(POINT *point)
 		RegCloseKey(hkey);
 	}
 
+    {
+        int x=profile_number(L"X",0x7fffffff),y=profile_number(L"Y",0x7fffffff);
+        if(x!=0x7fffffff && y!=0x7fffffff){point->x=x;point->y=y;got=2;}
+    }
 	if (got != 2)
 	{
 		return 1;
@@ -206,38 +246,12 @@ int jwLoadWindowLoc(POINT *point)
 
 void jwSaveWindowLoc(POINT point)
 {
-	HKEY hkey;
-
-	if (ERROR_SUCCESS == RegCreateKeyExW(HKEY_CURRENT_USER, getkeyname(), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hkey, NULL))
-	{
-		DWORD tmp;
-
-		tmp = point.x;
-		RegSetValueExW(hkey, L"X", 0, REG_DWORD, (LPBYTE)&tmp, sizeof(DWORD));
-
-		tmp = point.y;
-		RegSetValueExW(hkey, L"Y", 0, REG_DWORD, (LPBYTE)&tmp, sizeof(DWORD));
-
-		RegCloseKey(hkey);
-	}
+    save_number(L"X",point.x);save_number(L"Y",point.y);
 }
 
-void jwSaveWindowSize(int rows, int cols)
+void jwSaveWindowSize(int rows,int cols)
 {
-	HKEY hkey;
-
-	if (ERROR_SUCCESS == RegCreateKeyExW(HKEY_CURRENT_USER, getkeyname(), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hkey, NULL))
-	{
-		DWORD tmp;
-
-		tmp = rows;
-		RegSetValueExW(hkey, L"Rows", 0, REG_DWORD, (LPBYTE)&tmp, sizeof(DWORD));
-
-		tmp = cols;
-		RegSetValueExW(hkey, L"Columns", 0, REG_DWORD, (LPBYTE)&tmp, sizeof(DWORD));
-
-		RegCloseKey(hkey);
-	}
+    save_number(L"Rows",rows);save_number(L"Columns",cols);
 }
 
 void jwSaveWindowCoords(HWND hwnd, int rows, int cols)

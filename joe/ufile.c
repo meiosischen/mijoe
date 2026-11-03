@@ -413,6 +413,7 @@ static int saver(W *w, int c, void *object)
 		}
 		if (!bw->b->name && req->name[0]!='!' && req->name[0]!='>')
 			bw->b->name = joesep(zdup(req->name));
+        mj_recent_record(bw,1);
 		if (bw->b->name && !fullfilecmp(bw->b->name, req->name)) {
 			bw_unlock(bw);
 			bw->b->changed = 0;

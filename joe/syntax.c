@@ -736,15 +736,8 @@ static struct high_state *load_dfa(struct high_syntax *syntax)
 	int inside_subr = 0;
 
 	/* Load it */
-	p = getenv("HOME");
-	if (p) {
-#ifndef JOEWIN
-		name = vsfmt(name, 0, "%s/.joe/syntax/%s.jsf",p,syntax->name);
-#else
-		name = vsfmt(name, 0, "%s\\syntax\\%s.jsf", p, syntax->name);
-#endif
-		f = jfopen(name, "r");
-	}
+	name=mj_profile_asset("syntax",syntax->name,".jsf");
+    if (name) f=jfopen(name,"r");
 
 	if (!f) {
 		name = vsfmt(name, 0, "%ssyntax/%s.jsf",JOEDATA,syntax->name);

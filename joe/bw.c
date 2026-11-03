@@ -1126,6 +1126,7 @@ BW *bwmk(W *window, B *b, int prompt, const char *ps)
 	w->top_changed = 1;
 	w->db = 0;
 	w->shell_flag = 0;
+    if (!prompt && window->watom==&watomtw) mj_recent_record(w,1);
 	return w;
 }
 
@@ -1267,6 +1268,7 @@ BW *vtmaster(Screen *t, B *b)
 
 void bwrm(BW *w)
 {
+    if (w->parent->watom==&watomtw) mj_recent_record(w,0);
 	bwsoft_free(w);
 	if (w->b == errbuf && w->b->count == 1) {
 		/* Do not lose message buffer */

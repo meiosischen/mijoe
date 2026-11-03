@@ -273,6 +273,8 @@ void setopt(B *b, const char *parsed_name)
 	lazy_opts(b, &fdefault);
 
 	done:;
+    { OPTIONS personal=b->o; if(mj_profile_local_options(&personal))lazy_opts(b,&personal); }
+    if(b->o.readonly)b->rdonly=1;
 }
 
 /* Table of options and how to set them */
@@ -346,7 +348,7 @@ struct glopts {
 	{"marking",	0, &marking, NULL, _("Anchored block marking on"), _("Anchored block marking off"), _("Region marking mode"), 0, 0, 0 },
 	{"asis",	0, &dspasis, NULL, _("Characters above 127 shown as-is"), _("Characters above 127 shown in inverse"), _("Display meta chars as-is mode"), 0, 0, 0 },
 	{"force",	0, &force, NULL, _("Last line forced to have NL when file saved"), _("Last line not forced to have NL"), _("Force last NL mode"), 0, 0, 0 },
-	{"joe_state",0, &joe_state, NULL, _("~/.joe_state file will be updated"), _("~/.joe_state file will not be updated"), _("Joe_state file mode"), 0, 0, 0 },
+	{"joe_state",0, &joe_state, NULL, _("~/.mj/state file will be updated"), _("~/.mj/state file will not be updated"), _("Joe_state file mode"), 0, 0, 0 },
 	{"nobackup",	4, NULL, (char *) &fdefault.nobackup, _("Nobackup enabled"), _("Nobackup disabled"), _("No backup mode"), 0, 0, 0 },
 	{"nobackups",	0, &nobackups, NULL, _("Backup files will not be made"), _("Backup files will be made"), _("Disable backups mode"), 0, 0, 0 },
 	{"nodeadjoe",	0, &nodeadjoe, NULL, _("DEADJOE files will not be made"), _("DEADJOE files will be made"), _("Disable DEADJOE mode"), 0, 0, 0 },
@@ -891,11 +893,7 @@ char **find_configs(char **ary, const char *extension, const char *datadir, cons
 		/* Load from home directory. */
 		p = getenv("HOME");
 		if (p) {
-#ifndef JOEWIN
-			buf = vsfmt(buf, 0, "%s/.joe/%s", p, homedir);
-#else
-			buf = vsfmt(buf, 0, "%s\\%s", p, homedir);
-#endif
+            buf=mj_profile_path(homedir,0);
 
 			if (!chpwd(buf) && (t = rexpnd(wildcard))) {
 				for (x = 0; x < valen(t); ++x) {
@@ -1295,6 +1293,7 @@ static int olddoopt(BW *bw, int y, int flg)
 		}
 	}
 	bw->b->o = bw->o;
+    mj_recent_record(bw,0);
 	wfit(bw->parent->t);
 	updall();
 	return ret;

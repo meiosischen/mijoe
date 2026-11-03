@@ -50,7 +50,7 @@ batch.write_bytes((
     f'set "INCLUDE={winpath(vc98 / "include")}"\r\n'
     f'set "LIB={winpath(vc98 / "lib")}"\r\n'
     f'cl.exe /nologo /W3 /TC /MT /O2 /Fe"{winpath(helper)}" '
-    f'/Fo"{winpath(work / "vim-smoke.obj")}" "{winpath(root / "tests/vim_win32_smoke.c")}" /link user32.lib\r\n'
+    f'/Fo"{winpath(work / "vim-smoke.obj")}" "{winpath(root / "tests/vim_win32_smoke.c")}" /link user32.lib gdi32.lib\r\n'
 ).encode("ascii"))
 subprocess.run([str(args.wine), "cmd.exe", "/c", winpath(batch)], env=env, cwd=work, check=True, timeout=60)
 executable = root / "windows/bin/vc6" / args.config
@@ -58,6 +58,9 @@ if args.target == "dll":
     executable /= "dll"
 executable /= "joe.exe"
 cases = [
+    ("recent-open", b"alpha\n", b":enew\r:recent\r\rA!\x1b:wq\r", b"alpha!\n"),
+    ("recent-modal", b"a\n", b":recent\riBAD\x03iX\x1b:wq\r", b"Xa\n"),
+    ("recent-modes", b"a\n", b"\x14O\x14':enew\r:recent\r\r42:w\r:q!\r", b"a\n"),
     ("softwrap-mouse", b"abcdefghijklmnopqrstuvwxyz\n", b"i!\x1b:wq\r", b"abcdefghijkl!mnopqrstuvwxyz\n"),
     ("status-path", b"path unchanged\n", b":wq\r", b"path unchanged\n"),
     ("pipe-preview", b"WARN alpha\nINFO beta\nWARN gamma\n", b":grep WARN|awk '{print $2}'|grep gamma|less\r\r0x:wq\r", b"WARN alpha\nINFO beta\nARN gamma\n"),
@@ -144,7 +147,7 @@ for name, initial, keys, expected in cases:
     (directory / "expected.bin").write_bytes(expected)
     flags=["--path"] if name=="status-path" else ["--wrap"] if name=="softwrap-mouse" else []
     run = subprocess.run([str(args.wine), winpath(helper), winpath(executable), winpath(directory), *flags],
-                         env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=40)
+                         env=dict(env,MIJOE_CONFIG_HOME=winpath(directory / "profile")), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=40)
     (directory / "run.log").write_bytes(run.stdout)
     actual = (directory / "result.bin").read_bytes() if (directory / "result.bin").exists() else None
     if run.returncode or actual != expected:
@@ -159,4 +162,7 @@ for name, initial, keys, expected in cases:
         raise AssertionError("Windows path separators were not preserved")
     if name == "command-paste" and (directory / "folder/pasted.txt").read_bytes() != b"a\n":
         raise AssertionError("Pasting a command-line filename failed")
+    if name=="recent-modes":
+        records=(directory/"profile/.recent").read_text()
+        assert any(line and line[0].isdigit() and int(line.split("\t",1)[0])&3==3 for line in records.splitlines()), "Recent mode flags were lost"
     print(f"PASS {name}", flush=True)

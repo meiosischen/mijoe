@@ -181,7 +181,7 @@ static void gui_report(unsigned long id, int ok, const char *error, const char *
         json=vsncpy(sv(json),sz(number));
         if (gui_clipboard_text) { json=vsncpy(sv(json),sz(",\"clipboardText\":")); json=gui_json_string(json,gui_clipboard_text); }
     }
-    sprintf(number,",\"softwrap\":%s,\"wrapWidth\":%d",bw->o.softwrap ? "true" : "false",bwsoft_width(bw));
+    sprintf(number,",\"softwrap\":%s,\"wrapWidth\":%d,\"hex\":%s",bw->o.softwrap ? "true" : "false",bwsoft_width(bw),bw->o.hex ? "true" : "false");
     json=vsncpy(sv(json),sz(number));
     sprintf(number, ",\"largePending\":%s,\"lazy\":%s,\"binary\":%s,\"normalAllowed\":%s",
             lf_pending(bw->b) ? "true" : "false", lf_active(bw->b) ? "true" : "false",
@@ -190,6 +190,8 @@ static void gui_report(unsigned long id, int ok, const char *error, const char *
     sprintf(number, ",\"fileBytes\":%" JOE_INT64_FORMAT "d,\"fileOffset\":%" JOE_INT64_FORMAT "d,\"readBytes\":%" JOE_INT64_FORMAT "d,\"loadedBytes\":%" JOE_INT64_FORMAT "d",
             lf_size(bw->b),lf_absolute(bw->b,bw->cursor->byte),lf_read_bytes(bw->b),(JOE_LONG_LONG)bw->b->eof->byte);
     json = vsncpy(sv(json),sz(number));
+    sprintf(number,",\"recentActive\":%s,\"recentCount\":%d,\"recentSelected\":%d,\"recentTop\":%d,\"recentRows\":%d",mj_recent_active() ? "true" : "false",mj_recent_count(),mj_recent_selected(),mj_recent_top(),mj_recent_rows());
+    json=vsncpy(sv(json),sz(number));
 	sprintf(number,",\"grepActive\":%s,\"grepCount\":%d,\"grepSelected\":%d,\"grepColumn\":%d,\"grepMaxColumn\":%d",vim_grep_active() ? "true" : "false",vim_grep_count(),vim_grep_selected(),vim_grep_column(),vim_grep_max_column());
     json=vsncpy(sv(json),sz(number));
 	json = vsncpy(sv(json), sz(",\"scheme\":"));
@@ -295,6 +297,13 @@ int mijoe_macos_gui_action(va_list args)
 			error = "Invalid typography values.";
 		else { gui_font_size = font; gui_line_spacing = spacing; }
 	}
+    else if (mj_recent_active() && action==MIJOE_GUI_MOUSE) {
+        int event,column,row;
+        if (sscanf(path,"%d;%d;%d",&event,&column,&row)!=3) error="Invalid mouse position.";
+        else mj_recent_mouse(event,column,row);
+    }
+    else if (mj_recent_active() && action!=MIJOE_GUI_SCROLL && action!=MIJOE_GUI_QUIT && action!=MIJOE_GUI_DISCARD)
+        error="Close recent files with Enter or Esc before using this command.";
 	else if (vim_grep_active() && action!=MIJOE_GUI_SCROLL && action!=MIJOE_GUI_QUIT && action!=MIJOE_GUI_DISCARD) error="Close the grep results with Enter or Esc before using this command.";
 	else if (action == MIJOE_GUI_MOUSE) {
 		int event, column, row;
@@ -310,7 +319,7 @@ int mijoe_macos_gui_action(va_list args)
 		int menu = maint->curwin->watom->what & TYPEMENU;
 		const char *name = menu ? (amount > 0 ? "uparwmenu" : "dnarwmenu") : (amount > 0 ? "upslide" : "dnslide");
 		if (steps > 20) steps = 20;
-		while (steps--) { if (vim_grep_active()) vim_grep_key(amount>0 ? VIM_UP : VIM_DOWN); else execmd(findcmd(name), 0); }
+		while (steps--) { if (mj_recent_active()) mj_recent_key(amount>0 ? VIM_UP : VIM_DOWN); else if (vim_grep_active()) vim_grep_key(amount>0 ? VIM_UP : VIM_DOWN); else execmd(findcmd(name), 0); }
 	}
 	else if (action == MIJOE_GUI_QUIT || action == MIJOE_GUI_DISCARD) {
 		if (action == MIJOE_GUI_QUIT && gui_dirty_count()) error = "There are unsaved buffers.";

@@ -241,11 +241,7 @@ int procrc(CAP *cap, char *name)
 							char *p = getenv("HOME");
 							int rtn = -1;
 							if (p && !ISDIRSEP(buf[x])) {
-#ifndef JOEWIN
-								bf = vsfmt(bf, 0, "%s/.joe/%s", p, buf + x);
-#else
-								bf = vsfmt(bf, 0, "%s\\%s", p, buf + x);
-#endif
+                                bf=mj_profile_path(buf+x,0);
 								rtn = procrc(cap, bf);
 							}
 							if (rtn == -1 && !ISDIRSEP(buf[x])) {

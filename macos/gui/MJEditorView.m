@@ -1,4 +1,5 @@
 #import "MJEditorView.h"
+#import "MJPreferences.h"
 
 @interface MJRenderGlyph : NSObject
 @property(nonatomic,strong) NSString *text;
@@ -181,8 +182,7 @@ static const CGFloat padding = 8;
             default: adjusted = NO; break;
         }
         if (adjusted) {
-            [NSUserDefaults.standardUserDefaults setDouble:self.fontSize forKey:@"EditorFontSize"];
-            [NSUserDefaults.standardUserDefaults setDouble:self.lineSpacing forKey:@"EditorLineSpacing"];
+            [MJPreferences saveFontSize:self.fontSize lineSpacing:self.lineSpacing];
             if (self.hasMarkedText) [self.inputContext invalidateCharacterCoordinates];
             return;
         }

@@ -29,18 +29,20 @@
 static char *getrealenv(const wchar_t *env, char **result)
 {
 	wchar_t *tmp;
-	int sz;
+	int sz, length;
 
 	if (*result) {
 		return *result;
 	}
 
 	sz = GetEnvironmentVariableW(env, NULL, 0);
+	if (sz <= 0) return NULL;
 	tmp = (wchar_t *)malloc(sz * sizeof(wchar_t));
 	GetEnvironmentVariableW(env, tmp, sz);
-	*result = (char *)malloc(sz);
+	length=(int)wcstoutf8len(tmp)+1;
+	*result = (char *)malloc(length);
 
-	if (wcstoutf8(*result, tmp, sz)) {
+	if (wcstoutf8(*result, tmp, length)) {
 		free(tmp);
 		assert(0);
 		return NULL;
@@ -52,10 +54,13 @@ static char *getrealenv(const wchar_t *env, char **result)
 
 char* glue_getenv(const char* env)
 {
-	static char *lang = NULL, *temp = NULL, *shell = NULL, *path = NULL;
+	static char *lang = NULL, *temp = NULL, *shell = NULL, *path = NULL, *profile = NULL, *configuration = NULL;
 
 	if (!strcmp(env, "HOME")) {
-		return (char*)jw_home;
+		char *home=getrealenv(L"USERPROFILE",&profile);
+		return home ? home : (char*)jw_home;
+	} else if (!strcmp(env,"MIJOE_CONFIG_HOME")) {
+		return getrealenv(L"MIJOE_CONFIG_HOME",&configuration);
 	} else if (!strcmp(env, "TERM")) {
 		return "putty";
 	} else if (!strcmp(env, "LANG")) {

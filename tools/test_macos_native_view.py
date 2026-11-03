@@ -8,9 +8,10 @@ import argparse
 
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--softwrap",action="store_true",help="Run display-only line wrapping checks")
+parser.add_argument("--recent",action="store_true",help="Run recent-file modal and profile preference checks")
 args=parser.parse_args()
-name="macos_softwrap_test" if args.softwrap else "macos_native_view_test"
-report="softwrap.json" if args.softwrap else "native-view.json"
+name="macos_recent_test" if args.recent else "macos_softwrap_test" if args.softwrap else "macos_native_view_test"
+report="recent.json" if args.recent else "softwrap.json" if args.softwrap else "native-view.json"
 root = Path(__file__).resolve().parents[1]
 objects = root / "build/macos/app-objects"
 output = root / "build/native-gui-tests"
@@ -21,9 +22,9 @@ binary = output / name
 subprocess.run([compiler, "-isysroot", sdk, "-mmacosx-version-min=11.0", "-fobjc-arc", "-fblocks",
                 "-I" + str(root / "macos/gui"), "-I" + str(root / "macos/vendor/libvterm/include"),
                 str(root / ("tests/"+name+".m")), str(objects / "MJEditorSession.o"),
-                str(objects / "MJEditorView.o"), *map(str, sorted(objects.glob("vterm-*.o"))),
+                str(objects / "MJEditorView.o"), str(objects / "MJPreferences.o"), *map(str, sorted(objects.glob("vterm-*.o"))),
                 "-framework", "Cocoa", "-o", str(binary)], check=True)
 directory = tempfile.mkdtemp(prefix="offscreen-", dir=output)
 subprocess.run([str(binary), str(root / "build/macos/MiJoe.app/Contents/Resources/editor/bin/joe"),
                 directory, str(output / report)], check=True, timeout=60,
-               env=dict(os.environ, HOME=directory))
+               env=dict(os.environ, HOME=directory, MIJOE_CONFIG_HOME=str(Path(directory)/".mj")))

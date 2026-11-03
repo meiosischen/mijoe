@@ -1629,9 +1629,54 @@ static int open_file(BW *bw, const char *name)
 	return rc;
 }
 
+/* Recent paths are literal UTF-8, never interpolated into Ex input. */
+int vim_recent_open(BW *bw, const char *utf8, int flags)
+{
+    char *path=my_iconv(NULL,locale_map,utf8,utf8_map), *quoted;
+    struct stat status;
+    OPTIONS options;
+    B *b,*previous=bw->b;
+    off_t offset=bw->cursor->byte;
+    int error, result;
+    if (stat(path,&status)) { int missing=errno==ENOENT || errno==ENOTDIR;obj_free(path);return missing ? -2 : -1; }
+    if ((status.st_mode&S_IFMT)!=S_IFREG) { obj_free(path);return -1; }
+#ifndef JOEWIN
+    quoted=zdup(duplicate_backslashes(path,zlen(path)));
+#else
+    quoted=zdup(path);
+#endif
+    obj_free(path);
+    b=NULL;
+    {
+        B *candidate;
+        for(candidate=bufs.link.next;candidate!=&bufs;candidate=candidate->link.next)
+            if(candidate->large && candidate->name && (candidate==bw->b || candidate->orphan) &&
+               lf_active(candidate)==!!(flags & MJ_RECENT_LAZY) && !fullfilecmp(quoted,candidate->name)) {
+                b=candidate;if(b->orphan)b->orphan=0;else ++b->count;break;
+            }
+    }
+    if(b)error=0;else {b=bfind(quoted);error=berror;}
+    joe_free(quoted);
+    if (error) { brm(b);return error==-1 ? -2 : -1; }
+    if (lf_pending(b) && !(flags & MJ_RECENT_LAZY) && lf_size(b)>(JOE_LONG_LONG)MAXOFF) {brm(b);return -1;}
+    if(lf_pending(b))lf_startup_option(b,flags & MJ_RECENT_RO ? "rdonly" : "-rdonly");
+    options=b->o;options.readonly=!!(flags & MJ_RECENT_RO);options.hex=!!(flags & MJ_RECENT_HEX);options.softwrap=!!(flags & MJ_RECENT_SOFT);
+    lazy_opts(b,&options);b->rdonly=b->o.readonly;
+    result=switch_buffer(bw,b);brm(b);
+    if (result) return -1;
+    bw=(BW *)maint->curwin->object;bw->o=bw->b->o;
+    if (lf_pending(bw->b) && lf_choose(bw,flags & MJ_RECENT_LAZY ? 0 : 1)) {
+        switch_buffer(bw,previous);bw=(BW *)maint->curwin->object;pgoto(bw->cursor,offset);return -1;
+    }
+    bw->o.readonly=bw->b->rdonly=lf_active(bw->b) || !!(flags & MJ_RECENT_RO);
+    bw->o.softwrap=!!(flags & MJ_RECENT_SOFT);bw->b->o=bw->o;
+    mj_recent_record(bw,1);staupd=dostaupd=1;updall();return 0;
+}
+
 static int quit_window(BW *bw, int force_quit)
 {
 	B *b;
+
 	if (!force_quit) {
 		if (bw->b->changed && bw->b->count == 1) {
 			message("No write since last change (use :q! to discard)"); return -1;
@@ -2069,9 +2114,11 @@ int vim_ex(W *w, const char *line)
 	/* The existing file engine's dequote buffer is 1024 bytes. */
 	if (zlen(arg) >= 1000) { message("Filename argument is too long"); rc = -1; goto done; }
 	if (!*cmd) goto done;
-    if (!zcmp(cmd,"set") && (!zcmp(arg,"wrap") || !zcmp(arg,"nowrap"))) {
+    if (!zcmp(cmd,"recent")) {
+        if (bang || *arg) {message("Use :recent");rc=-1;} else rc=mj_recent_open(bw);
+    } else if (!zcmp(cmd,"set") && (!zcmp(arg,"wrap") || !zcmp(arg,"nowrap"))) {
         bw->o.softwrap=!zcmp(arg,"wrap"); bw->b->o.softwrap=bw->o.softwrap;
-        bwsoft_invalidate(bw); updall(); staupd=1;
+        bwsoft_invalidate(bw); mj_recent_record(bw,0); updall(); staupd=1;
     } else if (!zcmp(cmd,"reg") || !zcmp(cmd,"registers")) {
         if (bang) { message("Use :reg [names]"); rc=-1; } else rc=registers_show(bw,arg);
     } else if (!zcmp(cmd,"macro") || !zcmp(cmd,"macros")) {

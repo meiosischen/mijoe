@@ -430,6 +430,8 @@ struct highlight_state {
 #include "vt.h"
 #include "mmenu.h"
 #include "state.h"
+#include "profile.h"
+#include "recent.h"
 #include "options.h"
 #include "selinux.h"
 

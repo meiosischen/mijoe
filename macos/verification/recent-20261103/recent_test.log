@@ -1,0 +1,25 @@
+test_lazy_readonly_mode_is_restored_without_another_prompt (__main__.LazyRecentTests.test_lazy_readonly_mode_is_restored_without_another_prompt) ... ok
+test_binary_auto_detection_is_recorded (__main__.RecentTests.test_binary_auto_detection_is_recorded) ... ok
+test_choose_reopens_previous_file_and_keeps_unsaved_buffer (__main__.RecentTests.test_choose_reopens_previous_file_and_keeps_unsaved_buffer) ... ok
+test_config_and_state_are_under_profile (__main__.RecentTests.test_config_and_state_are_under_profile) ... ok
+test_default_config_comments_do_not_open_a_startup_error_window (__main__.RecentTests.test_default_config_comments_do_not_open_a_startup_error_window) ... ok
+test_history_cap_200_and_recent_promotion (__main__.RecentTests.test_history_cap_200_and_recent_promotion) ... ok
+test_invalid_history_is_not_overwritten (__main__.RecentTests.test_invalid_history_is_not_overwritten) ... ok
+test_legacy_joerc_is_copied_without_deleting_original (__main__.RecentTests.test_legacy_joerc_is_copied_without_deleting_original) ... ok
+test_literal_special_filename_never_becomes_a_command (__main__.RecentTests.test_literal_special_filename_never_becomes_a_command) ... ok
+test_long_paths_wrap_and_pages_scroll (__main__.RecentTests.test_long_paths_wrap_and_pages_scroll) ... ok
+test_missing_file_is_reported_and_removed (__main__.RecentTests.test_missing_file_is_reported_and_removed) ... ok
+test_modal_blocks_body_editing_and_native_save (__main__.RecentTests.test_modal_blocks_body_editing_and_native_save) ... ok
+test_native_double_click_opens_without_a_stray_body_mouseup (__main__.RecentTests.test_native_double_click_opens_without_a_stray_body_mouseup) ... ok
+test_parallel_processes_merge_history_without_losing_paths (__main__.RecentTests.test_parallel_processes_merge_history_without_losing_paths) ... ok
+test_persisted_history_restores_readonly_after_restart (__main__.RecentTests.test_persisted_history_restores_readonly_after_restart) ... ok
+test_personal_colors_migrate_on_use (__main__.RecentTests.test_personal_colors_migrate_on_use) ... ok
+test_personal_local_defaults_and_state_use_new_root (__main__.RecentTests.test_personal_local_defaults_and_state_use_new_root) ... ok
+test_readonly_hex_and_softwrap_modes_restore (__main__.RecentTests.test_readonly_hex_and_softwrap_modes_restore) ... ok
+test_startup_record_latest_first_deduplicated (__main__.RecentTests.test_startup_record_latest_first_deduplicated) ... ok
+test_terminal_mouse_wheel_navigates_only_the_picker (__main__.RecentTests.test_terminal_mouse_wheel_navigates_only_the_picker) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 44.426s
+
+OK

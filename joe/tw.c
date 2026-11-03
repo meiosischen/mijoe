@@ -51,7 +51,7 @@ static BW *path_at(ptrdiff_t x, ptrdiff_t y)
     W *w;
     BW *bw;
     TW *tw;
-    if (!maint || vim_grep_active() || help_text_active(maint)) return NULL;
+    if (!maint || mj_recent_active() || vim_grep_active() || help_text_active(maint)) return NULL;
     w=watpos(maint,x,y);
     if (!w || w->watom!=&watomtw || !w->object) return NULL;
     bw=(BW *)w->object; tw=(TW *)bw->object;

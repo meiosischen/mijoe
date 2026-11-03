@@ -2,6 +2,14 @@
 Normal 普通模式；Insert 插入模式；Visual 选择模式。
 PageDown / Space 下一页；PageUp / b 上一页；q / Esc 关闭帮助。
 
+【最近文件与个人配置】
+:recent：居中选择最近打开的 200 个文件，最新在前；长路径自动折行。
+上/下或 Ctrl+P/N 选择，PageUp/PageDown 翻页，Enter 打开，Esc/Ctrl+C 取消。
+列表超出高度时显示滚动条；恢复 RO/RW、TEXT/HEX、只读懒加载及软折行状态。
+打开前检查文件，已经不存在的文件会报错并移除记录；权限等其他错误保留记录。
+个人配置集中在 ~/.mj；config 为选项，joerc 为按键配置，state 为状态，.recent 为最近文件。
+macOS 字号/行距在 macos.json，Windows 窗口设置在 windows.ini。旧配置保留作备份。
+
 【软折行】
 默认关闭；Ctrl+T → Q Soft wrap 切换，:set wrap / :set nowrap 开启 / 关闭。
 已有长行按 Right Margin 和窗口正文宽度折行显示，不改变文件内容；W Word wrap 独立控制输入时硬换行。

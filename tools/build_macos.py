@@ -124,7 +124,7 @@ manifest = {
     "dependencies": dependencies,
     "sources": {name: hashlib.sha256((root / name).read_bytes()).hexdigest()
                 for name in ("joe/vim.c", "joe/vim.h", "joe/vimpipe.c", "joe/vimpipe.h", "joe/vimhelp.h", "docs/vim-help.txt",
-                             "joe/help.c", "joe/help.h", "joe/colors.c", "joe/colors.h", "joe/bw.c", "joe/bw.h", "joe/softwrap.c", "joe/b.c", "joe/b.h", "joe/mouse.c", "joe/lfile.c", "joe/lfile.h", "joe/ufile.c", "joe/ublock.c", "joe/w.c", "joe/cmd.c", "joe/options.c",
+                             "joe/help.c", "joe/help.h", "joe/colors.c", "joe/colors.h", "joe/bw.c", "joe/bw.h", "joe/softwrap.c", "joe/profile.c", "joe/profile.h", "joe/state.c", "joe/state.h", "joe/rc.c", "joe/syntax.c", "joe/charmap.c", "joe/recent.c", "joe/recent.h", "joe/b.c", "joe/b.h", "joe/mouse.c", "joe/lfile.c", "joe/lfile.h", "joe/ufile.c", "joe/ublock.c", "joe/w.c", "joe/cmd.c", "joe/options.c",
                              "joe/menu.c", "joe/menu.h", "joe/mmenu.c", "joe/tw.c", "joe/tw.h",
                              "macos/gui_protocol.h", "colors/synhill.jcf", "colors/teasp.jcf", "syntax/log.jsf", "rc/ftyperc", "rc/joerc.in", "colors/Makefile.am",
                              "joe/macos.c", "joe/macos.h", "joe/types.h", "joe/main.c", "joe/ushell.c", "joe/termcap.c")},

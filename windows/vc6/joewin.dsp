@@ -96,6 +96,14 @@ SOURCE=..\..\joe\softwrap.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\joe\profile.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\joe\recent.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\joe\cclass.c
 # End Source File
 # Begin Source File

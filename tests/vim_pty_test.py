@@ -32,7 +32,8 @@ class Editor:
         self.pid, self.fd = pty.fork()
         if not self.pid:
             os.chdir(directory)
-            env = dict(os.environ, TERM="xterm-256color", LANG="en_US.UTF-8")
+            home=directory/".home";home.mkdir(exist_ok=True)
+            env = dict(os.environ, TERM="xterm-256color", LANG="en_US.UTF-8", HOME=str(home), MIJOE_CONFIG_HOME=str(home/".mj"))
             if extra_env:
                 env.update(extra_env)
             os.execve(BINARY, [BINARY, "-nonotice", "--joe_state", "-nobackups",

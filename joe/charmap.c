@@ -1571,16 +1571,9 @@ struct charmap *find_charmap(const char *name)
 			return m;
 
 	/* Check ~/.joe/charmaps */
-	p = getenv("HOME");
-	f = 0;
-	if (p) {
-#ifndef JOEWIN
-		buf = vsfmt(buf, 0, "%s/.joe/charmaps/%s",p,name);
-		f = fopen(buf,"r");
-#else
-		buf = vsfmt(buf, 0, "%s\\charmaps\\%s",p,name);
-#endif
-	}
+    f=0;
+	buf=mj_profile_asset("charmaps",name,"");
+    if (buf) f=fopen(buf,"r");
 
 	/* Check JOERCcharmaps */
 	if (!f) {

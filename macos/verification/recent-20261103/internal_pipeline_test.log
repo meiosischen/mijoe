@@ -1,0 +1,47 @@
+Pipeline transcripts: /var/folders/j0/mdzsf8496qlcpfp2tfpzzb300000gn/T/mijoe-vim-pty-rjqebg6e
+test_awk_matches_system_reference (__main__.LazyPipelineTests.test_awk_matches_system_reference) ... ok
+test_crlf_bom_no_final_newline_and_empty_record (__main__.LazyPipelineTests.test_crlf_bom_no_final_newline_and_empty_record) ... ok
+test_ctrl_c_interrupts_scan_and_restores_cursor (__main__.LazyPipelineTests.test_ctrl_c_interrupts_scan_and_restores_cursor) ... ok
+test_export_final_text_and_keep_unsaved_source (__main__.LazyPipelineTests.test_export_final_text_and_keep_unsaved_source) ... ok
+test_field_limit_is_explicit (__main__.LazyPipelineTests.test_field_limit_is_explicit) ... ok
+test_full_transformed_lines_beyond_popup_preview (__main__.LazyPipelineTests.test_full_transformed_lines_beyond_popup_preview) ... ok
+test_grep_awk_grep_order_and_stage_nr (__main__.LazyPipelineTests.test_grep_awk_grep_order_and_stage_nr) ... ok
+test_head_default_counts_and_early_filter_stop (__main__.LazyPipelineTests.test_head_default_counts_and_early_filter_stop) ... ok
+test_head_zero_and_empty_input (__main__.LazyPipelineTests.test_head_zero_and_empty_input) ... ok
+test_lazy_utf16_and_head_bounded_reads (__main__.LazyPipelineTests.test_lazy_utf16_and_head_bounded_reads) ... ok
+test_lazy_utf16_surrogate_across_io_chunk (__main__.LazyPipelineTests.test_lazy_utf16_surrogate_across_io_chunk) ... ok
+test_more_less_passthrough_and_paging (__main__.LazyPipelineTests.test_more_less_passthrough_and_paging) ... ok
+test_numeric_field_comparisons (__main__.LazyPipelineTests.test_numeric_field_comparisons) ... ok
+test_pipe_inside_quotes_regex_and_unquoted_action (__main__.LazyPipelineTests.test_pipe_inside_quotes_regex_and_unquoted_action) ... ok
+test_result_limit_is_applied_after_filters (__main__.LazyPipelineTests.test_result_limit_is_applied_after_filters) ... ok
+test_single_character_delimiters_and_empty_fields (__main__.LazyPipelineTests.test_single_character_delimiters_and_empty_fields) ... ok
+test_source_record_limit_is_explicit (__main__.LazyPipelineTests.test_source_record_limit_is_explicit) ... ok
+test_stage_and_print_item_boundaries (__main__.LazyPipelineTests.test_stage_and_print_item_boundaries) ... ok
+test_syntax_errors_preserve_buffer_and_cursor (__main__.LazyPipelineTests.test_syntax_errors_preserve_buffer_and_cursor) ... ok
+test_total_output_limit_cancels_without_creating_result (__main__.LazyPipelineTests.test_total_output_limit_cancels_without_creating_result) ... ok
+test_transformed_results_jump_to_original_lines (__main__.LazyPipelineTests.test_transformed_results_jump_to_original_lines) ... ok
+test_awk_matches_system_reference (__main__.PipelineTests.test_awk_matches_system_reference) ... ok
+test_crlf_bom_no_final_newline_and_empty_record (__main__.PipelineTests.test_crlf_bom_no_final_newline_and_empty_record) ... ok
+test_ctrl_c_interrupts_scan_and_restores_cursor (__main__.PipelineTests.test_ctrl_c_interrupts_scan_and_restores_cursor) ... ok
+test_export_final_text_and_keep_unsaved_source (__main__.PipelineTests.test_export_final_text_and_keep_unsaved_source) ... ok
+test_field_limit_is_explicit (__main__.PipelineTests.test_field_limit_is_explicit) ... ok
+test_full_transformed_lines_beyond_popup_preview (__main__.PipelineTests.test_full_transformed_lines_beyond_popup_preview) ... ok
+test_grep_awk_grep_order_and_stage_nr (__main__.PipelineTests.test_grep_awk_grep_order_and_stage_nr) ... ok
+test_head_default_counts_and_early_filter_stop (__main__.PipelineTests.test_head_default_counts_and_early_filter_stop) ... ok
+test_head_zero_and_empty_input (__main__.PipelineTests.test_head_zero_and_empty_input) ... ok
+test_more_less_passthrough_and_paging (__main__.PipelineTests.test_more_less_passthrough_and_paging) ... ok
+test_numeric_field_comparisons (__main__.PipelineTests.test_numeric_field_comparisons) ... ok
+test_pipe_inside_quotes_regex_and_unquoted_action (__main__.PipelineTests.test_pipe_inside_quotes_regex_and_unquoted_action) ... ok
+test_result_limit_is_applied_after_filters (__main__.PipelineTests.test_result_limit_is_applied_after_filters) ... ok
+test_single_character_delimiters_and_empty_fields (__main__.PipelineTests.test_single_character_delimiters_and_empty_fields) ... ok
+test_source_record_limit_is_explicit (__main__.PipelineTests.test_source_record_limit_is_explicit) ... ok
+test_stage_and_print_item_boundaries (__main__.PipelineTests.test_stage_and_print_item_boundaries) ... ok
+test_syntax_errors_preserve_buffer_and_cursor (__main__.PipelineTests.test_syntax_errors_preserve_buffer_and_cursor) ... ok
+test_total_output_limit_cancels_without_creating_result (__main__.PipelineTests.test_total_output_limit_cancels_without_creating_result) ... ok
+test_transformed_results_jump_to_original_lines (__main__.PipelineTests.test_transformed_results_jump_to_original_lines) ... ok
+test_console_export_is_an_editable_buffer_in_same_window (__main__.TerminalPipelineTests.test_console_export_is_an_editable_buffer_in_same_window) ... ok
+
+----------------------------------------------------------------------
+Ran 41 tests in 32.293s
+
+OK
