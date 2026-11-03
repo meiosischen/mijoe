@@ -25,3 +25,9 @@
 
 证据：[macOS](../macos/verification/line-hl-20261104/)、
 [VC6 / Wine / PE](../windows/vc6/verification/line-hl-20261104/)。
+
+CSV 补充验证：带 UTF-8 BOM 的 `.csv` 第一行整行背景正确、第二行保持原色，
+逐字节核对文件内容及 BOM 未改变；原生高亮套件共 102 项通过。
+用户已安装 App 的后端仍为外部变更检测版，SHA-256 与上一安装记录相同，
+而控制台及候选 App 后端已包含行号功能；此时无效的原因是窗口版安装尚未完成。
+证据：[CSV 原生回归](../macos/verification/csv-line-hl-20261104/)。

@@ -69,6 +69,12 @@ int main(int argc,const char **argv) {
         check(waitFor(^BOOL{return temporary(s,@"gogogo") && ![s.state[@"changed"] boolValue];}),@"undo restores contents while preserving the temporary set");
         [s sendText:@":clear-hl\r"];request(s,MIJOE_GUI_STATUS,nil);
         check(waitFor(^BOOL{return !temporary(s,@"gogogo");}),@"clear-hl removes the overlay without changing text");
+        NSString *csv=[dir stringByAppendingPathComponent:@"bom-lines.csv"];
+        NSString *csvText=@"\ufeffname,amount,status\nalpha,10,ERROR\n";
+        openText(s,csv,csvText);
+        [s sendText:@":set-hl :1\r"];request(s,MIJOE_GUI_STATUS,nil);
+        check(waitFor(^BOOL{return temporary(s,@"name,amount,status") && cellBG(s,1,80,palette(s,11)) && !cellBG(s,2,80,palette(s,11));}),@"BOM-prefixed CSV header receives full-row line-1 highlighting only");
+        check([[NSData dataWithContentsOfFile:csv] isEqual:[csvText dataUsingEncoding:NSUTF8StringEncoding]],@"CSV line highlighting preserves BOM and source bytes");
         openText(s,[dir stringByAppendingPathComponent:@"line-numbers.txt"],@"first row\n\nnormal :1 ERROR\nfourth row\n");
         [s sendText:@":set-hl :1 :2 :4 ERROR\r"];request(s,MIJOE_GUI_STATUS,nil);
         check(waitFor(^BOOL{return temporary(s,@"first row") && temporary(s,@"fourth row");}),@"line selectors highlight the first and fourth complete logical lines");
