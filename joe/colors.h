@@ -74,3 +74,5 @@ extern const char *scheme_name;
 extern struct color_scheme *curscheme;
 extern struct color_set *curschemeset;
 extern int bg_cursor;
+
+extern int bg_temporary; /* Explicit temporary overlay foreground/background. */

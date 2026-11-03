@@ -33,7 +33,7 @@ static int colored(MJEditorSession *s,NSString *text,int fg,int bg) {
     return count;
 }
 static BOOL temporary(MJEditorSession *s,NSString *text) {
-    return colored(s,text,palette(s,0),palette(s,11))>0;
+    return colored(s,text,0x000000,0xffff00)>0;
 }
 static BOOL cellBG(MJEditorSession *s,int row,int col,int bg) {
     VTermScreenCell c;vterm_screen_get_cell(s.screen,(VTermPos){row,col},&c);return rgb(c.bg,s)==bg;
@@ -55,14 +55,14 @@ int main(int argc,const char **argv) {
         check(waitFor(^BOOL{return temporary(s,@"gogogo 123");}),@"quoted phrase includes its exact separating space in the yellow highlight");
         check(colored(s,@"gogogo X 123",0xe8e8d3,0x222222)==1,@"quoted phrase does not highlight separated words elsewhere");
         [s sendText:@":clear-hl\r:set-hl gogogo 123\r"];request(s,MIJOE_GUI_STATUS,nil);
-        check(waitFor(^BOOL{return colored(s,@"gogogo",palette(s,0),palette(s,11))==3 && colored(s,@"123",palette(s,0),palette(s,11))==3;}),@"unquoted terms highlight separately, including literal substrings");
-        check(!cellBG(s,1,6,palette(s,11)),@"spaces between separate terms are not highlighted");
+        check(waitFor(^BOOL{return colored(s,@"gogogo",0x000000,0xffff00)==3 && colored(s,@"123",0x000000,0xffff00)==3;}),@"unquoted terms highlight separately, including literal substrings");
+        check(!cellBG(s,1,6,0xffff00),@"spaces between separate terms are not highlighted");
         [s sendText:@"gg0v2l"];request(s,MIJOE_GUI_STATUS,nil);
-        check(waitFor(^BOOL{return cellBG(s,1,0,0xe8e8e8) && cellBG(s,1,4,palette(s,11));}),@"Visual selection takes priority over a temporary match");
+        check(waitFor(^BOOL{return cellBG(s,1,0,0xe8e8e8) && cellBG(s,1,4,0xffff00);}),@"Visual selection takes priority over a temporary match");
         [s sendText:@"\x1b/gogogo\r"];request(s,MIJOE_GUI_STATUS,nil);
         check(waitFor(^BOOL{return colored(s,@"gogogo",0x222222,0xe8e8e8)==3;}),@"search matches take priority over the temporary color");
         [s sendText:@":noh\r"];request(s,MIJOE_GUI_STATUS,nil);
-        check(waitFor(^BOOL{return colored(s,@"gogogo",palette(s,0),palette(s,11))==3;}),@"nohlsearch leaves temporary matches active");
+        check(waitFor(^BOOL{return colored(s,@"gogogo",0x000000,0xffff00)==3;}),@"nohlsearch leaves temporary matches active");
         [s sendText:@"gg0i!\x1b"];request(s,MIJOE_GUI_STATUS,nil);
         check(waitFor(^BOOL{return temporary(s,@"gogogo");}),@"editing refreshes temporary match locations");
         [s sendText:@"u"];request(s,MIJOE_GUI_STATUS,nil);
@@ -73,27 +73,27 @@ int main(int argc,const char **argv) {
         NSString *csvText=@"\ufeffname,amount,status\nalpha,10,ERROR\n";
         openText(s,csv,csvText);
         [s sendText:@":set-hl :1\r"];request(s,MIJOE_GUI_STATUS,nil);
-        check(waitFor(^BOOL{return temporary(s,@"name,amount,status") && cellBG(s,1,80,palette(s,11)) && !cellBG(s,2,80,palette(s,11));}),@"BOM-prefixed CSV header receives full-row line-1 highlighting only");
+        check(waitFor(^BOOL{return temporary(s,@"name,amount,status") && cellBG(s,1,80,0xffff00) && !cellBG(s,2,80,0xffff00);}),@"BOM-prefixed CSV header uses exact bright yellow #FFFF00 with black text, only on line 1");
         check([[NSData dataWithContentsOfFile:csv] isEqual:[csvText dataUsingEncoding:NSUTF8StringEncoding]],@"CSV line highlighting preserves BOM and source bytes");
         openText(s,[dir stringByAppendingPathComponent:@"line-numbers.txt"],@"first row\n\nnormal :1 ERROR\nfourth row\n");
         [s sendText:@":set-hl :1 :2 :4 ERROR\r"];request(s,MIJOE_GUI_STATUS,nil);
         check(waitFor(^BOOL{return temporary(s,@"first row") && temporary(s,@"fourth row");}),@"line selectors highlight the first and fourth complete logical lines");
-        check(cellBG(s,1,80,palette(s,11)) && cellBG(s,2,80,palette(s,11)) && cellBG(s,4,80,palette(s,11)),@"selected lines include blank lines and padding to the viewport edge");
+        check(cellBG(s,1,80,0xffff00) && cellBG(s,2,80,0xffff00) && cellBG(s,4,80,0xffff00),@"selected lines include blank lines and padding to the viewport edge");
         check(cellBG(s,3,0,0x222222) && temporary(s,@"ERROR"),@"literal terms still match independently on unselected lines");
-        check(!cellBG(s,5,80,palette(s,11)),@"line highlighting does not bleed below the selected lines");
+        check(!cellBG(s,5,80,0xffff00),@"line highlighting does not bleed below the selected lines");
         [s sendText:@":clear-hl\r:set-hl \":1\"\r"];request(s,MIJOE_GUI_STATUS,nil);
         check(waitFor(^BOOL{return temporary(s,@":1") && !temporary(s,@"first row");}),@"quoted colon-number remains a literal substring");
         openText(s,[dir stringByAppendingPathComponent:@"line-wrap.txt"],@"first\nsecond\nabcdefghijk\nlast\n");
         [s sendText:@"\x14R8\r:set wrap\r:set-hl :3\r"];request(s,MIJOE_GUI_STATUS,nil);
         check(waitFor(^BOOL{return temporary(s,@"abcdefgh") && temporary(s,@"ijk");}),@"all soft-wrapped segments of a selected logical line are highlighted");
-        check(cellBG(s,3,80,palette(s,11)) && cellBG(s,4,80,palette(s,11)) && !cellBG(s,5,80,palette(s,11)),@"wrapped line padding is yellow without coloring the following logical line");
+        check(cellBG(s,3,80,0xffff00) && cellBG(s,4,80,0xffff00) && !cellBG(s,5,80,0xffff00),@"wrapped line padding is yellow without coloring the following logical line");
         [s sendText:@":set nowrap\r"];request(s,MIJOE_GUI_STATUS,nil);
         openText(s,[dir stringByAppendingPathComponent:@"line-eof.txt"],@"only");
         [s sendText:@":set-hl :1\r"];request(s,MIJOE_GUI_STATUS,nil);
-        check(waitFor(^BOOL{return temporary(s,@"only") && !cellBG(s,2,80,palette(s,11));}),@"unterminated last line does not highlight nonexistent rows below EOF");
+        check(waitFor(^BOOL{return temporary(s,@"only") && !cellBG(s,2,80,0xffff00);}),@"unterminated last line does not highlight nonexistent rows below EOF");
         openText(s,[dir stringByAppendingPathComponent:@"line-empty-eof.txt"],@"only\n");
         [s sendText:@":set-hl :2\r"];request(s,MIJOE_GUI_STATUS,nil);
-        check(waitFor(^BOOL{return cellBG(s,2,80,palette(s,11)) && !cellBG(s,3,80,palette(s,11));}),@"the final empty logical line can be selected without coloring later screen rows");
+        check(waitFor(^BOOL{return cellBG(s,2,80,0xffff00) && !cellBG(s,3,80,0xffff00);}),@"the final empty logical line can be selected without coloring later screen rows");
         openText(s,[dir stringByAppendingPathComponent:@"literal.txt"],@"a.*[x]|(y)$ axxx\n");
         [s sendText:@":set-hl \"a.*[x]|(y)$\"\r"];request(s,MIJOE_GUI_STATUS,nil);
         check(waitFor(^BOOL{return temporary(s,@"a.*[x]|(y)$");}),@"regex punctuation and pipe are literal text");
@@ -102,7 +102,7 @@ int main(int argc,const char **argv) {
         check(waitFor(^BOOL{return temporary(s,@"ababa") && temporary(s,@"aaaa");}),@"overlapping literal matches form the complete union");
         openText(s,[dir stringByAppendingPathComponent:@"unicode.txt"],@"中文 word|中文 other\n");
         [s sendText:@":set-hl \"中文 word\"\r"];request(s,MIJOE_GUI_STATUS,nil);
-        check(waitFor(^BOOL{return cellBG(s,1,0,palette(s,11)) && cellBG(s,1,2,palette(s,11)) && cellBG(s,1,4,palette(s,11)) && cellBG(s,1,8,palette(s,11)) && !cellBG(s,1,9,palette(s,11));}),@"wide Unicode phrase highlights whole glyphs and its internal space");
+        check(waitFor(^BOOL{return cellBG(s,1,0,0xffff00) && cellBG(s,1,2,0xffff00) && cellBG(s,1,4,0xffff00) && cellBG(s,1,8,0xffff00) && !cellBG(s,1,9,0xffff00);}),@"wide Unicode phrase highlights whole glyphs and its internal space");
         NSString *latin=[dir stringByAppendingPathComponent:@"latin.txt"];
         const unsigned char latinBytes[]={'c','a','f',0xe9,'?','\n'};
         [[NSData dataWithBytes:latinBytes length:sizeof(latinBytes)] writeToFile:latin atomically:YES];
@@ -114,10 +114,10 @@ int main(int argc,const char **argv) {
         NSString *longWord=[@"a" stringByPaddingToLength:200 withString:@"a" startingAtIndex:0];
         openText(s,[dir stringByAppendingPathComponent:@"long.txt"],[longWord stringByAppendingString:@"!\n"]);
         [s sendText:[NSString stringWithFormat:@":set-hl %@\r$",longWord]];request(s,MIJOE_GUI_STATUS,nil);
-        check(waitFor(^BOOL{return cellBG(s,1,0,palette(s,11));}),@"a match beginning left of the horizontal viewport remains highlighted");
+        check(waitFor(^BOOL{return cellBG(s,1,0,0xffff00);}),@"a match beginning left of the horizontal viewport remains highlighted");
         openText(s,[dir stringByAppendingPathComponent:@"wrap.txt"],@"gogogo 123 END\n");
         [s sendText:@"\x14R8\r:set wrap\r:set-hl \"gogogo 123\"\r"];request(s,MIJOE_GUI_STATUS,nil);
-        check(waitFor(^BOOL{return temporary(s,@"gogogo") && cellBG(s,2,0,palette(s,11)) && cellBG(s,2,1,palette(s,11)) && !cellBG(s,2,2,palette(s,11));}),@"one literal remains highlighted across soft-wrapped display rows");
+        check(waitFor(^BOOL{return temporary(s,@"gogogo") && cellBG(s,2,0,0xffff00) && cellBG(s,2,1,0xffff00) && !cellBG(s,2,2,0xffff00);}),@"one literal remains highlighted across soft-wrapped display rows");
         NSString *large=[dir stringByAppendingPathComponent:@"large.log"];
         NSMutableData *data=[NSMutableData dataWithData:[@"ERROR marker\n" dataUsingEncoding:NSUTF8StringEncoding]];
         NSString *line=[[@"x" stringByPaddingToLength:1023 withString:@"x" startingAtIndex:0] stringByAppendingString:@"\n"];
@@ -146,12 +146,12 @@ int main(int argc,const char **argv) {
         check([after[@"lazy"] boolValue] && [after[@"readonly"] boolValue] && [after[@"readBytes"] isEqual:before[@"readBytes"]],@"temporary highlights do not scan or load additional lazy-file data");
         check(waitFor(^BOOL{return temporary(s,@"ERROR");}),@"read-only lazy text displays literal matches");
         [s sendText:@":set-hl :1 :2\r"];after=request(s,MIJOE_GUI_STATUS,nil);
-        check([after[@"readBytes"] isEqual:before[@"readBytes"]] && waitFor(^BOOL{return cellBG(s,1,80,palette(s,11)) && cellBG(s,2,80,palette(s,11)) && !cellBG(s,3,80,palette(s,11));}),@"known global line selectors paint lazy rows without reading additional data");
+        check([after[@"readBytes"] isEqual:before[@"readBytes"]] && waitFor(^BOOL{return cellBG(s,1,80,0xffff00) && cellBG(s,2,80,0xffff00) && !cellBG(s,3,80,0xffff00);}),@"known global line selectors paint lazy rows without reading additional data");
         [s sendText:@"G"];after=request(s,MIJOE_GUI_STATUS,nil);
         check([after[@"temporaryHighlights"] intValue]==3 && waitFor(^BOOL{return temporary(s,@"ERROR");}),@"lazy-region replacement preserves the open buffer's highlight set");
-        check(waitFor(^BOOL{return !cellBG(s,1,80,palette(s,11));}),@"line 1 does not become a region-relative line after a lazy jump");
+        check(waitFor(^BOOL{return !cellBG(s,1,80,0xffff00);}),@"line 1 does not become a region-relative line after a lazy jump");
         [s sendText:@"gg"];request(s,MIJOE_GUI_STATUS,nil);
-        check(waitFor(^BOOL{return cellBG(s,1,80,palette(s,11)) && cellBG(s,2,80,palette(s,11));}),@"returning to the beginning restores global line highlights");
+        check(waitFor(^BOOL{return cellBG(s,1,80,0xffff00) && cellBG(s,2,80,0xffff00);}),@"returning to the beginning restores global line highlights");
         NSString *history=[NSString stringWithContentsOfFile:[dir stringByAppendingPathComponent:@".mj/.recent"] encoding:NSUTF8StringEncoding error:NULL];
         check([history containsString:source] && [history containsString:lazy] && ![history containsString:@"ERROR"] && ![history containsString:@"gogogo"] && ![history containsString:@"restart-sentinel"],@"recent-file paths persist without storing temporary highlight words");
         request(s,MIJOE_GUI_DISCARD,nil);check(waitFor(^BOOL{return !s.running;}),@"second owned child exits cleanly");

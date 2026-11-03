@@ -34,6 +34,8 @@ struct color_builtin_specs {
 	int			*default_ptr;	/* Pointer to default attribute, e.g. to use bg_text */
 };
 
+int bg_temporary=FG_BLACK|BG_BYELLOW;
+
 static struct color_builtin_specs color_builtins[] = {
 	{ "text", &bg_text, NULL, 0, 0, 0, 0 },	/* Must come first, so others can use as default */
 	{ "linum", &bg_linum, NULL, 0, 0, 0, &bg_text },
@@ -47,6 +49,7 @@ static struct color_builtin_specs color_builtins[] = {
 	{ "prompt", &bg_prompt, NULL, 0, 0, 0, &bg_text },
 	{ "message", &bg_msg, NULL, 0, 0, 0, &bg_text },
 	{ "cursor", &bg_cursor, NULL, 0, INVERSE, ~INVERSE, NULL },
+    { "temporaryhl", &bg_temporary, NULL, 0, FG_BLACK|BG_BYELLOW, 0, NULL },
 	{ NULL, NULL, NULL, 0, 0, 0, NULL }
 };
 
@@ -499,6 +502,23 @@ SCHEME *load_scheme(const char *name)
 			}
 		}
 		
+        /* Overlay colors must not inherit a terminal's softened ANSI yellow.
+         * Use exact RGB in GUI palettes and the fixed xterm cube in 256 colors. */
+        {
+            int k;
+            for(k=0;color_builtins[k].name;++k)if(color_builtins[k].attribute==&bg_temporary &&
+                curset->builtins[k].type==COLORSPEC_TYPE_NONE) {
+                struct color_spec *spec=&curset->builtins[k];
+                spec->mask=FG_MASK|BG_MASK;
+                if(curset->colors==COLORSET_GUI) {
+                    spec->type=COLORSPEC_TYPE_GUI;spec->gui_fg=0;spec->gui_bg=0xffff00;
+                } else {
+                    spec->type=COLORSPEC_TYPE_ATTR;
+                    spec->atr=curset->colors>=256 ? FG_NOT_DEFAULT|(16<<FG_SHIFT)|BG_NOT_DEFAULT|(226<<BG_SHIFT) : FG_BLACK|BG_BYELLOW;
+                }
+            }
+        }
+
 		/* If this is GUI, then make the palette */
 		if (curset->colors == COLORSET_GUI) {
 #ifndef JOEWIN
