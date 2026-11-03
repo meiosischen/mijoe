@@ -1,0 +1,115 @@
+VC6 Release package: exit=0; log=build/substitute/final-Release-package.log
+
+See the SDK release notes for more information.
+
+	rc.exe /dJOEWIN_VC6 /i"." /i"..\src\common" /i"..\src\exe" /dNDEBUG /fo""..\bin\vc6\Release\obj\joe.res"" joe.rc
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /out:""..\bin\vc6\Release\joe.exe"" "..\bin\vc6\Release\joe.lib" "..\bin\vc6\Release\putty.lib" "..\bin\vc6\Release\common.lib" "..\bin\vc6\Release\obj\main.obj" "..\bin\vc6\Release\obj\joe.res" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib
+Windows UI test files: /Users/meiosis/Workspace/Projects/mijoe/build/substitute/mijoe-win32-smoke-release-package-p5hsdzzc
+vim_win32_smoke.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+PASS substitute-global
+PASS substitute-range
+PASS substitute-capture
+PASS substitute-confirm
+PASS substitute-undo
+PASS substitute-case
+PASS recent-open
+PASS visual
+PASS command-paste
+VC6 Release dll: exit=0; log=build/substitute/final-Release-dll.log
+
+See the SDK release notes for more information.
+
+	rc.exe /dJOEWIN_VC6 /i"." /i"..\src\common" /i"..\src\exe" /dNDEBUG /dJOEWIN_DLL_FRONTEND /fo""..\bin\vc6\Release\obj\joe_dll.res"" joe.rc
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /out:""..\bin\vc6\Release\dll\joe.exe"" "..\bin\vc6\Release\dll\joewin.lib" "..\bin\vc6\Release\obj\dllmain.obj" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib "..\bin\vc6\Release\obj\joe_dll.res"
+Windows UI test files: /Users/meiosis/Workspace/Projects/mijoe/build/substitute/mijoe-win32-smoke-release-dll-ajaziivy
+vim_win32_smoke.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+PASS substitute-global
+PASS substitute-range
+PASS substitute-capture
+PASS substitute-confirm
+PASS substitute-undo
+PASS substitute-case
+PASS recent-open
+PASS visual
+PASS command-paste
+VC6 Debug package: exit=0; log=build/substitute/final-Debug-package.log
+
+See the SDK release notes for more information.
+
+	rc.exe /dJOEWIN_VC6 /i"." /i"..\src\common" /i"..\src\exe" /d_DEBUG /dDEBUG /fo""..\bin\vc6\Debug\obj\joe.res"" joe.rc
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /debug /out:""..\bin\vc6\Debug\joe.exe"" "..\bin\vc6\Debug\joe.lib" "..\bin\vc6\Debug\putty.lib" "..\bin\vc6\Debug\common.lib" "..\bin\vc6\Debug\obj\main.obj" "..\bin\vc6\Debug\obj\joe.res" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib
+Windows UI test files: /Users/meiosis/Workspace/Projects/mijoe/build/substitute/mijoe-win32-smoke-debug-package-ugfp416r
+vim_win32_smoke.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+PASS substitute-global
+PASS substitute-range
+PASS substitute-capture
+PASS substitute-confirm
+PASS substitute-undo
+PASS substitute-case
+PASS recent-open
+PASS visual
+PASS command-paste
+VC6 Debug dll: exit=0; log=build/substitute/final-Debug-dll.log
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /debug /dll /out:""..\bin\vc6\Debug\dll\joewin.dll"" /implib:"..\bin\vc6\Debug\dll\joewin.lib" "..\bin\vc6\Debug\joe.lib" "..\bin\vc6\Debug\putty.lib" "..\bin\vc6\Debug\common.lib" "..\bin\vc6\Debug\obj\joedll.obj" "..\bin\vc6\Debug\obj\joedll.res" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib
+   Creating library ..\bin\vc6\Debug\dll\joewin.lib and object ..\bin\vc6\Debug\dll\joewin.exp
+	link.exe /nologo /machine:I386 /subsystem:windows,5.01 /incremental:no /debug /out:""..\bin\vc6\Debug\dll\joe.exe"" "..\bin\vc6\Debug\dll\joewin.lib" "..\bin\vc6\Debug\obj\dllmain.obj" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comctl32.lib imm32.lib winmm.lib "..\bin\vc6\Debug\obj\joe_dll.res"
+Windows UI test files: /Users/meiosis/Workspace/Projects/mijoe/build/substitute/mijoe-win32-smoke-debug-dll-rf7w6fyz
+vim_win32_smoke.c
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+PASS substitute-global
+PASS substitute-range
+PASS substitute-capture
+PASS substitute-confirm
+PASS substitute-undo
+PASS substitute-case
+PASS recent-open
+PASS visual
+PASS command-paste
+ALL FOUR VARIANTS PASSED

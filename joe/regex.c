@@ -1145,7 +1145,17 @@ static int better(Regmatch_t *a, Regmatch_t *b, int bra_no)
 	return 0;
 }
 
-static int add_thread(struct thread *pool, unsigned char *start, int l, int le, unsigned char *pc, Regmatch_t *pos, int bra_no, int *stack, int sp)
+static int better_greedy(Regmatch_t *a, Regmatch_t *b, int count)
+{
+    int n;
+    for (n=0;n<count;++n) {
+        if (a[n].rm_so!=b[n].rm_so) return a[n].rm_so<b[n].rm_so;
+        if (a[n].rm_eo!=b[n].rm_eo) return a[n].rm_eo>b[n].rm_eo;
+    }
+    return 0;
+}
+
+static int add_thread(struct thread *pool, unsigned char *start, int l, int le, unsigned char *pc, Regmatch_t *pos, int bra_no, int *stack, int sp, int greedy)
 {
 	int x;
 	Regmatch_t *d;
@@ -1167,11 +1177,11 @@ static int add_thread(struct thread *pool, unsigned char *start, int l, int le, 
 						/* New one starts earlier */
 						for (x = 0; x != bra_no; ++x) pool[t].pos[x] = pos[x];
 						return le;
-					} else if (pool[t].pos[y].rm_eo < pos[y].rm_eo) {
-						/* Current is shorter */
+					} else if ((greedy ? pool[t].pos[y].rm_eo > pos[y].rm_eo : pool[t].pos[y].rm_eo < pos[y].rm_eo)) {
+						/* Existing capture wins under the requested matching policy. */
 						return le;
-					} else if (pool[t].pos[y].rm_eo > pos[y].rm_eo) {
-						/* New one is shorter */
+					} else if ((greedy ? pool[t].pos[y].rm_eo < pos[y].rm_eo : pool[t].pos[y].rm_eo > pos[y].rm_eo)) {
+						/* Incoming capture wins under the requested matching policy. */
 						for (x = 0; x != bra_no; ++x) pool[t].pos[x] = pos[x];
 						return le;
 					}
@@ -1195,8 +1205,7 @@ static int add_thread(struct thread *pool, unsigned char *start, int l, int le, 
 	}
 	/* Add it */
 	if (le - l == MAX_THREADS) {
-		printf("ran out of threads\n");
-		exit(-1);
+		/* The execution loop reports exhausted capacity as -2. */
 		return le;
 	}
 	pool[le].pc = pc;
@@ -1232,8 +1241,7 @@ static int add_thread1(struct thread *pool, unsigned char *start, int l, int le,
 
 	/* Add it */
 	if (le - l == MAX_THREADS) {
-		printf("ran out of threads\n");
-		exit(-1);
+		/* The execution loop reports exhausted capacity as -2. */
 		return le;
 	}
 	pool[le].pc = pc;
@@ -1246,7 +1254,7 @@ static int add_thread1(struct thread *pool, unsigned char *start, int l, int le,
 	return le + 1;
 }
 
-int joe_regexec(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fold)
+static int regexec_impl(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fold, int longest, off_t limit)
 {
 	struct thread pool[MAX_THREADS * 2];
 
@@ -1259,6 +1267,7 @@ int joe_regexec(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fo
 
 	int c, d;
 	int match = -1;
+    off_t best_end=-1;
 
 	int bra_no = g->bra_no;
 
@@ -1332,7 +1341,7 @@ int joe_regexec(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fo
 #endif
 				if (i >= 0) { /* A single character */
 					if (c == i) {
-						nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+						nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 					}
 				} else switch (i) {
 					case iEXPR: {
@@ -1360,9 +1369,9 @@ int joe_regexec(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fo
 										logmessage_1("     Push %c\n", c);
 #endif
 										pool[t].stack[pool[t].sp++] = psh;
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									} else { /* Eat */
-										nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									}
 									break;
 								} case '(': {
@@ -1380,17 +1389,17 @@ int joe_regexec(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fo
 										logmessage_1("     Push %c\n", c);
 #endif
 										pool[t].stack[pool[t].sp++] = psh;
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									} else if (c == ')') {
 #ifdef DEBUG_REGEX
 										logmessage_0("     Pop )\n");
 #endif
 										if (pool[t].sp == 1)
-											nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, 0);
+											nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, 0,longest);
 										else
-											nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp - 1);
+											nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp - 1,longest);
 									} else {
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									}
 									break;
 								} case '[': {
@@ -1405,14 +1414,14 @@ int joe_regexec(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fo
 									}
 									if (psh) { /* Stay */
 										pool[t].stack[pool[t].sp++] = psh;
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									} else if (c == ']') {
 										if (pool[t].sp == 1)
-											nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, 0);
+											nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, 0,longest);
 										else
-											nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp - 1);
+											nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp - 1,longest);
 									} else {
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									}
 									break;
 								} case '{': {
@@ -1427,46 +1436,46 @@ int joe_regexec(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fo
 									}
 									if (psh) { /* Stay */
 										pool[t].stack[pool[t].sp++] = psh;
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									} else if (c == '}') {
 										if (pool[t].sp == 1)
-											nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, 0);
+											nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, 0,longest);
 										else
-											nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp - 1);
+											nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp - 1,longest);
 									} else {
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									}
 									break;
 								} case '"': {
 									if (c == '"') {
 										if (pool[t].sp == 1)
-											nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, 0);
+											nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, 0,longest);
 										else
-											nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp - 1);
+											nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp - 1,longest);
 									} else if (c == '\\') {
 										pool[t].stack[pool[t].sp++] = '\\';
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									} else {
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									}
 									break;
 								} case '\'': {
 									if (c == '\'') {
 										if (pool[t].sp == 1)
-											nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, 0);
+											nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, 0,longest);
 										else
-											nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp - 1);
+											nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp - 1,longest);
 									} else if (c == '\\') {
 										pool[t].stack[pool[t].sp++] = '\\';
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									} else {
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									}
 									break;
 								} case '/': {
 									if (c == '*') {
 										pool[t].stack[pool[t].sp - 1] = '*';
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									} else {
 										--pool[t].sp;
 										goto check;
@@ -1474,29 +1483,29 @@ int joe_regexec(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fo
 									break;
 								} case '\\': {
 									if (pool[t].sp == 1)
-										nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, 0);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, 0,longest);
 									else
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp - 1);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp - 1,longest);
 									break;
 								} case '*': {
 									if (c == '*') {
 										pool[t].stack[pool[t].sp - 1] = 'E';
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									} else {
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									}
 									break;
 								} case 'E': {
 									if (c == '*') {
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									} else if (c == '/') {
 										if (pool[t].sp == 1)
-											nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, 0);
+											nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, 0,longest);
 										else
-											nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp - 1);
+											nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp - 1,longest);
 									} else {
 										pool[t].stack[pool[t].sp - 1] = '*';
-										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+										nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 									}
 									break;
 								}
@@ -1506,7 +1515,7 @@ int joe_regexec(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fo
 					} case iDOT: {
 						if (c != NO_MORE_DATA && c != '\n')
 							/* . doesn't match end of string */
-							nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+							nle = add_thread(pool, g->frag->start, nl, nle, pc + SIZEOF(int), pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 						break;
 					}
 					case iBOL: {
@@ -1568,17 +1577,18 @@ int joe_regexec(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fo
 						if (cclass_lookup(cclass, c)) {
 							pc += SIZEOF(struct Cclass *);
 							pc += align_o((pc - (unsigned char *)0), SIZEOF(int));
-							nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp);
+							nle = add_thread(pool, g->frag->start, nl, nle, pc, pool[t].pos, bra_no, pool[t].stack, pool[t].sp,longest);
 						}
 						break;
 					}
 					case iEND: {
-						if (match || better(pool[t].pos, matches, bra_no)) {
+						if (match || (longest ? (byte>best_end || (byte==best_end && better_greedy(pool[t].pos, matches, bra_no))) : better(pool[t].pos, matches, bra_no))) {
 							int x;
 							for (x = 0; x != bra_no; ++x) {
 								matches[x] = pool[t].pos[x];
 							}
 							match = 0;
+                            best_end=byte;
 						}
 						break;
 					}
@@ -1602,9 +1612,10 @@ int joe_regexec(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fo
 			nl = MAX_THREADS;
 		 nle = nl;
 		 start_bol = 0;
-	} while (match && c != NO_MORE_DATA && cl != cle);
+	} while ((match || longest) && c != NO_MORE_DATA && cl != cle && (!longest || byte<limit));
 
-	if (!match && c != NO_MORE_DATA)
+	if (!match && longest) pgoto(p,best_end);
+    else if (!match && c != NO_MORE_DATA)
 		prgetc(p);
 
 	for (c = bra_no; c < nmatch; ++c) {
@@ -1612,4 +1623,15 @@ int joe_regexec(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fo
 	}
 
 	return match;
+}
+
+/* Keep historical shortest-match searches unchanged. Ex substitution requests
+ * the longest match at this candidate, bounded by its original line end. */
+int joe_regexec(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fold)
+{
+    return regexec_impl(g,p,nmatch,matches,fold,0,0);
+}
+int joe_regexec_greedy(struct regcomp *g, P *p, int nmatch, Regmatch_t *matches, int fold, off_t limit)
+{
+    return regexec_impl(g,p,nmatch,matches,fold,1,limit);
 }

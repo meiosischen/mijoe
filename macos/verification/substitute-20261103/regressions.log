@@ -1,0 +1,8 @@
+vim_substitute_test 0
+vim_pty_test 0
+vim_register_test 0
+vim_ui_test 0
+grep_control_test 0
+internal_pipeline_test 0
+recent_test 0
+softwrap_test 0

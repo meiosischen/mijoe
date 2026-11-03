@@ -145,6 +145,7 @@ int edloop()
 			exmsg = NULL;
 		}
 		/* Update the screen */
+        vim_substitute_prompt();
 		edupd(1);
 #if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
 		mijoe_macos_gui_update();
@@ -184,7 +185,7 @@ int edloop()
 		}
 #endif
         if (mj_recent_active()) { c=macro_decoded ? c : vim_readkey(c); co_call(mj_recent_input,c); continue; }
-        if (vim_grep_active()) { c=macro_decoded ? c : vim_readkey(c); vim_macro_capture(c,1); co_call(vim_input,c); vim_macro_applied(); continue; }
+        if (vim_grep_active() || vim_substitute_active()) { c=macro_decoded ? c : vim_readkey(c); vim_macro_capture(c,1); co_call(vim_input,c); vim_macro_applied(); continue; }
         if ((maint->curwin->watom->what & TYPETW) && lf_pending(((BW *)maint->curwin->object)->b)) {
             vim_macro_capture(c,0); lf_prompt_key((BW *)maint->curwin->object,c); vim_macro_applied(); continue;
         }

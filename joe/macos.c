@@ -304,6 +304,7 @@ int mijoe_macos_gui_action(va_list args)
     }
     else if (mj_recent_active() && action!=MIJOE_GUI_SCROLL && action!=MIJOE_GUI_QUIT && action!=MIJOE_GUI_DISCARD)
         error="Close recent files with Enter or Esc before using this command.";
+	else if (vim_substitute_active() && action!=MIJOE_GUI_QUIT && action!=MIJOE_GUI_DISCARD) error="Finish substitute confirmation before using this command.";
 	else if (vim_grep_active() && action!=MIJOE_GUI_SCROLL && action!=MIJOE_GUI_QUIT && action!=MIJOE_GUI_DISCARD) error="Close the grep results with Enter or Esc before using this command.";
 	else if (action == MIJOE_GUI_MOUSE) {
 		int event, column, row;

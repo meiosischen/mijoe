@@ -58,6 +58,12 @@ if args.target == "dll":
     executable /= "dll"
 executable /= "joe.exe"
 cases = [
+    ("substitute-global", b"foo foo\nfoo\n", b":%s/foo/bar/g\r:wq\r", b"bar bar\nbar\n"),
+    ("substitute-range", b"foo\nfoo foo\nfoo\n", b":2,3s/foo/bar/\r:wq\r", b"foo\nbar foo\nbar\n"),
+    ("substitute-capture", b"abc-123\n", br":s/\([a-z]\+\)-\([0-9]\+\)/\2-\1/"+b"\r:wq\r", b"123-abc\n"),
+    ("substitute-confirm", b"foo foo foo\nfoo\n", b":%s/foo/bar/gc\ryna:wq\r", b"bar foo bar\nbar\n"),
+    ("substitute-undo", b"foo foo\nfoo\n", b":%s/foo/bar/g\ru:wq\r", b"foo foo\nfoo\n"),
+    ("substitute-case", b"Foo FOO foo\n", b":s/foo/x/gi\r:wq\r", b"x x x\n"),
     ("recent-open", b"alpha\n", b":enew\r:recent\r\rA!\x1b:wq\r", b"alpha!\n"),
     ("recent-modal", b"a\n", b":recent\riBAD\x03iX\x1b:wq\r", b"Xa\n"),
     ("recent-modes", b"a\n", b"\x14O\x14':enew\r:recent\r\r42:w\r:q!\r", b"a\n"),

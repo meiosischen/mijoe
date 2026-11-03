@@ -92,3 +92,5 @@ void joe_regfree(struct regcomp *r);
    nmatch has size of matches array
 */
 int joe_regexec(struct regcomp *r, P *p, int nmatch, struct regmatch *matches, int eflags);
+
+int joe_regexec_greedy(struct regcomp *r, P *p, int nmatch, struct regmatch *matches, int fold, off_t limit);

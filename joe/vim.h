@@ -40,6 +40,8 @@ char *vim_buffer_list_text(void);
 const char *vim_mode_name(void);
 unsigned long vim_buffer_number(B *b);
 int vim_ex(W *w, const char *line);
+int vim_substitute_active(void);
+void vim_substitute_prompt(void);
 #if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
 int vim_gui_pasting(void);
 int vim_gui_action(int action, const char *path);

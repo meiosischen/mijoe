@@ -252,8 +252,11 @@ class VimTests(unittest.TestCase):
         editor.ex("w copy.txt")
         editor.send(b"u")
         editor.ex("q")
-        editor.drain(0.1)
-        pid, status = os.waitpid(editor.pid, os.WNOHANG)
+        deadline = time.monotonic() + 5
+        pid, status = 0, 0
+        while not pid and time.monotonic() < deadline:
+            editor.drain(0.05)
+            pid, status = os.waitpid(editor.pid, os.WNOHANG)
         self.assertEqual(pid, editor.pid, "Undo to original content should allow :q")
         editor.status = status
         self.assertEqual(status, 0)

@@ -42,23 +42,26 @@ static ptrdiff_t command_len;
 static char *search_pattern;
 static int search_back;
 static int search_highlight;
+static int search_ignore, highlight_ignore;
 static struct regcomp *highlight_regex;
 static struct charmap *highlight_map;
 static char *highlight_pattern;
+static int sub_highlight(struct vim_highlight *h, BW *bw);
 
 void vim_highlight_begin(struct vim_highlight *h, BW *bw, P *line)
 {
     char *pattern;
     h->scan = NULL; h->start = h->end = -1;
+    if (sub_highlight(h,bw)) return;
     if (!vim_enabled || !search_highlight || !search_pattern || !*search_pattern ||
         bw->b->internal || bw->b->scratch || bw->o.hex) return;
-    if (!highlight_pattern || zcmp(highlight_pattern, search_pattern) || highlight_map != bw->b->o.charmap) {
+    if (!highlight_pattern || zcmp(highlight_pattern, search_pattern) || highlight_map != bw->b->o.charmap || highlight_ignore != search_ignore) {
         if (highlight_regex) joe_regfree(highlight_regex);
         if (highlight_pattern) joe_free(highlight_pattern);
         highlight_pattern = zdup(search_pattern);
-        highlight_map = bw->b->o.charmap;
+        highlight_map = bw->b->o.charmap; highlight_ignore=search_ignore;
         pattern = my_iconv(NULL, highlight_map, search_pattern, locale_map);
-        highlight_regex = joe_regcomp(highlight_map, pattern, zlen(pattern), 0, 1, 0);
+        highlight_regex = joe_regcomp(highlight_map, pattern, zlen(pattern), search_ignore, 1, 0);
         obj_free(pattern);
     }
     if (!highlight_regex || highlight_regex->err) return;
@@ -70,13 +73,14 @@ void vim_highlight_begin(struct vim_highlight *h, BW *bw, P *line)
 int vim_highlight_test(struct vim_highlight *h, off_t byte)
 {
     if (!h->scan || h->line < 0) return 0;
+    if (!h->regex) return byte>=h->start && byte<h->end;
     while (byte >= h->end && h->scan->byte <= byte) {
         off_t candidate;
         int matched;
         if (piseof(h->scan) || h->scan->line != h->line || brc(h->scan) == '\n') { h->line = -1; return 0; }
         candidate = h->scan->byte;
-        matched = (!h->regex->prefix_len || brc(h->scan) == (unsigned char)h->regex->prefix[0]) &&
-                  !joe_regexec(h->regex, h->scan, 0, NULL, 0);
+        matched = (search_ignore || !h->regex->prefix_len || brc(h->scan) == (unsigned char)h->regex->prefix[0]) &&
+                  !joe_regexec(h->regex, h->scan, 0, NULL, search_ignore);
         if (matched && h->scan->byte > candidate) {
             h->start = candidate; h->end = h->scan->byte;
         } else {
@@ -215,7 +219,7 @@ int vim_native_key(int key)
 {
 	BW *bw = current_bw();
 	KBD *kbd;
-	if (!bw || paste || mode == VM_COMMAND || find_pending || object_pending || vim_grep_active()) return 0;
+	if (!bw || paste || mode == VM_COMMAND || find_pending || object_pending || vim_grep_active() || vim_substitute_active()) return 0;
 	kbd = bw->parent->kbd;
 	if (key != 11 && key != 20 && kbd->curmap == kbd->topmap) return 0;
 	if (help_text_active(bw->t)) help_text_close(bw->t);
@@ -1509,7 +1513,7 @@ static int search(BW *bw, int backwards, long n)
         return lf_search(bw,search_pattern,backwards,n);
     }
 	pattern = my_iconv(NULL, bw->b->o.charmap, search_pattern, locale_map);
-	compiled = joe_regcomp(bw->b->o.charmap, pattern, zlen(pattern), 0, 1, 0);
+	compiled = joe_regcomp(bw->b->o.charmap, pattern, zlen(pattern), search_ignore, 1, 0);
 	obj_free(pattern);
 	nredraw(maint->t);
 	if (compiled->err) { message(compiled->err); joe_regfree(compiled); return -1; }
@@ -1526,7 +1530,7 @@ static int search(BW *bw, int backwards, long n)
 			}
 			{
 				off_t candidate = p->byte;
-				int matched = !joe_regexec(compiled, p, 0, NULL, 0);
+				int matched = !joe_regexec(compiled, p, 0, NULL, search_ignore);
 				/* The engine consumes p while matching; Vim stays at the start. */
 				pgoto(p, candidate);
 				if (matched) { found = 1; break; }
@@ -1584,7 +1588,7 @@ static int search_word(BW *bw, long n)
         obj_free(pattern); prm(a); prm(z); message("Word is too long to search"); return -1;
     }
     if (search_pattern) joe_free(search_pattern);
-    search_pattern = zdup(pattern); obj_free(pattern); search_back = 0;
+    search_pattern = zdup(pattern); obj_free(pattern); search_back = 0; search_ignore=0;
     pset(bw->cursor, a);
     prm(a); prm(z);
     return search(bw, 0, n);
@@ -2044,7 +2048,7 @@ static int grep_open(BW *bw, const char *expression, int to_file)
     if (!grep_view.count) { grep_close(1); message("Grep: no matching lines"); return 0; }
     if (to_file) return grep_export(bw);
     if (search_pattern) joe_free(search_pattern);
-    search_pattern=zdup(expression); search_highlight=1; search_back=0;
+    search_pattern=zdup(expression); search_highlight=1; search_back=0; search_ignore=0;
     ttputs("\033[?25l");
     grep_preview();
     return 0;
@@ -2090,12 +2094,361 @@ static int pipeline_open(BW *bw, const char *command)
     ttputs("\033[?25l"); grep_preview(); return 0;
 }
 
+/* Ex substitution works on the original addressed lines, not on inserted
+ * replacement lines. Persistent P markers survive edits and confirmations. */
+static struct {
+    BW *bw;
+    P *scan, *eol, *match_end;
+    struct regcomp *regex;
+    Regmatch_t pieces[9];
+    char *replacement;
+    off_t remaining, start;
+    long changed, matched;
+    int global, confirm, waiting, skip_empty, suppress_error, fold;
+} substitution;
+static char *last_sub_pattern, *last_sub_replacement, *last_sub_regex;
+static off_t ex_visual_first, ex_visual_last;
+static B *ex_visual_buffer;
+static int command_visual_range;
+
+int vim_substitute_active(void) { return substitution.bw != NULL; }
+void vim_substitute_prompt(void)
+{
+    if (substitution.waiting) message("Replace? y=yes n=no a=all q=quit l=last (Esc/Ctrl+C cancel)");
+}
+
+static int sub_highlight(struct vim_highlight *h, BW *bw)
+{
+    if (substitution.bw!=bw || !substitution.waiting) return 0;
+    h->scan=pdup(substitution.scan,"sub highlight"); h->regex=NULL;
+    h->start=substitution.start; h->end=substitution.match_end->byte; h->line=0;
+    return 1;
+}
+
+static off_t ex_last_line(B *b)
+{
+    off_t last=b->eof->line;
+    if (last && pisbol(b->eof)) --last;
+    return last;
+}
+
+static void sub_close(void)
+{
+    BW *bw=substitution.bw;
+    char text[128];
+    if (!bw) return;
+    sprintf(text,"%ld substitutions",substitution.changed);
+    if (!substitution.matched && !substitution.suppress_error) strcpy(text,"Pattern not found");
+    if (substitution.scan) prm(substitution.scan);
+    if (substitution.eol) prm(substitution.eol);
+    if (substitution.match_end) prm(substitution.match_end);
+    if (substitution.regex) joe_regfree(substitution.regex);
+    if (substitution.replacement) joe_free(substitution.replacement);
+    memset(&substitution,0,sizeof(substitution));
+    finish_unit(); normal_cursor(bw); updall(); staupd=1; message(text);
+}
+
+/* Vim's default magic differs from the engine's conventional regex syntax. */
+static char *sub_pattern(const char *s, int *fold, const char **error)
+{
+    char *out=vsdupz("");
+    int in_class=0, class_start=0;
+    while (*s) {
+        int c=(unsigned char)*s++;
+        if (in_class) {
+            out=vsadd(out,c);
+            if (c=='\\' && *s) { out=vsadd(out,*s++); class_start=0; }
+            else if (c==']' && !class_start) in_class=0;
+            else if (!(class_start==1 && c=='^')) class_start=0;
+            continue;
+        }
+        if (c=='[') { in_class=1; class_start=1; out=vsadd(out,c); continue; }
+        if (c!='\\') {
+            if (strchr("()+?{}|",c)) out=vsadd(out,'\\');
+            out=vsadd(out,c); continue;
+        }
+        if (!*s) { *error="Trailing backslash in pattern"; break; }
+        c=(unsigned char)*s++;
+        if (c=='c' || c=='C') { *fold=c=='c'; continue; }
+        if (strchr("123456789@zZ%_vVmMn|",c)) {
+            *error="Unsupported Vim regex operator (multiline, backreferences or magic modifiers)"; break;
+        }
+        if (c=='{') {
+            unsigned long n=0;
+            out=vsadd(out,'{');
+            while (*s && *s!='}') {
+                c=(unsigned char)*s++;
+                if (c==',') n=0;
+                else if (c>='0' && c<='9') { n=n*10+c-'0'; if (n>1000) { *error="Regex repetition exceeds 1000"; break; } }
+                else { *error="Unsupported Vim repetition"; break; }
+                out=vsadd(out,c);
+            }
+            if (*error) break;
+            if (*s!='}') { *error="Missing } in pattern"; break; }
+            ++s; out=vsadd(out,'}'); continue;
+        }
+        if (strchr("()+?|",c)) out=vsadd(out,c);
+        else if (c=='=') out=vsadd(out,'?');
+        else { out=vsadd(out,'\\'); out=vsadd(out,c); }
+    }
+    if (in_class && !*error) *error="Missing ] in pattern";
+    return out;
+}
+
+static char *sub_part(const char **input, int delimiter, int required, const char **error)
+{
+    const char *s=*input;
+    char *out=vsdupz("");
+    while (*s && (unsigned char)*s!=delimiter) {
+        if (*s=='\\' && s[1]) {
+            if ((unsigned char)s[1]==delimiter && delimiter!='\\') {
+                if (required && strchr(".^$*[]",delimiter)) out=vsadd(out,'\\');
+                out=vsadd(out,*++s); ++s;
+            } else { out=vsadd(out,*s++); out=vsadd(out,*s++); }
+        } else out=vsadd(out,*s++);
+    }
+    if (*s) ++s;
+    else if (required) *error="Missing pattern delimiter";
+    *input=s; return out;
+}
+
+static int sub_address(BW *bw, const char **input, off_t current, off_t *line)
+{
+    const char *s=*input;
+    off_t n=0, last=ex_last_line(bw->b);
+    if (*s=='.') { n=current; ++s; }
+    else if (*s=='$') { n=last; ++s; }
+    else if (s[0]=='\'' && (s[1]=='<' || s[1]=='>') && ex_visual_buffer==bw->b) {
+        n=s[1]=='<' ? ex_visual_first : ex_visual_last; s+=2;
+    } else if (*s>='0' && *s<='9') {
+        while (*s>='0' && *s<='9') {
+            if (n>last+1) return -1;
+            n=n*10+*s++-'0';
+        }
+        if (!n) return -1;
+        --n;
+    } else return 0;
+    while (*s=='+' || *s=='-') {
+        int sign=*s++=='+' ? 1 : -1;
+        off_t delta=0;
+        while (*s>='0' && *s<='9') {
+            if (delta>last+1) return -1;
+            delta=delta*10+*s++-'0';
+        }
+        if (!delta) delta=1;
+        n+=sign*delta;
+    }
+    if (n<0 || n>last) return -1;
+    *line=n; *input=s; return 1;
+}
+
+static char *sub_expand(void)
+{
+    const char *s=substitution.replacement;
+    char *out=vsdupz("");
+    P *a=pdup(substitution.scan,"sub capture"), *z=pdup(a,"sub capture end");
+    while (*s) {
+        int c=(unsigned char)*s++, group=-2;
+        if (c=='&') group=-1;
+        else if (c=='\\' && *s) {
+            c=(unsigned char)*s++;
+            if (c>='0' && c<='9') group=c=='0' ? -1 : c-'1';
+            else if (c=='r') {
+                if (a->b->o.crlf) out=vsadd(out,'\r');
+                c='\n';
+            } else if (c=='n') c=0;
+            else if (c=='t') c='\t';
+        }
+        if (group!=-2) {
+            off_t start=group<0 ? substitution.start : substitution.pieces[group].rm_so;
+            off_t end=group<0 ? substitution.match_end->byte : substitution.pieces[group].rm_eo;
+            if (start>=0 && end>start) {
+                char *text;
+                pgoto(a,start); pgoto(z,end); text=brs(a,end-start);
+                out=vsncpy(sv(out),text,(ptrdiff_t)(end-start)); joe_free(text);
+            }
+        } else out=vsadd(out,c);
+    }
+    prm(a); prm(z); return out;
+}
+
+static void sub_next_line(void)
+{
+    pset(substitution.scan,substitution.eol);
+    if (!piseof(substitution.scan)) pgetc(substitution.scan);
+    --substitution.remaining;
+    substitution.skip_empty=0;
+    pset(substitution.eol,substitution.scan); p_goto_eol(substitution.eol);
+}
+
+static void sub_apply(int accept)
+{
+    P *scan=substitution.scan;
+    int empty=substitution.start==substitution.match_end->byte;
+    if (accept) {
+        char *text=sub_expand();
+        ptrdiff_t length=vslen(text);
+        pset(scan,substitution.match_end); pgoto(scan,substitution.start);
+        bdel(scan,substitution.match_end);
+        binsm(scan,text,length); pgoto(scan,substitution.start+length);
+        obj_free(text); ++substitution.changed;
+        pset(substitution.bw->cursor,scan);
+    } else pset(scan,substitution.match_end);
+    substitution.waiting=0;
+    if (!substitution.global) sub_next_line();
+    else if (empty) {
+        if (scan->byte>=substitution.eol->byte) sub_next_line();
+        else { pgetc(scan); substitution.skip_empty=0; if (scan->byte>=substitution.eol->byte) sub_next_line(); }
+    } else substitution.skip_empty=1;
+}
+
+static void sub_run(void)
+{
+    long checked=0;
+    while (substitution.remaining>0) {
+        P *scan=substitution.scan;
+        off_t start=scan->byte;
+        int matched;
+        pset(substitution.match_end,scan);
+        matched=joe_regexec_greedy(substitution.regex,substitution.match_end,9,substitution.pieces,substitution.fold,substitution.eol->byte);
+        if (matched==-2) {
+            sub_close(); message("Regex is too complex; replacement stopped (u undoes accepted changes)"); return;
+        }
+        matched=!matched && substitution.match_end->byte<=substitution.eol->byte;
+        if (matched && !(substitution.skip_empty && substitution.match_end->byte==start)) {
+            substitution.start=start; ++substitution.matched;
+            if (substitution.confirm) {
+                substitution.waiting=1; pset(substitution.bw->cursor,scan);
+                updall(); staupd=1; message("Replace? y=yes n=no a=all q=quit l=last (Esc/Ctrl+C cancel)"); return;
+            }
+            sub_apply(1);
+        } else if (start>=substitution.eol->byte) sub_next_line();
+        else {
+            int skipped_empty=matched && substitution.skip_empty;
+            pgetc(scan); substitution.skip_empty=0;
+            if (skipped_empty && scan->byte>=substitution.eol->byte) sub_next_line();
+        }
+        if (!(++checked%256) && ttcheck()) {
+            int key=ttgetch();
+            if (key==3 || key==27) { sub_close(); return; }
+            nungetc(key);
+        }
+    }
+    sub_close();
+}
+
+static int sub_key(int key)
+{
+    if (!substitution.bw) return 0;
+    if (key=='q' || key==3 || key==27) sub_close();
+    else if (substitution.waiting && (key=='y' || key=='n' || key=='a' || key=='l')) {
+        if (key=='a') substitution.confirm=0;
+        sub_apply(key!='n');
+        if (key=='l') sub_close(); else sub_run();
+    } else message("Replace? y=yes n=no a=all q=quit l=last (Esc/Ctrl+C cancel)");
+    return 1;
+}
+
+static int substitute_ex(BW *bw, const char *input, int *handled)
+{
+    const char *s=input, *error=NULL;
+    off_t first=bw->cursor->line, last=first, current=first;
+    int address=0, result=0, fold=0, global=0, confirm=0, suppress=0;
+    char *pattern=NULL, *replacement=NULL, *compiled_text=NULL, *encoded=NULL;
+    struct regcomp *regex=NULL;
+    *handled=0;
+    if (*s=='%') { first=0; last=ex_last_line(bw->b); ++s; address=1; }
+    else {
+        address=sub_address(bw,&s,current,&first); last=first;
+        if (address>0 && (*s==',' || *s==';')) {
+            if (*s++==';') current=first;
+            if (sub_address(bw,&s,current,&last)!=1) address=-1;
+        }
+    }
+    while (*s==' ' || *s=='\t') ++s;
+    if (*s!='s') return 0;
+    ++s;
+    if (!strncmp(s,"ubstitute",9)) s+=9;
+    if ((*s>='a' && *s<='z') || (*s>='A' && *s<='Z')) return 0;
+    *handled=1;
+    if (address<0 || first>last || last>ex_last_line(bw->b)) { message("Invalid substitute range"); return -1; }
+    while (*s==' ' || *s=='\t') ++s;
+    if (!*s) {
+        if (!last_sub_pattern) { message("No previous substitute"); return -1; }
+        pattern=vsdupz(last_sub_pattern); replacement=vsdupz(last_sub_replacement);
+        if (!*last_sub_pattern) compiled_text=vsdupz(last_sub_regex);
+    } else {
+        int delimiter=(unsigned char)*s++;
+        if (delimiter=='\\' || delimiter<33 || delimiter>126 || (delimiter>='0' && delimiter<='9')) {
+            message("Invalid substitute delimiter"); return -1;
+        }
+        pattern=sub_part(&s,delimiter,1,&error);
+        replacement=sub_part(&s,delimiter,0,&error);
+        while (*s && !error) {
+            switch (*s++) {
+            case 'g': global=1; break;
+            case 'c': confirm=1; break;
+            case 'i': fold=1; break;
+            case 'I': fold=0; break;
+            case 'e': suppress=1; break;
+            case ' ': case '\t': break;
+            default: error="Unsupported substitute flag (use g, c, i, I, e)"; break;
+            }
+        }
+    }
+    if (!compiled_text && !*pattern && !error) {
+        if (!search_pattern) error="No previous search pattern";
+        /* Search expressions already use the engine's conventional syntax. */
+        else compiled_text=vsdupz(search_pattern);
+    } else if (!compiled_text && !error) compiled_text=sub_pattern(pattern,&fold,&error);
+    if (!error) {
+        const char *r=replacement;
+        while (*r) {
+            if (*r++=='\\' && *r) {
+                if (strchr("ulULE~",*r)) { error="Replacement case conversion and previous-replacement expansion are not supported"; break; }
+                ++r;
+            }
+        }
+    }
+    if (!error && replacement[0]=='\\' && replacement[1]=='=') error="Expression replacements are not supported";
+    if (!error && (bw->o.hex || lf_active(bw->b))) error="Substitute requires an editable text buffer";
+    if (!error) {
+        encoded=my_iconv(NULL,bw->b->o.charmap,compiled_text,locale_map);
+        regex=joe_regcomp(bw->b->o.charmap,encoded,zlen(encoded),fold,1,0);
+        if (regex->err) error=regex->err;
+        else if (regex->bra_no>9) error="Substitute supports at most nine capture groups";
+    }
+    if (error) { message(error); result=-1; goto cleanup; }
+    if (!writable(bw)) { result=-1; goto cleanup; }
+    if (last_sub_pattern) joe_free(last_sub_pattern);
+    if (last_sub_replacement) joe_free(last_sub_replacement);
+    if (last_sub_regex) joe_free(last_sub_regex);
+    last_sub_regex=zdup(compiled_text);
+    last_sub_pattern=zdup(*pattern ? pattern : ""); last_sub_replacement=zdup(replacement);
+    if (search_pattern) joe_free(search_pattern);
+    search_pattern=zdup(compiled_text); search_highlight=1; search_ignore=fold;
+    clear_visual(); finish_unit(); clear_pending(); mode=VM_NORMAL; start_unit();
+    substitution.bw=bw; substitution.regex=regex; regex=NULL;
+    substitution.replacement=zdup(my_iconv(NULL,bw->b->o.charmap,replacement,locale_map));
+    substitution.scan=pdup(bw->cursor,"sub scan"); pline(substitution.scan,first); p_goto_bol(substitution.scan);
+    substitution.eol=pdup(substitution.scan,"sub eol"); p_goto_eol(substitution.eol); substitution.eol->end=1;
+    substitution.match_end=pdup(substitution.scan,"sub match end");
+    substitution.remaining=last-first+1; substitution.global=global;
+    substitution.confirm=confirm; substitution.suppress_error=suppress; substitution.fold=fold;
+    sub_run();
+cleanup:
+    if (regex) joe_regfree(regex);
+    if (pattern) obj_free(pattern);
+    return result;
+}
+
 int vim_ex(W *w, const char *line)
 {
 	BW *bw = (BW *)w->object;
 	char *copy = zdup(line), *cmd = copy, *arg, *end;
-	int bang = 0, rc = 0, adjacent_pipe = 0;
+	int bang = 0, rc = 0, adjacent_pipe = 0, substitute = 0;
 	while (*cmd == ':' || *cmd == ' ' || *cmd == '\t') ++cmd;
+    rc=substitute_ex(bw,cmd,&substitute); if (substitute) goto done;
 	end = cmd;
 	while (*end && *end != ' ' && *end != '\t' && *end != '!' && *end != '|') ++end;
 	if (*end == '!') { bang = 1; *end++ = 0; }
@@ -2221,6 +2574,21 @@ static void command_display(void)
 	obj_free(text);
 }
 
+/* Preserve the established Visual -> :grep/register workflow. Only a
+ * substitute command receives the saved Visual line range. */
+static void command_sub_range(int entering)
+{
+    const char *p=command;
+    if (!command_visual_range || command_kind!=':' || *p++!='s') return;
+    if (!strncmp(p,"ubstitute",9)) p+=9;
+    while (*p==' ' || *p=='\t') ++p;
+    if (!*p && !entering) return;
+    if ((*p>='a' && *p<='z') || (*p>='A' && *p<='Z') || (*p>='0' && *p<='9')) return;
+    if (command_len+5>=COMMAND_SIZE) return;
+    memmove(command+5,command,(size_t)command_len+1);
+    memcpy(command,"'<,'>",5); command_len+=5; command_visual_range=0;
+}
+
 static int command_key(BW *bw, int key)
 {
     if (command_register_pending && key!=3) {
@@ -2244,12 +2612,13 @@ static int command_key(BW *bw, int key)
 
 	if (key == 27 || key == 3) { mode = VM_NORMAL; clear_pending(); return 0; }
 	if (key == 13 || key == 10) {
+        command_sub_range(1);
 		mode = VM_NORMAL;
 		strcpy(history, command);
 		if (command_kind == ':') { strcpy(last_ex,command); return vim_ex(bw->parent, command); }
 		if (*command) {
 			if (search_pattern) joe_free(search_pattern);
-			search_pattern = zdup(command);
+			search_pattern = zdup(command); search_ignore=0;
 			search_back = command_kind == '?';
 		}
 		return search(bw, search_back, 1);
@@ -2269,6 +2638,7 @@ static int command_key(BW *bw, int key)
 		memcpy(command + command_len, encoded, (size_t)len);
 		command_len += len; command[command_len] = 0;
 	}
+    command_sub_range(0);
 	command_display();
 	return 0;
 }
@@ -2337,6 +2707,7 @@ static int dispatch(BW *bw, int key)
 	/* User paging pair: Ctrl+U up, Ctrl+Shift+U down (encoded as PgDn).
 	 * Prefix arguments and command-line editing keep their own input. */
 	if (key==21 && mode!=VM_COMMAND && !find_pending && !object_pending) key=VIM_PGUP;
+    if (sub_key(key)) return 0;
     if (vim_grep_key(key)) return 0;
 	if (help_text_active(bw->t)) {
 		if (key == 27 || key == 3 || key == 'q') help_text_close(bw->t);
@@ -2562,10 +2933,18 @@ static int dispatch(BW *bw, int key)
 		clear_pending(); return 0;
 	}
     if (key==':' || key=='/' || key=='?') {
+        int from_visual=visual_mode() && key==':' && anchor;
+        if (from_visual) {
+            ex_visual_buffer=bw->b;
+            ex_visual_first=anchor->line < bw->cursor->line ? anchor->line : bw->cursor->line;
+            ex_visual_last=anchor->line > bw->cursor->line ? anchor->line : bw->cursor->line;
+        }
         vim_capture_selection();
         if (visual_mode()) clear_visual();
         command_register_pending=0;
-        command_kind=key; command_len=0; command[0]=0; mode=VM_COMMAND;
+        command_kind=key; command_len=0; command[0]=0;
+        command_visual_range=from_visual;
+        mode=VM_COMMAND;
         clear_pending(); command_display(); return 0;
     }
 	if (visual_mode()) { clear_pending(); message("Visual command not implemented"); return -1; }
