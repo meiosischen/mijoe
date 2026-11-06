@@ -136,6 +136,41 @@ class VimTests(unittest.TestCase):
         editor.send(keys)
         self.assertEqual(editor.finish(), expected)
 
+    def test_replace_current_character(self):
+        self.result(b"abc\n", "lrX", b"aXc\n")
+
+    def test_replace_unicode_and_dot(self):
+        self.result("中文甲乙\n".encode(), "r好l.", "好好甲乙\n".encode())
+
+    def test_replace_count_and_cursor(self):
+        self.result(b"abcde\n", "3rXx", b"XXde\n")
+
+    def test_replace_undo_redo(self):
+        self.result(b"abc\n", "rXu\x12", b"Xbc\n")
+
+    def test_replace_cancel(self):
+        self.result(b"abc\n", "r\x1blx", b"ac\n")
+
+    def test_replace_does_not_cross_line(self):
+        self.result(b"ab\ncd\n", "3rX", b"ab\ncd\n")
+
+    def test_replace_empty_line(self):
+        self.result(b"\nabc\n", "rX", b"\nabc\n")
+
+    def test_replace_command_character(self):
+        self.result(b"abc\n", 'r"', b'"bc\n')
+
+    def test_replace_newline(self):
+        self.result(b"abcd\n", "2r\r", b"\ncd\n")
+
+    def test_replace_tab(self):
+        self.result(b"abc\n", "r\t", b"\tbc\n")
+
+    def test_replace_readonly(self):
+        editor = self.editor(b"abc\n", options=("-rdonly",))
+        editor.send("rX")
+        self.assertEqual(editor.finish(save=False), b"abc\n")
+
     def test_insert_unicode_and_escape(self):
         self.result(b"", "i中文 alpha\rsecond\x1b", "中文 alpha\nsecond".encode())
 

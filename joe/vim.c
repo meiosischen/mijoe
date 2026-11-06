@@ -21,7 +21,7 @@ int vim_enabled = 1;
 static int mode;
 static unsigned long next_number, active_number;
 static long count, op_count;
-static int pending, g_pending, find_pending, object_pending;
+static int pending, g_pending, find_pending, object_pending, replace_pending;
 static int motion_target, last_find_kind, last_find_target;
 static P *anchor;
 static int block_eol;
@@ -330,7 +330,7 @@ static void message(const char *s)
 static void clear_pending(void)
 {
 	count = op_count = 0;
-	pending = g_pending = find_pending = object_pending = 0;
+	pending = g_pending = find_pending = object_pending = replace_pending = 0;
     selected_register='"'; register_pending=insert_register_pending=0;
 	staupd = 1;
 }
@@ -398,7 +398,7 @@ static void record_key(int key)
 int vim_external_ready(void)
 {
     return (!vim_enabled || mode==VM_NORMAL) && !paste && !pending && !g_pending && !find_pending &&
-        !object_pending && !count && !register_pending && !vim_macro_recording() && !vim_macro_playing() &&
+        !object_pending && !replace_pending && !count && !register_pending && !vim_macro_recording() && !vim_macro_playing() &&
         queued_index>=queued_count;
 }
 
@@ -409,7 +409,7 @@ int vim_native_key(int key)
 {
 	BW *bw = current_bw();
 	KBD *kbd;
-	if (!bw || paste || mode == VM_COMMAND || find_pending || object_pending || vim_grep_active() || vim_substitute_active()) return 0;
+	if (!bw || paste || mode == VM_COMMAND || find_pending || object_pending || replace_pending || vim_grep_active() || vim_substitute_active()) return 0;
 	kbd = bw->parent->kbd;
 	if (key != 11 && key != 20 && kbd->curmap == kbd->topmap) return 0;
 	if (help_text_active(bw->t)) help_text_close(bw->t);
@@ -1436,7 +1436,7 @@ static int macro_toggle(void)
         sprintf(text,length ? "Macro saved: %d keys; F6 plays, :macro shows keys" : "No keys recorded; previous macro kept",length);
         message(text); return 0;
     }
-    if (mode==VM_COMMAND || pending || find_pending || object_pending || g_pending || register_pending || insert_register_pending || count || selected_register!='"') {
+    if (mode==VM_COMMAND || pending || find_pending || object_pending || replace_pending || g_pending || register_pending || insert_register_pending || count || selected_register!='"') {
         message("Finish the pending command or press Esc before recording"); return -1;
     }
     if (help_text_active(maint)) help_text_close(maint);
@@ -2914,7 +2914,7 @@ static int dispatch(BW *bw, int key)
 	P *a, *z;
 	/* User paging pair: Ctrl+U up, Ctrl+Shift+U down (encoded as PgDn).
 	 * Prefix arguments and command-line editing keep their own input. */
-	if (key==21 && mode!=VM_COMMAND && !find_pending && !object_pending) key=VIM_PGUP;
+	if (key==21 && mode!=VM_COMMAND && !find_pending && !object_pending && !replace_pending) key=VIM_PGUP;
     if (sub_key(key)) return 0;
     if (vim_grep_key(key)) return 0;
 	if (help_text_active(bw->t)) {
@@ -2929,7 +2929,7 @@ static int dispatch(BW *bw, int key)
 		if (key == VIM_PGUP) return u_help_prev(bw->parent, 0);
 	}
 	if (mode == VM_COMMAND) return command_key(bw, key);
-    if (!find_pending) {
+    if (!find_pending && !replace_pending) {
         switch (key) {
         case 1: key=VIM_HOME; break;
         case 5: key=VIM_END; break;
@@ -2939,7 +2939,7 @@ static int dispatch(BW *bw, int key)
         case 6: key=VIM_FORWARD_CHAR; break;
         }
     }
-	if (!replaying && mode == VM_NORMAL && !pending && !g_pending && !find_pending && !object_pending && !count && !register_pending && selected_register=='"') sequence_len = 0;
+	if (!replaying && mode == VM_NORMAL && !pending && !g_pending && !find_pending && !object_pending && !replace_pending && !count && !register_pending && selected_register=='"') sequence_len = 0;
 	record_key(key);
 	if (key == 3) {
 		int selected = markv(0) && markb->b == bw->b;
@@ -2962,6 +2962,27 @@ static int dispatch(BW *bw, int key)
 		clear_pending(); normal_cursor(bw);
 		return 0;
 	}
+    if (replace_pending) {
+        long amount = count ? count : 1, i;
+        if ((key < 32 && key != 9 && key != 13 && key != 10) || key > 0x10ffff) {
+            clear_pending(); return -1;
+        }
+        z = pdup(bw->cursor, "vim_replace_end");
+        for (i=0; i<amount && !piseol(z); ++i) pgetc(z);
+        if (i != amount || !writable(bw)) {
+            prm(z); clear_pending(); return -1;
+        }
+        start_unit();
+        bdel(bw->cursor, z); prm(z);
+        if (key == 13 || key == 10) {
+            binsc(bw->cursor, '\n'); pgetc(bw->cursor);
+        } else {
+            for (i=0; i<amount; ++i) { binsc(bw->cursor, key); pgetc(bw->cursor); }
+            prgetc(bw->cursor);
+        }
+        recording_change = 1; finish_unit();
+        clear_pending(); normal_cursor(bw); return 0;
+    }
     if (mode!=VM_INSERT && register_pending) {
         register_pending=0;
         if (register_index(key)<0 && key!='_') { clear_pending(); message("Invalid register name"); return -1; }
@@ -3162,6 +3183,7 @@ static int dispatch(BW *bw, int key)
 	case 'd': case 'c': case 'y': pending = key; op_count = count; count = 0;
         if (selected_register!='"') { char echo[32]; sprintf(echo,"\"%c%c",selected_register,key); message(echo); }
         return 0;
+	case 'r': replace_pending = 1; return 0;
 	case 'x': case VIM_DEL:
 		a = pdup(bw->cursor, "vim_x_a"); z = pdup(a, "vim_x_z");
 		while (n-- && !piseol(z)) pgetc(z);
