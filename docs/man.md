@@ -785,9 +785,9 @@ decide that you don't want the changes you made to a file during a
 particular edit session, you can hit __^C__ to exit the editor without
 saving them.
 
-If you edit a file and save the changes, a backup copy of that file is 
-created in the current directory, with a __~__ appended to the name, which 
-contains the original version of the file.
+MiJoe disables backup copies by default: saving changes does not create a
+file with a __~__ appended to its name. If you explicitly enable backups
+with __--nobackups__, the backup contains the original version of the file.
 
 ### File operations
 

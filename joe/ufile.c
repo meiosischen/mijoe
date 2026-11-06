@@ -19,7 +19,7 @@
 int orphan;
 char *backpath = NULL;		/* Place to store backup files */
 B *filehist = NULL;	/* History of file names */
-int nobackups = 0;
+int nobackups = 1; /* MiJoe saves without creating filename~ backups by default. */
 int exask = 0;
 extern int noexmsg;
 
