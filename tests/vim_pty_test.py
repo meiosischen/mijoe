@@ -139,6 +139,18 @@ class VimTests(unittest.TestCase):
     def test_insert_unicode_and_escape(self):
         self.result(b"", "i中文 alpha\rsecond\x1b", "中文 alpha\nsecond".encode())
 
+    def test_insert_ctrl_d_deletes_current_character(self):
+        self.result(b"abc\n", "li\x04X\x1b", b"aXc\n")
+
+    def test_insert_ctrl_d_deletes_unicode_character(self):
+        self.result("中文abc\n".encode(), "i\x04X\x1b", "X文abc\n".encode())
+
+    def test_insert_ctrl_d_undo(self):
+        self.result(b"abc\n", "i\x04X\x1bu", b"abc\n")
+
+    def test_insert_ctrl_d_at_eof(self):
+        self.result(b"abc", "A\x04X\x1b", b"abcX")
+
     def test_word_and_punctuation_motion(self):
         self.result(b"one,two three\n", b"wxi!\x1b", b"one!two three\n")
 

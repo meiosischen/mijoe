@@ -141,7 +141,7 @@ Windows XP 构建仍使用 `windows/vc6/build.bat Release package`。
 
 三种模式均支持 `Ctrl+A/E` 到行首/行尾、`Ctrl+P/N` 上下移动、`Ctrl+B/F` 前后移动一个字符。
 `Ctrl+K` 前缀优先，保留 `Ctrl+K Ctrl+B` 标记起点与 `Ctrl+K Ctrl+F` 查找等原有组合。
-Insert 下 `Ctrl+E` 定位到换行符之前，可直接追加；Ctrl+B/F 可以跨行移动。`:command` 输入行使用 cyan。
+Insert 下 `Ctrl+E` 定位到换行符之前，可直接追加；Ctrl+B/F 可以跨行移动；`Ctrl+D` 与 Delete 一样删除光标所在字符，并保持 Insert 模式。`:command` 输入行使用 cyan。
 
 `:grep 表达式` 搜索当前文件，不调用 shell。普通文本使用 JOE 正则；只读懒加载以字面文本流式搜索。
 结果框的左右方向键按显示列移动统一的正文视口，所有结果一起滚动，行号固定；标题 `X` 显示起始列。

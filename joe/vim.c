@@ -2983,6 +2983,7 @@ static int dispatch(BW *bw, int key)
             bw->cursor->xcol=piscol(bw->cursor); recording_change=1; return 0;
         }
         if (key==18) { insert_register_pending=1; return 0; }
+		if (key == 4) key = VIM_DEL;
 		block_insert_key(bw, key);
 		if (key & VIM_LITERAL) {
 			rc = execmd(findcmd("type"), key & ~VIM_LITERAL);
