@@ -11,8 +11,8 @@ PageDown / Space 下一页；PageUp / b 上一页；q / Esc 关闭帮助。
 macOS 字号/行距在 macos.json，Windows 窗口设置在 windows.ini。旧配置保留作备份。
 
 【软折行】
-默认关闭；Ctrl+T → Q Soft wrap 切换，:set wrap / :set nowrap 开启 / 关闭。
-已有长行按 Right Margin 和窗口正文宽度折行显示，不改变文件内容；W Word wrap 独立控制输入时硬换行。
+默认开启；Ctrl+T → Q Soft wrap 切换，:set wrap / :set nowrap 开启 / 关闭。
+已有长行按 当前窗口正文宽度折行显示，不改变文件内容；W Word wrap 独立控制输入时硬换行。
 j/k、上下键按逻辑行移动；PageUp/PageDown、滚轮和鼠标按屏幕位置处理。调整窗口和边界立即重排。
 Hex、Picture、隐藏 ANSI 模式和 shell 窗口沿用原有显示。
 

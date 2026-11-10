@@ -8,7 +8,7 @@ from grep_control_test import GrepCase, bridge
 
 class SoftWrapTests(GrepCase):
     def wrap(self,width=12):
-        self.editor.send('\x14R'+str(width)+'\r')
+        fcntl.ioctl(self.editor.fd,termios.TIOCSWINSZ,struct.pack('HHHH',40,width,0,0))
         self.editor.ex('set wrap')
         s=self.call(1);self.assertTrue(s['softwrap']);self.assertEqual(s['wrapWidth'],width)
         return s
@@ -16,10 +16,10 @@ class SoftWrapTests(GrepCase):
         self.assertTrue(self.call(14,f'1;{x};{y}')['ok'])
         self.assertTrue(self.call(14,f'3;{x};{y}')['ok'])
         return self.call(1)
-    def test_default_off_and_independent_menu_toggle(self):
-        self.assertFalse(self.call(1)['softwrap'])
-        self.editor.send('\x14Q');self.assertTrue(self.call(1)['softwrap'])
+    def test_default_on_and_independent_menu_toggle(self):
+        self.assertTrue(self.call(1)['softwrap'])
         self.editor.send('\x14Q');self.assertFalse(self.call(1)['softwrap'])
+        self.editor.send('\x14Q');self.assertTrue(self.call(1)['softwrap'])
         self.assertFalse(self.call(1)['changed'])
     def test_existing_line_mouse_and_save_are_display_only(self):
         data=b'abcdefghijklmnopqrstuvwxXYZ\nnext\n'
@@ -35,10 +35,11 @@ class SoftWrapTests(GrepCase):
         self.editor.send('gg09l3l');self.assertEqual(self.call(1)['fileOffset'],12)
         self.editor.send('j');self.assertEqual(self.call(1)['fileOffset'],33)
         self.editor.send('k');self.assertEqual(self.call(1)['fileOffset'],12)
-    def test_margin_change_reflows_without_changing_file(self):
+    def test_window_change_reflows_without_changing_file(self):
         path=self.open(b'abcdefghijklmnopqrstuvwxyz\n');self.wrap(12)
         self.assertEqual(self.click(0,2)['fileOffset'],12)
-        self.editor.send('gg0\x14R8\r')
+        self.editor.send('gg0')
+        self.wrap(8)
         self.assertEqual(self.click(1,3)['fileOffset'],17)
         self.editor.ex('set nowrap');self.assertFalse(self.call(1)['softwrap'])
         self.assertFalse(self.call(1)['changed']);self.assertEqual(path.read_bytes(),b'abcdefghijklmnopqrstuvwxyz\n')
@@ -62,10 +63,18 @@ class SoftWrapTests(GrepCase):
         self.assertEqual(self.click(1,3)['fileOffset'],25)
         self.call(2);self.assertEqual(path.read_bytes(),b'abcdefghijklmnopqrstuvwxyz\nend\n')
     def test_resize_uses_viewport_width(self):
-        self.open(b'0123456789'*20+b'\n');self.wrap(100)
+        path=self.open(b'0123456789'*20+b'\n')
+        self.assertTrue(self.call(1)['softwrap'])
+        self.editor.send('\x14R12\r')
         fcntl.ioctl(self.editor.fd,termios.TIOCSWINSZ,struct.pack('HHHH',30,40,0,0))
         self.call(1);s=self.call(1);self.assertEqual(s['wrapWidth'],40)
         self.assertEqual(self.click(0,2)['fileOffset'],40)
+        self.editor.send('gg0')
+        fcntl.ioctl(self.editor.fd,termios.TIOCSWINSZ,struct.pack('HHHH',30,120,0,0))
+        self.call(1);self.assertEqual(self.call(1)['wrapWidth'],120)
+        self.assertEqual(self.click(0,2)['fileOffset'],120)
+        self.assertFalse(self.call(1)['changed'])
+        self.assertEqual(path.read_bytes(),b'0123456789'*20+b'\n')
     def test_visual_selection_across_wrapped_rows(self):
         self.open(b'abcdefghijklmnopqrstuvwxyz\n');self.wrap()
         self.editor.send('gg09lv5l')
@@ -86,7 +95,8 @@ class LazySoftWrapTests(GrepCase):
             for _ in range(200):output.write(b'x'*200000+b'\n')
         self.editor.ex('e '+str(path));s=self.call(1)
         self.assertTrue(s['largePending']);self.call(17,'lazy')
-        self.editor.send('\x14R12\r:set wrap\r\x1b[6~')
+        fcntl.ioctl(self.editor.fd,termios.TIOCSWINSZ,struct.pack('HHHH',40,12,0,0))
+        self.editor.send(':set wrap\r\x1b[6~')
         s=self.call(1)
         self.assertTrue(s['lazy']);self.assertTrue(s['readonly']);self.assertTrue(s['softwrap'])
         self.assertGreater(s['fileOffset'],100);self.assertLess(s['fileOffset'],1000)

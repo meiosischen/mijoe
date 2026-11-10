@@ -22,8 +22,7 @@ int bwsoft(BW *w)
 }
 int bwsoft_width(BW *w)
 {
-    off_t width=w->o.rmargin+1;
-    if (width>w->w) width=w->w;
+    off_t width=w->w;
     if (width<2) width=2;
     return (int)width;
 }

@@ -144,7 +144,8 @@ OPTIONS fdefault = {
 	NULL,		/* text_delimiters */
 	">;!#%/",	/* Characters which can indent paragraphs */
 	".",	/* Characters which begin non-paragraph lines */
-	NULL, NULL, NULL, NULL, NULL	/* macros (see above) */
+	NULL, NULL, NULL, NULL, NULL,	/* macros (see above) */
+	1		/* softwrap: follow the text viewport by default */
 };
 
 /* Commands which just type in variable values */
