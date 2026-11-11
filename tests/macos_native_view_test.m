@@ -99,6 +99,56 @@ int main(int argc, const char *argv[]) {
         [NSApplication sharedApplication];
         results=[NSMutableArray array];
         NSString *directory=[NSString stringWithUTF8String:argv[2]];
+        /* Exercise the real AppKit paste responder and editor session with the
+         * user's 500-line log shape.  Restore the system pasteboard after the
+         * isolated session so verification never consumes user clipboard data. */
+        NSString *pasteFile=[directory stringByAppendingPathComponent:@"paste-500.log"];
+        [@"" writeToFile:pasteFile atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+        NSError *pasteError;
+        MJEditorSession *pasteSession=[[MJEditorSession alloc] initWithExecutable:[NSString stringWithUTF8String:argv[1]] file:pasteFile error:&pasteError];
+        check(pasteSession!=nil,@"500-line paste session starts its own editor");
+        MJTestEditorView *pasteView=[[MJTestEditorView alloc] initWithFrame:NSMakeRect(0,0,720,400)];
+        pasteView.session=pasteSession;
+        [pasteView insertText:@"i" replacementRange:NSMakeRange(NSNotFound,0)];
+        check([request(pasteSession,MIJOE_GUI_STATUS,nil)[@"mode"] isEqual:@"I"],@"500-line paste starts in Insert mode");
+        NSArray<NSString *> *logLines=@[
+            @"2026-11-11 12:00:30.755 [TID: N/A] [main] INFO  c.d.m.m.v.l.ViewInitialListener -主视图注册登记成功",
+            @"2026-11-11 12:01:11.204 [TID: N/A] [http-nio-10031-exec-2] INFO  c.d.m.m.o.r.ObjectDataQueryController -===> 对象数据查询接口入参：[{\"currentPage\":1,\"pageSize\":1}]",
+            @"org.mybatis.spring.MyBatisSystemException: ### Error querying database. Cause: java.lang.RuntimeException: no exist datasource : gttvwc",
+            @"        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)",
+            @"        at java.base/java.lang.Thread.run(Thread.java:1583)"
+        ];
+        NSMutableString *pasteText=[NSMutableString string];
+        for(int n=0;n<500;++n)[pasteText appendFormat:@"%@\n",logLines[n%logLines.count]];
+        NSPasteboard *pasteboard500=NSPasteboard.generalPasteboard;
+        NSMutableArray<NSPasteboardItem *> *savedPasteboard500=[NSMutableArray array];
+        for(NSPasteboardItem *item in pasteboard500.pasteboardItems){
+            NSPasteboardItem *copy=[NSPasteboardItem new];
+            for(NSString *type in item.types){NSData *data=[item dataForType:type];if(data)[copy setData:data forType:type];}
+            [savedPasteboard500 addObject:copy];
+        }
+        NSTimeInterval pasteSeconds=0;
+        @try {
+            [pasteboard500 clearContents];BOOL pasteboardSet=[pasteboard500 setString:pasteText forType:NSPasteboardTypeString];
+            NSString *pasteboardText=[pasteboard500 stringForType:NSPasteboardTypeString];
+            if(!(pasteboardSet && [pasteboardText isEqual:pasteText]))
+                fprintf(stderr,"pasteboard set=%d expected=%lu actual=%lu\n",pasteboardSet,(unsigned long)pasteText.length,(unsigned long)pasteboardText.length);
+            check(pasteboardSet && [pasteboardText isEqual:pasteText],@"500-line AppKit pasteboard contains the complete payload");
+            NSDate *pasteStarted=[NSDate date];[pasteView paste:nil];
+            NSDictionary *pasteState=request(pasteSession,MIJOE_GUI_STATUS,nil);
+            pasteSeconds=-pasteStarted.timeIntervalSinceNow;
+            check(pasteSeconds<5.0,@"500-line AppKit paste completes within five seconds");
+            if(!([pasteState[@"mode"] isEqual:@"I"] && [pasteState[@"changed"] boolValue]))
+                fprintf(stderr,"paste state: %s\n",pasteState.description.UTF8String);
+            check([pasteState[@"mode"] isEqual:@"I"] && [pasteState[@"changed"] boolValue],@"500-line paste remains in Insert mode and marks the buffer changed");
+            check([request(pasteSession,MIJOE_GUI_SAVE,nil)[@"ok"] boolValue] && [[NSString stringWithContentsOfFile:pasteFile encoding:NSUTF8StringEncoding error:NULL] isEqual:pasteText],@"500-line paste saves every UTF-8 character exactly");
+            check([request(pasteSession,MIJOE_GUI_UNDO,nil)[@"ok"] boolValue],@"500-line paste is one undo unit");
+            NSDictionary *undoState=request(pasteSession,MIJOE_GUI_SAVE,nil);
+            check([undoState[@"mode"] isEqual:@"I"] && [NSData dataWithContentsOfFile:pasteFile].length==0,@"undo removes the whole paste and retains Insert mode");
+        } @finally {
+            [pasteboard500 clearContents];if(savedPasteboard500.count)[pasteboard500 writeObjects:savedPasteboard500];
+        }
+        check([request(pasteSession,MIJOE_GUI_QUIT,nil)[@"ok"] boolValue] && waitFor(^BOOL{return !pasteSession.running;}),@"500-line paste session exits cleanly");
         NSString *file=[directory stringByAppendingPathComponent:@"view-input.txt"];
         [@"base\n" writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:NULL];
         NSError *error;
@@ -484,7 +534,7 @@ int main(int argc, const char *argv[]) {
         [session consumeOutput:"Z" length:1];
         check([session.screenText containsString:@"FRAME_ATOMIC_TESTZ"],@"unframed terminal output remains compatible");
         check(![request(session,MIJOE_GUI_STATUS,nil)[@"changed"] boolValue] && [request(session,MIJOE_GUI_QUIT,nil)[@"ok"] boolValue] && waitFor(^BOOL { return !session.running; }),@"theme switching preserves the document and exits cleanly");
-        NSData *report=[NSJSONSerialization dataWithJSONObject:@{@"passed":@(results.count),@"checks":results,@"real_ime_candidates_tested":@NO} options:NSJSONWritingPrettyPrinted error:NULL];
+        NSData *report=[NSJSONSerialization dataWithJSONObject:@{@"passed":@(results.count),@"checks":results,@"paste500Bytes":@([pasteText lengthOfBytesUsingEncoding:NSUTF8StringEncoding]),@"paste500Milliseconds":@(pasteSeconds*1000),@"real_ime_candidates_tested":@NO} options:NSJSONWritingPrettyPrinted error:NULL];
         [report writeToFile:[NSString stringWithUTF8String:argv[3]] atomically:YES];
     }
     return 0;

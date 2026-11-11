@@ -144,11 +144,20 @@ int edloop()
 			obj_free(exmsg);
 			exmsg = NULL;
 		}
-		/* Update the screen */
-        vim_substitute_prompt();
-		edupd(1);
+        /* Native paste arrives as one bracketed input burst.  Keep applying
+         * its bytes in order, but do not repaint the complete editor between
+         * characters while another byte is already waiting.  The closing
+         * bracket leaves paste mode and the next loop publishes one complete
+         * frame, so cursor, status and damage remain atomic. */
 #if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
-		mijoe_macos_gui_update();
+        if (!(vim_gui_pasting() && ttcheck())) {
+#endif
+            /* Update the screen */
+            vim_substitute_prompt();
+		    edupd(1);
+#if defined(__APPLE__) && defined(MIJOE_PORTABLE_MACOS)
+		    mijoe_macos_gui_update();
+        }
 #endif
 		/* Set ahead when typeahead from before editor startup is done */
 		if (!ahead && !have)
